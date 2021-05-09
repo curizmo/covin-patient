@@ -1,26 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import "../App.css";
 
-const PatientVitalForm = () => {
+const PatientVitalForm = ({
+  setTemperature,
+  setOxygenLevel,
+  setPulseRate,
+  setBpUpperRange,
+  setBpLowerRange,
+}) => {
   return (
     <div className="form-content-wrapper">
       <div className="input-vitals">
         <label>Temperature</label>
-        <input type="text" name="Temperature" />
+        <input
+          type="text"
+          name="Temperature"
+          onChange={(e) => setTemperature(e.target.value)}
+        />
       </div>
       <div className="input-vitals">
         <label>Oxygen Level</label>
-        <input type="text" name="OxygenLevel" />
+        <input
+          type="text"
+          name="OxygenLevel"
+          onChange={(e) => setOxygenLevel(e.target.value)}
+        />
       </div>
       <div className="input-vitals">
         <label>Pulse rate</label>
-        <input type="text" name="Pulserate" />
+        <input
+          type="text"
+          name="Pulserate"
+          onChange={(e) => setPulseRate(e.target.value)}
+        />
       </div>
       <div className="input-vitals">
         <label>Blood Pressure</label>
         <div className="blood-pressure">
-          <input className="bp" type="text" name="BloodPressureHigh" />
-          <input className="bp" type="text" name="BloodPressureLow" />
+          <input
+            className="bp"
+            type="text"
+            name="BloodPressureHigh"
+            onChange={(e) => setBpUpperRange(e.target.value)}
+          />
+          <input
+            className="bp"
+            type="text"
+            name="BloodPressureLow"
+            onChange={(e) => setBpLowerRange(e.target.value)}
+          />
         </div>
       </div>
     </div>

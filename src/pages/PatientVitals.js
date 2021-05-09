@@ -4,7 +4,26 @@ import PatientVitalForm from "./PatientVitalForm";
 import Submission from "./Submission";
 
 const PatientVitals = () => {
+  const [temperature, setTemperature] = useState("");
+  const [oxygenLevel, setOxygenLevel] = useState("");
+  const [pulseRate, setPulseRate] = useState("");
+  const [bpUpperRange, setBpUpperRange] = useState("");
+  const [bpLowerRange, setBpLowerRange] = useState("");
+  const [checkedItems, setCheckedItems] = useState({});
   const [page, setPage] = useState(1);
+  const [state, setState] = useState({
+    feverOrChills: false,
+    cough: false,
+    difficultyBreathing: false,
+    fatigueMuscleOrBodyAches: false,
+    headache: false,
+    newlossOfTasteOrSmell: false,
+    soreThroat: false,
+    congestionOrRunnyNose: false,
+    nauseaOrVomiting: false,
+    diarrhea: false,
+    none: false,
+  });
 
   const FOLLOWING_STATUS = {
     pageNum: page,
@@ -29,7 +48,15 @@ const PatientVitals = () => {
       <div className="content-wrapper">
         <div className="form-wrapper">
           {FOLLOWING_STATUS.pageNum === 1 && <PatientChecklist />}
-          {FOLLOWING_STATUS.pageNum === 2 && <PatientVitalForm />}
+          {FOLLOWING_STATUS.pageNum === 2 && (
+            <PatientVitalForm
+              setTemperature={setTemperature}
+              setOxygenLevel={setOxygenLevel}
+              setPulseRate={setPulseRate}
+              setBpUpperRange={setBpUpperRange}
+              setBpLowerRange={setBpLowerRange}
+            />
+          )}
           {FOLLOWING_STATUS.pageNum === 3 && <Submission />}
         </div>
 

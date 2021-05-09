@@ -23,7 +23,10 @@ const PatientChecklist = () => {
           return (
             <div className="list-content">
               <input type="checkbox" id={list} value={list} />
-              <label for={list}> {list}</label>
+              <label for={list} key={list.key}>
+                {" "}
+                {list}
+              </label>
             </div>
           );
         })}
