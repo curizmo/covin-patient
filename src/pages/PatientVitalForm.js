@@ -10,10 +10,6 @@ const PatientVitalForm = ({
   setBpLowerRange,
   setRespiratoryRate,
 }) => {
-
-  const openHelp = ()=>{
-    
-  }
   return (
     <div className="form-content-wrapper">
       <div className="input-vitals">
@@ -26,7 +22,7 @@ const PatientVitalForm = ({
             onChange={(e) => setOxygenLevel(e.target.value)}
           />
           <div className="icon">%</div>
-          <img className="help-icon" src={help_icon} alt="help icon" onClick={openHelp}/>
+          <img className="help-icon" src={help_icon} alt="help icon"/>
         </div>
       </div>
       <div className="input-vitals">

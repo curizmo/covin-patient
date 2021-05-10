@@ -63,7 +63,7 @@ const PatientVitals = () => {
   
 
   return (
-    <div>
+    <div className="wrapper">
       <div className="second-header">
         <img src={patient_profile} alt="user-profile"/>
         <div className="header-wrapper page-hero">

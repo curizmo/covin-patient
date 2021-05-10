@@ -180,21 +180,21 @@ body {
 .input-vitals .icon {
     position: absolute;
     top: 3.7rem;
-    right: 5rem;
+    right: 6rem;
     opacity: 0.3;
 }
 
 .input-vitals .icon-higher{
     position: absolute;
     top: 3.7rem;
-    left: 4.5rem;
+    left: 5rem;
     opacity: 0.3;
 }
 
 .input-vitals .icon-lower{
     position: absolute;
     top: 3.7rem;
-    right: 5rem;
+    right: 6rem;
     opacity: 0.3;
 }
 
@@ -210,3 +210,4 @@ body {
 .bp-lower{
     margin-right: 0;
 }
+

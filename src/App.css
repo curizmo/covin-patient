@@ -1,10 +1,11 @@
 .content-wrapper {
-  padding: 1rem 1rem;
+  padding: 1rem 1.5rem;
   /* background-color: bisque; */
   margin-top: 0.7rem;
   /* height: 100%; */
   /* width: 84vw; */
 }
+
 
 .health-checklist {
   margin-top: 1rem;
@@ -46,13 +47,13 @@
 
 .input-vitals input {
   height: 2rem;
-  width: 80%;
+  width: 72%;
   margin-top: 0.5rem;
   border: 1px solid #E0E3EA;
-  box-shadow: 0px 4px 10px rgba(101, 115, 150, 0.1);
+  box-shadow: 0px 2px 0px 0px #E0E3EA;
   border-radius: 3px;
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   outline-style: none;
 }
