@@ -4,6 +4,8 @@ import PatientVitalForm from "./PatientVitalForm";
 import Submission from "./Submission";
 import * as patientService from "../services/patient";
 import "./home.css"
+import patient_profile from '../assets/images/icon_userprofile.svg'
+
 
 const PatientVitals = () => {
   const [temperature, setTemperature] = useState("");
@@ -61,9 +63,12 @@ const PatientVitals = () => {
 
   return (
     <div>
-      <div className="header-wrapper page-hero">
-        <div className="main-text">Amit shah</div>
-        <div className="dull-text">+91982134576</div>
+      <div className="second-header">
+        <img src={patient_profile} alt="user-profile"/>
+        <div className="header-wrapper page-hero">
+          <div className="main-text">Amit shah</div>
+          <div className="dull-text">+91982134576</div>
+        </div>
       </div>
 
       <div className={`content-wrapper ${subWrapper}`}>

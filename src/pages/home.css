@@ -12,7 +12,7 @@ body {
 }
 
 .page-alert {
-    background: #E5E5E5;
+    background: #f2f7fd;
     border-radius: 0.3rem;
     font-style: normal;
     font-weight: normal;
@@ -22,8 +22,7 @@ body {
     flex-direction: row;
     justify-content: stretch;
     align-items: center;
-    color: #22335E;
-    opacity: 0.5;
+    color: #a4adc1;
     padding: 1rem;
 }
 
@@ -38,15 +37,22 @@ body {
 }
 
 .dull-text {
-    color:#22335E;
-    opacity: 0.5;
+    color:#9ea5b8;
     font-size: 0.85rem;
     margin-top: 0.2rem;
 }
 
+.link-text {
+    color: #a4adc1;
+    text-decoration: none;
+    border-bottom: 0.01rem solid #a4adc1;
+}
+
 .main-text {
     font-size: 1.3rem;
-    line-height: 30px;
+    line-height: 1.5rem;
+    color: #2f4068;
+    margin-top: 0.4rem;
 }
 
 .submit-btn {
@@ -84,6 +90,16 @@ body {
 .page2-sub-wrapper {
     background: #E5E5E5;
     color: #22335E;
+}
+
+.second-header .header-wrapper{
+    box-shadow: none;
+}
+.second-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 /* PatientCheclist */
