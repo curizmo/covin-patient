@@ -76,7 +76,8 @@
 
 .text-greeting {
   font-size: 1rem;
-  font-family: "Courier New", Courier, monospace;
+  color: #959fb7;
+  /* font-family: "Courier New", Courier, monospace; */
 }
 
 .initial-page-wrapper {
