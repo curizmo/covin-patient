@@ -3,6 +3,7 @@ import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
 import Submission from "./Submission";
 import * as patientService from "../services/patient";
+import "./home.css"
 
 const PatientVitals = () => {
   const [temperature, setTemperature] = useState("");
@@ -55,14 +56,17 @@ const PatientVitals = () => {
     window.close();
   };
 
+  const subWrapper = (FOLLOWING_STATUS.pageNum) === 1? 'page1-sub-wrapper' : 'page2-sub-wrapper';
+  
+
   return (
     <div>
-      <div className="header-wrapper">
-        <div>Name: Amit shah</div>
-        <div>Phone: +91982134576</div>
+      <div className="header-wrapper page-hero">
+        <div className="main-text">Amit shah</div>
+        <div className="dull-text">+91982134576</div>
       </div>
 
-      <div className="content-wrapper">
+      <div className={`content-wrapper ${subWrapper}`}>
         <div className="form-wrapper">
           {FOLLOWING_STATUS.pageNum === 1 && (
             <PatientChecklist state={state} setState={setState} />
@@ -81,20 +85,20 @@ const PatientVitals = () => {
 
         {FOLLOWING_STATUS.pageNum === 1 ? (
           <button
-            className="submit-button"
+            className="submit-button submit-btn"
             onClick={() => {
               setPage(page + 1);
             }}
           >
-            Next
+            NEXT
           </button>
         ) : FOLLOWING_STATUS.pageNum === 2 ? (
-          <button className="submit-button" onClick={onSubmit}>
-            Submit
+          <button className="submit-button submit-btn" onClick={onSubmit}>
+            SUBMIT
           </button>
         ) : (
-          <button className="submit-button" onClick={onclose}>
-            Close
+          <button className="submit-button submit-btn" onClick={onclose}>
+            CLOSE
           </button>
         )}
       </div>

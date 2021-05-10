@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./home.css";
 
 const PatientChecklist = ({ state, setState }) => {
   const checkList = {
@@ -28,8 +29,9 @@ const PatientChecklist = ({ state, setState }) => {
       <div className="health-checklist">
         {Object.entries(checkList).map(([list, val], indx) => {
           return (
-            <div className="list-content" key={indx}>
+            <div className="list-content symptoms-list" key={indx}>
               <input
+                className="symptoms-checkbox"
                 type="checkbox"
                 id={indx}
                 value={val}

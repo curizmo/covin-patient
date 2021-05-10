@@ -11,19 +11,19 @@ const PatientVitalForm = ({
   return (
     <div className="form-content-wrapper">
       <div className="input-vitals">
-        <label>Temperature</label>
-        <input
-          type="text"
-          name="Temperature"
-          onChange={(e) => setTemperature(e.target.value)}
-        />
-      </div>
-      <div className="input-vitals">
         <label>Oxygen Level</label>
         <input
           type="text"
           name="OxygenLevel"
           onChange={(e) => setOxygenLevel(e.target.value)}
+        />
+      </div>
+      <div className="input-vitals">
+        <label>Temperature</label>
+        <input
+          type="text"
+          name="Temperature"
+          onChange={(e) => setTemperature(e.target.value)}
         />
       </div>
       <div className="input-vitals">

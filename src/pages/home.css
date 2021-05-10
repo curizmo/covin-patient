@@ -109,3 +109,14 @@ body {
 .symptoms-checkbox:checked ~ .symptoms-checkbox{
     background: black;
 }
+
+/* submission */
+.block-text {
+    font-weight: bold;
+    display: block;
+    text-align: center;
+}
+
+.bold-text {
+    font-weight: bold;
+}
