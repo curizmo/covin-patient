@@ -15,5 +15,5 @@ export const postData = async (url, data = {}) => {
     },
   });
 
-  return response.JSON();
+  return response.json();
 };

@@ -35,6 +35,10 @@ const PatientVitals = () => {
     setPage(page + 1);
 
     await patientService.createPatientIntake({
+      form: state,
+      patientId: "d3de6b96-c263-45c3-8e1a-1d687c024bae",
+    });
+    await patientService.createPatientVitals({
       appointmentId: "8b4b9415-6d68-4cdd-a6e8-b1ba6b93b822",
       patientId: "d3de6b96-c263-45c3-8e1a-1d687c024bae",
       temperature,
@@ -44,10 +48,6 @@ const PatientVitals = () => {
       vitalsMeasureOn: today,
       oxygenLevel,
       pulseRate,
-    });
-    await patientService.createPatientVitals({
-      patientId: "d3de6b96-c263-45c3-8e1a-1d687c024bae",
-      form: state,
     });
   };
 
