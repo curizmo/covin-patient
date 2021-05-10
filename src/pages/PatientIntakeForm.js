@@ -7,17 +7,22 @@ import * as patientService from "../services/patient";
 const PatientIntakeForm = () => {
   const { hashKey } = useParams();
   const [isAgreed, setIsAgreed] = useState(false);
-  const [patientDetails, setPatientDatails] = useState();
+  const [patientDetails, setPatientDatails] = useState({});
 
   useEffect(() => {
-    getPatientDetails(hashKey);
+    console.log("hash", hashKey);
+    getPatientDetail(hashKey);
   }, [hashKey]);
 
-  const getPatientDetails = async (hashKey) => {
+  const getPatientDetail = async (hashKey) => {
     try {
       const response = await patientService.getPatientDetails(hashKey);
+      console.log("inside");
+      console.log("response", response);
       setPatientDatails(response.patientInfo);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div>
@@ -36,6 +41,8 @@ const PatientIntakeForm = () => {
                 <PatientVitals
                   name={`${patientDetails.givenName} ${patientDetails.familyName}`}
                   phone={patientDetails.phone}
+                  hashKey={hashKey}
+                  patientId={patientDetails.patientId}
                 />
               )}
             </>

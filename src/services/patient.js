@@ -1,4 +1,4 @@
-import { postData, getData } from "./fetch";
+import { postData, getData, putData } from "./fetch";
 
 export const getPatientDetails = (hashKey) => {
   return getData(`/register-patient-intake/${hashKey}`);
@@ -10,4 +10,8 @@ export const createPatientIntake = (payload) => {
 
 export const createPatientVitals = (payload) => {
   return postData("/vitals", payload);
+};
+
+export const UpdateMessageStatus = (hashKey) => {
+  return putData(`/register-patient-intake/message-status/${hashKey}`);
 };

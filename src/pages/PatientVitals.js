@@ -4,7 +4,7 @@ import PatientVitalForm from "./PatientVitalForm";
 import Submission from "./Submission";
 import * as patientService from "../services/patient";
 
-const PatientVitals = ({ name, phone }) => {
+const PatientVitals = ({ name, phone, hashKey, patientId }) => {
   const [temperature, setTemperature] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
   const [pulseRate, setPulseRate] = useState("");
@@ -38,11 +38,10 @@ const PatientVitals = ({ name, phone }) => {
 
     await patientService.createPatientIntake({
       form: state,
-      patientId: "d3de6b96-c263-45c3-8e1a-1d687c024bae",
+      patientId: patientId,
     });
     await patientService.createPatientVitals({
-      appointmentId: "8b4b9415-6d68-4cdd-a6e8-b1ba6b93b822",
-      patientId: "d3de6b96-c263-45c3-8e1a-1d687c024bae",
+      patientId: patientId,
       temperature,
       respiratoryRate,
       bpLowerRange,
@@ -51,6 +50,8 @@ const PatientVitals = ({ name, phone }) => {
       oxygenLevel,
       pulseRate,
     });
+
+    await patientService.UpdateMessageStatus(hashKey);
   };
 
   const onclose = () => {
