@@ -10,18 +10,14 @@ const PatientIntakeForm = () => {
   const [patientDetails, setPatientDatails] = useState({});
 
   useEffect(() => {
-    console.log("hash", hashKey);
     getPatientDetail(hashKey);
   }, [hashKey]);
 
   const getPatientDetail = async (hashKey) => {
     try {
       const response = await patientService.getPatientDetails(hashKey);
-      console.log("inside");
-      console.log("response", response);
       setPatientDatails(response.patientInfo);
     } catch (err) {
-      console.log(err);
     }
   };
   return (
