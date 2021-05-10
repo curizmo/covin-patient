@@ -82,7 +82,7 @@ body {
 }
 
 .page2-sub-wrapper {
-    background: #E5E5E5;
+    background: #FFFFFF;
     color: #22335E;
 }
 
@@ -119,4 +119,14 @@ body {
 
 .bold-text {
     font-weight: bold;
+}
+
+.input-vitals{
+    position: relative;
+}
+
+.input-vitals .icon {
+    position: absolute;
+    top: 3.5rem;
+    right: 1rem;
 }

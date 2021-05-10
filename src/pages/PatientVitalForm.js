@@ -13,10 +13,12 @@ const PatientVitalForm = ({
       <div className="input-vitals">
         <label>Oxygen Level</label>
         <input
+          className="oxygen-input"
           type="text"
           name="OxygenLevel"
           onChange={(e) => setOxygenLevel(e.target.value)}
         />
+        <div className="icon">%</div>
       </div>
       <div className="input-vitals">
         <label>Temperature</label>
