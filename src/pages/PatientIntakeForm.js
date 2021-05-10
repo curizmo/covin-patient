@@ -31,6 +31,7 @@ const PatientIntakeForm = () => {
                   setIsAgreed={setIsAgreed}
                   name={patientDetails.givenName}
                   phone={patientDetails.phone}
+                  patientId={patientDetails.patientId}
                 />
               )}
               {isAgreed && (

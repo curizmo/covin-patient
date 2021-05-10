@@ -1,15 +1,21 @@
 import React, { useState } from "react";
+import * as patientService from "../services/patient";
 import "../App.css";
 
-const TermsAndCondition = ({ setIsAgreed, name, phone }) => {
+const TermsAndCondition = ({ setIsAgreed, name, phone, patientId }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleOnChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     setIsAgreed(true);
+
+    await patientService.createPatientAgreement({
+      patientId,
+      isAgreed: isChecked ? 0 : 1,
+    });
   };
 
   return (
