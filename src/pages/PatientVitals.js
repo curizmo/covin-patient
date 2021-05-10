@@ -52,7 +52,7 @@ const PatientVitals = () => {
   };
 
   const onclose = () => {
-    console.log("closed");
+    window.close();
   };
 
   return (
