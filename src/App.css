@@ -1,6 +1,6 @@
 .content-wrapper {
-  padding: 1rem 2rem;
-  background-color: bisque;
+  padding: 1rem 1rem;
+  /* background-color: bisque; */
   margin-top: 0.7rem;
   /* height: 100%; */
   /* width: 84vw; */
@@ -11,9 +11,9 @@
 }
 
 .list-content {
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
   background-color: white;
-  padding: 0.6rem 0.3rem;
+  padding: 0.725rem 0.3rem;
 }
 
 .header-wrapper {
@@ -27,7 +27,7 @@
 }
 
 .form-content-wrapper {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
 }
 
 .submit-button {

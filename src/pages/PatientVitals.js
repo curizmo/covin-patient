@@ -70,6 +70,7 @@ const PatientVitals = () => {
           <div className="dull-text">+91982134576</div>
         </div>
       </div>
+      <div className="page-hero dull-text">Wednesday, May 5, 2021</div>
 
       <div className={`content-wrapper ${subWrapper}`}>
         <div className="form-wrapper">
@@ -102,7 +103,7 @@ const PatientVitals = () => {
             SUBMIT
           </button>
         ) : (
-          <button className="submit-button submit-btn" onClick={onclose}>
+          <button className="submit-button submit-btn-close" onClick={onclose}>
             CLOSE
           </button>
         )}
