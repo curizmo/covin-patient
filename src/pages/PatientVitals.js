@@ -58,7 +58,12 @@ const PatientVitals = () => {
     window.close();
   };
 
-  const subWrapper = (FOLLOWING_STATUS.pageNum) === 1? 'page1-sub-wrapper' : 'page2-sub-wrapper';
+  const subWrapper = 
+  (FOLLOWING_STATUS.pageNum) === 1
+    ? 'page1-sub-wrapper' 
+    : (FOLLOWING_STATUS.pageNum) === 2
+      ? 'page2-sub-wrapper'
+      : 'page3-sub-wrapper';
   
 
   return (
