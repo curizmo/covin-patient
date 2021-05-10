@@ -4,12 +4,14 @@ import PatientVitalForm from "./PatientVitalForm";
 import Submission from "./Submission";
 import * as patientService from "../services/patient";
 
-const PatientVitals = () => {
+const PatientVitals = ({ name, phone }) => {
   const [temperature, setTemperature] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
   const [pulseRate, setPulseRate] = useState("");
   const [bpUpperRange, setBpUpperRange] = useState("");
   const [bpLowerRange, setBpLowerRange] = useState("");
+  const [respiratoryRate, setRespiratoryRate] = useState("");
+
   const [page, setPage] = useState(1);
   const [state, setState] = useState({
     feverOrChills: false,
@@ -42,7 +44,7 @@ const PatientVitals = () => {
       appointmentId: "8b4b9415-6d68-4cdd-a6e8-b1ba6b93b822",
       patientId: "d3de6b96-c263-45c3-8e1a-1d687c024bae",
       temperature,
-      respiratoryRate: "82",
+      respiratoryRate,
       bpLowerRange,
       bpUpperRange,
       vitalsMeasureOn: today,
@@ -58,8 +60,8 @@ const PatientVitals = () => {
   return (
     <div>
       <div className="header-wrapper">
-        <div>Name: Amit shah</div>
-        <div>Phone: +91982134576</div>
+        <div>Name: {name}</div>
+        <div>Phone: {phone}</div>
       </div>
 
       <div className="content-wrapper">
@@ -74,6 +76,7 @@ const PatientVitals = () => {
               setPulseRate={setPulseRate}
               setBpUpperRange={setBpUpperRange}
               setBpLowerRange={setBpLowerRange}
+              setRespiratoryRate={setRespiratoryRate}
             />
           )}
           {FOLLOWING_STATUS.pageNum === 3 && <Submission />}

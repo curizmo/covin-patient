@@ -7,6 +7,7 @@ const PatientVitalForm = ({
   setPulseRate,
   setBpUpperRange,
   setBpLowerRange,
+  setRespiratoryRate,
 }) => {
   return (
     <div className="form-content-wrapper">
@@ -50,6 +51,14 @@ const PatientVitalForm = ({
             onChange={(e) => setBpLowerRange(e.target.value)}
           />
         </div>
+      </div>
+      <div className="input-vitals">
+        <label>Respiratory rate</label>
+        <input
+          type="text"
+          name="Respiratoryrate"
+          onChange={(e) => setRespiratoryRate(e.target.value)}
+        />
       </div>
     </div>
   );

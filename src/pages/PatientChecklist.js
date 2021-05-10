@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
 
-const PatientChecklist = ({ state, setState }) => {
+const PatientChecklist = ({ state, setState, setSymptomsDuration }) => {
   const checkList = {
     "Fever or Chills": "feverOrChills",
     Cough: "cough",
@@ -39,10 +39,6 @@ const PatientChecklist = ({ state, setState }) => {
             </div>
           );
         })}
-        {/* <div>
-          <label>Since when did you have the symptoms?</label>
-          <textarea cols="39" rows="5"></textarea>
-        </div> */}
       </div>
     </div>
   );

@@ -1,15 +1,16 @@
 import "./App.css";
 import React, { useState } from "react";
-import PatientVitals from "./pages/PatientVitals";
-import TermsAndCondition from "./pages/TermsAndCondition";
+import PageRouter from "./pages/PageRouter";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-  const [isAgreed, setIsAgreed] = useState(false);
+  console.log("hash", window.location.href);
   return (
-    <div className="App">
-      {!isAgreed && <TermsAndCondition setIsAgreed={setIsAgreed} />}
-      {isAgreed && <PatientVitals />}
-    </div>
+    <Router>
+      <div className="App">
+        <PageRouter />
+      </div>
+    </Router>
   );
 }
 

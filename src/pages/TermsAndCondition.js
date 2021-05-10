@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 
-const TermsAndCondition = ({ setIsAgreed }) => {
+const TermsAndCondition = ({ setIsAgreed, name, phone }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleOnChange = (event) => {
@@ -15,8 +15,8 @@ const TermsAndCondition = ({ setIsAgreed }) => {
   return (
     <div className="initial-page-wrapper">
       <div className="name-container">
-        <span>Hi Amit Shah!</span>
-        <span>+919845667233</span>
+        <span>Hi {name}!</span>
+        <span>{phone}</span>
       </div>
       <div className="initial-page-content">
         <div>
