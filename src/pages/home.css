@@ -232,3 +232,33 @@ body {
     align-items: center;
     /* font-family: Helvetica; */
 }
+
+
+.modal{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+.modal-header{
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 1rem;
+}
+
+.modal-content{
+    width: 25rem;
+    height: 20rem;
+}
+
+.video{
+    width: 99%;
+    height: 15rem;
+}
