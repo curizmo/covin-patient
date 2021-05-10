@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../App.css";
+import "./home.css"
 
 const TermsAndCondition = ({ setIsAgreed }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -13,21 +14,20 @@ const TermsAndCondition = ({ setIsAgreed }) => {
   };
 
   return (
-    <div className="initial-page-wrapper">
+    <div className="initial-page-wrapper page-hero">
       <div className="name-container">
-        <span>Hi Amit Shah!</span>
-        <span>+919845667233</span>
+        <span className="main-text" >Hi Amit Shah!</span>
+        <span className="dull-text">+919845667233</span>
       </div>
       <div className="initial-page-content">
-        <div>
-          <input type="checkbox" onChange={handleOnChange} />
-          <label> I agree to the terms and conditions</label>
+        <div className="page-alert">
+          <input className="page-checkbox" type="checkbox" onChange={handleOnChange} />
+          <label> I agree to the terms and conditins of the usage this system</label>
         </div>
-
-        <button onClick={handleOnClick} disabled={!isChecked}>
-          I Agree
-        </button>
       </div>
+        <button className="initial-page-content submit-btn" onClick={handleOnClick} disabled={!isChecked}>
+          I AGREE
+        </button>
     </div>
   );
 };
