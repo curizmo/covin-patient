@@ -17,8 +17,7 @@ const PatientIntakeForm = () => {
     try {
       const response = await patientService.getPatientDetails(hashKey);
       setPatientDatails(response.patientInfo);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
   return (
     <div>
@@ -44,7 +43,12 @@ const PatientIntakeForm = () => {
               )}
             </>
           ) : (
-            <PatientVitals />
+            <PatientVitals
+              name={`${patientDetails.givenName} ${patientDetails.familyName}`}
+              phone={patientDetails.phone}
+              hashKey={hashKey}
+              patientId={patientDetails.patientId}
+            />
           )}
         </>
       ) : null}
