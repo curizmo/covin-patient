@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../App.css";
 
 const PatientVitalForm = ({
@@ -16,6 +16,7 @@ const PatientVitalForm = ({
           type="text"
           name="Temperature"
           onChange={(e) => setTemperature(e.target.value)}
+          required="required" 
         />
       </div>
       <div className="input-vitals">
@@ -24,6 +25,7 @@ const PatientVitalForm = ({
           type="text"
           name="OxygenLevel"
           onChange={(e) => setOxygenLevel(e.target.value)}
+          required="required" 
         />
       </div>
       <div className="input-vitals">
@@ -32,6 +34,7 @@ const PatientVitalForm = ({
           type="text"
           name="Pulserate"
           onChange={(e) => setPulseRate(e.target.value)}
+          required="required" 
         />
       </div>
       <div className="input-vitals">
@@ -42,12 +45,14 @@ const PatientVitalForm = ({
             type="text"
             name="BloodPressureHigh"
             onChange={(e) => setBpUpperRange(e.target.value)}
+            required="required" 
           />
           <input
             className="bp"
             type="text"
             name="BloodPressureLow"
             onChange={(e) => setBpLowerRange(e.target.value)}
+            required="required" 
           />
         </div>
       </div>

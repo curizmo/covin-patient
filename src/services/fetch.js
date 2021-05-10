@@ -6,7 +6,7 @@ export const getData = async (url) => {
   return response.json();
 };
 
-export const postData = async (url) => {
+export const postData = async (url, data = {}) => {
   const response = await fetch(`${config.apiURL}${url}`, {
     method: "POST",
     body: JSON.stringify(data),

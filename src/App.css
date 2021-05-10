@@ -60,7 +60,39 @@
   margin-right: 0.5rem;
 }
 
-.text-greeting{
+.text-greeting {
   font-size: 1rem;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.initial-page-wrapper {
+  background-color: blanchedalmond;
+  height: 100vh;
+}
+
+.name-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.name-container span {
+  margin: 1rem;
+}
+
+.initial-page-content {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.initial-page-content button {
+  margin-top: 2rem;
+  width: 10rem;
+  height: 3rem;
 }

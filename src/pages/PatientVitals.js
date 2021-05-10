@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
 import Submission from "./Submission";
+import * as patientService from "../services/patient";
 
 const PatientVitals = () => {
   const [temperature, setTemperature] = useState("");
@@ -9,7 +10,6 @@ const PatientVitals = () => {
   const [pulseRate, setPulseRate] = useState("");
   const [bpUpperRange, setBpUpperRange] = useState("");
   const [bpLowerRange, setBpLowerRange] = useState("");
-  const [checkedItems, setCheckedItems] = useState({});
   const [page, setPage] = useState(1);
   const [state, setState] = useState({
     feverOrChills: false,
@@ -25,13 +25,30 @@ const PatientVitals = () => {
     none: false,
   });
 
+  let today = new Date().toLocaleDateString();
+
   const FOLLOWING_STATUS = {
     pageNum: page,
   };
 
-  const onSubmit = () => {
-    console.log("submitted");
+  const onSubmit = async () => {
     setPage(page + 1);
+
+    await patientService.createPatientIntake({
+      appointmentId: "8b4b9415-6d68-4cdd-a6e8-b1ba6b93b822",
+      patientId: "d3de6b96-c263-45c3-8e1a-1d687c024bae",
+      temperature,
+      respiratoryRate: "82",
+      bpLowerRange,
+      bpUpperRange,
+      vitalsMeasureOn: today,
+      oxygenLevel,
+      pulseRate,
+    });
+    await patientService.createPatientVitals({
+      patientId: "d3de6b96-c263-45c3-8e1a-1d687c024bae",
+      form: state,
+    });
   };
 
   const onclose = () => {
@@ -47,7 +64,9 @@ const PatientVitals = () => {
 
       <div className="content-wrapper">
         <div className="form-wrapper">
-          {FOLLOWING_STATUS.pageNum === 1 && <PatientChecklist />}
+          {FOLLOWING_STATUS.pageNum === 1 && (
+            <PatientChecklist state={state} setState={setState} />
+          )}
           {FOLLOWING_STATUS.pageNum === 2 && (
             <PatientVitalForm
               setTemperature={setTemperature}

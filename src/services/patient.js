@@ -1,5 +1,9 @@
-import { getData, postData } from "./fetch";
+import { postData } from "./fetch";
 
-export const createPatient = (payload) => {
-  return postData("/create-patient", payload);
+export const createPatientIntake = (payload) => {
+  return postData("/patient-intake-form", payload);
+};
+
+export const createPatientVitals = (payload) => {
+  return postData("/vitals", payload);
 };
