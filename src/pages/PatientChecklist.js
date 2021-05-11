@@ -3,7 +3,7 @@ import "../App.css";
 import * as patientService from "../services/patient";
 import "./home.css";
 
-const PatientChecklist = ({ state, setState, setSymptomsDuration }) => {
+const PatientChecklist = ({ state, setState }) => {
   const [symptoms, setSymptoms] = useState([]);
 
   useEffect(() => {

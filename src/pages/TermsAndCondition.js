@@ -24,7 +24,7 @@ const TermsAndCondition = ({ setIsAgreed, name, phone, patientId }) => {
     <div className="initial-page-wrapper page-hero">
       <div className="name-container">
         <img src={patient_profile} alt="user-profile" />
-        <span className="main-text">{name}!</span>
+        <span className="main-text">Hi {name}!</span>
         <span className="dull-text">{phone}</span>
       </div>
       <div className="initial-page-content">

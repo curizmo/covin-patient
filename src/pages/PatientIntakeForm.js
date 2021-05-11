@@ -39,6 +39,7 @@ const PatientIntakeForm = () => {
                   phone={patientDetails.phone}
                   hashKey={hashKey}
                   patientId={patientDetails.patientId}
+                  messageType={patientDetails.messageType}
                 />
               )}
             </>
@@ -48,6 +49,7 @@ const PatientIntakeForm = () => {
               phone={patientDetails.phone}
               hashKey={hashKey}
               patientId={patientDetails.patientId}
+              messageType={patientDetails.messageType}
             />
           )}
         </>

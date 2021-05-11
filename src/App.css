@@ -55,6 +55,57 @@
   font-size: 1rem;
 }
 
+.input-history {
+  margin: 0.725rem 0;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  height: 5rem;
+}
+
+.input-history input {
+  height: 2rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  outline-style: none;
+}
+
+.input-history label {
+  font-size: 1rem;
+}
+
+.history-list-content {
+  margin: 1.8rem 0 0.5rem 0;
+  background-color: white;
+  padding: 1rem 0.3rem;
+}
+
+.preexisting-list-content {
+  margin: 1rem 0 0.5rem 0;
+  background-color: white;
+  padding: 1rem 0.3rem;
+  font-size: 1rem;
+}
+
+.history-list-content label {
+  font-size: 1rem;
+}
+
+.page-title{
+  color: #22335e;
+  margin-top: 0px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.2rem;
+  word-spacing: 0.125rem;
+}
+
 .blood-pressure {
   display: flex;
   width: 82%;

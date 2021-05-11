@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
+import PatientFirstIntake from "./PatientFirstIntake";
 import Submission from "./Submission";
 import * as patientService from "../services/patient";
 import "./home.css";
@@ -8,7 +9,7 @@ import patient_profile from "../assets/images/icon_userprofile.svg";
 
 import { weekDays, MONTHS } from "../constants/constants";
 
-const PatientVitals = ({ name, phone, hashKey, patientId }) => {
+const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
   const [temperature, setTemperature] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
   const [pulseRate, setPulseRate] = useState("");
@@ -32,10 +33,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
 
   let today = new Date().toLocaleDateString();
 
-  const FOLLOWING_STATUS = {
-    pageNum: page,
-  };
-
   let d = new Date();
   let day = d.getDay();
   let date = d.getDate();
@@ -44,6 +41,10 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
 
   month = MONTHS[month - 1];
   day = weekDays[day];
+
+  const FOLLOWING_STATUS = {
+    pageNum: page,
+  };
 
   const onSubmit = async () => {
     setPage(page + 1);
@@ -64,7 +65,13 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
   };
 
   const subWrapper =
-    FOLLOWING_STATUS.pageNum === 1
+    messageType === "newPatient"
+      ? FOLLOWING_STATUS.pageNum === 1 || FOLLOWING_STATUS.pageNum === 2 || FOLLOWING_STATUS.pageNum === 5
+        ? "page1-sub-wrapper"
+        : FOLLOWING_STATUS.pageNum === 6
+        ? "page2-sub-wrapper"
+        : "page3-sub-wrapper"
+      : FOLLOWING_STATUS.pageNum === 1
       ? "page1-sub-wrapper"
       : FOLLOWING_STATUS.pageNum === 2
       ? "page2-sub-wrapper"
@@ -83,39 +90,75 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
         {day}, {month} {date}, {year}
       </div>
 
-      <div className={`content-wrapper ${subWrapper}`}>
-        <div className="form-wrapper">
-          {FOLLOWING_STATUS.pageNum === 1 && (
-            <PatientChecklist state={state} setState={setState} />
-          )}
-          {FOLLOWING_STATUS.pageNum === 2 && (
-            <PatientVitalForm
-              setTemperature={setTemperature}
-              setOxygenLevel={setOxygenLevel}
-              setPulseRate={setPulseRate}
-              setBpUpperRange={setBpUpperRange}
-              setBpLowerRange={setBpLowerRange}
-              setRespiratoryRate={setRespiratoryRate}
-            />
-          )}
-          {FOLLOWING_STATUS.pageNum === 3 && <Submission />}
-        </div>
+      {messageType === "newPatient" ? (
+        <div className={`content-wrapper ${subWrapper}`}>
+          <div className="form-wrapper">
+            <PatientFirstIntake pageNum={FOLLOWING_STATUS.pageNum} />
+            {FOLLOWING_STATUS.pageNum === 5 && (
+              <PatientChecklist state={state} setState={setState} />
+            )}
+            {FOLLOWING_STATUS.pageNum === 6 && (
+              <PatientVitalForm
+                setTemperature={setTemperature}
+                setOxygenLevel={setOxygenLevel}
+                setPulseRate={setPulseRate}
+                setBpUpperRange={setBpUpperRange}
+                setBpLowerRange={setBpLowerRange}
+                setRespiratoryRate={setRespiratoryRate}
+              />
+            )}
+            {FOLLOWING_STATUS.pageNum === 7 && <Submission />}
 
-        {FOLLOWING_STATUS.pageNum === 1 ? (
-          <button
-            className="submit-button submit-btn"
-            onClick={() => {
-              setPage(page + 1);
-            }}
-          >
-            NEXT
-          </button>
-        ) : FOLLOWING_STATUS.pageNum === 2 ? (
-          <button className="submit-button submit-btn" onClick={onSubmit}>
-            SUBMIT
-          </button>
-        ) : null}
-      </div>
+            {FOLLOWING_STATUS.pageNum === 6 ? (
+              <button className="submit-button submit-btn" onClick={onSubmit}>
+                SUBMIT
+              </button>
+            ) : FOLLOWING_STATUS.pageNum === 7 ? null : (
+              <button
+                className="submit-button submit-btn"
+                onClick={() => {
+                  setPage(page + 1);
+                }}
+              >
+                NEXT
+              </button>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className={`content-wrapper ${subWrapper}`}>
+          <div className="form-wrapper">
+            {FOLLOWING_STATUS.pageNum === 1 && (
+              <PatientChecklist state={state} setState={setState} />
+            )}
+            {FOLLOWING_STATUS.pageNum === 2 && (
+              <PatientVitalForm
+                setTemperature={setTemperature}
+                setOxygenLevel={setOxygenLevel}
+                setPulseRate={setPulseRate}
+                setBpUpperRange={setBpUpperRange}
+                setBpLowerRange={setBpLowerRange}
+                setRespiratoryRate={setRespiratoryRate}
+              />
+            )}
+            {FOLLOWING_STATUS.pageNum === 3 && <Submission />}
+            {FOLLOWING_STATUS.pageNum === 1 ? (
+              <button
+                className="submit-button submit-btn"
+                onClick={() => {
+                  setPage(page + 1);
+                }}
+              >
+                NEXT
+              </button>
+            ) : FOLLOWING_STATUS.pageNum === 2 ? (
+              <button className="submit-button submit-btn" onClick={onSubmit}>
+                SUBMIT
+              </button>
+            ) : null}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

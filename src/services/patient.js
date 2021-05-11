@@ -12,6 +12,10 @@ export const getPatientVitals = () => {
   return getData("/vitals-template");
 };
 
+export const getPatientHealthIntake = () => {
+  return getData("/patients-intake-template");
+};
+
 export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
 };
