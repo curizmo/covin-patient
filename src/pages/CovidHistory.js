@@ -3,6 +3,9 @@ import "../App.css";
 import "./home.css";
 
 const CovidHistory = ({ covidHistory, setIntakeState, intakeState }) => {
+  const [checkedOne, setCheckedOne] = useState(false);
+  const [checkedTwo, setCheckedTwo] = useState(false);
+
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
@@ -14,6 +17,12 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState }) => {
     item == "none"
       ? setIntakeState({ ...intakeState, [item]: !isChecked })
       : setIntakeState({ ...intakeState, [item]: isChecked });
+
+    if (item === "covidVaccinationDose1taken") {
+      setCheckedOne(isChecked);
+    } else if (item === "CovidVaccinationDose2Taken") {
+      setCheckedTwo(isChecked);
+    }
   };
 
   return (
@@ -31,20 +40,25 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState }) => {
               key={indx}
             >
               {history.type === "Text" && <label>{history.title}</label>}
-              {history.type === "Boolean" ? (
+              {history.type === "Text" ? (
+                <input
+                  type="date"
+                  id={indx}
+                  name={history.field}
+                  onChange={handleInputChange}
+                  disabled={
+                    `${history.field}` === "dateofDose1Vaccination"
+                      ? !checkedOne
+                      : !checkedTwo
+                  }
+                />
+              ) : (
                 <input
                   className="symptoms-checkbox"
                   type="checkbox"
                   id={indx}
                   value={history.field}
                   onChange={handleCheckboxChange}
-                />
-              ) : (
-                <input
-                  type="date"
-                  id={indx}
-                  name={history.field}
-                  onChange={handleInputChange}
                 />
               )}
               {history.type === "Boolean" && <label>{history.title}</label>}
