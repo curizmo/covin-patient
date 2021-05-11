@@ -68,53 +68,55 @@ const PatientVitals = () => {
   
 
   return (
-    <div className="wrapper">
-      <div className="second-header">
-        <img src={patient_profile} alt="user-profile"/>
-        <div className="header-wrapper page-hero">
-          <div className="main-text">Amit shah</div>
-          <div className="dull-text">+91982134576</div>
+    <div className="main-body">
+      <div className="wrapper">
+        <div className="second-header">
+          <img src={patient_profile} alt="user-profile"/>
+          <div className="header-wrapper page-hero">
+            <div className="main-text">Amit shah</div>
+            <div className="dull-text">+91982134576</div>
+          </div>
         </div>
-      </div>
-      <div className="page-hero dull-text">Wednesday, May 5, 2021</div>
+        <div className="page-hero dull-text">Wednesday, May 5, 2021</div>
 
-      <div className={`content-wrapper ${subWrapper}`}>
-        <div className="form-wrapper">
-          {FOLLOWING_STATUS.pageNum === 1 && (
-            <PatientChecklist state={state} setState={setState} />
-          )}
-          {FOLLOWING_STATUS.pageNum === 2 && (
-            <PatientVitalForm
-              setTemperature={setTemperature}
-              setOxygenLevel={setOxygenLevel}
-              setPulseRate={setPulseRate}
-              setBpUpperRange={setBpUpperRange}
-              setBpLowerRange={setBpLowerRange}
-              setRespiratoryRate={setRespiratoryRate}
+        <div className={`content-wrapper ${subWrapper}`}>
+          <div className="form-wrapper">
+            {FOLLOWING_STATUS.pageNum === 1 && (
+              <PatientChecklist state={state} setState={setState} />
+            )}
+            {FOLLOWING_STATUS.pageNum === 2 && (
+              <PatientVitalForm
+                setTemperature={setTemperature}
+                setOxygenLevel={setOxygenLevel}
+                setPulseRate={setPulseRate}
+                setBpUpperRange={setBpUpperRange}
+                setBpLowerRange={setBpLowerRange}
+                setRespiratoryRate={setRespiratoryRate}
 
-            />
+              />
+            )}
+            {FOLLOWING_STATUS.pageNum === 3 && <Submission />}
+          </div>
+
+          {FOLLOWING_STATUS.pageNum === 1 ? (
+            <button
+              className="submit-button submit-btn"
+              onClick={() => {
+                setPage(page + 1);
+              }}
+            >
+              NEXT
+            </button>
+          ) : FOLLOWING_STATUS.pageNum === 2 ? (
+            <button className="submit-button submit-btn" onClick={onSubmit}>
+              SUBMIT
+            </button>
+          ) : (
+            <button className="submit-button submit-btn-close" onClick={onclose}>
+              CLOSE
+            </button>
           )}
-          {FOLLOWING_STATUS.pageNum === 3 && <Submission />}
         </div>
-
-        {FOLLOWING_STATUS.pageNum === 1 ? (
-          <button
-            className="submit-button submit-btn"
-            onClick={() => {
-              setPage(page + 1);
-            }}
-          >
-            NEXT
-          </button>
-        ) : FOLLOWING_STATUS.pageNum === 2 ? (
-          <button className="submit-button submit-btn" onClick={onSubmit}>
-            SUBMIT
-          </button>
-        ) : (
-          <button className="submit-button submit-btn-close" onClick={onclose}>
-            CLOSE
-          </button>
-        )}
       </div>
     </div>
   );

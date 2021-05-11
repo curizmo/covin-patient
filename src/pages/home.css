@@ -12,6 +12,10 @@ body {
     /* border-bottom: 0.125rem solid #eaeff7; */
 }
 
+.wrapper{
+    background-color : #FFFFFF;
+}
+
 .page-alert {
     background: #f2f7fd;
     border-radius: 0.3rem;
@@ -263,4 +267,53 @@ body {
 .video{
     width: 99%;
     height: 15rem;
+}
+
+@media only screen and (min-width: 720px) {
+    .App{
+        background-color: #F2F7FD;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 107vh;
+      }
+    .main-body{
+        background-color: #F2F7FD;
+        display: flex;
+        flex-wrap: wrap;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+    .page-hero{
+        max-width: 50rem;
+        max-height: 40rem;
+    }
+    .wrapper{
+        max-width: 50rem;
+   
+    }
+    .input-vitals .icon {
+        right: 9rem;
+    }
+    .blood-pressure{
+        width: 78%;
+    }
+    .input-vitals .icon-lower{
+        right: 9rem;
+    }
+    .input-vitals .icon-higher{
+        left: 10rem;
+    }
+    .modal-content{
+        width: 40rem;
+        height: 75%;
+    }
+    .video{
+        width: 99%;
+        height: 30rem;
+    }
+    .input-vitals {
+        margin: 1.5rem 0;
+    }
 }

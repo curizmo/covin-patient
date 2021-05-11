@@ -6,6 +6,11 @@
   /* width: 84vw; */
 }
 
+.App{
+  background-color: #F2F7FD;
+  height: 100vh;
+}
+
 
 .health-checklist {
   margin-top: 1rem;
