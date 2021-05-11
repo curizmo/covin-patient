@@ -272,6 +272,9 @@ body {
 .header{
     display: none;
 }
+.page-header{
+    display: none;
+}
 
 @media only screen and (min-width: 720px) {
     .App{
@@ -291,7 +294,7 @@ body {
 
     }
     .page-hero{
-        max-width: 50rem;
+        max-width: 620px;
         max-height: 40rem;
     }
     .page-header{
@@ -304,6 +307,7 @@ body {
         width: 100%;
         padding-left: 11rem;
         color: #01518D;
+        display: inline;
     }
     .body-wrap{
         width: 100%;
@@ -314,7 +318,8 @@ body {
         justify-content: center;
     }
     .wrapper{
-        max-width: 40rem;
+        max-width: 620px;
+        width: 620px;
    
     }
     .input-vitals .icon {
