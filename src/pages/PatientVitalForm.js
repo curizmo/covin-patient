@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
+import * as patientService from "../services/patient";
+
+const camelcaseKeys = require("camelcase-keys");
 
 const PatientVitalForm = ({
   setTemperature,
@@ -9,6 +12,17 @@ const PatientVitalForm = ({
   setBpLowerRange,
   setRespiratoryRate,
 }) => {
+  const [vitals, setVitals] = useState([]);
+
+  useEffect(() => {
+    getVitals();
+  }, []);
+
+  const getVitals = async () => {
+    const response = await patientService.getPatientVitals();
+    setVitals(response.vitalsTemplate);
+  };
+
   return (
     <div className="form-content-wrapper">
       <div className="input-vitals">

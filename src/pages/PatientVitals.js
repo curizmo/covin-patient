@@ -35,11 +35,7 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
 
   const onSubmit = async () => {
     setPage(page + 1);
-
-    await patientService.createPatientIntake({
-      form: state,
-      patientId: patientId,
-    });
+    
     await patientService.createPatientVitals({
       patientId: patientId,
       temperature,
@@ -49,6 +45,7 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
       vitalsMeasureOn: today,
       oxygenLevel,
       pulseRate,
+      symptoms: state,
     });
 
     await patientService.UpdateMessageStatus(hashKey);

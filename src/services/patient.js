@@ -4,6 +4,14 @@ export const getPatientDetails = (hashKey) => {
   return getData(`/register-patient-intake/${hashKey}`);
 };
 
+export const getPatientSymtoms = () => {
+  return getData("/symptoms-template");
+};
+
+export const getPatientVitals = () => {
+  return getData("/vitals-template");
+};
+
 export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
 };
