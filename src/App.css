@@ -1,9 +1,6 @@
 .content-wrapper {
-  padding: 1rem 2rem;
-  background-color: bisque;
+  padding: 1rem 1.5rem;
   margin-top: 0.7rem;
-  height: 100vh;
-  width: 84vw;
 }
 
 .health-checklist {
@@ -11,9 +8,9 @@
 }
 
 .list-content {
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
   background-color: white;
-  padding: 0.6rem 0.3rem;
+  padding: 0.725rem 0.3rem;
 }
 
 .header-wrapper {
@@ -24,10 +21,6 @@
 
 .form-wrapper {
   margin-top: 0.3rem;
-}
-
-.form-content-wrapper {
-  padding: 0.5rem;
 }
 
 .submit-button {
@@ -45,13 +38,77 @@
 }
 
 .input-vitals input {
-  height: 4rem;
+  height: 2rem;
+  width: 72%;
   margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  outline-style: none;
+}
+
+.input-vitals label {
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.input-history {
+  margin: 0.725rem 0;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  height: 5rem;
+}
+
+.input-history input {
+  height: 2rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  outline-style: none;
+}
+
+.input-history label {
+  font-size: 1rem;
+}
+
+.history-list-content {
+  margin: 1.8rem 0 0.5rem 0;
+  background-color: white;
+  padding: 1rem 0.3rem;
+}
+
+.preexisting-list-content {
+  margin: 1rem 0 0.5rem 0;
+  background-color: white;
+  padding: 1rem 0.3rem;
+  font-size: 1rem;
+}
+
+.history-list-content label {
+  font-size: 1rem;
+}
+
+.page-title{
+  color: #22335e;
+  margin-top: 0px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.2rem;
+  word-spacing: 0.125rem;
 }
 
 .blood-pressure {
   display: flex;
-  width: 10rem;
+  width: 82%;
 }
 
 .bp {
@@ -62,12 +119,14 @@
 
 .text-greeting {
   font-size: 1rem;
-  font-family: "Courier New", Courier, monospace;
+  color: #959fb7;
+  line-height: 1.5rem;
+  text-align: center;
 }
 
 .initial-page-wrapper {
   background-color: blanchedalmond;
-  height: 100vh;
+  height: 95vh;
 }
 
 .name-container {
@@ -78,17 +137,12 @@
   padding: 2rem;
 }
 
-.name-container span {
-  margin: 1rem;
-}
-
 .initial-page-content {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
 }
 
 .initial-page-content button {
