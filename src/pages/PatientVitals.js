@@ -6,6 +6,8 @@ import * as patientService from "../services/patient";
 import "./home.css";
 import patient_profile from "../assets/images/icon_userprofile.svg";
 
+import { weekDays, MONTHS } from "../constants/constants";
+
 const PatientVitals = ({ name, phone, hashKey, patientId }) => {
   const [temperature, setTemperature] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
@@ -33,6 +35,15 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
   const FOLLOWING_STATUS = {
     pageNum: page,
   };
+
+  let d = new Date();
+  let day = d.getDay();
+  let date = d.getDate();
+  let month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+  let year = d.getFullYear();
+
+  month = MONTHS[month - 1];
+  day = weekDays[day];
 
   const onSubmit = async () => {
     setPage(page + 1);
@@ -68,7 +79,9 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
           <div className="dull-text">{phone}</div>
         </div>
       </div>
-      <div className="page-hero dull-text">Wednesday, May 5, 2021</div>
+      <div className="page-hero dull-text">
+        {day}, {month} {date}, {year}
+      </div>
 
       <div className={`content-wrapper ${subWrapper}`}>
         <div className="form-wrapper">
