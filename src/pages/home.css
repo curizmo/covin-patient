@@ -200,21 +200,21 @@ body {
 
 .input-vitals .icon {
     position: absolute;
-    top: 3.7rem;
+    top: 3.5rem;
     right: 6rem;
     opacity: 0.3;
 }
 
 .input-vitals .icon-higher{
     position: absolute;
-    top: 3.7rem;
+    top: 3.5rem;
     left: 5rem;
     opacity: 0.3;
 }
 
 .input-vitals .icon-lower{
     position: absolute;
-    top: 3.7rem;
+    top: 3.5rem;
     right: 6rem;
     opacity: 0.3;
 }
@@ -304,9 +304,12 @@ body {
 
     }
     .page-hero{
-        max-width: 620px;
+        max-width: 38.75rem;
         max-height: 40rem;
-        width: 620px;
+        width: 38.75rem;
+    }
+    .input-vitals input {
+        height: 3.75rem;
     }
     .page-header{
         background-color: #FFFFFF;
@@ -332,21 +335,22 @@ body {
         justify-content: center;
     }
     .wrapper{
-        max-width: 620px;
-        width: 620px;
+        max-width: 38.75;
+        width: 38.75rem;
    
     }
     .input-vitals .icon {
-        right: 7rem;
+        right: 8.5rem;
+        top: 3.5;
     }
     .blood-pressure{
-        width: 86%;
+        width: 80%;
     }
     .input-vitals .icon-lower{
-        right: 7rem;
+        right: 8.5rem;
     }
     .input-vitals .icon-higher{
-        left: 11rem;
+        left: 10rem;
     }
     .modal-content{
         width: 40rem;
@@ -413,6 +417,6 @@ body {
         width: 80%;
     }
     .text-greeting{
-        width: 50%;
+        width: 42%;
     }
 }
