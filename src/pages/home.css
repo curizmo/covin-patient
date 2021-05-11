@@ -1,6 +1,7 @@
 body {
     font-family: Helvetica;
     background-color: #F2F7FD;
+    font-size: 16px;
 }
 .page-hero {
     background-color: #FFFFFF;
@@ -11,6 +12,15 @@ body {
     align-items: center;
     box-shadow: 0px 8px 8px #eaeff7;
     /* border-bottom: 0.125rem solid #eaeff7; */
+}
+.page-hero-head{
+    background-color: #FFFFFF;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 8px 8px #eaeff7;
 }
 
 .wrapper{
@@ -296,18 +306,22 @@ body {
     .page-hero{
         max-width: 620px;
         max-height: 40rem;
+        width: 620px;
     }
     .page-header{
         background-color: #FFFFFF;
-        padding: 1rem;
+        
         position: absolute;
         top: 0;
         font-size: 1.5rem;
         font-weight: 600;
         width: 100%;
-        padding-left: 11rem;
         color: #01518D;
         display: inline;
+    }
+    .head-text{
+        padding: 1rem;
+        padding-left: 5.625rem;
     }
     .body-wrap{
         width: 100%;

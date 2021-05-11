@@ -69,12 +69,12 @@ const PatientVitals = () => {
 
   return (
     <div className="body-wrap">
-      <div className="page-header">Covin</div>
+      <div className="page-header"><p className="head-text">Covin</p></div>
       <div className="main-body">
       <div className="wrapper">
         <div className="second-header">
           <img src={patient_profile} alt="user-profile"/>
-          <div className="header-wrapper page-hero">
+          <div className="header-wrapper page-hero-head">
             <div className="main-text">Amit shah</div>
             <div className="dull-text">+91982134576</div>
           </div>
