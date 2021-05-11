@@ -15,7 +15,7 @@ const PatientVitalForm = ({
   const [show, setShow] = useState(false)
 
   return (
-    <div className="form-content-wrapper">
+    <div className="form-content-wrapper form-content-wrap">
       <div className="input-vitals">
         <label>Oxygen Level</label>
         <div className="input-wrap">

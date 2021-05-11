@@ -68,7 +68,9 @@ const PatientVitals = () => {
   
 
   return (
-    <div className="main-body">
+    <div className="body-wrap">
+      <div className="page-header">Covin</div>
+      <div className="main-body">
       <div className="wrapper">
         <div className="second-header">
           <img src={patient_profile} alt="user-profile"/>
@@ -99,25 +101,32 @@ const PatientVitals = () => {
           </div>
 
           {FOLLOWING_STATUS.pageNum === 1 ? (
-            <button
-              className="submit-button submit-btn"
-              onClick={() => {
-                setPage(page + 1);
-              }}
-            >
-              NEXT
-            </button>
+            <div className="button-wrapper">
+                <button
+                  className="submit-button submit-btn submit-btn-large-screen"
+                  onClick={() => {
+                    setPage(page + 1);
+                  }}
+                >
+                  NEXT
+                </button>
+            </div>
           ) : FOLLOWING_STATUS.pageNum === 2 ? (
-            <button className="submit-button submit-btn" onClick={onSubmit}>
-              SUBMIT
-            </button>
+            <div className="button-wrap">
+              <button className="submit-button submit-btn submit-btn-large-screen" onClick={onSubmit}>
+                SUBMIT
+              </button>
+            </div>
           ) : (
-            <button className="submit-button submit-btn-close" onClick={onclose}>
-              CLOSE
-            </button>
+            <div className="close-button-wrap">
+              <button className="submit-button submit-btn-close" onClick={onclose}>
+                CLOSE
+              </button>
+            </div>
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 };

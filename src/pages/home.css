@@ -1,5 +1,6 @@
 body {
     font-family: Helvetica;
+    background-color: #F2F7FD;
 }
 .page-hero {
     background-color: #FFFFFF;
@@ -268,6 +269,9 @@ body {
     width: 99%;
     height: 15rem;
 }
+.header{
+    display: none;
+}
 
 @media only screen and (min-width: 720px) {
     .App{
@@ -275,35 +279,55 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 107vh;
+        height: 100vh;
       }
     .main-body{
         background-color: #F2F7FD;
         display: flex;
         flex-wrap: wrap;
-        height: 100%;
-        align-items: center;
         justify-content: center;
+        position: absolute;
+        top: 7rem;
+
     }
     .page-hero{
         max-width: 50rem;
         max-height: 40rem;
     }
+    .page-header{
+        background-color: #FFFFFF;
+        padding: 1rem;
+        position: absolute;
+        top: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        width: 100%;
+        padding-left: 11rem;
+        color: #01518D;
+    }
+    .body-wrap{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
     .wrapper{
-        max-width: 50rem;
+        max-width: 40rem;
    
     }
     .input-vitals .icon {
-        right: 9rem;
+        right: 7rem;
     }
     .blood-pressure{
-        width: 78%;
+        width: 86%;
     }
     .input-vitals .icon-lower{
-        right: 9rem;
+        right: 7rem;
     }
     .input-vitals .icon-higher{
-        left: 10rem;
+        left: 11rem;
     }
     .modal-content{
         width: 40rem;
@@ -315,5 +339,61 @@ body {
     }
     .input-vitals {
         margin: 1.5rem 0;
+    }
+    .content-wrapper{
+        padding: 1rem 0;
+    }
+    .text-area{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .text{
+        width: 65%;
+        text-align: center;
+    }
+    .form-content-wrap{
+        padding: 0 1.5rem;
+    }
+    .button-wrap{
+        padding: 0 1.5rem;
+        width: 50%;
+    }
+    .button-wrapper{
+        width: 50%;
+        padding: 1rem 0;
+    }
+    .input-vitals input {
+        width: 80%;
+    }
+    .close-button-wrap{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .submit-btn-close{
+        width: 50%;
+    }
+    .header{
+        display: inline;
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #01518D;
+        padding-top: 3rem;
+    }
+    .footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+    .initial-page-content{
+        width: 80%;
+    }
+    .text-greeting{
+        width: 50%;
     }
 }

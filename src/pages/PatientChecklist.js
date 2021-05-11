@@ -27,7 +27,9 @@ const PatientChecklist = ({ state, setState }) => {
 
   return (
     <div className="form-content-wrapper">
-      <div>Are you currently having any of the following symptoms?</div>
+      <div className="text-area">
+        <div className="text">Are you currently having any of the following symptoms?</div>
+      </div>
       <div className="health-checklist">
         {Object.entries(checkList).map(([list, val], indx) => {
           return (
