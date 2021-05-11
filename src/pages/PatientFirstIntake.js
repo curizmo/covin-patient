@@ -15,7 +15,6 @@ const PatientFirstIntake = ({ pageNum, setIntakeState, intakeState }) => {
 
   useEffect(() => {
     getPatientHealthIntake();
-    console.log('intakeState',intakeState)
   }, []);
 
   const getPatientHealthIntake = async () => {
