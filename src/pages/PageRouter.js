@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 const PageRouter = () => {
   return (
     <Router>
-      <div className="App">
+      <div>
         <Switch>
           <Route path="/:hashKey" component={PatientIntakeForm} />
         </Switch>

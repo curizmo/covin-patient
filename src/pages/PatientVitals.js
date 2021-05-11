@@ -3,15 +3,16 @@ import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
 import Submission from "./Submission";
 import * as patientService from "../services/patient";
+import "./home.css";
+import patient_profile from "../assets/images/icon_userprofile.svg";
 
 const PatientVitals = ({ name, phone, hashKey, patientId }) => {
   const [temperature, setTemperature] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
   const [pulseRate, setPulseRate] = useState("");
+  const [respiratoryRate, setRespiratoryRate] = useState("");
   const [bpUpperRange, setBpUpperRange] = useState("");
   const [bpLowerRange, setBpLowerRange] = useState("");
-  const [respiratoryRate, setRespiratoryRate] = useState("");
-
   const [page, setPage] = useState(1);
   const [state, setState] = useState({
     feverOrChills: false,
@@ -35,7 +36,7 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
 
   const onSubmit = async () => {
     setPage(page + 1);
-    
+
     await patientService.createPatientVitals({
       patientId: patientId,
       temperature,
@@ -51,18 +52,25 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
     await patientService.UpdateMessageStatus(hashKey);
   };
 
-  const onclose = () => {
-    window.close();
-  };
+  const subWrapper =
+    FOLLOWING_STATUS.pageNum === 1
+      ? "page1-sub-wrapper"
+      : FOLLOWING_STATUS.pageNum === 2
+      ? "page2-sub-wrapper"
+      : "page3-sub-wrapper";
 
   return (
-    <div>
-      <div className="header-wrapper">
-        <div>Name: {name}</div>
-        <div>Phone: {phone}</div>
+    <div className="wrapper">
+      <div className="second-header">
+        <img src={patient_profile} alt="user-profile" />
+        <div className="header-wrapper page-hero">
+          <div className="main-text">{name}</div>
+          <div className="dull-text">{phone}</div>
+        </div>
       </div>
+      <div className="page-hero dull-text">Wednesday, May 5, 2021</div>
 
-      <div className="content-wrapper">
+      <div className={`content-wrapper ${subWrapper}`}>
         <div className="form-wrapper">
           {FOLLOWING_STATUS.pageNum === 1 && (
             <PatientChecklist state={state} setState={setState} />
@@ -82,22 +90,18 @@ const PatientVitals = ({ name, phone, hashKey, patientId }) => {
 
         {FOLLOWING_STATUS.pageNum === 1 ? (
           <button
-            className="submit-button"
+            className="submit-button submit-btn"
             onClick={() => {
               setPage(page + 1);
             }}
           >
-            Next
+            NEXT
           </button>
         ) : FOLLOWING_STATUS.pageNum === 2 ? (
-          <button className="submit-button" onClick={onSubmit}>
-            Submit
+          <button className="submit-button submit-btn" onClick={onSubmit}>
+            SUBMIT
           </button>
-        ) : (
-          <button className="submit-button" onClick={onclose}>
-            Close
-          </button>
-        )}
+        ) : null}
       </div>
     </div>
   );

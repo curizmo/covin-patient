@@ -1,22 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import * as patientService from "../services/patient";
+import "./home.css";
 
 const PatientChecklist = ({ state, setState, setSymptomsDuration }) => {
   const [symptoms, setSymptoms] = useState([]);
-  const checkList = {
-    "Fever or Chills": "feverOrChills",
-    Cough: "cough",
-    "Difficulty Breathing": "difficultyBreathing",
-    "Fatigue, Muscle or body aches": "fatigueMuscleOrBodyAches",
-    Headache: "headache",
-    "New loss of taste or smell": "newlossOfTasteOrSmell",
-    "Sore throat": "soreThroat",
-    "Congestion or runny nose": "congestionOrRunnyNose",
-    "Nausea or Vomiting": "nauseaOrVomiting",
-    Diarrhea: "diarrhea",
-    "None of the above": "none",
-  };
 
   useEffect(() => {
     getSymptoms();
@@ -25,7 +13,9 @@ const PatientChecklist = ({ state, setState, setSymptomsDuration }) => {
   const handleOnChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.value;
-    setState({ ...state, [`${item}`]: isChecked });
+    item == "none"
+      ? setState({ ...state, [`${item}`]: !isChecked })
+      : setState({ ...state, [`${item}`]: isChecked });
   };
 
   const getSymptoms = async () => {
@@ -38,9 +28,10 @@ const PatientChecklist = ({ state, setState, setSymptomsDuration }) => {
       <div className="health-checklist">
         {symptoms.map((symptom, indx) => {
           return (
-            <div className="list-content" key={indx}>
+            <div className="list-content symptoms-list" key={indx}>
               <input
-                type={"checkbox"}
+                className="symptoms-checkbox"
+                type="checkbox"
                 id={indx}
                 value={symptom.field}
                 onChange={handleOnChange}
