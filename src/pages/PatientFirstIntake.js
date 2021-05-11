@@ -7,7 +7,7 @@ import PreexistingCondition from "./PreexistingCondition";
 import SocialHistory from "./SocialHistory";
 import Medication from "./Medication";
 
-const PatientFirstIntake = ({ pageNum }) => {
+const PatientFirstIntake = ({ pageNum, setIntakeState, intakeState }) => {
   const [covidHistory, setcovidHistory] = useState([]);
   const [preexistingCondition, setPreexistingCondition] = useState([]);
   const [socialHistory, setSocialHistory] = useState([]);
@@ -15,6 +15,7 @@ const PatientFirstIntake = ({ pageNum }) => {
 
   useEffect(() => {
     getPatientHealthIntake();
+    console.log('intakeState',intakeState)
   }, []);
 
   const getPatientHealthIntake = async () => {
@@ -38,12 +39,30 @@ const PatientFirstIntake = ({ pageNum }) => {
 
   return (
     <div className="form-content-wrapper">
-      {pageNum === 1 && <CovidHistory covidHistory={covidHistory} />}
-      {pageNum === 2 && (
-        <PreexistingCondition preexistingCondition={preexistingCondition} />
+      {pageNum === 1 && (
+        <CovidHistory
+          covidHistory={covidHistory}
+          setIntakeState={setIntakeState}
+          intakeState={intakeState}
+        />
       )}
-      {pageNum === 3 && <SocialHistory socialHistory={socialHistory} />}
-      {pageNum === 4 && <Medication medication={medication} />}
+      {pageNum === 2 && (
+        <PreexistingCondition
+          preexistingCondition={preexistingCondition}
+          setIntakeState={setIntakeState}
+          intakeState={intakeState}
+        />
+      )}
+      {pageNum === 3 && (
+        <SocialHistory
+          socialHistory={socialHistory}
+          setIntakeState={setIntakeState}
+          intakeState={intakeState}
+        />
+      )}
+      {pageNum === 4 && (
+        <Medication medication={medication} setIntakeState={setIntakeState}  intakeState={intakeState} />
+      )}
     </div>
   );
 };

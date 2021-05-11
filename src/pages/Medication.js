@@ -3,8 +3,12 @@ import "../App.css";
 import * as patientService from "../services/patient";
 import "./home.css";
 
-const Medication = ({ medication }) => {
-  const handleOnChange = (event) => {};
+const Medication = ({ medication, setIntakeState, intakeState }) => {
+  const handleInputChange = (e) => {
+    const item = e.target.name;
+    setIntakeState({ ...intakeState, [item]: e.target.value });
+  };
+
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Medications</div>
@@ -20,17 +24,13 @@ const Medication = ({ medication }) => {
               key={indx}
             >
               {history.type === "Text" && <label>{history.title}</label>}
+
               <input
-                className={
-                  `${history.type}` === "Boolean" ? "symptoms-checkbox" : ""
-                }
-                type={`${history.type}` === "Boolean" ? "checkbox" : "text"}
+                type="text"
                 id={indx}
-                value={`${history.type}` === "Boolean" ? history.field : ""}
-                name={`${history.type}` === "Text" ? history.field : ""}
-                onChange={handleOnChange}
+                name={history.field}
+                onChange={handleInputChange}
               />
-              {history.type === "Boolean" && <label>{history.title}</label>}
             </div>
           );
         })}

@@ -30,13 +30,44 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     diarrhea: false,
     none: false,
   });
+  const [intakeState, setIntakeState] = useState({
+    covidPositiveEverBefore: false,
+    covidVaccinationDose1taken: false,
+    dateofDose1Vaccination: "",
+    CovidVaccinationDose2Taken: false,
+    dateOfDose2Vaccination: "",
+    heartAttack: false,
+    highBloodPressure: false,
+    diabetes: false,
+    ashthma: false,
+    stroke: false,
+    migraines: false,
+    bleedingProblems: false,
+    highCholesterol: false,
+    otherIllness: "",
+    surgeries: "",
+    bmiAbove35Kgm2: false,
+    bmiBelow18Kgm2: false,
+    useTobacco: false,
+    useAlcohol: false,
+    tobaccoPerDay: "",
+    exercise: false,
+    allergy1Reaction: "",
+    allergy2Reaction: "",
+    allergy3Reaction: "",
+    medication1DoseFrequency: "",
+    medication2DoseFrequency: "",
+    medication3DoseFrequency: "",
+    medication4DoseFrequency: "",
+    medication5DoseFrequency: "",
+  });
 
   let today = new Date().toLocaleDateString();
 
   let d = new Date();
   let day = d.getDay();
   let date = d.getDate();
-  let month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+  let month = d.getMonth() + 1;
   let year = d.getFullYear();
 
   month = MONTHS[month - 1];
@@ -48,6 +79,11 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
 
   const onSubmit = async () => {
     setPage(page + 1);
+
+    await patientService.createPatientIntake({
+      form: intakeState,
+      patientId: patientId,
+    });
 
     await patientService.createPatientVitals({
       patientId: patientId,
@@ -66,7 +102,9 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
 
   const subWrapper =
     messageType === "newPatient"
-      ? FOLLOWING_STATUS.pageNum === 1 || FOLLOWING_STATUS.pageNum === 2 || FOLLOWING_STATUS.pageNum === 5
+      ? FOLLOWING_STATUS.pageNum === 1 ||
+        FOLLOWING_STATUS.pageNum === 2 ||
+        FOLLOWING_STATUS.pageNum === 5
         ? "page1-sub-wrapper"
         : FOLLOWING_STATUS.pageNum === 6
         ? "page2-sub-wrapper"
@@ -93,7 +131,11 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
       {messageType === "newPatient" ? (
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
-            <PatientFirstIntake pageNum={FOLLOWING_STATUS.pageNum} />
+            <PatientFirstIntake
+              pageNum={FOLLOWING_STATUS.pageNum}
+              setIntakeState={setIntakeState}
+              intakeState={intakeState}
+            />
             {FOLLOWING_STATUS.pageNum === 5 && (
               <PatientChecklist state={state} setState={setState} />
             )}
