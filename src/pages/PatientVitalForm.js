@@ -10,9 +10,9 @@ const PatientVitalForm = ({
   setBpUpperRange,
   setBpLowerRange,
   setRespiratoryRate,
+  vitalError,
 }) => {
   const [show, setShow] = useState(false);
-
   return (
     <div className="form-content-wrapper">
       <div className="input-vitals">
@@ -32,6 +32,9 @@ const PatientVitalForm = ({
             onClick={() => setShow(true)}
           />
         </div>
+        {vitalError.oxygenLevel ? (
+          <span className="error-message">Oxygen Level is required</span>
+        ) : null}
       </div>
       <Modal onClose={() => setShow(false)} show={show} />
       <div className="input-vitals">
@@ -50,6 +53,9 @@ const PatientVitalForm = ({
             onClick={() => setShow(true)}
           />
         </div>
+        {vitalError.temperature ? (
+          <span className="error-message">Temperature is required</span>
+        ) : null}
       </div>
       <div className="input-vitals">
         <label>Pulse rate</label>
@@ -67,6 +73,9 @@ const PatientVitalForm = ({
             onClick={() => setShow(true)}
           />
         </div>
+        {vitalError.pulseRate ? (
+          <span className="error-message">Pulse Rate is required</span>
+        ) : null}
       </div>
       <div className="input-vitals">
         <label>Blood Pressure</label>
@@ -78,6 +87,7 @@ const PatientVitalForm = ({
               name="BloodPressureHigh"
               onChange={(e) => setBpUpperRange(e.target.value)}
             />
+
             <div className="icon-higher">Higher</div>
             <input
               className="bp bp-lower"
@@ -85,6 +95,7 @@ const PatientVitalForm = ({
               name="BloodPressureLow"
               onChange={(e) => setBpLowerRange(e.target.value)}
             />
+
             <div className="icon-lower">Lower</div>
           </div>
           <img
@@ -94,6 +105,9 @@ const PatientVitalForm = ({
             onClick={() => setShow(true)}
           />
         </div>
+        {vitalError.bpLowerRange ? (
+          <span className="error-message">Blood Pressure is required</span>
+        ) : null}
       </div>
       <div className="input-vitals">
         <label>Respiratory Rate</label>
@@ -111,6 +125,9 @@ const PatientVitalForm = ({
             onClick={() => setShow(true)}
           />
         </div>
+        {vitalError.respiratoryRate ? (
+          <span className="error-message">Respiratory Rate is required</span>
+        ) : null}
       </div>
     </div>
   );

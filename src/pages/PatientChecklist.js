@@ -3,7 +3,7 @@ import "../App.css";
 import * as patientService from "../services/patient";
 import "./home.css";
 
-const PatientChecklist = ({ state, setState }) => {
+const PatientChecklist = ({ state, setState, symptomsError }) => {
   const [symptoms, setSymptoms] = useState([]);
 
   useEffect(() => {
@@ -12,10 +12,24 @@ const PatientChecklist = ({ state, setState }) => {
 
   const handleOnChange = (event) => {
     const isChecked = event.target.checked;
-    const item = event.target.value;
-    item == "none"
-      ? setState({ ...state, [`${item}`]: !isChecked })
-      : setState({ ...state, [`${item}`]: isChecked });
+    const item = event.target.name;
+    if (item == "none") {
+      setState({
+        feverOrChills: false,
+        cough: false,
+        difficultyBreathing: false,
+        fatigueMuscleOrBodyAches: false,
+        headache: false,
+        newlossOfTasteOrSmell: false,
+        soreThroat: false,
+        congestionOrRunnyNose: false,
+        nauseaOrVomiting: false,
+        diarrhea: false,
+        none: true,
+      });
+    } else {
+      setState({ ...state, [`${item}`]: isChecked, none: false });
+    }
   };
 
   const getSymptoms = async () => {
@@ -33,14 +47,16 @@ const PatientChecklist = ({ state, setState }) => {
                 className="symptoms-checkbox"
                 type="checkbox"
                 id={indx}
-                value={symptom.field}
+                name={symptom.field}
                 onChange={handleOnChange}
+                checked={state[symptom.field]}
               />
               <label key={indx}>{symptom.title}</label>
             </div>
           );
         })}
       </div>
+      {symptomsError ? <span className="error-message">At least one field must be selected</span> : null}
     </div>
   );
 };
