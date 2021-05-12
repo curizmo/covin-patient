@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
 import "../App.css";
-import * as patientService from "../services/patient";
 import "./home.css";
 
 const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState }) => {

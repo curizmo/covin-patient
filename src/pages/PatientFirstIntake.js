@@ -7,10 +7,7 @@ import PreexistingCondition from "./PreexistingCondition";
 import SocialHistory from "./SocialHistory";
 import Medication from "./Medication";
 import PatientPersonalInfo from "./PatientPersonalInfo";
-import {
-  NEW_PATIENT_PAGES,
-  EXISTING_PATIENT_PAGES,
-} from "../constants/constants";
+import { NEW_PATIENT_PAGES } from "../constants/constants";
 
 const PatientFirstIntake = ({ pageNum, setIntakeState, intakeState }) => {
   const [personalInfo, setPersonalInfo] = useState([]);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import help_icon from "../assets/images/help-circle.svg";
 import "../App.css";
 import Modal from "./HelpVideoModal";
