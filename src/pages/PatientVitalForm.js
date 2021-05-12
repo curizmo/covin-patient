@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import help_icon from "../assets/images/help-circle.svg";
 import "../App.css";
 import Modal from "./HelpVideoModal";
@@ -11,8 +11,20 @@ const PatientVitalForm = ({
   setBpLowerRange,
   setRespiratoryRate,
   vitalError,
+  bpUpperRange,
+  bpLowerRange,
 }) => {
   const [show, setShow] = useState(false);
+  const [showBpInvaid, setShowBpInvalid] = useState(false);
+
+  useEffect(() => {
+    if (parseInt(bpLowerRange) > parseInt(bpUpperRange)) {
+      setShowBpInvalid(true);
+    } else {
+      setShowBpInvalid(false);
+    }
+  }, [bpUpperRange, bpLowerRange]);
+
   return (
     <div className="form-content-wrapper">
       <div className="input-vitals">
@@ -107,6 +119,11 @@ const PatientVitalForm = ({
         </div>
         {vitalError.bpLowerRange ? (
           <span className="error-message">Blood Pressure is required</span>
+        ) : null}
+        {showBpInvaid ? (
+          <span className="error-message">
+            Higher Range must be greater that Lower Range
+          </span>
         ) : null}
       </div>
       <div className="input-vitals">

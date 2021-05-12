@@ -19,8 +19,8 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
   const [oxygenLevel, setOxygenLevel] = useState("");
   const [pulseRate, setPulseRate] = useState("");
   const [respiratoryRate, setRespiratoryRate] = useState("");
-  const [bpUpperRange, setBpUpperRange] = useState("");
-  const [bpLowerRange, setBpLowerRange] = useState("");
+  const [bpUpperRange, setBpUpperRange] = useState(0);
+  const [bpLowerRange, setBpLowerRange] = useState(0);
   const [page, setPage] = useState(1);
   const [state, setState] = useState({
     feverOrChills: false,
@@ -116,6 +116,7 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
         .some((v) => v === true);
 
       setVitalError(vitalErrors);
+
       return !isAnyTrue;
     }
   };
@@ -125,7 +126,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
       messageType === "newPatient" &&
       page === NEW_PATIENT_PAGES.patientInfo
     ) {
-      console.log(intakeState);
       const PaitientInfoError = {
         patientMobileNumber: !intakeState.patientMobileNumber,
         firstName: !intakeState.firstName,
@@ -141,7 +141,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
         .some((v) => v === true);
 
       setPersonalInfoError(PaitientInfoError);
-      console.log(isAnyTrue);
 
       return !isAnyTrue;
     }
@@ -178,7 +177,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
       page === NEW_PATIENT_PAGES.patientInfo
     ) {
       const isValid = validatePatientPersonalForm();
-      console.log(isValid);
       if (!isValid) {
         return;
       }
@@ -192,6 +190,7 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     if (!isValid) {
       return;
     }
+
     await patientService.createPatientIntake({
       form: intakeState,
       patientId: patientId,
@@ -265,6 +264,8 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
                 setBpUpperRange={setBpUpperRange}
                 setBpLowerRange={setBpLowerRange}
                 setRespiratoryRate={setRespiratoryRate}
+                bpUpperRange={bpUpperRange}
+                bpLowerRange={bpLowerRange}
                 vitalError={vitalError}
               />
             )}
@@ -288,7 +289,11 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
             {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms && (
-              <PatientChecklist state={state} setState={setState} />
+              <PatientChecklist
+                state={state}
+                setState={setState}
+                symptomsError={symptomsError}
+              />
             )}
             {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital && (
               <PatientVitalForm
@@ -298,6 +303,8 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
                 setBpUpperRange={setBpUpperRange}
                 setBpLowerRange={setBpLowerRange}
                 setRespiratoryRate={setRespiratoryRate}
+                bpUpperRange={bpUpperRange}
+                bpLowerRange={bpLowerRange}
                 vitalError={vitalError}
               />
             )}

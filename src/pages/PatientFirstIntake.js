@@ -14,8 +14,6 @@ const PatientFirstIntake = ({
   setIntakeState,
   intakeState,
   personalInfoError,
-  isEmailValid,
-  isPhoneValid,
 }) => {
   const [personalInfo, setPersonalInfo] = useState([]);
   const [covidHistory, setcovidHistory] = useState([]);
@@ -59,8 +57,6 @@ const PatientFirstIntake = ({
           setIntakeState={setIntakeState}
           intakeState={intakeState}
           personalInfoError={personalInfoError}
-          isEmailValid={isEmailValid}
-          isPhoneValid={isPhoneValid}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.covidHistory && (
