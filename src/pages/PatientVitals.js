@@ -7,7 +7,12 @@ import * as patientService from "../services/patient";
 import "./home.css";
 import patient_profile from "../assets/images/icon_userprofile.svg";
 
-import { weekDays, MONTHS } from "../constants/constants";
+import {
+  weekDays,
+  MONTHS,
+  NEW_PATIENT_PAGES,
+  EXISTING_PATIENT_PAGES,
+} from "../constants/constants";
 
 const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
   const [temperature, setTemperature] = useState("");
@@ -31,30 +36,33 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     none: false,
   });
   const [intakeState, setIntakeState] = useState({
+    patientMobileNumber: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dateOfBirth: "",
+    height: "",
+    weight: "",
+    emailId: "",
     covidPositiveEverBefore: false,
-    covidVaccinationDose1taken: false,
-    dateofDose1Vaccination: "",
-    CovidVaccinationDose2Taken: false,
+    covidVaccinationDose1Taken: false,
+    dateOfDose1Vaccination: "",
+    covidVaccinationDose2Taken: false,
     dateOfDose2Vaccination: "",
-    heartAttack: false,
-    highBloodPressure: false,
+    heartDisease: false,
+    cancer: false,
+    highOrLowBloodPressure: false,
     diabetes: false,
-    ashthma: false,
+    asthma: false,
     stroke: false,
-    migraines: false,
-    bleedingProblems: false,
     highCholesterol: false,
-    otherIllness: "",
-    surgeries: "",
-    bmiAbove35Kgm2: false,
-    bmiBelow18Kgm2: false,
-    useTobacco: false,
-    useAlcohol: false,
-    tobaccoPerDay: "",
-    exercise: false,
-    allergy1Reaction: "",
-    allergy2Reaction: "",
-    allergy3Reaction: "",
+    rash: false,
+    headacheOrmigrain: false,
+    depression: false,
+    others: "",
+    food: "",
+    medications: "",
+    otherAllergies: "",
     medication1DoseFrequency: "",
     medication2DoseFrequency: "",
     medication3DoseFrequency: "",
@@ -72,10 +80,21 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     pulseRate: "",
   });
 
+  const [personalInfoError, setPersonalInfoError] = useState({
+    patientMobileNumber: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dateOfBirth: "",
+    height: "",
+    weight: "",
+    emailId: "",
+  });
+
   const validateForm = () => {
     if (
-      (messageType === "newPatient" && page === 5) ||
-      (messageType !== "newPatient" && page === 1)
+      (messageType === "newPatient" && page === NEW_PATIENT_PAGES.symptoms) ||
+      (messageType !== "newPatient" && page === EXISTING_PATIENT_PAGES.symptoms)
     ) {
       const isAnyTrue = Object.keys(state)
         .map((key) => state[key])
@@ -120,8 +139,8 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
 
   const onNext = () => {
     if (
-      (messageType === "newPatient" && page === 5) ||
-      (messageType !== "newPatient" && page === 1)
+      (messageType === "newPatient" && page === NEW_PATIENT_PAGES.symptoms) ||
+      (messageType !== "newPatient" && page === EXISTING_PATIENT_PAGES.symptoms)
     ) {
       const isValid = validateForm();
       if (!isValid) {
@@ -161,11 +180,11 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
 
   const subWrapper =
     messageType === "newPatient"
-      ? FOLLOWING_STATUS.pageNum === 1 ||
-        FOLLOWING_STATUS.pageNum === 2 ||
-        FOLLOWING_STATUS.pageNum === 5
+      ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.covidHistory ||
+        FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
+        FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.symptoms
         ? "page1-sub-wrapper"
-        : FOLLOWING_STATUS.pageNum === 6
+        : FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vital
         ? "page2-sub-wrapper"
         : "page3-sub-wrapper"
       : FOLLOWING_STATUS.pageNum === 1
@@ -195,14 +214,14 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
               setIntakeState={setIntakeState}
               intakeState={intakeState}
             />
-            {FOLLOWING_STATUS.pageNum === 5 && (
+            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.symptoms && (
               <PatientChecklist
                 state={state}
                 setState={setState}
                 symptomsError={symptomsError}
               />
             )}
-            {FOLLOWING_STATUS.pageNum === 6 && (
+            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vital && (
               <PatientVitalForm
                 setTemperature={setTemperature}
                 setOxygenLevel={setOxygenLevel}
@@ -213,13 +232,16 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
                 vitalError={vitalError}
               />
             )}
-            {FOLLOWING_STATUS.pageNum === 7 && <Submission />}
+            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.submission && (
+              <Submission />
+            )}
 
-            {FOLLOWING_STATUS.pageNum === 6 ? (
+            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vital ? (
               <button className="submit-button submit-btn" onClick={onSubmit}>
                 SUBMIT
               </button>
-            ) : FOLLOWING_STATUS.pageNum === 7 ? null : (
+            ) : FOLLOWING_STATUS.pageNum ===
+              NEW_PATIENT_PAGES.submission ? null : (
               <button className="submit-button submit-btn" onClick={onNext}>
                 NEXT
               </button>
@@ -229,10 +251,10 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
       ) : (
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
-            {FOLLOWING_STATUS.pageNum === 1 && (
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms && (
               <PatientChecklist state={state} setState={setState} />
             )}
-            {FOLLOWING_STATUS.pageNum === 2 && (
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital && (
               <PatientVitalForm
                 setTemperature={setTemperature}
                 setOxygenLevel={setOxygenLevel}
@@ -243,8 +265,10 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
                 vitalError={vitalError}
               />
             )}
-            {FOLLOWING_STATUS.pageNum === 3 && <Submission />}
-            {FOLLOWING_STATUS.pageNum === 1 ? (
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.Submission && (
+              <Submission />
+            )}
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms ? (
               <button
                 className="submit-button submit-btn"
                 onClick={() => {
@@ -253,7 +277,7 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
               >
                 NEXT
               </button>
-            ) : FOLLOWING_STATUS.pageNum === 2 ? (
+            ) : FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital ? (
               <button className="submit-button submit-btn" onClick={onSubmit}>
                 SUBMIT
               </button>

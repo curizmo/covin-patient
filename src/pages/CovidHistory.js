@@ -14,13 +14,13 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState }) => {
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.value;
-    item == "none"
+    item === "none"
       ? setIntakeState({ ...intakeState, [item]: !isChecked })
       : setIntakeState({ ...intakeState, [item]: isChecked });
 
-    if (item === "covidVaccinationDose1taken") {
+    if (item === "covidVaccinationDose1Taken") {
       setCheckedOne(isChecked);
-    } else if (item === "CovidVaccinationDose2Taken") {
+    } else if (item === "covidVaccinationDose2Taken") {
       setCheckedTwo(isChecked);
     }
   };
@@ -47,7 +47,7 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState }) => {
                   name={history.field}
                   onChange={handleInputChange}
                   disabled={
-                    `${history.field}` === "dateofDose1Vaccination"
+                    `${history.field}` === "dateOfDose1Vaccination"
                       ? !checkedOne
                       : !checkedTwo
                   }
