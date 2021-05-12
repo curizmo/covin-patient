@@ -12,11 +12,10 @@ const Modal = props => {
             <div className="modal-header">
                 <img src={closeIcon} alt="close icon" onClick={props.onClose}/>
             </div>
-            <iframe src='https://www.youtube.com/embed/YipRpSJ9X6k'
-                    allow='autoplay; encrypted-media'
+            <object data='https://www.youtube.com/embed/YipRpSJ9X6k'
                     title='video'
-                    className="video"
-            />
+                    className="video">
+            </object>
         </div>
     </div>
     )
