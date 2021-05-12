@@ -20,7 +20,6 @@ const PatientChecklist = ({ state, setState }) => {
   const handleOnChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.value;
-    console.log(item, `${item}`);
     item == "none"? setState({...state, [`${item}`]: !isChecked }) : 
     setState({ ...state, [`${item}`]: isChecked });
   };
