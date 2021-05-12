@@ -23,6 +23,8 @@ export const MONTHS = [
   "Dec",
 ];
 
+export const GENDERS = ["male", "female", "others"];
+
 export const NEW_PATIENT_PAGES = {
   patientInfo: 1,
   covidHistory: 2,

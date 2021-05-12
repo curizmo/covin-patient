@@ -1,8 +1,14 @@
 import "../App.css";
 import "./home.css";
+import { GENDERS } from "../constants/constants";
 
 const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState }) => {
   const handleInputChange = (e) => {
+    const item = e.target.name;
+    setIntakeState({ ...intakeState, [item]: e.target.value });
+  };
+
+  const handleCheckboxChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
@@ -11,25 +17,47 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState }) => {
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
       <div className="health-checklist">
-        {personalInfo.map((history, indx) => {
+        {personalInfo.map((info, indx) => {
           return (
-            <div className="input-vitals">
-              <label>{history.title}</label>
-              <div className="input-wrap" key={indx}>
+            <div
+              className={
+                `${info.type}` === "Boolean" ? "list-content" : "input-history"
+              }
+              key={indx}
+            >
+              <label>{info.title}</label>
+              {info.type === "Boolean" ? (
+                GENDERS.map((gender) => {
+                  return (
+                    <>
+                      <span className="gender-radio-span">
+                        <input
+                          className="gender-radio"
+                          type="radio"
+                          name={info.field}
+                          value={gender}
+                          onChange={handleCheckboxChange}
+                        />
+                        <label className="gender-radio-label">{gender}</label>
+                      </span>
+                    </>
+                  );
+                })
+              ) : info.type === "DateType" ? (
                 <input
-                  className="patient-intake-info"
-                  type="text"
-                  name={history.field}
+                  type="date"
+                  id={indx}
+                  name={info.field}
                   onChange={handleInputChange}
                 />
-                <div className="icon-height">
-                  {history.field === "height"
-                    ? "in feet"
-                    : history.field === "weight"
-                    ? "in kg"
-                    : null}
-                </div>
-              </div>
+              ) : (
+                <input
+                  type="text"
+                  id={indx}
+                  name={info.field}
+                  onChange={handleInputChange}
+                />
+              )}
             </div>
           );
         })}
