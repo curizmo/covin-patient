@@ -19,7 +19,7 @@ const PeexistingCondition = ({
       ? setIntakeState({ ...intakeState, [item]: !isChecked })
       : setIntakeState({ ...intakeState, [item]: isChecked });
   };
-  
+
   return (
     <div className="form-content-wrapper">
       <div>Pre-existing Conditions</div>

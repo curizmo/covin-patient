@@ -155,9 +155,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     if (!isValid) {
       return;
     }
-
-    setPage(page + 1);
-
     await patientService.createPatientIntake({
       form: intakeState,
       patientId: patientId,
@@ -176,6 +173,7 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     });
 
     await patientService.UpdateMessageStatus(hashKey);
+    setPage(page + 1);
   };
 
   const subWrapper =
