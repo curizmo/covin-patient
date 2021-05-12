@@ -26,7 +26,7 @@ const TermsAndCondition = ({ setIsAgreed }) => {
           <div className="initial-page-content">
             <div className="page-alert">
               <input className="page-checkbox" type="checkbox" onChange={handleOnChange} />
-              <label> I agree to the <a href="#" className="link-text">terms and conditins</a> of the usage this system</label>
+              <label className="tnc-label-text"> I agree to the <a href="#" className="link-text">terms and conditins</a> of the usage this system</label>
               <span className="checkmark"></span>
             </div>
           </div>

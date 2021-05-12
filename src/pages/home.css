@@ -77,7 +77,7 @@ body {
 }
 
 .link-text {
-  color: #a4adc1;
+  color: #22335E;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -280,6 +280,7 @@ body {
 .modal-content {
   width: 25rem;
   height: 20rem;
+  padding: 0 0.75rem;
 }
 
 .video {
@@ -302,6 +303,11 @@ label{
   font-size: 0.875rem;
 }
 
+.tnc-label-text{
+  color: #22335E;
+  opacity: 0.5;
+}
+
 @media only screen and (max-width: 720px){
   .wrapper{
     height: 100vh;
@@ -311,6 +317,18 @@ label{
   }
   .text-greeting{
     padding: 1.5rem 0;
+  }
+}
+
+@media only screen and (max-width: 400px){
+  .input-vitals .icon-higher{
+    left: 3.75rem;
+  }
+  .input-vitals .icon-lower{
+    right: 5.25rem;
+  }
+  .input-vitals .icon{
+    right: 5rem;
   }
 }
 
@@ -365,7 +383,7 @@ label{
     .wrapper{
         max-width: 38.75;
         width: 38.75rem;
-   
+        margin-bottom: 6rem;
     }
     .input-vitals .icon {
         right: 5.5rem;
@@ -381,7 +399,7 @@ label{
         left: 10rem;
     }
     .modal-content{
-        width: 40rem;
+        width: 50rem;
         height: 75%;
     }
     .video{
