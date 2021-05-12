@@ -2,6 +2,8 @@ body {
   font-family: Helvetica;
   background-color: #f2f7fd;
   font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .page-hero {
   background-color: #ffffff;
@@ -208,7 +210,7 @@ body {
 .input-vitals .icon-higher{
     position: absolute;
     top: 3.5rem;
-    left: 5rem;
+    left: 4.5rem;
     opacity: 0.3;
 }
 
@@ -295,6 +297,23 @@ body {
   color: #657396;
 }
 
+label{
+  color: #22335E;
+  font-size: 0.875rem;
+}
+
+@media only screen and (max-width: 720px){
+  .wrapper{
+    height: 100vh;
+  }
+  .form-content-wrapper{
+    padding: 2rem 0;
+  }
+  .text-greeting{
+    padding: 1.5rem 0;
+  }
+}
+
 @media only screen and (min-width: 720px) {
     .App{
         background-color: #F2F7FD;
@@ -349,14 +368,14 @@ body {
    
     }
     .input-vitals .icon {
-        right: 8.5rem;
+        right: 5.5rem;
         top: 3.5;
     }
     .blood-pressure{
-        width: 80%;
+        width: 88%;
     }
     .input-vitals .icon-lower{
-        right: 8.5rem;
+        right: 5.5rem;
     }
     .input-vitals .icon-higher{
         left: 10rem;
@@ -387,18 +406,18 @@ body {
         text-align: center;
     }
     .form-content-wrap{
-        padding: 0 1.5rem;
+        padding: 0 3.125rem;
     }
     .button-wrap{
-        padding: 0 1.5rem;
-        width: 50%;
+        padding: 0 3.125rem;
+        width: 18.75rem;
     }
     .button-wrapper{
-        width: 50%;
+        width: 12.5rem;
         padding: 1rem 0;
     }
     .input-vitals input {
-        width: 80%;
+        width: 88%;
     }
     .close-button-wrap{
         display: flex;
