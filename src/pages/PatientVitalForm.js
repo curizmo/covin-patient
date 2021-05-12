@@ -17,7 +17,7 @@ const PatientVitalForm = ({
   return (
     <div className="form-content-wrapper form-content-wrap">
       <div className="input-vitals">
-        <label>Oxygen Level</label>
+        <label className="label-text">Oxygen Level (SpO2)</label>
         <div className="input-wrap">
           <input
             className="oxygen-input"
@@ -31,7 +31,7 @@ const PatientVitalForm = ({
       </div>
       <Modal onClose = { () => setShow(false) } show={ show }/>
       <div className="input-vitals">
-        <label>Temperature</label>
+        <label className="label-text">Temperature</label>
         <div className="input-wrap">
           <input
             type="text"
@@ -43,7 +43,7 @@ const PatientVitalForm = ({
         </div>
       </div>
       <div className="input-vitals">
-        <label>Pulse rate</label>
+        <label className="label-text">Pulse rate</label>
         <div className="input-wrap">
           <input
             type="text"
@@ -55,7 +55,7 @@ const PatientVitalForm = ({
         </div>
       </div>
       <div className="input-vitals">
-        <label>Blood Pressure</label>
+        <label className="label-text">Blood Pressure</label>
         <div className="input-wrap">
           <div className="blood-pressure">
             <input
@@ -77,7 +77,7 @@ const PatientVitalForm = ({
         </div>
       </div>
       <div className="input-vitals">
-        <label>Respiratory Rate</label>
+        <label className="label-text">Respiratory Rate</label>
         <div className="input-wrap">
           <input
             type="text"

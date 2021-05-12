@@ -291,6 +291,10 @@ body {
   display: none;
 }
 
+.label-text{
+  color: #657396;
+}
+
 @media only screen and (min-width: 720px) {
     .App{
         background-color: #F2F7FD;
