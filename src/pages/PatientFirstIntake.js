@@ -9,7 +9,12 @@ import Medication from "./Medication";
 import PatientPersonalInfo from "./PatientPersonalInfo";
 import { NEW_PATIENT_PAGES } from "../constants/constants";
 
-const PatientFirstIntake = ({ pageNum, setIntakeState, intakeState }) => {
+const PatientFirstIntake = ({
+  pageNum,
+  setIntakeState,
+  intakeState,
+  personalInfoError,
+}) => {
   const [personalInfo, setPersonalInfo] = useState([]);
   const [covidHistory, setcovidHistory] = useState([]);
   const [preexistingCondition, setPreexistingCondition] = useState([]);
@@ -51,6 +56,7 @@ const PatientFirstIntake = ({ pageNum, setIntakeState, intakeState }) => {
           personalInfo={personalInfo}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
+          personalInfoError={personalInfoError}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.covidHistory && (

@@ -2,7 +2,12 @@ import "../App.css";
 import "./home.css";
 import { GENDERS } from "../constants/constants";
 
-const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState }) => {
+const PatientPersonalInfo = ({
+  personalInfo,
+  setIntakeState,
+  intakeState,
+  personalInfoError,
+}) => {
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
@@ -25,7 +30,17 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState }) => {
               }
               key={indx}
             >
-              <label>{info.title}</label>
+              {personalInfoError[`${info.field}`] ? (
+                <label>
+                  {info.title}{" "}
+                  <span className="error-message">
+                    (This field is required)
+                  </span>
+                </label>
+              ) : (
+                <label>{info.title}</label>
+              )}
+
               {info.type === "Boolean" ? (
                 GENDERS.map((gender) => {
                   return (
@@ -48,6 +63,10 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState }) => {
                   type="date"
                   id={indx}
                   name={info.field}
+                  placeholder="dd-mm-yyyy"
+                  value=""
+                  min="1997-01-01"
+                  max="2030-12-31"
                   onChange={handleInputChange}
                 />
               ) : (
