@@ -70,7 +70,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     medication5DoseFrequency: "",
   });
   const [symptomsError, setSymptomsError] = useState(false);
-
   const [vitalError, setVitalError] = useState({
     temperature: "",
     respiratoryRate: "",
@@ -79,7 +78,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     oxygenLevel: "",
     pulseRate: "",
   });
-
   const [personalInfoError, setPersonalInfoError] = useState({
     patientMobileNumber: "",
     firstName: "",
@@ -98,32 +96,11 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     ) {
       const isAnyTrue = Object.keys(state)
         .map((key) => state[key])
-        .find((v) => v);
+        .some((v) => v === true);
 
       setSymptomsError(!isAnyTrue);
 
       return isAnyTrue;
-    } else if (
-      messageType === "newPatient" &&
-      page === NEW_PATIENT_PAGES.patientInfo
-    ) {
-      const PaitientInfoError = {
-        patientMobileNumber: !intakeState.patientMobileNumber,
-        firstName: !intakeState.firstName,
-        lastName: !intakeState.lastName,
-        gender: !intakeState.gender,
-        dateOfBirth: !intakeState.dateOfBirth,
-        height: !intakeState.height,
-        weight: !intakeState.weight,
-        emailId: !intakeState.emailId,
-      };
-      const isAnyTrue = Object.keys(PaitientInfoError)
-        .map((key) => PaitientInfoError[key])
-        .find((v) => v);
-
-      setPersonalInfoError(PaitientInfoError);
-
-      return !isAnyTrue;
     } else {
       const vitalErrors = {
         temperature: !temperature,
@@ -136,9 +113,36 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
 
       const isAnyTrue = Object.keys(vitalErrors)
         .map((key) => vitalErrors[key])
-        .find((v) => v);
+        .some((v) => v === true);
 
       setVitalError(vitalErrors);
+      return !isAnyTrue;
+    }
+  };
+
+  const validatePatientPersonalForm = () => {
+    if (
+      messageType === "newPatient" &&
+      page === NEW_PATIENT_PAGES.patientInfo
+    ) {
+      console.log(intakeState);
+      const PaitientInfoError = {
+        patientMobileNumber: !intakeState.patientMobileNumber,
+        firstName: !intakeState.firstName,
+        lastName: !intakeState.lastName,
+        gender: !intakeState.gender,
+        dateOfBirth: !intakeState.dateOfBirth,
+        height: !intakeState.height,
+        weight: !intakeState.weight,
+        emailId: !intakeState.emailId,
+      };
+      const isAnyTrue = Object.keys(PaitientInfoError)
+        .map((key) => PaitientInfoError[key])
+        .some((v) => v === true);
+
+      setPersonalInfoError(PaitientInfoError);
+      console.log(isAnyTrue);
+
       return !isAnyTrue;
     }
   };
@@ -167,15 +171,19 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
       if (!isValid) {
         return;
       }
-    } else if (
+    }
+
+    if (
       messageType === "newPatient" &&
       page === NEW_PATIENT_PAGES.patientInfo
     ) {
-      const isValid = validateForm();
+      const isValid = validatePatientPersonalForm();
+      console.log(isValid);
       if (!isValid) {
         return;
       }
     }
+
     setPage(page + 1);
   };
 

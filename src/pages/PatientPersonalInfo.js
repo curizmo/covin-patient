@@ -10,6 +10,7 @@ const PatientPersonalInfo = ({
 }) => {
   const handleInputChange = (e) => {
     const item = e.target.name;
+
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
@@ -63,10 +64,6 @@ const PatientPersonalInfo = ({
                   type="date"
                   id={indx}
                   name={info.field}
-                  placeholder="dd-mm-yyyy"
-                  value=""
-                  min="1997-01-01"
-                  max="2030-12-31"
                   onChange={handleInputChange}
                 />
               ) : (
@@ -75,6 +72,13 @@ const PatientPersonalInfo = ({
                   id={indx}
                   name={info.field}
                   onChange={handleInputChange}
+                  placeholder={
+                    info.field === "height"
+                      ? "Ft."
+                      : info.field === "weight"
+                      ? "Kg."
+                      : ""
+                  }
                 />
               )}
             </div>
