@@ -15,25 +15,6 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState }) => {
       <div className="health-checklist">
         {personalInfo.map((history, indx) => {
           return (
-            // <div className="input-wrap">
-            //   <div
-            //     className={
-            //       `${history.type}` === "Boolean"
-            //         ? "list-content"
-            //         : "input-history"
-            //     }
-            //     key={indx}
-            //   >
-            //     {history.type === "Text" && <label>{history.title}</label>}
-
-            //     <input
-            //       type="text"
-            //       id={indx}
-            //       name={history.field}
-            //       onChange={handleInputChange}
-            //     />
-            //   </div>
-            // </div>
             <div className="input-vitals">
               <label>{history.title}</label>
               <div className="input-wrap" key={indx}>
@@ -43,8 +24,12 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState }) => {
                   name={history.field}
                   onChange={handleInputChange}
                 />
-                <div className="icon">
-                  {history.field === "height" ? "in feet": history.field === "weight"? "in kg" : null}
+                <div className="icon-height">
+                  {history.field === "height"
+                    ? "in feet"
+                    : history.field === "weight"
+                    ? "in kg"
+                    : null}
                 </div>
               </div>
             </div>
