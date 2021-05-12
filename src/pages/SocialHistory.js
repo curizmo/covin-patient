@@ -12,14 +12,14 @@ const SocialHistory = ({ socialHistory, setIntakeState, intakeState }) => {
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.value;
-    item == "none"
+    item === "none"
       ? setIntakeState({ ...intakeState, [item]: !isChecked })
       : setIntakeState({ ...intakeState, [item]: isChecked });
   };
 
   return (
     <div className="form-content-wrapper">
-      <div className="page-title">Social History</div>
+      <div className="page-title">Allergy</div>
       <div className="health-checklist">
         {socialHistory.map((history, indx) => {
           return (

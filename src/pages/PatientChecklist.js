@@ -13,7 +13,7 @@ const PatientChecklist = ({ state, setState, symptomsError }) => {
   const handleOnChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.name;
-    if (item == "none") {
+    if (item === "none") {
       setState({
         feverOrChills: false,
         cough: false,

@@ -6,8 +6,16 @@ import CovidHistory from "./CovidHistory";
 import PreexistingCondition from "./PreexistingCondition";
 import SocialHistory from "./SocialHistory";
 import Medication from "./Medication";
+import PatientPersonalInfo from "./PatientPersonalInfo";
+import { NEW_PATIENT_PAGES } from "../constants/constants";
 
-const PatientFirstIntake = ({ pageNum, setIntakeState, intakeState }) => {
+const PatientFirstIntake = ({
+  pageNum,
+  setIntakeState,
+  intakeState,
+  personalInfoError,
+}) => {
+  const [personalInfo, setPersonalInfo] = useState([]);
   const [covidHistory, setcovidHistory] = useState([]);
   const [preexistingCondition, setPreexistingCondition] = useState([]);
   const [socialHistory, setSocialHistory] = useState([]);
@@ -21,16 +29,21 @@ const PatientFirstIntake = ({ pageNum, setIntakeState, intakeState }) => {
     const response = await patientService.getPatientHealthIntake();
 
     Object.values(response.patientIntake).map((response) => {
-      if (response.pageNumber === 1) {
+      if (response.pageNumber === NEW_PATIENT_PAGES.patientInfo) {
+        setPersonalInfo((personalInfo) => [...personalInfo, response]);
+      }
+      if (response.pageNumber === NEW_PATIENT_PAGES.covidHistory) {
         setcovidHistory((covidHistory) => [...covidHistory, response]);
-      } else if (response.pageNumber === 2) {
+      } else if (
+        response.pageNumber === NEW_PATIENT_PAGES.preExistingCondition
+      ) {
         setPreexistingCondition((preexistingCondition) => [
           ...preexistingCondition,
           response,
         ]);
-      } else if (response.pageNumber === 3) {
+      } else if (response.pageNumber === NEW_PATIENT_PAGES.allergy) {
         setSocialHistory((socialHistory) => [...socialHistory, response]);
-      } else {
+      } else if (response.pageNumber === NEW_PATIENT_PAGES.medication) {
         setMedication((medication) => [...medication, response]);
       }
     });
@@ -38,29 +51,41 @@ const PatientFirstIntake = ({ pageNum, setIntakeState, intakeState }) => {
 
   return (
     <div className="form-content-wrapper">
-      {pageNum === 1 && (
+      {pageNum === NEW_PATIENT_PAGES.patientInfo && (
+        <PatientPersonalInfo
+          personalInfo={personalInfo}
+          setIntakeState={setIntakeState}
+          intakeState={intakeState}
+          personalInfoError={personalInfoError}
+        />
+      )}
+      {pageNum === NEW_PATIENT_PAGES.covidHistory && (
         <CovidHistory
           covidHistory={covidHistory}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
         />
       )}
-      {pageNum === 2 && (
+      {pageNum === NEW_PATIENT_PAGES.preExistingCondition && (
         <PreexistingCondition
           preexistingCondition={preexistingCondition}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
         />
       )}
-      {pageNum === 3 && (
+      {pageNum === NEW_PATIENT_PAGES.allergy && (
         <SocialHistory
           socialHistory={socialHistory}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
         />
       )}
-      {pageNum === 4 && (
-        <Medication medication={medication} setIntakeState={setIntakeState}  intakeState={intakeState} />
+      {pageNum === NEW_PATIENT_PAGES.medication && (
+        <Medication
+          medication={medication}
+          setIntakeState={setIntakeState}
+          intakeState={intakeState}
+        />
       )}
     </div>
   );
