@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import help_icon from "../assets/images/help-circle.svg";
 import "../App.css";
 import Modal from "./HelpVideoModal";
+import { NUMBER_TYPE_REGEX } from "../constants/constants";
 
 const PatientVitalForm = ({
   setTemperature,
@@ -16,6 +17,12 @@ const PatientVitalForm = ({
 }) => {
   const [show, setShow] = useState(false);
   const [showBpInvaid, setShowBpInvalid] = useState(false);
+  const [showOxygenErrorMessage, setShowOxygenErrorMessage] = useState(false);
+  const [showTempErrorMessage, setShowTempErrorMessage] = useState(false);
+  const [showPulseErrorMessage, setShowPulseErrorMessage] = useState(false);
+  const [showRespirationMessage, setShowRespirationMessage] = useState(false);
+  const [showBpMessage, setShowBpMessage] = useState(false);
+
 
   useEffect(() => {
     if (parseInt(bpLowerRange) > parseInt(bpUpperRange)) {
@@ -34,7 +41,14 @@ const PatientVitalForm = ({
             className="oxygen-input"
             type="text"
             name="OxygenLevel"
-            onChange={(e) => setOxygenLevel(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.match(NUMBER_TYPE_REGEX)) {
+                setOxygenLevel(e.target.value);
+                setShowOxygenErrorMessage(false);
+              } else {
+                setShowOxygenErrorMessage(true);
+              }
+            }}
           />
           <div className="icon">%</div>
           <img
@@ -47,6 +61,9 @@ const PatientVitalForm = ({
         {vitalError.oxygenLevel ? (
           <span className="error-message">Oxygen Level is required</span>
         ) : null}
+        {showOxygenErrorMessage ? (
+          <span className="error-message">Oxygen Level is a number value</span>
+        ) : null}
       </div>
       <Modal onClose={() => setShow(false)} show={show} />
       <div className="input-vitals">
@@ -55,7 +72,14 @@ const PatientVitalForm = ({
           <input
             type="text"
             name="Temperature"
-            onChange={(e) => setTemperature(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.match(NUMBER_TYPE_REGEX)) {
+                setTemperature(e.target.value);
+                setShowTempErrorMessage(false);
+              } else {
+                setShowTempErrorMessage(true);
+              }
+            }}
           />
           <div className="icon">°F</div>
           <img
@@ -68,6 +92,9 @@ const PatientVitalForm = ({
         {vitalError.temperature ? (
           <span className="error-message">Temperature is required</span>
         ) : null}
+        {showTempErrorMessage ? (
+          <span className="error-message">Temperature is a number value</span>
+        ) : null}
       </div>
       <div className="input-vitals">
         <label>Pulse rate</label>
@@ -75,7 +102,14 @@ const PatientVitalForm = ({
           <input
             type="text"
             name="Pulserate"
-            onChange={(e) => setPulseRate(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.match(NUMBER_TYPE_REGEX)) {
+                setPulseRate(e.target.value);
+                setShowPulseErrorMessage(false);
+              } else {
+                setShowPulseErrorMessage(true);
+              }
+            }}
           />
           <div className="icon">Bpm</div>
           <img
@@ -88,6 +122,9 @@ const PatientVitalForm = ({
         {vitalError.pulseRate ? (
           <span className="error-message">Pulse Rate is required</span>
         ) : null}
+        {showPulseErrorMessage ? (
+          <span className="error-message">Pulse rate is a number value</span>
+        ) : null}
       </div>
       <div className="input-vitals">
         <label>Blood Pressure</label>
@@ -97,7 +134,14 @@ const PatientVitalForm = ({
               className="bp"
               type="text"
               name="BloodPressureHigh"
-              onChange={(e) => setBpUpperRange(e.target.value)}
+              onChange={(e) => {
+                if (e.target.value.match(NUMBER_TYPE_REGEX)) {
+                  setBpUpperRange(e.target.value);
+                  setShowBpMessage(false);
+                } else {
+                  setShowBpMessage(true);
+                }
+              }}
             />
 
             <div className="icon-higher">Higher</div>
@@ -105,7 +149,14 @@ const PatientVitalForm = ({
               className="bp bp-lower"
               type="text"
               name="BloodPressureLow"
-              onChange={(e) => setBpLowerRange(e.target.value)}
+              onChange={(e) => {
+                if (e.target.value.match(NUMBER_TYPE_REGEX)) {
+                  setBpLowerRange(e.target.value);
+                  setShowBpMessage(false);
+                } else {
+                  setShowBpMessage(true);
+                }
+              }}
             />
 
             <div className="icon-lower">Lower</div>
@@ -125,6 +176,9 @@ const PatientVitalForm = ({
             Higher Range must be greater that Lower Range
           </span>
         ) : null}
+        {showBpMessage ? (
+          <span className="error-message">Blood Pressure is a number value</span>
+        ) : null}
       </div>
       <div className="input-vitals">
         <label>Respiratory Rate</label>
@@ -132,7 +186,14 @@ const PatientVitalForm = ({
           <input
             type="text"
             name="respiratoryRate"
-            onChange={(e) => setRespiratoryRate(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.match(NUMBER_TYPE_REGEX)) {
+                setRespiratoryRate(e.target.value);
+                setShowRespirationMessage(false);
+              } else {
+                setShowRespirationMessage(true);
+              }
+            }}
           />
           <div className="icon">Breaths</div>
           <img
@@ -144,6 +205,11 @@ const PatientVitalForm = ({
         </div>
         {vitalError.respiratoryRate ? (
           <span className="error-message">Respiratory Rate is required</span>
+        ) : null}
+        {showRespirationMessage ? (
+          <span className="error-message">
+            Respiratory Rate is a number value
+          </span>
         ) : null}
       </div>
     </div>

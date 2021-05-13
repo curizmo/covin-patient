@@ -25,7 +25,7 @@ export const MONTHS = [
 
 export const GENDERS = ["male", "female", "others"];
 
-export const HEIGHT = ["feet", "inch"]
+export const HEIGHT = ["feet", "inch"];
 
 export const NEW_PATIENT_PAGES = {
   patientInfo: 1,
@@ -46,4 +46,4 @@ export const EXISTING_PATIENT_PAGES = {
 
 export const EMAIL_TYPE_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-export const PHONE_TYPE_REGEX = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})/;
+export const NUMBER_TYPE_REGEX = /^[+-]?\d*(?:[.,]\d*)?$/;
