@@ -119,6 +119,8 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     }
   };
 
+  console.log(oxygenLevel)
+
   const validatePatientPersonalForm = () => {
     if (
       messageType === "newPatient" &&

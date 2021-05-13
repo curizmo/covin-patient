@@ -46,8 +46,6 @@ const PatientPersonalInfo = ({
     }
   };
 
-  console.log(intakeState)
-
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
