@@ -51,7 +51,14 @@ const PatientPersonalInfo = ({
     }
   }, [intakeState.emailId]);
 
-  const handleValidateNumbers = (e) => {
+  const handleValidateWeight = (e) => {
+    const item = e.target.name;
+    if (e.target.value.match(NUMBER_TYPE_REGEX)) {
+      setIntakeState({ ...intakeState, [item]: e.target.value });
+    }
+  };
+
+  const handleValidateHeight = (e) => {
     const item = e.target.name;
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
       handleHeightInput(e);
@@ -92,6 +99,8 @@ const PatientPersonalInfo = ({
 
     return !isAnyTrue;
   };
+
+  console.log(intakeState);
 
   const onNext = () => {
     const isValid = validatePatientPersonalForm();
@@ -167,25 +176,23 @@ const PatientPersonalInfo = ({
                   value={intakeState.emailId}
                 />
               ) : info.field === "height" ? (
-                <>
-                  <div className="height-wrapper">
-                    {HEIGHT.map((height) => {
-                      <label>{info.title}</label>;
-                      return (
-                        <>
-                          <input
-                            className="bp"
-                            type="text"
-                            name={info.field}
-                            id={height}
-                            placeholder={height === "feet" ? "Ft." : "In"}
-                            onChange={handleValidateNumbers}
-                          />
-                        </>
-                      );
-                    })}
-                  </div>
-                </>
+                <div className="height-wrapper">
+                  {HEIGHT.map((height) => {
+                    <label>{info.title}</label>;
+                    return (
+                      <>
+                        <input
+                          className="bp"
+                          type="text"
+                          name={info.field}
+                          id={height}
+                          placeholder={height === "feet" ? "Ft." : "In"}
+                          onChange={handleValidateHeight}
+                        />
+                      </>
+                    );
+                  })}
+                </div>
               ) : (
                 <input
                   type="text"
@@ -200,7 +207,7 @@ const PatientPersonalInfo = ({
                   }
                   onChange={
                     info.field === "weight"
-                      ? handleValidateNumbers
+                      ? handleValidateWeight
                       : handleInputChange
                   }
                   placeholder={info.field === "weight" ? "Kg." : ""}
