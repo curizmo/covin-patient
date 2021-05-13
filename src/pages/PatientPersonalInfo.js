@@ -8,13 +8,19 @@ import {
   NUMBER_TYPE_REGEX,
 } from "../constants/constants";
 
-const PatientPersonalInfo = ({
-  personalInfo,
-  setIntakeState,
-  intakeState,
-  personalInfoError,
-}) => {
+const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState ,setPage, page}) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [personalInfoError, setPersonalInfoError] = useState({
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dateOfBirth: "",
+    height: "",
+    weight: "",
+    emailId: "",
+  });
+
+  console.log(page)
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -41,6 +47,33 @@ const PatientPersonalInfo = ({
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
       setIntakeState({ ...intakeState, [item]: e.target.value });
     }
+  };
+
+  const validatePatientPersonalForm = () => {
+    const PaitientInfoError = {
+      firstName: !intakeState.firstName,
+      lastName: !intakeState.lastName,
+      gender: !intakeState.gender,
+      dateOfBirth: !intakeState.dateOfBirth,
+      height: !intakeState.height,
+      weight: !intakeState.weight,
+      emailId: !intakeState.emailId,
+    };
+    const isAnyTrue = Object.keys(PaitientInfoError)
+      .map((key) => PaitientInfoError[key])
+      .some((v) => v === true);
+
+    setPersonalInfoError(PaitientInfoError);
+
+    return !isAnyTrue;
+  };
+
+  const onNext = () => {
+    const isValid = validatePatientPersonalForm();
+    if (!isValid) {
+      return;
+    }
+    setPage(page + 1);
   };
 
   console.log(intakeState);
@@ -148,6 +181,9 @@ const PatientPersonalInfo = ({
           );
         })}
       </div>
+      <button className="submit-button submit-btn" onClick={onNext}>
+        NEXT
+      </button>
     </div>
   );
 };

@@ -3,8 +3,9 @@ import "../App.css";
 import * as patientService from "../services/patient";
 import "./home.css";
 
-const PatientChecklist = ({ state, setState, symptomsError }) => {
+const PatientChecklist = ({ state, setState, setPage, page }) => {
   const [symptoms, setSymptoms] = useState([]);
+  const [symptomsError, setSymptomsError] = useState(false);
 
   useEffect(() => {
     getSymptoms();
@@ -32,6 +33,25 @@ const PatientChecklist = ({ state, setState, symptomsError }) => {
     }
   };
 
+  const validateForm = () => {
+    const isAnyTrue = Object.keys(state)
+      .map((key) => state[key])
+      .some((v) => v === true);
+
+    setSymptomsError(!isAnyTrue);
+
+    return isAnyTrue;
+  };
+
+  const onNext = () => {
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
+
+    setPage(page + 1);
+  };
+
   const getSymptoms = async () => {
     const response = await patientService.getPatientSymtoms();
     setSymptoms(response.symptomsTemplate);
@@ -56,7 +76,14 @@ const PatientChecklist = ({ state, setState, symptomsError }) => {
           );
         })}
       </div>
-      {symptomsError ? <span className="error-message">At least one field must be selected</span> : null}
+      {symptomsError ? (
+        <span className="error-message">
+          At least one field must be selected
+        </span>
+      ) : null}
+      <button className="submit-button submit-btn" onClick={onNext}>
+        NEXT
+      </button>
     </div>
   );
 };

@@ -3,7 +3,13 @@ import "../App.css";
 import * as patientService from "../services/patient";
 import "./home.css";
 
-const SocialHistory = ({ socialHistory, setIntakeState, intakeState }) => {
+const SocialHistory = ({
+  socialHistory,
+  setIntakeState,
+  intakeState,
+  setPage,
+  page,
+}) => {
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
@@ -15,6 +21,10 @@ const SocialHistory = ({ socialHistory, setIntakeState, intakeState }) => {
     item === "none"
       ? setIntakeState({ ...intakeState, [item]: !isChecked })
       : setIntakeState({ ...intakeState, [item]: isChecked });
+  };
+
+  const onNext = () => {
+    setPage(page + 1);
   };
 
   return (
@@ -53,6 +63,9 @@ const SocialHistory = ({ socialHistory, setIntakeState, intakeState }) => {
           );
         })}
       </div>
+      <button className="submit-button submit-btn" onClick={onNext}>
+        NEXT
+      </button>
     </div>
   );
 };
