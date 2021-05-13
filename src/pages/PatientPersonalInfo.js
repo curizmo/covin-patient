@@ -16,6 +16,8 @@ const PatientPersonalInfo = ({
   page,
 }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [inchHeight, setInchHeight] = useState(0);
+  const [feetHeight, setFeetHeight] = useState(0);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -25,8 +27,6 @@ const PatientPersonalInfo = ({
     weight: "",
     emailId: "",
   });
-
-  console.log(intakeState);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -54,9 +54,25 @@ const PatientPersonalInfo = ({
   const handleValidateNumbers = (e) => {
     const item = e.target.name;
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
-      setIntakeState({ ...intakeState, [item]: e.target.value });
+      handleHeightInput(e);
     }
   };
+
+  const handleHeightInput = (e) => {
+    if (e.target.id === "feet") {
+      setFeetHeight(e.target.value);
+    }
+    if (e.target.id === "inch") {
+      setInchHeight(e.target.value);
+    }
+  };
+
+  useEffect(() => {
+    setIntakeState({
+      ...intakeState,
+      height: `${feetHeight}ft ${inchHeight}in`,
+    });
+  }, [feetHeight, inchHeight]);
 
   const validatePatientPersonalForm = () => {
     const PaitientInfoError = {
@@ -89,8 +105,6 @@ const PatientPersonalInfo = ({
 
     setPage(page + 1);
   };
-
-  console.log(intakeState);
 
   return (
     <div className="form-content-wrapper">
@@ -163,6 +177,7 @@ const PatientPersonalInfo = ({
                             className="bp"
                             type="text"
                             name={info.field}
+                            id={height}
                             placeholder={height === "feet" ? "Ft." : "In"}
                             onChange={handleValidateNumbers}
                           />
