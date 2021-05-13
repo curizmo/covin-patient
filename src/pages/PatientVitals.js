@@ -74,8 +74,6 @@ const PatientVitals = ({
     medication5DoseFrequency: "",
   });
 
-console.log(page)
-
   let d = new Date();
   let day = d.getDay();
   let date = d.getDate();
