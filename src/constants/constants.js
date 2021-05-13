@@ -25,6 +25,8 @@ export const MONTHS = [
 
 export const GENDERS = ["male", "female", "others"];
 
+export const HEIGHT = ["feet", "inch"]
+
 export const NEW_PATIENT_PAGES = {
   patientInfo: 1,
   covidHistory: 2,
