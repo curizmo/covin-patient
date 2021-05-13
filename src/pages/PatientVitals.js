@@ -14,7 +14,13 @@ import {
   EXISTING_PATIENT_PAGES,
 } from "../constants/constants";
 
-const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
+const PatientVitals = ({
+  name,
+  phone,
+  hashKey,
+  patientDetails,
+  messageType,
+}) => {
   const [temperature, setTemperature] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
   const [pulseRate, setPulseRate] = useState("");
@@ -36,13 +42,13 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     none: false,
   });
   const [intakeState, setIntakeState] = useState({
-    firstName: "",
-    lastName: "",
+    firstName: patientDetails.givenName,
+    lastName: patientDetails.familyName,
     gender: "",
     dateOfBirth: "",
     height: "",
     weight: "",
-    emailId: "",
+    emailId: patientDetails.email,
     covidPositiveEverBefore: false,
     covidVaccinationDose1Taken: false,
     dateOfDose1Vaccination: "",
@@ -190,11 +196,11 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
 
     await patientService.createPatientIntake({
       form: intakeState,
-      patientId: patientId,
+      patientId: patientDetails.patientId,
     });
 
     await patientService.createPatientVitals({
-      patientId: patientId,
+      patientId: patientDetails.patientId,
       temperature,
       respiratoryRate,
       bpLowerRange,
