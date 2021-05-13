@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../App.css";
 import "./home.css";
-import { GENDERS, HEIGHT } from "../constants/constants";
+import { GENDERS, HEIGHT, EMAIL_TYPE_REGEX } from "../constants/constants";
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -9,6 +9,8 @@ const PatientPersonalInfo = ({
   intakeState,
   personalInfoError,
 }) => {
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+
   const handleInputChange = (e) => {
     const item = e.target.name;
 
@@ -19,7 +21,16 @@ const PatientPersonalInfo = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  console.log(intakeState)
+  const handleValidateEmail = (e) => {
+    const item = e.target.name;
+    if (e.target.value.match(EMAIL_TYPE_REGEX)) {
+      setIntakeState({ ...intakeState, [item]: e.target.value });
+      setShowErrorMessage(false);
+    } else {
+      setShowErrorMessage(true);
+    }
+  };
+
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
@@ -38,6 +49,11 @@ const PatientPersonalInfo = ({
                   <span className="error-message">
                     (This field is required)
                   </span>
+                </label>
+              ) : `${info.field}` === "emailId" && showErrorMessage ? (
+                <label>
+                  {info.title}{" "}
+                  <span className="error-message">Invalid Email</span>
                 </label>
               ) : (
                 <label>{info.title}</label>
@@ -66,6 +82,13 @@ const PatientPersonalInfo = ({
                   id={indx}
                   name={info.field}
                   onChange={handleInputChange}
+                />
+              ) : info.field === "emailId" ? (
+                <input
+                  type="email"
+                  id={indx}
+                  name={info.field}
+                  onChange={handleValidateEmail}
                 />
               ) : info.field === "height" ? (
                 <>
