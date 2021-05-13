@@ -60,18 +60,13 @@ const PatientPersonalInfo = ({
   };
 
   const handleValidateHeight = (e) => {
-    const item = e.target.name;
-    if (e.target.value.match(NUMBER_TYPE_REGEX)) {
-      handleHeightInput(e);
-    }
-  };
-
-  const handleHeightInput = (e) => {
-    if (e.target.id === HEIGHT_MEASUREMENT.feet) {
-      setFeetHeight(e.target.value);
-    }
-    if (e.target.id === HEIGHT_MEASUREMENT.inch) {
-      setInchHeight(e.target.value);
+    const value = e.target.value;
+    if (value.match(NUMBER_TYPE_REGEX)) {
+      if (e.target.id === HEIGHT_MEASUREMENT.feet) {
+        setFeetHeight(value);
+      } else {
+        setInchHeight(value);
+      }
     }
   };
 
@@ -113,7 +108,7 @@ const PatientPersonalInfo = ({
 
     setPage(page + 1);
   };
-
+  
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
@@ -176,21 +171,24 @@ const PatientPersonalInfo = ({
                 />
               ) : info.field === "height" ? (
                 <div className="height-wrapper">
-                  {HEIGHT.map((height) => {
-                    <label>{info.title}</label>;
-                    return (
-                      <>
-                        <input
-                          className="bp"
-                          type="text"
-                          name={info.field}
-                          id={height}
-                          placeholder={height === "feet" ? "Ft." : "In"}
-                          onChange={handleValidateHeight}
-                        />
-                      </>
-                    );
-                  })}
+                  <>
+                    <input
+                      className="bp"
+                      type="text"
+                      name={info.field}
+                      id={"feet"}
+                      placeholder={"ft"}
+                      onChange={handleValidateHeight}
+                    />
+                    <input
+                      className="bp"
+                      type="text"
+                      name={info.field}
+                      id={"incg"}
+                      placeholder={"in"}
+                      onChange={handleValidateHeight}
+                    />
+                  </>
                 </div>
               ) : (
                 <input

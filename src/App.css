@@ -1,4 +1,4 @@
-html{
+html {
   background-color: #f2f7fd;
 }
 .content-wrapper {
@@ -52,8 +52,6 @@ html{
   font-size: 1.25rem;
   font-weight: 600;
   outline-style: none;
-
-
 }
 
 .input-vitals label {
@@ -81,7 +79,7 @@ html{
   font-size: 1.125rem;
   font-weight: 600;
   outline-style: none;
-  color: #22335E;
+  color: #22335e;
 }
 
 .input-history label {
@@ -100,14 +98,14 @@ html{
   padding: 1rem 0.3rem;
   font-size: 0.85rem;
 }
-.preexisting-list-content>label{
+.preexisting-list-content > label {
   margin-left: 0.8em;
 }
 .history-list-content label {
   font-size: 1rem;
 }
 
-.height-input{
+.height-input {
   margin-bottom: 1rem;
 }
 
@@ -133,7 +131,6 @@ html{
 }
 
 input.bp {
-
   height: 1.5rem;
   margin-right: 0.5rem;
 }
@@ -177,16 +174,15 @@ input.bp {
   color: red;
   font-size: 0.7rem;
 }
-.history-list-content>label{
+.history-list-content > label {
   font-size: 0.85rem;
 }
 /*@Shreeti can be removed ** START** just added for the heading for Vaccination*/
-.history-list-content:first-of-type{
-
+.history-list-content:first-of-type {
   background-color: transparent;
 }
 .history-list-content:first-of-type::after {
-  content: " Vaccination History";
+  content: "Vaccination History";
   margin-top: 2rem;
   display: block;
 }
