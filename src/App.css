@@ -1,6 +1,10 @@
+html{
+  background-color: #f2f7fd;
+}
 .content-wrapper {
   padding: 1rem 1.5rem;
   margin-top: 0.7rem;
+  min-height: 70vh;
 }
 
 .health-checklist {
@@ -48,11 +52,14 @@
   font-size: 1.25rem;
   font-weight: 600;
   outline-style: none;
+
+
 }
 
 .input-vitals label {
   font-weight: 400;
   font-size: 1rem;
+  color: #657396;
 }
 
 .input-history {
@@ -71,9 +78,10 @@
   box-shadow: 0px 2px 0px 0px #e0e3ea;
   border-radius: 3px;
   padding: 1rem;
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: 1.125rem;
+  font-weight: 600;
   outline-style: none;
+  color: #22335E;
 }
 
 .input-history label {
@@ -81,18 +89,20 @@
 }
 
 .history-list-content {
-  margin: 1.8rem 0 0.5rem 0;
+  margin-top: 0.5rem;
   background-color: white;
   padding: 1rem 0.3rem;
 }
 
 .preexisting-list-content {
-  margin: 1rem 0 0.5rem 0;
+  margin-top: 0.5rem;
   background-color: white;
   padding: 1rem 0.3rem;
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
-
+.preexisting-list-content>label{
+  margin-left: 0.8em;
+}
 .history-list-content label {
   font-size: 1rem;
 }
@@ -113,6 +123,7 @@
 .blood-pressure {
   display: flex;
   width: 82%;
+  position: relative;
 }
 
 .height-wrapper {
@@ -121,9 +132,9 @@
   flex-direction: row;
 }
 
-.bp {
-  width: 9.5rem;
-  height: 5rem;
+input.bp {
+
+  height: 1.5rem;
   margin-right: 0.5rem;
 }
 
@@ -166,3 +177,17 @@
   color: red;
   font-size: 0.7rem;
 }
+.history-list-content>label{
+  font-size: 0.85rem;
+}
+/*@Shreeti can be removed ** START** just added for the heading for Vaccination*/
+.history-list-content:first-of-type{
+
+  background-color: transparent;
+}
+.history-list-content:first-of-type::after {
+  content: " Vaccination History";
+  margin-top: 2rem;
+  display: block;
+}
+/*@Shreeti can be removed ** END** just added for the heading for Vaccination*/
