@@ -6,14 +6,16 @@ import "./home.css";
 const PatientChecklist = ({ state, setState, setPage, page }) => {
   const [symptoms, setSymptoms] = useState([]);
   const [symptomsError, setSymptomsError] = useState(false);
+  const [isSymptomChecked, setIsSymptomChecked] = useState(false);
 
   useEffect(() => {
     getSymptoms();
   }, []);
 
-  const handleOnChange = (event) => {
-    const isChecked = event.target.checked;
-    const item = event.target.name;
+  const handleOnSynptomClick = (item) => {
+    if (isSymptomChecked) {
+      setSymptomsError(false);
+    }
     if (item === "none") {
       setState({
         feverOrChills: false,
@@ -29,7 +31,7 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
         none: true,
       });
     } else {
-      setState({ ...state, [`${item}`]: isChecked, none: false });
+      setState({ ...state, [item]: isSymptomChecked, none: false });
     }
   };
 
@@ -62,13 +64,19 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
       <div className="health-checklist">
         {symptoms.map((symptom, indx) => {
           return (
-            <div className="list-content symptoms-list" key={indx}>
+            <div
+              className="list-content symptoms-list"
+              key={indx}
+              onClick={() => {
+                setIsSymptomChecked(!isSymptomChecked);
+                handleOnSynptomClick(symptom.field);
+              }}
+            >
               <input
                 className="symptoms-checkbox"
                 type="checkbox"
                 id={indx}
                 name={symptom.field}
-                onChange={handleOnChange}
                 checked={state[symptom.field]}
               />
               <label key={indx}>{symptom.title}</label>
