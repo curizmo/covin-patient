@@ -6,6 +6,7 @@ import {
   HEIGHT,
   EMAIL_TYPE_REGEX,
   NUMBER_TYPE_REGEX,
+  HEIGHT_MEASUREMENT,
 } from "../constants/constants";
 
 const PatientPersonalInfo = ({
@@ -66,10 +67,10 @@ const PatientPersonalInfo = ({
   };
 
   const handleHeightInput = (e) => {
-    if (e.target.id === "feet") {
+    if (e.target.id === HEIGHT_MEASUREMENT.feet) {
       setFeetHeight(e.target.value);
     }
-    if (e.target.id === "inch") {
+    if (e.target.id === HEIGHT_MEASUREMENT.inch) {
       setInchHeight(e.target.value);
     }
   };
