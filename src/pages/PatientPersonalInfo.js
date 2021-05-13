@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import {
@@ -8,7 +8,13 @@ import {
   NUMBER_TYPE_REGEX,
 } from "../constants/constants";
 
-const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState ,setPage, page}) => {
+const PatientPersonalInfo = ({
+  personalInfo,
+  setIntakeState,
+  intakeState,
+  setPage,
+  page,
+}) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
@@ -20,7 +26,7 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState ,setPag
     emailId: "",
   });
 
-  console.log(page)
+  console.log(intakeState);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -32,15 +38,18 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState ,setPag
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleValidateEmail = (e) => {
+  const handleEmailChange = (e) => {
     const item = e.target.name;
-    if (e.target.value.match(EMAIL_TYPE_REGEX)) {
-      setIntakeState({ ...intakeState, [item]: e.target.value });
+    setIntakeState({ ...intakeState, [item]: e.target.value });
+  };
+
+  useEffect(() => {
+    if (intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
       setShowErrorMessage(false);
     } else {
       setShowErrorMessage(true);
     }
-  };
+  }, [intakeState.emailId]);
 
   const handleValidateNumbers = (e) => {
     const item = e.target.name;
@@ -73,6 +82,11 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState ,setPag
     if (!isValid) {
       return;
     }
+
+    if (!intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
+      return;
+    }
+
     setPage(page + 1);
   };
 
@@ -135,7 +149,7 @@ const PatientPersonalInfo = ({ personalInfo, setIntakeState, intakeState ,setPag
                   type="email"
                   id={indx}
                   name={info.field}
-                  onChange={handleValidateEmail}
+                  onChange={handleEmailChange}
                   value={intakeState.emailId}
                 />
               ) : info.field === "height" ? (
