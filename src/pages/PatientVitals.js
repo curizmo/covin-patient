@@ -36,7 +36,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     none: false,
   });
   const [intakeState, setIntakeState] = useState({
-    patientMobileNumber: "",
     firstName: "",
     lastName: "",
     gender: "",
@@ -79,7 +78,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
     pulseRate: "",
   });
   const [personalInfoError, setPersonalInfoError] = useState({
-    patientMobileNumber: "",
     firstName: "",
     lastName: "",
     gender: "",
@@ -127,7 +125,6 @@ const PatientVitals = ({ name, phone, hashKey, patientId, messageType }) => {
       page === NEW_PATIENT_PAGES.patientInfo
     ) {
       const PaitientInfoError = {
-        patientMobileNumber: !intakeState.patientMobileNumber,
         firstName: !intakeState.firstName,
         lastName: !intakeState.lastName,
         gender: !intakeState.gender,

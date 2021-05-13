@@ -97,6 +97,10 @@
   font-size: 1rem;
 }
 
+.height-input{
+  margin-bottom: 1rem;
+}
+
 .page-title {
   color: #22335e;
   margin-top: 0px;
@@ -109,6 +113,12 @@
 .blood-pressure {
   display: flex;
   width: 82%;
+}
+
+.height-wrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
 }
 
 .bp {

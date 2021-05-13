@@ -183,20 +183,6 @@ body {
   display: flex;
 }
 
-input[type="radio"]:checked:after {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 1rem;
-  top: -2px;
-  left: -1px;
-  position: relative;
-  background-color: black;
-  content: "";
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid white;
-}
-
 input[type="text"]::placeholder {
   float: right;
 }

@@ -1,6 +1,7 @@
+import { useState } from "react";
 import "../App.css";
 import "./home.css";
-import { GENDERS } from "../constants/constants";
+import { GENDERS, HEIGHT } from "../constants/constants";
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -13,12 +14,12 @@ const PatientPersonalInfo = ({
 
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
-
   const handleCheckboxChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
+  console.log(intakeState)
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
@@ -66,19 +67,32 @@ const PatientPersonalInfo = ({
                   name={info.field}
                   onChange={handleInputChange}
                 />
+              ) : info.field === "height" ? (
+                <>
+                  <div className="height-wrapper">
+                    {HEIGHT.map((height) => {
+                      <label>{info.title}</label>;
+                      return (
+                        <>
+                          <input
+                            className="bp"
+                            type="text"
+                            name={info.field}
+                            placeholder={height === "feet" ? "Ft." : "In"}
+                            onChange={handleInputChange}
+                          />
+                        </>
+                      );
+                    })}
+                  </div>
+                </>
               ) : (
                 <input
                   type="text"
                   id={indx}
                   name={info.field}
                   onChange={handleInputChange}
-                  placeholder={
-                    info.field === "height"
-                      ? "Ft."
-                      : info.field === "weight"
-                      ? "Kg."
-                      : ""
-                  }
+                  placeholder={info.field === "weight" ? "Kg." : ""}
                 />
               )}
             </div>
