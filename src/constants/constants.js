@@ -44,6 +44,11 @@ export const EXISTING_PATIENT_PAGES = {
   submission: 3,
 };
 
+export const HEIGHT_MEASUREMENT = {
+  feet: "feet",
+  inch: "inch",
+};
+
 export const EMAIL_TYPE_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 export const NUMBER_TYPE_REGEX = /^[+-]?\d*(?:[.,]\d*)?$/;

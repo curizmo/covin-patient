@@ -6,6 +6,7 @@ import {
   HEIGHT,
   EMAIL_TYPE_REGEX,
   NUMBER_TYPE_REGEX,
+  HEIGHT_MEASUREMENT,
 } from "../constants/constants";
 
 const PatientPersonalInfo = ({
@@ -16,6 +17,8 @@ const PatientPersonalInfo = ({
   page,
 }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [inchHeight, setInchHeight] = useState(0);
+  const [feetHeight, setFeetHeight] = useState(0);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -25,8 +28,6 @@ const PatientPersonalInfo = ({
     weight: "",
     emailId: "",
   });
-
-  console.log(intakeState);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -51,12 +52,30 @@ const PatientPersonalInfo = ({
     }
   }, [intakeState.emailId]);
 
-  const handleValidateNumbers = (e) => {
+  const handleValidateWeight = (e) => {
     const item = e.target.name;
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
       setIntakeState({ ...intakeState, [item]: e.target.value });
     }
   };
+
+  const handleValidateHeight = (e) => {
+    const value = e.target.value;
+    if (value.match(NUMBER_TYPE_REGEX)) {
+      if (e.target.id === HEIGHT_MEASUREMENT.feet) {
+        setFeetHeight(value);
+      } else {
+        setInchHeight(value);
+      }
+    }
+  };
+
+  useEffect(() => {
+    setIntakeState({
+      ...intakeState,
+      height: `${feetHeight}ft ${inchHeight}in`,
+    });
+  }, [feetHeight, inchHeight]);
 
   const validatePatientPersonalForm = () => {
     const PaitientInfoError = {
@@ -89,9 +108,7 @@ const PatientPersonalInfo = ({
 
     setPage(page + 1);
   };
-
-  console.log(intakeState);
-
+  
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
@@ -153,24 +170,26 @@ const PatientPersonalInfo = ({
                   value={intakeState.emailId}
                 />
               ) : info.field === "height" ? (
-                <>
-                  <div className="height-wrapper">
-                    {HEIGHT.map((height) => {
-                      <label>{info.title}</label>;
-                      return (
-                        <>
-                          <input
-                            className="bp"
-                            type="text"
-                            name={info.field}
-                            placeholder={height === "feet" ? "Ft." : "In"}
-                            onChange={handleValidateNumbers}
-                          />
-                        </>
-                      );
-                    })}
-                  </div>
-                </>
+                <div className="height-wrapper">
+                  <>
+                    <input
+                      className="bp"
+                      type="text"
+                      name={info.field}
+                      id={"feet"}
+                      placeholder={"ft"}
+                      onChange={handleValidateHeight}
+                    />
+                    <input
+                      className="bp"
+                      type="text"
+                      name={info.field}
+                      id={"incg"}
+                      placeholder={"in"}
+                      onChange={handleValidateHeight}
+                    />
+                  </>
+                </div>
               ) : (
                 <input
                   type="text"
@@ -185,7 +204,7 @@ const PatientPersonalInfo = ({
                   }
                   onChange={
                     info.field === "weight"
-                      ? handleValidateNumbers
+                      ? handleValidateWeight
                       : handleInputChange
                   }
                   placeholder={info.field === "weight" ? "Kg." : ""}
