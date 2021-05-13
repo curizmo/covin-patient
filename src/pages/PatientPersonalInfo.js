@@ -104,6 +104,7 @@ const PatientPersonalInfo = ({
                   id={indx}
                   name={info.field}
                   onChange={handleValidateEmail}
+                  value={intakeState.emailId}
                 />
               ) : info.field === "height" ? (
                 <>
@@ -129,6 +130,13 @@ const PatientPersonalInfo = ({
                   type="text"
                   id={indx}
                   name={info.field}
+                  value={
+                    info.field === "firstName"
+                      ? intakeState.firstName
+                      : info.field === "lastName"
+                      ? intakeState.lastName
+                      : ""
+                  }
                   onChange={
                     info.field === "weight"
                       ? handleValidateNumbers
