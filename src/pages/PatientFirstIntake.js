@@ -14,6 +14,8 @@ const PatientFirstIntake = ({
   setIntakeState,
   intakeState,
   personalInfoError,
+  setPage,
+  page,
 }) => {
   const [personalInfo, setPersonalInfo] = useState([]);
   const [covidHistory, setcovidHistory] = useState([]);
@@ -57,6 +59,8 @@ const PatientFirstIntake = ({
           setIntakeState={setIntakeState}
           intakeState={intakeState}
           personalInfoError={personalInfoError}
+          setPage={setPage}
+          page={page}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.covidHistory && (
@@ -64,6 +68,8 @@ const PatientFirstIntake = ({
           covidHistory={covidHistory}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
+          setPage={setPage}
+          page={page}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.preExistingCondition && (
@@ -71,6 +77,8 @@ const PatientFirstIntake = ({
           preexistingCondition={preexistingCondition}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
+          setPage={setPage}
+          page={page}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.allergy && (
@@ -78,6 +86,8 @@ const PatientFirstIntake = ({
           socialHistory={socialHistory}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
+          setPage={setPage}
+          page={page}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.medication && (
@@ -85,6 +95,8 @@ const PatientFirstIntake = ({
           medication={medication}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
+          setPage={setPage}
+          page={page}
         />
       )}
     </div>

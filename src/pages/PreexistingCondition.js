@@ -6,6 +6,8 @@ const PeexistingCondition = ({
   preexistingCondition,
   setIntakeState,
   intakeState,
+  setPage,
+  page,
 }) => {
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -18,6 +20,10 @@ const PeexistingCondition = ({
     item === "none"
       ? setIntakeState({ ...intakeState, [item]: !isChecked })
       : setIntakeState({ ...intakeState, [item]: isChecked });
+  };
+
+  const onNext = () => {
+    setPage(page + 1);
   };
 
   return (
@@ -56,6 +62,9 @@ const PeexistingCondition = ({
           );
         })}
       </div>
+      <button className="submit-button submit-btn" onClick={onNext}>
+        NEXT
+      </button>
     </div>
   );
 };

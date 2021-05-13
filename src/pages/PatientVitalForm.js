@@ -3,6 +3,7 @@ import help_icon from "../assets/images/help-circle.svg";
 import "../App.css";
 import Modal from "./HelpVideoModal";
 import { NUMBER_TYPE_REGEX } from "../constants/constants";
+import * as patientService from "../services/patient";
 
 const PatientVitalForm = ({
   setTemperature,
@@ -11,9 +12,18 @@ const PatientVitalForm = ({
   setBpUpperRange,
   setBpLowerRange,
   setRespiratoryRate,
-  vitalError,
   bpUpperRange,
   bpLowerRange,
+  temperature,
+  respiratoryRate,
+  intakeState,
+  oxygenLevel,
+  pulseRate,
+  hashKey,
+  patientDetails,
+  state,
+  setPage,
+  page,
 }) => {
   const [show, setShow] = useState(false);
   const [showBpInvaid, setShowBpInvalid] = useState(false);
@@ -22,7 +32,14 @@ const PatientVitalForm = ({
   const [showPulseErrorMessage, setShowPulseErrorMessage] = useState(false);
   const [showRespirationMessage, setShowRespirationMessage] = useState(false);
   const [showBpMessage, setShowBpMessage] = useState(false);
-
+  const [vitalError, setVitalError] = useState({
+    temperature: "",
+    respiratoryRate: "",
+    bpLowerRange: "",
+    bpUpperRange: "",
+    oxygenLevel: "",
+    pulseRate: "",
+  });
 
   useEffect(() => {
     if (parseInt(bpLowerRange) > parseInt(bpUpperRange)) {
@@ -31,6 +48,54 @@ const PatientVitalForm = ({
       setShowBpInvalid(false);
     }
   }, [bpUpperRange, bpLowerRange]);
+
+  let today = new Date().toLocaleDateString();
+
+  const validateForm = () => {
+    const vitalErrors = {
+      temperature: !temperature,
+      respiratoryRate: !respiratoryRate,
+      bpLowerRange: !bpLowerRange,
+      bpUpperRange: !bpUpperRange,
+      oxygenLevel: !oxygenLevel,
+      pulseRate: !pulseRate,
+    };
+
+    const isAnyTrue = Object.keys(vitalErrors)
+      .map((key) => vitalErrors[key])
+      .some((v) => v === true);
+
+    setVitalError(vitalErrors);
+
+    return !isAnyTrue;
+  };
+
+  const onSubmit = async () => {
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
+
+    await patientService.createPatientIntake({
+      form: intakeState,
+      patientId: patientDetails.patientId,
+    });
+
+    await patientService.createPatientVitals({
+      patientId: patientDetails.patientId,
+      temperature,
+      respiratoryRate,
+      bpLowerRange,
+      bpUpperRange,
+      vitalsMeasureOn: today,
+      oxygenLevel,
+      pulseRate,
+      symptoms: state,
+    });
+
+    await patientService.UpdateMessageStatus(hashKey);
+    setPage(page + 1);
+  };
 
   return (
     <div className="form-content-wrapper">
@@ -177,7 +242,9 @@ const PatientVitalForm = ({
           </span>
         ) : null}
         {showBpMessage ? (
-          <span className="error-message">Blood Pressure is a number value</span>
+          <span className="error-message">
+            Blood Pressure is a number value
+          </span>
         ) : null}
       </div>
       <div className="input-vitals">
@@ -212,6 +279,9 @@ const PatientVitalForm = ({
           </span>
         ) : null}
       </div>
+      <button className="submit-button submit-btn" onClick={onSubmit}>
+        SUBMIT
+      </button>
     </div>
   );
 };

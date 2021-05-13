@@ -1,12 +1,21 @@
 import "../App.css";
 import "./home.css";
 
-const Medication = ({ medication, setIntakeState, intakeState }) => {
+const Medication = ({
+  medication,
+  setIntakeState,
+  intakeState,
+  setPage,
+  page,
+}) => {
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
+  const onNext = () => {
+    setPage(page + 1);
+  };
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Medications</div>
@@ -33,6 +42,9 @@ const Medication = ({ medication, setIntakeState, intakeState }) => {
           );
         })}
       </div>
+      <button className="submit-button submit-btn" onClick={onNext}>
+        NEXT
+      </button>
     </div>
   );
 };

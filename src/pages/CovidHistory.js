@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import "./home.css";
 
-const CovidHistory = ({ covidHistory, setIntakeState, intakeState }) => {
+const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page }) => {
   const [checkedOne, setCheckedOne] = useState(false);
   const [checkedTwo, setCheckedTwo] = useState(false);
 
@@ -23,6 +23,10 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState }) => {
     } else if (item === "covidVaccinationDose2Taken") {
       setCheckedTwo(isChecked);
     }
+  };
+
+  const onNext = () => {
+    setPage(page + 1);
   };
 
   return (
@@ -66,6 +70,12 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState }) => {
           );
         })}
       </div>
+      <button
+        className="submit-button submit-btn"
+        onClick={onNext}
+      >
+        NEXT
+      </button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import {
@@ -12,9 +12,21 @@ const PatientPersonalInfo = ({
   personalInfo,
   setIntakeState,
   intakeState,
-  personalInfoError,
+  setPage,
+  page,
 }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [personalInfoError, setPersonalInfoError] = useState({
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dateOfBirth: "",
+    height: "",
+    weight: "",
+    emailId: "",
+  });
+
+  console.log(intakeState);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -26,25 +38,59 @@ const PatientPersonalInfo = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleValidateEmail = (e) => {
+  const handleEmailChange = (e) => {
     const item = e.target.name;
-    if (e.target.value.match(EMAIL_TYPE_REGEX)) {
-      setIntakeState({ ...intakeState, [item]: e.target.value });
+    setIntakeState({ ...intakeState, [item]: e.target.value });
+  };
+
+  useEffect(() => {
+    if (intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
       setShowErrorMessage(false);
     } else {
       setShowErrorMessage(true);
     }
-  };
+  }, [intakeState.emailId]);
 
   const handleValidateNumbers = (e) => {
     const item = e.target.name;
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
       setIntakeState({ ...intakeState, [item]: e.target.value });
-      setShowErrorMessage(false);
-    } else {
-      setShowErrorMessage(true);
     }
   };
+
+  const validatePatientPersonalForm = () => {
+    const PaitientInfoError = {
+      firstName: !intakeState.firstName,
+      lastName: !intakeState.lastName,
+      gender: !intakeState.gender,
+      dateOfBirth: !intakeState.dateOfBirth,
+      height: !intakeState.height,
+      weight: !intakeState.weight,
+      emailId: !intakeState.emailId,
+    };
+    const isAnyTrue = Object.keys(PaitientInfoError)
+      .map((key) => PaitientInfoError[key])
+      .some((v) => v === true);
+
+    setPersonalInfoError(PaitientInfoError);
+
+    return !isAnyTrue;
+  };
+
+  const onNext = () => {
+    const isValid = validatePatientPersonalForm();
+    if (!isValid) {
+      return;
+    }
+
+    if (!intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
+      return;
+    }
+
+    setPage(page + 1);
+  };
+
+  console.log(intakeState);
 
   return (
     <div className="form-content-wrapper">
@@ -103,7 +149,7 @@ const PatientPersonalInfo = ({
                   type="email"
                   id={indx}
                   name={info.field}
-                  onChange={handleValidateEmail}
+                  onChange={handleEmailChange}
                   value={intakeState.emailId}
                 />
               ) : info.field === "height" ? (
@@ -135,7 +181,7 @@ const PatientPersonalInfo = ({
                       ? intakeState.firstName
                       : info.field === "lastName"
                       ? intakeState.lastName
-                      : ""
+                      : null
                   }
                   onChange={
                     info.field === "weight"
@@ -149,6 +195,9 @@ const PatientPersonalInfo = ({
           );
         })}
       </div>
+      <button className="submit-button submit-btn" onClick={onNext}>
+        NEXT
+      </button>
     </div>
   );
 };
