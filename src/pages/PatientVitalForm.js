@@ -19,7 +19,7 @@ const PatientVitalForm = ({
   intakeState,
   oxygenLevel,
   pulseRate,
-  hashKey,
+  hash,
   patientDetails,
   state,
   setPage,
@@ -93,7 +93,8 @@ const PatientVitalForm = ({
       symptoms: state,
     });
 
-    await patientService.UpdateMessageStatus(hashKey);
+    await patientService.UpdateMessageStatus(hash);
+
     setPage(page + 1);
   };
 

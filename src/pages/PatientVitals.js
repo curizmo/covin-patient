@@ -64,7 +64,7 @@ const PatientVitals = ({
     headacheOrmigrain: false,
     depression: false,
     others: "",
-    noPrexistingCondition:false,
+    noPrexistingCondition: false,
     food: "",
     medications: "",
     otherAllergies: "",
