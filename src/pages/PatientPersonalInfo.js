@@ -100,8 +100,6 @@ const PatientPersonalInfo = ({
     return !isAnyTrue;
   };
 
-  console.log(intakeState);
-
   const onNext = () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
