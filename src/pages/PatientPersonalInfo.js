@@ -40,11 +40,10 @@ const PatientPersonalInfo = ({
     const item = e.target.name;
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
       setIntakeState({ ...intakeState, [item]: e.target.value });
-      setShowErrorMessage(false);
-    } else {
-      setShowErrorMessage(true);
     }
   };
+
+  console.log(intakeState);
 
   return (
     <div className="form-content-wrapper">
@@ -135,7 +134,7 @@ const PatientPersonalInfo = ({
                       ? intakeState.firstName
                       : info.field === "lastName"
                       ? intakeState.lastName
-                      : ""
+                      : null
                   }
                   onChange={
                     info.field === "weight"
