@@ -7,6 +7,7 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
   const [symptoms, setSymptoms] = useState([]);
   const [symptomsError, setSymptomsError] = useState(false);
   const [isSymptomChecked, setIsSymptomChecked] = useState(false);
+  const [isSymptomLoad, setIsSymptomLoad] = useState(true);
 
   useEffect(() => {
     getSymptoms();
@@ -57,7 +58,9 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
   const getSymptoms = async () => {
     const response = await patientService.getPatientSymtoms();
     setSymptoms(response.symptomsTemplate);
+    setIsSymptomLoad(false)
   };
+
   return (
     <div className="form-content-wrapper">
       <div>Are you currently having any of the following symptoms?</div>
@@ -89,7 +92,11 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
           At least one field must be selected
         </span>
       ) : null}
-      <button className="submit-button submit-btn" onClick={onNext}>
+      <button
+        className="submit-button submit-btn"
+        onClick={onNext}
+        disabled={isSymptomLoad}
+      >
         NEXT
       </button>
     </div>
