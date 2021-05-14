@@ -29,10 +29,11 @@ const PeexistingCondition = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  console.log();
-
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
+    if (isChecked) {
+      setConditionError(false);
+    }
     const item = event.target.value;
     item === "none"
       ? setIntakeState({ ...intakeState, [item]: !isChecked })
