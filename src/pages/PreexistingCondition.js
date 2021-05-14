@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
+import { PRE_EXISTING_CONDITION } from "../constants/constants";
 
 const PeexistingCondition = ({
   preexistingCondition,
@@ -43,7 +44,7 @@ const PeexistingCondition = ({
       setConditionError(false);
     }
 
-    if (item === "noPrexistingCondition") {
+    if (item === PRE_EXISTING_CONDITION) {
       setIntakeState({
         ...intakeState,
         heartDisease: false,
@@ -70,7 +71,7 @@ const PeexistingCondition = ({
   const validateForm = () => {
     const isAnyTrue = Object.keys(preExistingCondition)
       .map((key) => preExistingCondition[key])
-      .some((v) => v === true);
+      .some((key) => preExistingCondition[key]);
 
     setConditionError(!isAnyTrue);
 
@@ -86,7 +87,6 @@ const PeexistingCondition = ({
     setPage(page + 1);
   };
 
-  console.log(intakeState);
   return (
     <div className="form-content-wrapper">
       <div>Pre-existing Conditions</div>
