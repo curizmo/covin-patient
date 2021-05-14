@@ -10,7 +10,7 @@ const PeexistingCondition = ({
   page,
 }) => {
   const [conditionError, setConditionError] = useState(false);
-  const [preExistingCondition, setPreExistingCondition] = useState({
+  const preExistingCondition = {
     heartDisease: intakeState.heartDisease,
     cancer: intakeState.cancer,
     highOrLowBloodPressure: intakeState.highOrLowBloodPressure,
@@ -22,7 +22,7 @@ const PeexistingCondition = ({
     headacheOrMigrain: intakeState.headacheOrMigrain,
     depression: intakeState.depression,
     noPrexistingCondition: intakeState.noPrexistingCondition,
-  });
+  };
 
   const handleInputChange = (e) => {
     const item = e.target.name;
