@@ -19,7 +19,7 @@ const PeexistingCondition = ({
     stroke: intakeState.stroke,
     highCholesterol: intakeState.highCholesterol,
     rash: intakeState.rash,
-    headacheOrmigrain: intakeState.headacheOrmigrain,
+    headacheOrMigrain: intakeState.headacheOrMigrain,
     depression: intakeState.depression,
     noPrexistingCondition: intakeState.noPrexistingCondition,
   });
@@ -34,10 +34,29 @@ const PeexistingCondition = ({
     if (isChecked) {
       setConditionError(false);
     }
-    const item = event.target.value;
-    item === "none"
-      ? setIntakeState({ ...intakeState, [item]: !isChecked })
-      : setIntakeState({ ...intakeState, [item]: isChecked });
+    const item = event.target.name;
+    if (item === "noPrexistingCondition") {
+      setIntakeState({
+        ...intakeState,
+        heartDisease: false,
+        cancer: false,
+        highOrLowBloodPressure: false,
+        diabetes: false,
+        asthma: false,
+        stroke: false,
+        highCholesterol: false,
+        rash: false,
+        headacheOrMigrain: false,
+        depression: false,
+        noPrexistingCondition: true,
+      });
+    } else {
+      setIntakeState({
+        ...intakeState,
+        [item]: isChecked,
+        noPrexistingCondition: false,
+      });
+    }
   };
 
   const validateForm = () => {
@@ -79,7 +98,8 @@ const PeexistingCondition = ({
                   className="symptoms-checkbox"
                   type="checkbox"
                   id={indx}
-                  value={history.field}
+                  name={history.field}
+                  checked={intakeState[history.field]}
                   onChange={handleCheckboxChange}
                 />
               ) : (
