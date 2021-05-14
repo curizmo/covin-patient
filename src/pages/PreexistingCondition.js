@@ -10,6 +10,7 @@ const PeexistingCondition = ({
   page,
 }) => {
   const [conditionError, setConditionError] = useState(false);
+  const [isConditionChecked, setIsConditionChecked] = useState(false);
   const preExistingCondition = {
     heartDisease: intakeState.heartDisease,
     cancer: intakeState.cancer,
@@ -29,12 +30,19 @@ const PeexistingCondition = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleCheckboxChange = (event) => {
-    const isChecked = event.target.checked;
-    if (isChecked) {
+  const handleDivSelect = (field) => {
+    setIsConditionChecked(!isConditionChecked);
+    handleOnConditionClick(field);
+  };
+
+  const handleOnConditionClick = (item) => {
+    if (isConditionChecked) {
+      setIsConditionChecked(false);
+    }
+    if (isConditionChecked) {
       setConditionError(false);
     }
-    const item = event.target.name;
+
     if (item === "noPrexistingCondition") {
       setIntakeState({
         ...intakeState,
@@ -53,7 +61,7 @@ const PeexistingCondition = ({
     } else {
       setIntakeState({
         ...intakeState,
-        [item]: isChecked,
+        [item]: isConditionChecked,
         noPrexistingCondition: false,
       });
     }
@@ -78,6 +86,7 @@ const PeexistingCondition = ({
     setPage(page + 1);
   };
 
+  console.log(intakeState);
   return (
     <div className="form-content-wrapper">
       <div>Pre-existing Conditions</div>
@@ -91,6 +100,11 @@ const PeexistingCondition = ({
                   : "input-history"
               }
               key={indx}
+              onClick={
+                `${history.type}` === "Boolean"
+                  ? () => handleDivSelect(history.field)
+                  : null
+              }
             >
               {history.type === "Text" && <label>{history.title}</label>}
               {history.type === "Boolean" ? (
@@ -100,7 +114,6 @@ const PeexistingCondition = ({
                   id={indx}
                   name={history.field}
                   checked={intakeState[history.field]}
-                  onChange={handleCheckboxChange}
                 />
               ) : (
                 <input
