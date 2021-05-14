@@ -7,7 +7,7 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
   const [symptoms, setSymptoms] = useState([]);
   const [symptomsError, setSymptomsError] = useState(false);
   const [isSymptomChecked, setIsSymptomChecked] = useState(false);
-  const [isSymptomLoad, setIsSymptomLoad] = useState(false);
+  const [isSymptomLoad, setIsSymptomLoad] = useState(true);
 
   useEffect(() => {
     getSymptoms();
@@ -58,11 +58,7 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
   const getSymptoms = async () => {
     const response = await patientService.getPatientSymtoms();
     setSymptoms(response.symptomsTemplate);
-    if (symptoms) {
-      setIsSymptomLoad(true);
-    } else {
-      setIsSymptomLoad(false);
-    }
+    setIsSymptomLoad(false)
   };
 
   return (
