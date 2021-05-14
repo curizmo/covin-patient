@@ -9,12 +9,28 @@ const PeexistingCondition = ({
   setPage,
   page,
 }) => {
+  const [conditionError, setConditionError] = useState(false);
+  const [preExistingCondition, setPreExistingCondition] = useState({
+    heartDisease: intakeState.heartDisease,
+    cancer: intakeState.cancer,
+    highOrLowBloodPressure: intakeState.highOrLowBloodPressure,
+    diabetes: intakeState.diabetes,
+    asthma: intakeState.asthma,
+    stroke: intakeState.stroke,
+    highCholesterol: intakeState.highCholesterol,
+    rash: intakeState.rash,
+    headacheOrmigrain: intakeState.headacheOrmigrain,
+    depression: intakeState.depression,
+    noPrexistingCondition: intakeState.noPrexistingCondition,
+  });
+
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  console.log()
+  console.log();
+
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.value;
@@ -23,7 +39,22 @@ const PeexistingCondition = ({
       : setIntakeState({ ...intakeState, [item]: isChecked });
   };
 
+  const validateForm = () => {
+    const isAnyTrue = Object.keys(preExistingCondition)
+      .map((key) => preExistingCondition[key])
+      .some((v) => v === true);
+
+    setConditionError(!isAnyTrue);
+
+    return isAnyTrue;
+  };
+
   const onNext = () => {
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
+
     setPage(page + 1);
   };
 
@@ -63,6 +94,11 @@ const PeexistingCondition = ({
           );
         })}
       </div>
+      {conditionError ? (
+        <span className="error-message">
+          At least one field must be selected
+        </span>
+      ) : null}
       <button className="submit-button submit-btn" onClick={onNext}>
         NEXT
       </button>
