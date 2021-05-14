@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
+import { PRE_EXISTING_CONDITION } from "../constants/constants";
 
 const PeexistingCondition = ({
   preexistingCondition,
@@ -9,21 +10,79 @@ const PeexistingCondition = ({
   setPage,
   page,
 }) => {
+  const [conditionError, setConditionError] = useState(false);
+  const [isConditionChecked, setIsConditionChecked] = useState(false);
+  const preExistingCondition = {
+    heartDisease: intakeState.heartDisease,
+    cancer: intakeState.cancer,
+    highOrLowBloodPressure: intakeState.highOrLowBloodPressure,
+    diabetes: intakeState.diabetes,
+    asthma: intakeState.asthma,
+    stroke: intakeState.stroke,
+    highCholesterol: intakeState.highCholesterol,
+    rash: intakeState.rash,
+    headacheOrMigrain: intakeState.headacheOrMigrain,
+    depression: intakeState.depression,
+    noPrexistingCondition: intakeState.noPrexistingCondition,
+  };
+
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  console.log()
-  const handleCheckboxChange = (event) => {
-    const isChecked = event.target.checked;
-    const item = event.target.value;
-    item === "none"
-      ? setIntakeState({ ...intakeState, [item]: !isChecked })
-      : setIntakeState({ ...intakeState, [item]: isChecked });
+  const handleDivSelect = (field) => {
+    setIsConditionChecked(!isConditionChecked);
+    handleOnConditionClick(field);
+  };
+
+  const handleOnConditionClick = (item) => {
+    if (isConditionChecked) {
+      setIsConditionChecked(false);
+    }
+    if (isConditionChecked) {
+      setConditionError(false);
+    }
+
+    if (item === PRE_EXISTING_CONDITION) {
+      setIntakeState({
+        ...intakeState,
+        heartDisease: false,
+        cancer: false,
+        highOrLowBloodPressure: false,
+        diabetes: false,
+        asthma: false,
+        stroke: false,
+        highCholesterol: false,
+        rash: false,
+        headacheOrMigrain: false,
+        depression: false,
+        noPrexistingCondition: true,
+      });
+    } else {
+      setIntakeState({
+        ...intakeState,
+        [item]: isConditionChecked,
+        noPrexistingCondition: false,
+      });
+    }
+  };
+
+  const validateForm = () => {
+    const isAnyTrue = Object.keys(preExistingCondition)
+      .some((key) => preExistingCondition[key]);
+
+    setConditionError(!isAnyTrue);
+
+    return isAnyTrue;
   };
 
   const onNext = () => {
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
+
     setPage(page + 1);
   };
 
@@ -40,6 +99,11 @@ const PeexistingCondition = ({
                   : "input-history"
               }
               key={indx}
+              onClick={
+                `${history.type}` === "Boolean"
+                  ? () => handleDivSelect(history.field)
+                  : null
+              }
             >
               {history.type === "Text" && <label>{history.title}</label>}
               {history.type === "Boolean" ? (
@@ -47,8 +111,8 @@ const PeexistingCondition = ({
                   className="symptoms-checkbox"
                   type="checkbox"
                   id={indx}
-                  value={history.field}
-                  onChange={handleCheckboxChange}
+                  name={history.field}
+                  checked={intakeState[history.field]}
                 />
               ) : (
                 <input
@@ -63,6 +127,11 @@ const PeexistingCondition = ({
           );
         })}
       </div>
+      {conditionError ? (
+        <span className="error-message">
+          At least one field must be selected
+        </span>
+      ) : null}
       <button className="submit-button submit-btn" onClick={onNext}>
         NEXT
       </button>
