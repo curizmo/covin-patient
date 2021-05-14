@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
+import { PRE_EXISTING_CONDITION } from "../constants/constants";
 
 const PeexistingCondition = ({
   preexistingCondition,
@@ -10,6 +11,7 @@ const PeexistingCondition = ({
   page,
 }) => {
   const [conditionError, setConditionError] = useState(false);
+  const [isConditionChecked, setIsConditionChecked] = useState(false);
   const preExistingCondition = {
     heartDisease: intakeState.heartDisease,
     cancer: intakeState.cancer,
@@ -29,13 +31,20 @@ const PeexistingCondition = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleCheckboxChange = (event) => {
-    const isChecked = event.target.checked;
-    if (isChecked) {
+  const handleDivSelect = (field) => {
+    setIsConditionChecked(!isConditionChecked);
+    handleOnConditionClick(field);
+  };
+
+  const handleOnConditionClick = (item) => {
+    if (isConditionChecked) {
+      setIsConditionChecked(false);
+    }
+    if (isConditionChecked) {
       setConditionError(false);
     }
-    const item = event.target.name;
-    if (item === "noPrexistingCondition") {
+
+    if (item === PRE_EXISTING_CONDITION) {
       setIntakeState({
         ...intakeState,
         heartDisease: false,
@@ -53,7 +62,7 @@ const PeexistingCondition = ({
     } else {
       setIntakeState({
         ...intakeState,
-        [item]: isChecked,
+        [item]: isConditionChecked,
         noPrexistingCondition: false,
       });
     }
@@ -61,8 +70,7 @@ const PeexistingCondition = ({
 
   const validateForm = () => {
     const isAnyTrue = Object.keys(preExistingCondition)
-      .map((key) => preExistingCondition[key])
-      .some((v) => v === true);
+      .some((key) => preExistingCondition[key]);
 
     setConditionError(!isAnyTrue);
 
@@ -91,6 +99,11 @@ const PeexistingCondition = ({
                   : "input-history"
               }
               key={indx}
+              onClick={
+                `${history.type}` === "Boolean"
+                  ? () => handleDivSelect(history.field)
+                  : null
+              }
             >
               {history.type === "Text" && <label>{history.title}</label>}
               {history.type === "Boolean" ? (
@@ -100,7 +113,6 @@ const PeexistingCondition = ({
                   id={indx}
                   name={history.field}
                   checked={intakeState[history.field]}
-                  onChange={handleCheckboxChange}
                 />
               ) : (
                 <input
