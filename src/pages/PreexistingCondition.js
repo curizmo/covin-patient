@@ -70,7 +70,6 @@ const PeexistingCondition = ({
 
   const validateForm = () => {
     const isAnyTrue = Object.keys(preExistingCondition)
-      .map((key) => preExistingCondition[key])
       .some((key) => preExistingCondition[key]);
 
     setConditionError(!isAnyTrue);
