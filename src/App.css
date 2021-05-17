@@ -85,7 +85,7 @@ html {
 }
 
 .input-history label {
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 
 .history-list-content {
@@ -171,7 +171,7 @@ input.bp:last-of-type {
   padding: 3.188rem 1.5rem;
 }
 
-.thanks-message{
+.thanks-message {
   padding: 3rem;
   height: 50%;
   display: flex;
@@ -179,10 +179,10 @@ input.bp:last-of-type {
   justify-content: center;
 }
 
-.thanks-text{
+.thanks-text {
   font-size: 1.5rem;
   font-weight: 500;
-  color: #22335E;
+  color: #22335e;
   text-align: center;
 }
 
@@ -208,24 +208,24 @@ input.bp:last-of-type {
   padding: 1rem 0;
 }
 
-.covid-tittle{
+.covid-tittle {
   font-size: 1rem;
   line-height: 1.625rem;
-  color: #1F3259;
+  color: #1f3259;
   font-weight: 500;
 }
 
-.covid-buttons{
+.covid-buttons {
   padding: 0.5rem 0;
   display: flex;
   justify-content: space-between;
 }
 
-.covid-button{
+.covid-button {
   width: 48%;
   height: 5.5rem;
   background-color: #ffffff;
-  border: 1px solid #C5CDE1;
+  border: 1px solid #c5cde1;
   box-shadow: 0px 3px 3px rgba(159, 167, 186, 0.2);
   border-radius: 3px;
   display: flex;
@@ -233,14 +233,14 @@ input.bp:last-of-type {
   justify-content: center;
 }
 
-.yes-diagnosed:focus{
-  background-color: #F0FAF5;
-  border: 1px solid #48B07A;
+.yes-diagnosed:focus {
+  background-color: #f0faf5;
+  border: 1px solid #48b07a;
 }
 
-.yes-diagnosed:active{
-  background-color: #F0FAF5;
-  border: 1px solid #48B07A;
+.yes-diagnosed:active {
+  background-color: #f0faf5;
+  border: 1px solid #48b07a;
 }
 
 .not-diagnosed:focus{
@@ -259,7 +259,7 @@ input.bp:last-of-type {
   padding: 2rem 0;
 }
 
-.date-of-diagnosis{
+.date-of-diagnosis {
   height: 2rem;
   width: 91%;
   margin-top: 0.5rem;
