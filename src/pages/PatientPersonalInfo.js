@@ -108,7 +108,7 @@ const PatientPersonalInfo = ({
 
     setPage(page + 1);
   };
-  
+
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
@@ -160,6 +160,7 @@ const PatientPersonalInfo = ({
                   id={indx}
                   name={info.field}
                   onChange={handleInputChange}
+                  placeholder="dd-mon-yyyy"
                 />
               ) : info.field === "emailId" ? (
                 <input
@@ -171,28 +172,30 @@ const PatientPersonalInfo = ({
                 />
               ) : info.field === "height" ? (
                 <div className="height-wrapper">
-                  <>
-                    <input
-                      className="bp"
-                      type="text"
-                      name={info.field}
-                      id={"feet"}
-                      placeholder={"ft"}
-                      onChange={handleValidateHeight}
-                    />
-                    <input
-                      className="bp"
-                      type="text"
-                      name={info.field}
-                      id={"incg"}
-                      placeholder={"in"}
-                      onChange={handleValidateHeight}
-                    />
-                  </>
+                  <label className="height-label" for={"feet"}>
+                    ft
+                  </label>
+                  <input
+                    className="bp"
+                    type="number"
+                    name={info.field}
+                    id={"feet"}
+                    onChange={handleValidateHeight}
+                  />
+                  <label className="height-label" for={"inch"}>
+                    in
+                  </label>
+                  <input
+                    className="bp"
+                    type="number"
+                    name={info.field}
+                    id={"inch"}
+                    onChange={handleValidateHeight}
+                  />
                 </div>
               ) : (
                 <input
-                  type="text"
+                  type="number"
                   id={indx}
                   name={info.field}
                   value={

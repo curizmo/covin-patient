@@ -90,11 +90,11 @@ const PatientVitals = ({
 
   const subWrapper =
     messageType === "newPatient"
-      ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.covidHistory ||
-        FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
+      ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
         FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.symptoms
         ? "page1-sub-wrapper"
-        : FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vital
+        : FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vital ||
+          FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.covidHistory
         ? "page2-sub-wrapper"
         : "page3-sub-wrapper"
       : FOLLOWING_STATUS.pageNum === 1
@@ -112,7 +112,7 @@ const PatientVitals = ({
           <div className="dull-text">{phone}</div>
         </div>
       </div>
-      <div className="page-hero dull-text">
+      <div className="page-hero dull-text text-cente">
         {day}, {month} {date}, {year}
       </div>
 
