@@ -19,6 +19,7 @@ const PatientPersonalInfo = ({
   setIntakeState,
   intakeState,
   patientDetails,
+  hash,
   setPage,
   page,
 }) => {
@@ -135,7 +136,7 @@ const PatientPersonalInfo = ({
     return !isAnyTrue;
   };
 
-  const onNext = async() => {
+  const onNext = async () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
       return;
@@ -152,19 +153,26 @@ const PatientPersonalInfo = ({
       return;
     }
 
-    await patientService.createPatientIntake({
-      form: {
-        ...intakeState,
-        firstName: intakeState.firstName,
-        lastName: intakeState.lastName,
-        gender: intakeState.gender,
-        dateOfBirth: intakeState.dateOfBirth,
-        height: intakeState.height,
-        weight: intakeState.weight,
-        emailId: intakeState.emailId,
-      },
-      patientId: patientDetails.patientId,
-    });
+    await Promise.all([
+      patientService.createPatientIntake({
+        form: {
+          ...intakeState,
+          firstName: intakeState.firstName,
+          lastName: intakeState.lastName,
+          gender: intakeState.gender,
+          dateOfBirth: intakeState.dateOfBirth,
+          height: intakeState.height,
+          weight: intakeState.weight,
+          emailId: intakeState.emailId,
+        },
+        patientId: patientDetails.patientId,
+      }),
+      patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: page,
+      }),
+    ]);
 
     setPage(page + 1);
   };

@@ -10,6 +10,7 @@ const PeexistingCondition = ({
   setIntakeState,
   intakeState,
   patientDetails,
+  hash,
   setPage,
   page,
 }) => {
@@ -81,30 +82,37 @@ const PeexistingCondition = ({
     return isAnyTrue;
   };
 
-  const onNext = async() => {
+  const onNext = async () => {
     const isValid = validateForm();
     if (!isValid) {
       return;
     }
 
-    await patientService.createPatientIntake({
-      form: {
-        ...intakeState,
-        heartDisease: intakeState.heartDisease,
-        cancer: intakeState.cancer,
-        highOrLowBloodPressure: intakeState.highOrLowBloodPressure,
-        diabetes: intakeState.diabetes,
-        asthma: intakeState.asthma,
-        stroke: intakeState.stroke,
-        highCholesterol: intakeState.highCholesterol,
-        rash: intakeState.rash,
-        headacheOrMigrain: intakeState.headacheOrMigrain,
-        depression: intakeState.depression,
-        others: intakeState.others,
-        noPrexistingCondition: intakeState.noPrexistingCondition,
-      },
-      patientId: patientDetails.patientId,
-    });
+    await Promise.all([
+      patientService.createPatientIntake({
+        form: {
+          ...intakeState,
+          heartDisease: intakeState.heartDisease,
+          cancer: intakeState.cancer,
+          highOrLowBloodPressure: intakeState.highOrLowBloodPressure,
+          diabetes: intakeState.diabetes,
+          asthma: intakeState.asthma,
+          stroke: intakeState.stroke,
+          highCholesterol: intakeState.highCholesterol,
+          rash: intakeState.rash,
+          headacheOrMigrain: intakeState.headacheOrMigrain,
+          depression: intakeState.depression,
+          others: intakeState.others,
+          noPrexistingCondition: intakeState.noPrexistingCondition,
+        },
+        patientId: patientDetails.patientId,
+      }),
+      patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: page,
+      }),
+    ]);
 
     setPage(page + 1);
   };

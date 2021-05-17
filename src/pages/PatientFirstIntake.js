@@ -65,6 +65,7 @@ const PatientFirstIntake = ({
           patientDetails={patientDetails}
           setPage={setPage}
           page={page}
+          hash={hash}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.covidHistory && (
@@ -75,6 +76,7 @@ const PatientFirstIntake = ({
           patientDetails={patientDetails}
           setPage={setPage}
           page={page}
+          hash={hash}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.preExistingCondition && (
@@ -85,6 +87,7 @@ const PatientFirstIntake = ({
           patientDetails={patientDetails}
           setPage={setPage}
           page={page}
+          hash={hash}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.allergy && (
@@ -95,6 +98,7 @@ const PatientFirstIntake = ({
           patientDetails={patientDetails}
           setPage={setPage}
           page={page}
+          hash={hash}
         />
       )}
       {pageNum === NEW_PATIENT_PAGES.medication && (

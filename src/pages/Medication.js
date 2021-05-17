@@ -17,12 +17,18 @@ const Medication = ({
   };
 
   const onSubmit = async () => {
-    await patientService.createPatientIntake({
-      form: intakeState,
-      patientId: patientDetails.patientId,
-    });
-
-    await patientService.UpdateMessageStatus(hash);
+    await Promise.all([
+      patientService.createPatientIntake({
+        form: intakeState,
+        patientId: patientDetails.patientId,
+      }),
+      patientService.UpdateMessageStatus(hash),
+      patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: page,
+      }),
+    ]);
 
     setPage(page + 1);
   };

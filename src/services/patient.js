@@ -20,6 +20,10 @@ export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
 };
 
+export const createFormProgress = (payload) => {
+  return postData("/patient-intake-form/form-progress", payload);
+};
+
 export const createPatientAgreement = (payload) => {
   return postData("/patient-intake-form/agreement", payload);
 };

@@ -8,6 +8,7 @@ const SocialHistory = ({
   setIntakeState,
   intakeState,
   patientDetails,
+  hash,
   setPage,
   page,
 }) => {
@@ -24,16 +25,23 @@ const SocialHistory = ({
       : setIntakeState({ ...intakeState, [item]: isChecked });
   };
 
-  const onNext = async() => {
-    await patientService.createPatientIntake({
-      form: {
-        ...intakeState,
-        food: intakeState.food,
-        medications: intakeState.medications,
-        otherAllergies: intakeState.otherAllergies,
-      },
-      patientId: patientDetails.patientId,
-    });
+  const onNext = async () => {
+    await Promise.all([
+      patientService.createPatientIntake({
+        form: {
+          ...intakeState,
+          food: intakeState.food,
+          medications: intakeState.medications,
+          otherAllergies: intakeState.otherAllergies,
+        },
+        patientId: patientDetails.patientId,
+      }),
+      patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: page,
+      }),
+    ]);
 
     setPage(page + 1);
   };
