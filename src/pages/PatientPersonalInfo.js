@@ -17,9 +17,12 @@ const PatientPersonalInfo = ({
   setPage,
   page,
 }) => {
+  const heightInFeet = intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "");
+  const heightInInch = intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "");
+
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [inchHeight, setInchHeight] = useState(0);
-  const [feetHeight, setFeetHeight] = useState(0);
+  const [inchHeight, setInchHeight] = useState(heightInInch);
+  const [feetHeight, setFeetHeight] = useState(heightInFeet);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -115,6 +118,8 @@ const PatientPersonalInfo = ({
     setPage(page + 1);
   };
 
+  console.log(intakeState);
+
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
@@ -188,6 +193,7 @@ const PatientPersonalInfo = ({
                     type="number"
                     name={info.field}
                     id={"feet"}
+                    value={feetHeight}
                     onChange={handleValidateHeight}
                   />
                   <label className="height-label" for={"inch"}>
@@ -198,6 +204,7 @@ const PatientPersonalInfo = ({
                     type="number"
                     name={info.field}
                     id={"inch"}
+                    value={inchHeight}
                     onChange={handleValidateHeight}
                   />
                 </div>
