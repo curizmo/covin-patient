@@ -20,18 +20,9 @@ const PatientPersonalInfo = ({
   setPage,
   page,
 }) => {
-  const heightInFeet =
-    (intakeState.height &&
-      intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
-    0;
-  const heightInInch =
-    (intakeState.height &&
-      intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
-    0;
-
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [inchHeight, setInchHeight] = useState(heightInInch);
-  const [feetHeight, setFeetHeight] = useState(heightInFeet);
+  const [inchHeight, setInchHeight] = useState(0);
+  const [feetHeight, setFeetHeight] = useState(0);
   const [showDateError, setShowDateError] = useState(false);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
@@ -42,6 +33,21 @@ const PatientPersonalInfo = ({
     weight: "",
     emailId: "",
   });
+
+  useEffect(() => {
+    const heightInFeet =
+    (intakeState.height &&
+      intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
+    0;
+    const heightInInch =
+    (intakeState.height &&
+      intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
+      0;
+      setFeetHeight(heightInFeet)
+      setInchHeight(heightInInch)
+  }, [])
+
+  console.log(intakeState)
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -185,7 +191,7 @@ const PatientPersonalInfo = ({
               )}
 
               {info.type === "Boolean" ? (
-                GENDERS.map((gender, index) => {
+                GENDERS.map((gender) => {
                   return (
                     <>
                       <span className="gender-radio-span">
