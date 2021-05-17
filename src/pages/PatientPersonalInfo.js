@@ -79,7 +79,7 @@ const PatientPersonalInfo = ({
   useEffect(() => {
     setIntakeState({
       ...intakeState,
-      height: `${feetHeight}' ${inchHeight}"`,
+      height: `${feetHeight}'${inchHeight}"`,
     });
   }, [feetHeight, inchHeight]);
 
@@ -154,6 +154,7 @@ const PatientPersonalInfo = ({
                           name={info.field}
                           value={gender}
                           onChange={handleCheckboxChange}
+                          checked={intakeState.gender === gender}
                         />
                         <label className="gender-radio-label">{gender}</label>
                       </span>
