@@ -5,6 +5,7 @@ import "./home.css";
 const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page }) => {
   const [checkedOne, setCheckedOne] = useState(false);
   const [checkedTwo, setCheckedTwo] = useState(false);
+  const [isDiagnosed, setDiagnosed] = useState(false);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -29,9 +30,44 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page 
     setPage(page + 1);
   };
 
+  const yesDiagnosed =() =>{
+    setDiagnosed(true)
+  }
+
+  const notDiagnosed =() =>{
+    setDiagnosed(false)
+  }
+
   return (
     <div className="form-content-wrapper">
-      <div className="page-title">Covid History</div>
+      {/* <div className="page-title">Covid History</div> */}
+      <div className="covid-diagnosed">
+        <div className="covid-tittle">Have you ever been diagnosed positive for COVID?</div>
+        <div className="covid-buttons">
+          <button 
+            className="yes-diagnosed covid-button"
+            onClick={yesDiagnosed}
+          >
+            Yes
+          </button>
+          <button 
+            className="not-diagnosed covid-button"
+            onClick={notDiagnosed}
+            >
+              No
+          </button>
+        </div>
+        {isDiagnosed && 
+          <div className="date-diagnosed">
+            <label>Date of diagnosis</label>
+            <input
+            className="date-of-diagnosis"
+            type="date"
+            placeholder="Select date of diagnosis"
+            />
+          </div>
+        }
+      </div>
       <div className="health-checklist">
         {covidHistory.map((history, indx) => {
           return (
