@@ -4,7 +4,6 @@ import "./home.css";
 import * as patientService from "../services/patient";
 import {
   GENDERS,
-  HEIGHT,
   EMAIL_TYPE_REGEX,
   NUMBER_TYPE_REGEX,
   HEIGHT_MEASUREMENT,
