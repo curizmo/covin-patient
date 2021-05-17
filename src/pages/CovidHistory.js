@@ -33,6 +33,18 @@ const CovidHistory = ({
   };
 
   const onNext = () => {
+    if (
+      parseInt(moment(intakeState.dateOfDose1Vaccination).year()) >
+        parseInt(moment().year()) ||
+      parseInt(moment(intakeState.dateOfDose2Vaccination).year()) >
+        parseInt(moment().year()) ||
+      parseInt(moment(intakeState.dateOfDose1Vaccination).year()) <
+        parseInt(moment().year()) - 150 ||
+      parseInt(moment(intakeState.dateOfDose2Vaccination).year()) <
+        parseInt(moment().year()) - 150
+    ) {
+      return;
+    }
     setPage(page + 1);
   };
 

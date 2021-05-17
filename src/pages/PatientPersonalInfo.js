@@ -29,6 +29,7 @@ const PatientPersonalInfo = ({
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [inchHeight, setInchHeight] = useState(heightInInch);
   const [feetHeight, setFeetHeight] = useState(heightInFeet);
+  const [showDateError, setShowDateError] = useState(false);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -46,7 +47,21 @@ const PatientPersonalInfo = ({
 
   const handleDateChange = (e) => {
     const item = e.target.name;
-    setIntakeState({ ...intakeState, [item]: moment(e.target.value).format() });
+    const year = moment(e.target.value).year();
+    const currentYear = moment().year();
+    if (year <= currentYear) {
+      setIntakeState({
+        ...intakeState,
+        [item]: moment(e.target.value).format(),
+      });
+      setShowDateError(false);
+    } else {
+      setIntakeState({
+        ...intakeState,
+        [item]: moment(e.target.value).format(),
+      });
+      setShowDateError(true);
+    }
   };
 
   const handleCheckboxChange = (e) => {
@@ -121,10 +136,17 @@ const PatientPersonalInfo = ({
       return;
     }
 
+    if (
+      parseInt(moment(intakeState.dateOfBirth).year()) >
+        parseInt(moment().year()) ||
+      parseInt(moment(intakeState.dateOfBirth).year()) <
+        parseInt(moment().year()) - 150
+    ) {
+      return;
+    }
+
     setPage(page + 1);
   };
-
-  console.log(intakeState);
 
   return (
     <div className="form-content-wrapper">
@@ -149,6 +171,13 @@ const PatientPersonalInfo = ({
                 <label>
                   {info.title}{" "}
                   <span className="error-message">Invalid Email</span>
+                </label>
+              ) : `${info.field}` === "dateOfBirth" && showDateError ? (
+                <label>
+                  {info.title}{" "}
+                  <span className="error-message">
+                    Selected year cannot be greater than {moment().year()}
+                  </span>
                 </label>
               ) : (
                 <label>{info.title}</label>
