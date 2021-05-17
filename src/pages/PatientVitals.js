@@ -112,7 +112,7 @@ const PatientVitals = ({
           <div className="dull-text">{phone}</div>
         </div>
       </div>
-      <div className="page-hero dull-text text-cente">
+      <div className="page-hero dull-text text-center">
         {day}, {month} {date}, {year}
       </div>
 

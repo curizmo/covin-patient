@@ -195,7 +195,7 @@ const PatientPersonalInfo = ({
                 </div>
               ) : (
                 <input
-                  type="number"
+                  type={info.field === "weight" ? "number" : "text"}
                   id={indx}
                   name={info.field}
                   value={
