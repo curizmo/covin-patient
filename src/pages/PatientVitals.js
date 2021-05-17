@@ -117,14 +117,16 @@ const PatientVitals = ({
     <div className="wrapper">
       <div className="second-header">
         <div className="navigation-bar">
+          {(page === 2 || page === 3 || page === 4 || page === 5) && 
           <div className="back-button" onClick={goBack}>
             <img className="nav-img-back" src={back} alt="go back"></img>
             <span>Back</span>
-          </div>
+          </div>}
+          {(page === 2 || page === 4 || page === 5) && 
           <div className="skip-button" onClick={goForward}>
             <span>Skip</span>
             <img className="nav-img-skip" src={forward} alt="go forward"></img>
-          </div>
+          </div>}
         </div>
         <div className="header-wrapper page-hero">
           <div className="main-text">{name}</div>
@@ -132,7 +134,7 @@ const PatientVitals = ({
         </div>
       </div>
       <div className="page-hero dull-text text-center">
-        {day}, {month} {date}, {year}
+        {/* {day}, {month} {date}, {year} */}
       </div>
 
       {messageType === "newPatient" ? (
