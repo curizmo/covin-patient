@@ -48,7 +48,7 @@ const PatientIntakeForm = () => {
               name={`${patientDetails.givenName} ${patientDetails.familyName}`}
               phone={patientDetails.phone}
               hashKey={hashKey}
-              patientId={patientDetails.patientId}
+              patientDetails={patientDetails}
               messageType={patientDetails.messageType}
             />
           )}

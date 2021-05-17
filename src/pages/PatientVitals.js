@@ -155,7 +155,6 @@ const PatientVitals = ({
                 hash={hashKey}
                 intakeState={intakeState}
                 patientDetails={patientDetails}
-                patientDetails={patientDetails}
                 state={state}
               />
             )}
@@ -193,7 +192,7 @@ const PatientVitals = ({
                 pulseRate={pulseRate}
                 setPage={setPage}
                 page={page}
-                hashKey={hashKey}
+                hash={hashKey}
                 intakeState={intakeState}
                 patientDetails={patientDetails}
                 state={state}
