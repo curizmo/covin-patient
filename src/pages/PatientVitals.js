@@ -11,6 +11,8 @@ import {
   MONTHS,
   NEW_PATIENT_PAGES,
   EXISTING_PATIENT_PAGES,
+  EXISTING_PATIENT_VITAL_PAGES,
+  MESSAGE_TYPES,
 } from "../constants/constants";
 
 const PatientVitals = ({
@@ -89,7 +91,7 @@ const PatientVitals = ({
   };
 
   const subWrapper =
-    messageType === "newPatient"
+    messageType === MESSAGE_TYPES.newPatient
       ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
         FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.symptoms
         ? "page1-sub-wrapper"
@@ -116,7 +118,7 @@ const PatientVitals = ({
         {day}, {month} {date}, {year}
       </div>
 
-      {messageType === "newPatient" ? (
+      {messageType === MESSAGE_TYPES.newPatient ? (
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
             <PatientFirstIntake
@@ -125,45 +127,16 @@ const PatientVitals = ({
               intakeState={intakeState}
               setPage={setPage}
               page={page}
+              messageType={messageType}
+              patientDetails={patientDetails}
+              hash={hashKey}
             />
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.symptoms && (
-              <PatientChecklist
-                state={state}
-                setState={setState}
-                setPage={setPage}
-                page={page}
-              />
-            )}
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vital && (
-              <PatientVitalForm
-                setTemperature={setTemperature}
-                setOxygenLevel={setOxygenLevel}
-                setPulseRate={setPulseRate}
-                setBpUpperRange={setBpUpperRange}
-                setBpLowerRange={setBpLowerRange}
-                setRespiratoryRate={setRespiratoryRate}
-                bpUpperRange={bpUpperRange}
-                bpLowerRange={bpLowerRange}
-                temperature={temperature}
-                respiratoryRate={respiratoryRate}
-                bpLowerRange={bpLowerRange}
-                bpUpperRange={bpUpperRange}
-                oxygenLevel={oxygenLevel}
-                pulseRate={pulseRate}
-                setPage={setPage}
-                page={page}
-                hash={hashKey}
-                intakeState={intakeState}
-                patientDetails={patientDetails}
-                state={state}
-              />
-            )}
             {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.submission && (
               <Submission />
             )}
           </div>
         </div>
-      ) : (
+      ) : messageType === MESSAGE_TYPES.dailyScreening ? (
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
             {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms && (
@@ -196,14 +169,48 @@ const PatientVitals = ({
                 intakeState={intakeState}
                 patientDetails={patientDetails}
                 state={state}
+                messageType={messageType}
               />
             )}
-            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.Submission && (
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.submission && (
               <Submission />
             )}
           </div>
         </div>
-      )}
+      ) : messageType === MESSAGE_TYPES.vitalsUpdate ? (
+        <div className={`content-wrapper ${subWrapper}`}>
+          <div className="form-wrapper">
+            {FOLLOWING_STATUS.pageNum ===
+              EXISTING_PATIENT_VITAL_PAGES.vital && (
+              <PatientVitalForm
+                setTemperature={setTemperature}
+                setOxygenLevel={setOxygenLevel}
+                setPulseRate={setPulseRate}
+                setBpUpperRange={setBpUpperRange}
+                setBpLowerRange={setBpLowerRange}
+                setRespiratoryRate={setRespiratoryRate}
+                bpUpperRange={bpUpperRange}
+                bpLowerRange={bpLowerRange}
+                temperature={temperature}
+                respiratoryRate={respiratoryRate}
+                bpLowerRange={bpLowerRange}
+                bpUpperRange={bpUpperRange}
+                oxygenLevel={oxygenLevel}
+                pulseRate={pulseRate}
+                setPage={setPage}
+                page={page}
+                hash={hashKey}
+                intakeState={intakeState}
+                patientDetails={patientDetails}
+                state={state}
+                messageType={messageType}
+              />
+            )}
+            {FOLLOWING_STATUS.pageNum ===
+              EXISTING_PATIENT_VITAL_PAGES.submission && <Submission />}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

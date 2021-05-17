@@ -14,7 +14,10 @@ const PatientFirstIntake = ({
   setIntakeState,
   intakeState,
   personalInfoError,
+  messageType,
   setPage,
+  patientDetails,
+  hash,
   page,
 }) => {
   const [personalInfo, setPersonalInfo] = useState([]);
@@ -97,6 +100,9 @@ const PatientFirstIntake = ({
           intakeState={intakeState}
           setPage={setPage}
           page={page}
+          messageType={messageType}
+          patientDetails={patientDetails}
+          hash={hash}
         />
       )}
     </div>

@@ -33,15 +33,18 @@ export const NEW_PATIENT_PAGES = {
   preExistingCondition: 3,
   allergy: 4,
   medication: 5,
-  symptoms: 6,
-  vital: 7,
-  submission: 8,
+  submission: 6,
 };
 
 export const EXISTING_PATIENT_PAGES = {
   symptoms: 1,
   vital: 2,
   submission: 3,
+};
+
+export const EXISTING_PATIENT_VITAL_PAGES = {
+  vital: 1,
+  submission: 2,
 };
 
 export const HEIGHT_MEASUREMENT = {
@@ -53,4 +56,10 @@ export const EMAIL_TYPE_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 export const NUMBER_TYPE_REGEX = /^[+-]?\d*(?:[.,]\d*)?$/;
 
-export const PRE_EXISTING_CONDITION ="noPrexistingCondition"
+export const PRE_EXISTING_CONDITION = "noPrexistingCondition";
+
+export const MESSAGE_TYPES = {
+  newPatient: "newPatient",
+  dailyScreening: "dailyScreening",
+  vitalsUpdate: "vitalsUpdate",
+};
