@@ -2,7 +2,7 @@ html {
   background-color: #f2f7fd;
 }
 .content-wrapper {
-  padding: 1rem 1.5rem;
+  padding: 2rem 1.5rem; /*top spacing increased from 1rem to 2rem*/
   margin-top: 0.7rem;
   min-height: 70vh;
 }
@@ -54,8 +54,6 @@ html {
   font-size: 1.25rem;
   font-weight: 600;
   outline-style: none;
-
-
 }
 
 .input-vitals label {
@@ -135,22 +133,22 @@ html {
   flex-direction: row;
   position: relative;
 }
-label.height-label{
+label.height-label {
   position: absolute;
-  top:42%;
-  right:5%;
+  top: 42%;
+  right: 5%;
   font-weight: bold;
-  color:#657396;
+  color: #657396;
   font-size: 1.125rem;
 }
-.height-label:first-of-type{
-  right:55%;
+.height-label:first-of-type {
+  right: 55%;
 }
 input.bp {
   height: 1.5rem;
   margin-right: 0.5rem;
 }
-input.bp:last-of-type{
+input.bp:last-of-type {
   margin-right: 0rem;
 }
 
@@ -193,20 +191,19 @@ input.bp:last-of-type{
   color: red;
   font-size: 0.7rem;
 }
-.history-list-content>label{
+.history-list-content > label {
   font-size: 1rem;
   margin-left: 0.4rem;
 }
-.wrapper{
+.wrapper {
   min-height: 100vh;
 }
-.initial-page-wrapper{
+.initial-page-wrapper {
   height: 100vh;
   box-sizing: border-box;
 }
 /*@Shreeti can be removed ** START** just added for the heading for Vaccination*/
-.history-list-content:first-of-type{
-
+.history-list-content:first-of-type {
   background-color: transparent;
 }
 .history-list-content:first-of-type::after {
@@ -215,10 +212,9 @@ input.bp:last-of-type{
   display: block;
   font-size: 1.2rem;
   font-weight: 600;
-
 }
 /*@Shreeti can be removed ** END** just added for the heading for Vaccination*/
-.text-center.dull-text{
+.text-center.dull-text {
   text-align: center;
   padding-top: 0;
 }
