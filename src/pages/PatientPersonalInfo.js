@@ -173,8 +173,7 @@ const PatientPersonalInfo = ({
                   {info.title}{" "}
                   <span className="error-message">Invalid Email</span>
                 </label>
-              ) : `${info.field}` === PERSONAL_INFO.dateOfBirth &&
-                showDateError ? (
+              ) : `${info.field}` === PERSONAL_INFO.dob && showDateError ? (
                 <label>
                   {info.title}{" "}
                   <span className="error-message">
