@@ -137,7 +137,7 @@ body {
   display: flex;
   align-items: center;
   width: -webkit-fill-available;
-  padding: 1rem;
+  padding: 2rem 1rem 1rem 1rem;
   justify-content: space-between;
   font-size: 0.875rem;
   color: #9099AF;

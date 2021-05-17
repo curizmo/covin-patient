@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../App.css";
 import "./home.css";
+import yes from "../assets/images/yes.svg";
+import no from "../assets/images/no.svg";
 
 const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page }) => {
   const [checkedOne, setCheckedOne] = useState(false);
@@ -48,12 +50,14 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page 
             className="yes-diagnosed covid-button"
             onClick={yesDiagnosed}
           >
+            <img className="button-img" src={yes} alt="tick"></img>
             Yes
           </button>
           <button 
             className="not-diagnosed covid-button"
             onClick={notDiagnosed}
             >
+              <img className="button-img" src={no} alt="cross"></img>
               No
           </button>
         </div>

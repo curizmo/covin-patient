@@ -4,7 +4,9 @@ import PatientVitalForm from "./PatientVitalForm";
 import PatientFirstIntake from "./PatientFirstIntake";
 import Submission from "./Submission";
 import "./home.css";
-import patient_profile from "../assets/images/icon_userprofile.svg";
+import back from "../assets/images/back.svg";
+import forward from "../assets/images/forward.svg";
+
 
 import {
   weekDays,
@@ -115,8 +117,14 @@ const PatientVitals = ({
     <div className="wrapper">
       <div className="second-header">
         <div className="navigation-bar">
-          <div className="back-button" onClick={goBack}><span>Back</span></div>
-          <div className="skip-button" onClick={goForward}><span>Skip</span></div>
+          <div className="back-button" onClick={goBack}>
+            <img className="nav-img-back" src={back} alt="go back"></img>
+            <span>Back</span>
+          </div>
+          <div className="skip-button" onClick={goForward}>
+            <span>Skip</span>
+            <img className="nav-img-skip" src={forward} alt="go forward"></img>
+          </div>
         </div>
         <div className="header-wrapper page-hero">
           <div className="main-text">{name}</div>

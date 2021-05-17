@@ -186,6 +186,24 @@ input.bp:last-of-type {
   text-align: center;
 }
 
+.nav-img-back{
+  padding-right: 0.35rem;
+}
+
+.nav-img-skip{
+  padding-left: 0.35rem;
+}
+
+.back-button{
+  display: flex;
+  align-items: center;
+}
+
+.skip-button{
+  display: flex;
+  align-items: center;
+}
+
 .covid-diagnosed{
   padding: 1rem 0;
 }
@@ -210,6 +228,9 @@ input.bp:last-of-type {
   border: 1px solid #C5CDE1;
   box-shadow: 0px 3px 3px rgba(159, 167, 186, 0.2);
   border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .yes-diagnosed:focus{
@@ -220,6 +241,16 @@ input.bp:last-of-type {
 .yes-diagnosed:active{
   background-color: #F0FAF5;
   border: 1px solid #48B07A;
+}
+
+.not-diagnosed:focus{
+  background: #FAF0F0;
+  border: 1px solid #D02727;
+}
+
+.not-diagnosed:active{
+  background: #FAF0F0;
+  border: 1px solid #D02727;
 }
 
 .date-diagnosed{
@@ -241,6 +272,11 @@ input.bp:last-of-type {
   outline-style: none;
   color: #22335e;
 }
+
+.button-img{
+  padding-right: 0.5rem;
+}
+
 .initial-page-content {
   margin-top: 2rem;
   display: flex;
