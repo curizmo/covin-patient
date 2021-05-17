@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import help_icon from "../assets/images/help-circle.svg";
 import "../App.css";
 import Modal from "./HelpVideoModal";
-import { NUMBER_TYPE_REGEX } from "../constants/constants";
+import { NUMBER_TYPE_REGEX, MESSAGE_TYPES } from "../constants/constants";
 import * as patientService from "../services/patient";
 
 const PatientVitalForm = ({
@@ -19,6 +19,7 @@ const PatientVitalForm = ({
   intakeState,
   oxygenLevel,
   pulseRate,
+  messageType,
   hash,
   patientDetails,
   state,
@@ -76,22 +77,31 @@ const PatientVitalForm = ({
       return;
     }
 
-    await patientService.createPatientIntake({
-      form: intakeState,
-      patientId: patientDetails.patientId,
-    });
-
-    await patientService.createPatientVitals({
-      patientId: patientDetails.patientId,
-      temperature,
-      respiratoryRate,
-      bpLowerRange,
-      bpUpperRange,
-      vitalsMeasureOn: today,
-      oxygenLevel,
-      pulseRate,
-      symptoms: state,
-    });
+    if (messageType === MESSAGE_TYPES.dailyScreening) {
+      await patientService.createPatientVitals({
+        patientId: patientDetails.patientId,
+        temperature,
+        respiratoryRate,
+        bpLowerRange,
+        bpUpperRange,
+        vitalsMeasureOn: today,
+        oxygenLevel,
+        pulseRate,
+        symptoms: state,
+      });
+    } else if (messageType === MESSAGE_TYPES.vitalsUpdate) {
+      await patientService.createPatientVitals({
+        patientId: patientDetails.patientId,
+        temperature,
+        respiratoryRate,
+        bpLowerRange,
+        bpUpperRange,
+        vitalsMeasureOn: today,
+        oxygenLevel,
+        pulseRate,
+        symptoms: {},
+      });
+    }
 
     await patientService.UpdateMessageStatus(hash);
 
