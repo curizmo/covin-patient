@@ -8,6 +8,7 @@ import {
   NUMBER_TYPE_REGEX,
   HEIGHT_MEASUREMENT,
 } from "../constants/constants";
+const moment = require("moment");
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -32,6 +33,11 @@ const PatientPersonalInfo = ({
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
+  };
+
+  const handleDateChange = (e) => {
+    const item = e.target.name;
+    setIntakeState({ ...intakeState, [item]: moment(e.target.value).format() });
   };
 
   const handleCheckboxChange = (e) => {
@@ -73,7 +79,7 @@ const PatientPersonalInfo = ({
   useEffect(() => {
     setIntakeState({
       ...intakeState,
-      height: `${feetHeight}ft ${inchHeight}in`,
+      height: `${feetHeight}' ${inchHeight}"`,
     });
   }, [feetHeight, inchHeight]);
 
@@ -138,7 +144,7 @@ const PatientPersonalInfo = ({
               )}
 
               {info.type === "Boolean" ? (
-                GENDERS.map((gender) => {
+                GENDERS.map((gender, index) => {
                   return (
                     <>
                       <span className="gender-radio-span">
@@ -159,8 +165,9 @@ const PatientPersonalInfo = ({
                   type="date"
                   id={indx}
                   name={info.field}
-                  onChange={handleInputChange}
+                  onChange={handleDateChange}
                   placeholder="dd-mon-yyyy"
+                  value={moment(intakeState.dateOfBirth).format("YYYY-MM-DD")}
                 />
               ) : info.field === "emailId" ? (
                 <input
@@ -203,6 +210,8 @@ const PatientPersonalInfo = ({
                       ? intakeState.firstName
                       : info.field === "lastName"
                       ? intakeState.lastName
+                      : info.field === "weight"
+                      ? intakeState.weight
                       : null
                   }
                   onChange={
