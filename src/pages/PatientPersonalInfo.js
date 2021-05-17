@@ -17,8 +17,14 @@ const PatientPersonalInfo = ({
   setPage,
   page,
 }) => {
-  const heightInFeet = intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "");
-  const heightInInch = intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "");
+  const heightInFeet =
+    (intakeState.height &&
+      intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
+    0;
+  const heightInInch =
+    (intakeState.height &&
+      intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
+    0;
 
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [inchHeight, setInchHeight] = useState(heightInInch);
