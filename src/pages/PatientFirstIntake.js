@@ -62,6 +62,7 @@ const PatientFirstIntake = ({
           setIntakeState={setIntakeState}
           intakeState={intakeState}
           personalInfoError={personalInfoError}
+          patientDetails={patientDetails}
           setPage={setPage}
           page={page}
         />
@@ -71,6 +72,7 @@ const PatientFirstIntake = ({
           covidHistory={covidHistory}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
+          patientDetails={patientDetails}
           setPage={setPage}
           page={page}
         />
@@ -80,6 +82,7 @@ const PatientFirstIntake = ({
           preexistingCondition={preexistingCondition}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
+          patientDetails={patientDetails}
           setPage={setPage}
           page={page}
         />
@@ -89,6 +92,7 @@ const PatientFirstIntake = ({
           socialHistory={socialHistory}
           setIntakeState={setIntakeState}
           intakeState={intakeState}
+          patientDetails={patientDetails}
           setPage={setPage}
           page={page}
         />

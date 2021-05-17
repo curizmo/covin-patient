@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
 import * as patientService from "../services/patient";
+import "../App.css";
 import "./home.css";
 
 const SocialHistory = ({
   socialHistory,
   setIntakeState,
   intakeState,
+  patientDetails,
   setPage,
   page,
 }) => {
@@ -23,7 +24,17 @@ const SocialHistory = ({
       : setIntakeState({ ...intakeState, [item]: isChecked });
   };
 
-  const onNext = () => {
+  const onNext = async() => {
+    await patientService.createPatientIntake({
+      form: {
+        ...intakeState,
+        food: intakeState.food,
+        medications: intakeState.medications,
+        otherAllergies: intakeState.otherAllergies,
+      },
+      patientId: patientDetails.patientId,
+    });
+
     setPage(page + 1);
   };
 

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
+import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
+
 import { PRE_EXISTING_CONDITION } from "../constants/constants";
 
 const PeexistingCondition = ({
   preexistingCondition,
   setIntakeState,
   intakeState,
+  patientDetails,
   setPage,
   page,
 }) => {
@@ -69,19 +72,39 @@ const PeexistingCondition = ({
   };
 
   const validateForm = () => {
-    const isAnyTrue = Object.keys(preExistingCondition)
-      .some((key) => preExistingCondition[key]);
+    const isAnyTrue = Object.keys(preExistingCondition).some(
+      (key) => preExistingCondition[key]
+    );
 
     setConditionError(!isAnyTrue);
 
     return isAnyTrue;
   };
 
-  const onNext = () => {
+  const onNext = async() => {
     const isValid = validateForm();
     if (!isValid) {
       return;
     }
+
+    await patientService.createPatientIntake({
+      form: {
+        ...intakeState,
+        heartDisease: intakeState.heartDisease,
+        cancer: intakeState.cancer,
+        highOrLowBloodPressure: intakeState.highOrLowBloodPressure,
+        diabetes: intakeState.diabetes,
+        asthma: intakeState.asthma,
+        stroke: intakeState.stroke,
+        highCholesterol: intakeState.highCholesterol,
+        rash: intakeState.rash,
+        headacheOrMigrain: intakeState.headacheOrMigrain,
+        depression: intakeState.depression,
+        others: intakeState.others,
+        noPrexistingCondition: intakeState.noPrexistingCondition,
+      },
+      patientId: patientDetails.patientId,
+    });
 
     setPage(page + 1);
   };

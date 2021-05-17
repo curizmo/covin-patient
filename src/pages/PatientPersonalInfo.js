@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
+import * as patientService from "../services/patient";
 import {
   GENDERS,
   HEIGHT,
@@ -11,12 +12,14 @@ import {
   PERSONAL_INFO,
   DATE_FORMAT,
 } from "../constants/constants";
+
 const moment = require("moment");
 
 const PatientPersonalInfo = ({
   personalInfo,
   setIntakeState,
   intakeState,
+  patientDetails,
   setPage,
   page,
 }) => {
@@ -36,18 +39,16 @@ const PatientPersonalInfo = ({
 
   useEffect(() => {
     const heightInFeet =
-    (intakeState.height &&
-      intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
-    0;
-    const heightInInch =
-    (intakeState.height &&
-      intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
+      (intakeState.height &&
+        intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
       0;
-      setFeetHeight(heightInFeet)
-      setInchHeight(heightInInch)
-  }, [])
-
-  console.log(intakeState)
+    const heightInInch =
+      (intakeState.height &&
+        intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
+      0;
+    setFeetHeight(heightInFeet);
+    setInchHeight(heightInInch);
+  }, []);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -135,7 +136,7 @@ const PatientPersonalInfo = ({
     return !isAnyTrue;
   };
 
-  const onNext = () => {
+  const onNext = async() => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
       return;
@@ -151,6 +152,20 @@ const PatientPersonalInfo = ({
     if (dateOfBirth > currentYear || dateOfBirth < minimumYear) {
       return;
     }
+
+    await patientService.createPatientIntake({
+      form: {
+        ...intakeState,
+        firstName: intakeState.firstName,
+        lastName: intakeState.lastName,
+        gender: intakeState.gender,
+        dateOfBirth: intakeState.dateOfBirth,
+        height: intakeState.height,
+        weight: intakeState.weight,
+        emailId: intakeState.emailId,
+      },
+      patientId: patientDetails.patientId,
+    });
 
     setPage(page + 1);
   };
