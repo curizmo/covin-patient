@@ -115,8 +115,8 @@ const PatientVitals = ({
     <div className="wrapper">
       <div className="second-header">
         <div className="navigation-bar">
-          <div className="back-button" onClick={goBack}><spam>Back</spam></div>
-          <div className="skip-button" onClick={goForward}><spam>Skip</spam></div>
+          <div className="back-button" onClick={goBack}><span>Back</span></div>
+          <div className="skip-button" onClick={goForward}><span>Skip</span></div>
         </div>
         <div className="header-wrapper page-hero">
           <div className="main-text">{name}</div>
