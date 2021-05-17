@@ -65,7 +65,7 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page 
                   onChange={handleCheckboxChange}
                 />
               )}
-              {history.type === "Boolean" && <label>{history.title}</label>}
+              {history.type === "Boolean" && <label for={history.field}>{history.title}</label>}
             </div>
           );
         })}
