@@ -88,6 +88,14 @@ const PatientVitals = ({
     pageNum: page,
   };
 
+  const goBack = () =>{
+    setPage(page - 1);
+  }
+
+  const goForward = () =>{
+    setPage(page + 1);
+  }
+
   const subWrapper =
     messageType === "newPatient"
       ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
@@ -106,7 +114,10 @@ const PatientVitals = ({
   return (
     <div className="wrapper">
       <div className="second-header">
-        <img src={patient_profile} alt="user-profile" />
+        <div className="navigation-bar">
+          <div className="back-button" onClick={goBack}><spam>Back</spam></div>
+          <div className="skip-button" onClick={goForward}><spam>Skip</spam></div>
+        </div>
         <div className="header-wrapper page-hero">
           <div className="main-text">{name}</div>
           <div className="dull-text">{phone}</div>

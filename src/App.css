@@ -167,11 +167,80 @@ input.bp:last-of-type {
 .name-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 3.188rem 1.5rem;
 }
 
+.thanks-message{
+  padding: 3rem;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thanks-text{
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #22335E;
+  text-align: center;
+}
+
+.covid-diagnosed{
+  padding: 1rem 0;
+}
+
+.covid-tittle{
+  font-size: 1rem;
+  line-height: 1.625rem;
+  color: #1F3259;
+  font-weight: 500;
+}
+
+.covid-buttons{
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.covid-button{
+  width: 48%;
+  height: 5.5rem;
+  background-color: #ffffff;
+  border: 1px solid #C5CDE1;
+  box-shadow: 0px 3px 3px rgba(159, 167, 186, 0.2);
+  border-radius: 3px;
+}
+
+.yes-diagnosed:focus{
+  background-color: #F0FAF5;
+  border: 1px solid #48B07A;
+}
+
+.yes-diagnosed:active{
+  background-color: #F0FAF5;
+  border: 1px solid #48B07A;
+}
+
+.date-diagnosed{
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+.date-of-diagnosis{
+  height: 2rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  outline-style: none;
+  color: #22335e;
+}
 .initial-page-content {
   margin-top: 2rem;
   display: flex;

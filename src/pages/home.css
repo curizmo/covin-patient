@@ -107,7 +107,6 @@ body {
 
 .name-container {
   width: 80%;
-  height: 75vh;
 }
 
 /* PatientVitals */
@@ -119,7 +118,7 @@ body {
   font-weight: normal;
   font-size: 1.2rem;
 }
-.page1-sub-wrapper <.history-list-content {
+.page1-sub-wrapper .history-list-content{
   background: #ffffff;
 }
 .page2-sub-wrapper {
@@ -134,12 +133,23 @@ body {
   color: #2f4068;
 }
 
+.navigation-bar{
+  display: flex;
+  align-items: center;
+  width: -webkit-fill-available;
+  padding: 1rem;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #9099AF;
+  font-weight: 500;
+}
+
 .second-header .header-wrapper {
   box-shadow: none;
 }
 .second-header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #fff;
