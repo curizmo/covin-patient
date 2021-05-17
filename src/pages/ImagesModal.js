@@ -13,8 +13,6 @@ const ImagesModal = (props) => {
       const reader = new FileReader();
       const f = e.target.files[0];
       const file = e.target.value.split("\\");
-      const value = file[2].split(".");
-      const type = value[value.length - 1];
       reader.readAsDataURL(f);
       reader.onload = function () {
         const fileInfo = {
