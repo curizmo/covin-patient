@@ -179,6 +179,7 @@ const PatientPersonalInfo = ({
                   name={info.field}
                   onChange={handleDateChange}
                   placeholder="dd-mon-yyyy"
+                  max={moment().subtract(1, "days").format("YYYY-MM-DD")}
                   value={moment(intakeState.dateOfBirth).format("YYYY-MM-DD")}
                 />
               ) : info.field === "emailId" ? (
