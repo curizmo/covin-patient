@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import "../App.css";
 import "./home.css";
+const moment = require("moment");
 
-const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page }) => {
+const CovidHistory = ({
+  covidHistory,
+  setIntakeState,
+  intakeState,
+  setPage,
+  page,
+}) => {
   const [checkedOne, setCheckedOne] = useState(false);
   const [checkedTwo, setCheckedTwo] = useState(false);
 
@@ -50,6 +57,7 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page 
                   id={indx}
                   name={history.field}
                   onChange={handleInputChange}
+                  max={moment().format("YYYY-MM-DD")}
                   disabled={
                     `${history.field}` === "dateOfDose1Vaccination"
                       ? !checkedOne
@@ -65,15 +73,14 @@ const CovidHistory = ({ covidHistory, setIntakeState, intakeState,setPage, page 
                   onChange={handleCheckboxChange}
                 />
               )}
-              {history.type === "Boolean" && <label for={history.field}>{history.title}</label>}
+              {history.type === "Boolean" && (
+                <label for={history.field}>{history.title}</label>
+              )}
             </div>
           );
         })}
       </div>
-      <button
-        className="submit-button submit-btn"
-        onClick={onNext}
-      >
+      <button className="submit-button submit-btn" onClick={onNext}>
         NEXT
       </button>
     </div>
