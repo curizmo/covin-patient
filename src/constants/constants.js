@@ -63,3 +63,19 @@ export const MESSAGE_TYPES = {
   dailyScreening: "dailyScreening",
   vitalsUpdate: "vitalsUpdate",
 };
+
+export const MINIMUM_YEAR = 150;
+
+export const PERSONAL_INFO = {
+  firstName: "firstName",
+  lastName: "lastName",
+  gender: "gender",
+  dob: "dateOfBirth",
+  weight: "weight",
+  height: "height",
+  email: "emailId",
+};
+
+export const DATE_FORMAT = {
+  yyyymmdd: "YYYY-MM-DD",
+};

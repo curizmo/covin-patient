@@ -7,6 +7,9 @@ import {
   EMAIL_TYPE_REGEX,
   NUMBER_TYPE_REGEX,
   HEIGHT_MEASUREMENT,
+  MINIMUM_YEAR,
+  PERSONAL_INFO,
+  DATE_FORMAT,
 } from "../constants/constants";
 const moment = require("moment");
 
@@ -136,12 +139,10 @@ const PatientPersonalInfo = ({
       return;
     }
 
-    if (
-      parseInt(moment(intakeState.dateOfBirth).year()) >
-        parseInt(moment().year()) ||
-      parseInt(moment(intakeState.dateOfBirth).year()) <
-        parseInt(moment().year()) - 150
-    ) {
+    const currentYear = parseInt(moment().year());
+    const minimumYear = currentYear - MINIMUM_YEAR;
+    const dateOfBirth = parseInt(moment(intakeState.dateOfBirth).year());
+    if (dateOfBirth > currentYear || dateOfBirth < minimumYear) {
       return;
     }
 
@@ -172,7 +173,8 @@ const PatientPersonalInfo = ({
                   {info.title}{" "}
                   <span className="error-message">Invalid Email</span>
                 </label>
-              ) : `${info.field}` === "dateOfBirth" && showDateError ? (
+              ) : `${info.field}` === PERSONAL_INFO.dateOfBirth &&
+                showDateError ? (
                 <label>
                   {info.title}{" "}
                   <span className="error-message">
@@ -208,8 +210,12 @@ const PatientPersonalInfo = ({
                   name={info.field}
                   onChange={handleDateChange}
                   placeholder="dd-mon-yyyy"
-                  max={moment().subtract(1, "days").format("YYYY-MM-DD")}
-                  value={moment(intakeState.dateOfBirth).format("YYYY-MM-DD")}
+                  max={moment()
+                    .subtract(1, "days")
+                    .format(DATE_FORMAT.yyyymmdd)}
+                  value={moment(intakeState.dateOfBirth).format(
+                    DATE_FORMAT.yyyymmdd
+                  )}
                 />
               ) : info.field === "emailId" ? (
                 <input
@@ -246,24 +252,24 @@ const PatientPersonalInfo = ({
                 </div>
               ) : (
                 <input
-                  type={info.field === "weight" ? "number" : "text"}
+                  type={info.field === PERSONAL_INFO.weight ? "number" : "text"}
                   id={indx}
                   name={info.field}
                   value={
-                    info.field === "firstName"
+                    info.field === PERSONAL_INFO.firstName
                       ? intakeState.firstName
-                      : info.field === "lastName"
+                      : info.field === PERSONAL_INFO.lastName
                       ? intakeState.lastName
-                      : info.field === "weight"
+                      : info.field === PERSONAL_INFO.weight
                       ? intakeState.weight
                       : null
                   }
                   onChange={
-                    info.field === "weight"
+                    info.field === PERSONAL_INFO.weight
                       ? handleValidateWeight
                       : handleInputChange
                   }
-                  placeholder={info.field === "weight" ? "Kg." : ""}
+                  placeholder={info.field === PERSONAL_INFO.weight ? "Kg." : ""}
                 />
               )}
             </div>

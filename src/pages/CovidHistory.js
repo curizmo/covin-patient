@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import "./home.css";
 const moment = require("moment");
+import { MINIMUM_YEAR, DATE_FORMAT } from "../constants/constants";
 
 const CovidHistory = ({
   covidHistory,
@@ -33,15 +34,19 @@ const CovidHistory = ({
   };
 
   const onNext = () => {
+    const currentYear = parseInt(moment().year());
+    const minimumYear = currentYear - MINIMUM_YEAR;
+    const dose1Year = parseInt(
+      moment(intakeState.dateOfDose1Vaccination).year()
+    );
+    const dose2Year = parseInt(
+      moment(intakeState.dateOfDose2Vaccination).year()
+    );
     if (
-      parseInt(moment(intakeState.dateOfDose1Vaccination).year()) >
-        parseInt(moment().year()) ||
-      parseInt(moment(intakeState.dateOfDose2Vaccination).year()) >
-        parseInt(moment().year()) ||
-      parseInt(moment(intakeState.dateOfDose1Vaccination).year()) <
-        parseInt(moment().year()) - 150 ||
-      parseInt(moment(intakeState.dateOfDose2Vaccination).year()) <
-        parseInt(moment().year()) - 150
+      dose1Year > currentYear ||
+      dose2Year > currentYear ||
+      dose1Year < minimumYear ||
+      dose2Year < minimumYear
     ) {
       return;
     }
@@ -69,7 +74,7 @@ const CovidHistory = ({
                   id={indx}
                   name={history.field}
                   onChange={handleInputChange}
-                  max={moment().format("YYYY-MM-DD")}
+                  max={moment().format(DATE_FORMAT.yyyymmdd)}
                   disabled={
                     `${history.field}` === "dateOfDose1Vaccination"
                       ? !checkedOne
