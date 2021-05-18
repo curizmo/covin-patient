@@ -79,6 +79,7 @@ const PatientVitals = ({
     medication1DoseFrequency: "",
   });
 
+  console.log(intakeState)
   useEffect(() => {
     getPageProgress(hashKey);
   }, []);

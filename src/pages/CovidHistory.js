@@ -107,6 +107,21 @@ const CovidHistory = ({
   const onBackButtonClick = () => {
     setProgressedPage(NEW_PATIENT_PAGES.patientInfo);
   };
+
+  const getValue = (field) => {
+    if (field === "dateOfDose1Vaccination") {
+      return moment(intakeState.dateOfDose1Vaccination).format(
+        DATE_FORMAT.yyyymmdd
+      );
+    } else if (field === "dateOfDose2Vaccination") {
+      return moment(intakeState.dateOfDose2Vaccination).format(
+        DATE_FORMAT.yyyymmdd
+      );
+    } else if (field === "dateCovidBefore") {
+      return moment(intakeState.dateCovidBefore).format(DATE_FORMAT.yyyymmdd);
+    }
+  };
+
   return (
     <div className="form-content-wrapper">
       <div className="covid-diagnosed">
@@ -184,21 +199,7 @@ const CovidHistory = ({
                       ? !intakeState.covidPositiveEverBefore
                       : null
                   }
-                  value={
-                    `${history.field}` === "dateOfDose1Vaccination"
-                      ? moment(intakeState.dateOfDose1Vaccination).format(
-                          DATE_FORMAT.yyyymmdd
-                        )
-                      : `${history.field}` === "dateOfDose2Vaccination"
-                      ? moment(intakeState.dateOfDose2Vaccination).format(
-                          DATE_FORMAT.yyyymmdd
-                        )
-                      : `${history.field}` === "dateCovidBefore"
-                      ? moment(intakeState.dateCovidBefore).format(
-                          DATE_FORMAT.yyyymmdd
-                        )
-                      : null
-                  }
+                  value={getValue(history.field)}
                 />
               ) : (
                 <input
