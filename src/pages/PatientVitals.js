@@ -112,10 +112,12 @@ const PatientVitals = ({
 
   const goBack = () =>{
     setPage(page - 1);
+    setProgressedPage(progressedPage - 1);
   }
 
   const goForward = () =>{
     setPage(page + 1);
+    setProgressedPage(progressedPage + 1);
   }
 
   const subWrapper =
@@ -150,7 +152,7 @@ const PatientVitals = ({
             <img className="nav-img-back" src={back} alt="go back"></img>
             <span>Back</span>
           </div>}
-          {(page === 2 || page === 4 || page === 5) && 
+          {(page === 2 || page === 4 ) && 
           <div className="skip-button" onClick={goForward}>
             <span>Skip</span>
             <img className="nav-img-skip" src={forward} alt="go forward"></img>
