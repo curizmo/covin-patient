@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as patientService from "../services/patient";
+import { NEW_PATIENT_PAGES } from "../constants/constants";
 import "../App.css";
 import "./home.css";
 
@@ -41,17 +42,22 @@ const SocialHistory = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: progressedPage,
+        pagenum: NEW_PATIENT_PAGES.allergy,
       }),
     ]);
 
-    setProgressedPage(progressedPage + 1);
+    setProgressedPage(NEW_PATIENT_PAGES.medication);
     setPage(page + 1);
+  };
 
+  const onBackButtonClick = () => {
+    setProgressedPage(NEW_PATIENT_PAGES.preExistingCondition);
   };
 
   return (
     <div className="form-content-wrapper">
+      <div onClick={onBackButtonClick}>back</div>
+
       <div className="page-title">Allergy</div>
       <div className="health-checklist">
         {socialHistory.map((history, indx) => {
@@ -78,6 +84,7 @@ const SocialHistory = ({
                   type="text"
                   id={indx}
                   name={history.field}
+                  value={intakeState[history.field]}
                   onChange={handleInputChange}
                 />
               )}

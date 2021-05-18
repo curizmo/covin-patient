@@ -1,6 +1,7 @@
 import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
+import { NEW_PATIENT_PAGES } from "../constants/constants";
 
 const Medication = ({
   medication,
@@ -28,17 +29,21 @@ const Medication = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: progressedPage,
+        pagenum: NEW_PATIENT_PAGES.medication,
       }),
     ]);
 
-    setProgressedPage(progressedPage + 1);
+    setProgressedPage(NEW_PATIENT_PAGES.submission);
     setPage(page + 1);
+  };
 
+  const onBackButtonClick = () => {
+    setProgressedPage(NEW_PATIENT_PAGES.allergy);
   };
 
   return (
     <div className="form-content-wrapper">
+      <div onClick={onBackButtonClick}>back</div>
       <div className="page-title">Medications</div>
       <div className="health-checklist">
         {medication.map((history, indx) => {

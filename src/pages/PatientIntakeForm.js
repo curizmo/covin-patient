@@ -28,7 +28,7 @@ const PatientIntakeForm = () => {
           {patientDetails.messageType === "newPatient" ? (
             <>
               {!isAgreed && (
-                <TermsAndCondition
+                <TermsAndCondition  
                   setIsAgreed={setIsAgreed}
                   name={patientDetails.givenName}
                   phone={patientDetails.phone}

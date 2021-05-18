@@ -10,6 +10,7 @@ import {
   MINIMUM_YEAR,
   PERSONAL_INFO,
   DATE_FORMAT,
+  NEW_PATIENT_PAGES,
 } from "../constants/constants";
 
 const moment = require("moment");
@@ -172,11 +173,11 @@ const PatientPersonalInfo = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: progressedPage,
+        pagenum: NEW_PATIENT_PAGES.patientInfo,
       }),
     ]);
 
-    setProgressedPage(progressedPage + 1);
+    setProgressedPage(NEW_PATIENT_PAGES.covidHistory);
     setPage(page + 1);
   };
 
