@@ -175,9 +175,7 @@ const PatientVitals = ({
           <div className="dull-text">{phone}</div>
         </div>
       </div>
-      <div className="page-hero dull-text text-center">
-        {/* {day}, {month} {date}, {year} */}
-      </div>
+      <div className="page-hero dull-text text-center"></div>
 
       {messageType === MESSAGE_TYPES.newPatient ? (
         <div className={`content-wrapper ${subWrapper}`}>

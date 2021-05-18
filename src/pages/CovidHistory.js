@@ -109,26 +109,34 @@ const CovidHistory = ({
   };
 
   const getValue = (field) => {
-    if (field === "dateOfDose1Vaccination") {
-      return moment(intakeState.dateOfDose1Vaccination).format(
-        DATE_FORMAT.yyyymmdd
-      );
-    } else if (field === "dateOfDose2Vaccination") {
-      return moment(intakeState.dateOfDose2Vaccination).format(
-        DATE_FORMAT.yyyymmdd
-      );
-    } else if (field === "dateCovidBefore") {
-      return moment(intakeState.dateCovidBefore).format(DATE_FORMAT.yyyymmdd);
+    switch (field) {
+      case "dateOfDose1Vaccination":
+        return moment(intakeState.dateOfDose1Vaccination).format(
+          DATE_FORMAT.yyyymmdd
+        );
+        break;
+      case "dateOfDose2Vaccination":
+        return moment(intakeState.dateOfDose2Vaccination).format(
+          DATE_FORMAT.yyyymmdd
+        );
+        break;
+      case "dateCovidBefore":
+        moment(intakeState.dateCovidBefore).format(DATE_FORMAT.yyyymmdd);
+        break;
     }
   };
 
   const checkDisabled = (field) => {
-    if (field === "dateOfDose1Vaccination") {
-      return !intakeState.covidVaccinationDose1Taken;
-    } else if (field === "dateOfDose2Vaccination") {
-      return !intakeState.covidVaccinationDose2Taken;
-    } else if (field === "dateCovidBefore") {
-      return !intakeState.covidPositiveEverBefore;
+    switch (field) {
+      case "dateOfDose1Vaccination":
+        return !intakeState.covidVaccinationDose1Taken;
+        break;
+      case "dateOfDose2Vaccination":
+        return !intakeState.covidVaccinationDose2Taken;
+        break;
+      case "dateCovidBefore":
+        return !intakeState.covidPositiveEverBefore;
+        break;
     }
   };
 
