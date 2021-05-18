@@ -137,14 +137,15 @@ const PatientVitals = ({
   return (
     <div className="wrapper">
       <div className="second-header">
+      {(progressedPage === NEW_PATIENT_PAGES.patientInfo || progressedPage === NEW_PATIENT_PAGES.covidHistory || progressedPage ===  NEW_PATIENT_PAGES.preExistingCondition || progressedPage === NEW_PATIENT_PAGES.allergy || progressedPage === NEW_PATIENT_PAGES.medication) && 
         <div className="progress-bar">
           <div class="progress" ></div>
           <style>{`
             .progress::after{
-              width : ${progressedPage*20}%;
+              width : ${(progressedPage-1)*20}%;
             }
           `}</style>
-        </div>
+        </div>}
         <div className="navigation-bar">
           {(progressedPage === NEW_PATIENT_PAGES.covidHistory || progressedPage ===  NEW_PATIENT_PAGES.preExistingCondition || progressedPage === NEW_PATIENT_PAGES.allergy || progressedPage === NEW_PATIENT_PAGES.medication) && 
           <div className="back-button" onClick={goBack}>
