@@ -1,5 +1,6 @@
 const config = {
-  apiURL: "https://test-covin-nodeapi.azurewebsites.net/api",
+ apiURL: process.env.REACT_APP_API_URL,
+
 };
 
 export default config;
