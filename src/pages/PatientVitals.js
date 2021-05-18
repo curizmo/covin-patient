@@ -118,6 +118,9 @@ const PatientVitals = ({
   return (
     <div className="wrapper">
       <div className="second-header">
+        <div className="progress-bar">
+          <div class="progress" ></div>
+        </div>
         <div className="navigation-bar">
           {(page === 2 || page === 3 || page === 4 || page === 5) && 
           <div className="back-button" onClick={goBack}>

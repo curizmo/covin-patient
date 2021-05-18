@@ -2,8 +2,8 @@ import { MINIMUM_YEAR, DATE_FORMAT } from "../constants/constants";
 import React, { useState } from "react";
 import "../App.css";
 import "./home.css";
-import yes from "../assets/images/yes.svg";
-import no from "../assets/images/no.svg";
+
+
 const moment = require("moment");
 
 const CovidHistory = ({
