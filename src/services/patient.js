@@ -24,6 +24,10 @@ export const getPatientAgreement = (patientId) => {
   return getData(`/patient-intake-form/agreement/${patientId}`);
 };
 
+export const getSymptomsByPatientId = (patientId) => {
+  return getData(`/vitals/symptoms/${patientId}`);
+};
+
 export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
 };
