@@ -75,7 +75,7 @@ const PatientVitals = ({
     noPrexistingCondition: false,
     food: "",
     medications: "",
-    otherMedications: "",
+    otherMedicationsInfo: "",
     medication1DoseFrequency: "",
   });
 
