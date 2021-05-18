@@ -8,7 +8,6 @@ const PatientIntakeForm = () => {
   const { hashKey } = useParams();
   const [isAgreed, setIsAgreed] = useState(false);
   const [patientDetails, setPatientDatails] = useState({});
-  const [hasPatientAgreed, setHasPatientAgreed] = useState(false);
 
   useEffect(() => {
     getPatientDetail(hashKey);
@@ -17,20 +16,8 @@ const PatientIntakeForm = () => {
   const getPatientDetail = async (hashKey) => {
     try {
       const response = await patientService.getPatientDetails(hashKey);
-      getAgreementStatus(response.patientInfo.patientId);
       setPatientDatails(response.patientInfo);
-    } catch (err) {}
-  };
-
-  const getAgreementStatus = async (patientId) => {
-    try {
-      const response = await patientService.getPatientAgreement(patientId);
-      if (response.agreement) {
-        setHasPatientAgreed(true);
-        setIsAgreed(response.agreement.isAgreed);
-      } else {
-        setHasPatientAgreed(false);
-      }
+      setIsAgreed(response.patientInfo.isAgreed);
     } catch (err) {}
   };
 
@@ -40,7 +27,7 @@ const PatientIntakeForm = () => {
         <>
           {patientDetails.messageType === "newPatient" ? (
             <>
-              {!isAgreed && !hasPatientAgreed && (
+              {!isAgreed && (
                 <TermsAndCondition
                   setIsAgreed={setIsAgreed}
                   name={patientDetails.givenName}
