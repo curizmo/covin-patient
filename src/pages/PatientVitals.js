@@ -138,6 +138,11 @@ const PatientVitals = ({
       <div className="second-header">
         <div className="progress-bar">
           <div class="progress" ></div>
+          <style>{`
+            .progress::after{
+              width : ${page*20}%;
+            }
+          `}</style>
         </div>
         <div className="navigation-bar">
           {(page === 2 || page === 3 || page === 4 || page === 5) && 
