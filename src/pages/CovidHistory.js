@@ -1,4 +1,8 @@
-import { MINIMUM_YEAR, DATE_FORMAT } from "../constants/constants";
+import {
+  MINIMUM_YEAR,
+  DATE_FORMAT,
+  NEW_PATIENT_PAGES,
+} from "../constants/constants";
 import React, { useState } from "react";
 import * as patientService from "../services/patient";
 import "../App.css";
@@ -29,7 +33,7 @@ const CovidHistory = ({
 
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
-    const item = event.target.value;
+    const item = event.target.name;
     item === "none"
       ? setIntakeState({ ...intakeState, [item]: !isChecked })
       : setIntakeState({ ...intakeState, [item]: isChecked });
@@ -75,11 +79,11 @@ const CovidHistory = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: progressedPage,
+        pagenum: NEW_PATIENT_PAGES.covidHistory,
       }),
     ]);
 
-    setProgressedPage(progressedPage + 1);
+    setProgressedPage(NEW_PATIENT_PAGES.preExistingCondition);
     setPage(page + 1);
   };
 
@@ -93,6 +97,9 @@ const CovidHistory = ({
 
   const handleRadioButton = (value) => {
     setChecked(value);
+  };
+  const onBackButtonClick = () => {
+    setProgressedPage(NEW_PATIENT_PAGES.patientInfo);
   };
   return (
     <div className="form-content-wrapper">
@@ -158,8 +165,27 @@ const CovidHistory = ({
                   max={moment().format(DATE_FORMAT.yyyymmdd)}
                   disabled={
                     `${history.field}` === "dateOfDose1Vaccination"
-                      ? !checkedOne
-                      : !checkedTwo
+                      ? !intakeState.covidVaccinationDose1Taken
+                      : `${history.field}` === "dateOfDose2Vaccination"
+                      ? !intakeState.covidVaccinationDose2Taken
+                      : `${history.field}` === "dateCovidBefore"
+                      ? !intakeState.covidPositiveEverBefore
+                      : null
+                  }
+                  value={
+                    `${history.field}` === "dateOfDose1Vaccination"
+                      ? moment(intakeState.dateOfDose1Vaccination).format(
+                          DATE_FORMAT.yyyymmdd
+                        )
+                      : `${history.field}` === "dateOfDose2Vaccination"
+                      ? moment(intakeState.dateOfDose2Vaccination).format(
+                          DATE_FORMAT.yyyymmdd
+                        )
+                      : `${history.field}` === "dateCovidBefore"
+                      ? moment(intakeState.dateCovidBefore).format(
+                          DATE_FORMAT.yyyymmdd
+                        )
+                      : null
                   }
                 />
               ) : (
@@ -167,8 +193,10 @@ const CovidHistory = ({
                   className="symptoms-checkbox"
                   type="checkbox"
                   id={indx}
+                  name={history.field}
                   value={history.field}
                   onChange={handleCheckboxChange}
+                  checked={intakeState[history.field]}
                 />
               )}
               {history.type === "Boolean" && (
