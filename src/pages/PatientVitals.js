@@ -147,12 +147,12 @@ const PatientVitals = ({
           `}</style>
         </div>
         <div className="navigation-bar">
-          {(page === 2 || page === 3 || page === 4 || page === 5) && 
+          {(page === NEW_PATIENT_PAGES.covidHistory || page ===  NEW_PATIENT_PAGES.preExistingCondition || page === NEW_PATIENT_PAGES.allergy || page === NEW_PATIENT_PAGES.medication) && 
           <div className="back-button" onClick={goBack}>
             <img className="nav-img-back" src={back} alt="go back"></img>
             <span>Back</span>
           </div>}
-          {(page === 2 || page === 4 ) && 
+          {(page === NEW_PATIENT_PAGES.covidHistory || page === NEW_PATIENT_PAGES.allergy ) && 
           <div className="skip-button" onClick={goForward}>
             <span>Skip</span>
             <img className="nav-img-skip" src={forward} alt="go forward"></img>
