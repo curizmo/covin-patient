@@ -292,7 +292,6 @@ input.bp:last-of-type {
   content: '';
   display: block;
   background: #48B07A;
-  width: 14.5%;
   height: 100%;
   border-radius: 10px;
 }
