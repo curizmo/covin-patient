@@ -146,6 +146,7 @@ body {
 
 .second-header .header-wrapper {
   box-shadow: none;
+  padding-top: 0;
 }
 .second-header {
   display: flex;
@@ -153,7 +154,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  height: 14vh;
+  height: 16vh;
 }
 
 /* PatientCheclist */

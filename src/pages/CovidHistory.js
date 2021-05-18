@@ -16,6 +16,7 @@ const CovidHistory = ({
   const [checkedOne, setCheckedOne] = useState(false);
   const [checkedTwo, setCheckedTwo] = useState(false);
   const [isDiagnosed, setDiagnosed] = useState(false);
+  const [state, setChecked] = useState();
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -64,26 +65,54 @@ const CovidHistory = ({
     setDiagnosed(false)
   }
 
+  const handleRadioButton = (value)=>{
+    setChecked(value);
+  }
+
   return (
     <div className="form-content-wrapper">
       {/* <div className="page-title">Covid History</div> */}
       <div className="covid-diagnosed">
         <div className="covid-tittle">Have you ever been diagnosed positive for COVID?</div>
         <div className="covid-buttons">
-          <button 
+          <span>
+            <input 
+              className="covid-button"
+              type="radio"
+              name="yes"
+              value="yes"
+              onClick={yesDiagnosed}
+              checked={state === 1}
+              onChange={() => handleRadioButton(1)}
+            />
+            <label for="yes">Yes</label>
+          </span>
+          <span>
+            <input 
+              className="covid-button"
+              type="radio"
+              name="no"
+              value="no"
+              onClick={notDiagnosed}
+              checked={state === 2}
+              onChange={() => handleRadioButton(2)}
+            />
+            <label for="no">No</label>
+          </span>
+          {/* <button 
             className="yes-diagnosed covid-button"
-            onClick={yesDiagnosed}
+            
           >
             <img className="button-img" src={yes} alt="tick"></img>
             Yes
           </button>
           <button 
             className="not-diagnosed covid-button"
-            onClick={notDiagnosed}
+            
             >
               <img className="button-img" src={no} alt="cross"></img>
               No
-          </button>
+          </button> */}
         </div>
         {isDiagnosed && 
           <div className="date-diagnosed">
