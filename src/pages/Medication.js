@@ -5,11 +5,14 @@ import closeIcon from "../assets/images/icon_close_blue.svg";
 import ImagesModal from "./ImagesModal";
 import "../App.css";
 import "./home.css";
+import * as patientService from "../services/patient";
 
 const Medication = ({
   medication,
   setIntakeState,
   intakeState,
+  patientDetails,
+  hash,
   setPage,
   page,
 }) => {
@@ -23,9 +26,17 @@ const Medication = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const onNext = () => {
+  const onSubmit = async () => {
+    await patientService.createPatientIntake({
+      form: intakeState,
+      patientId: patientDetails.patientId,
+    });
+
+    await patientService.UpdateMessageStatus(hash);
+
     setPage(page + 1);
   };
+
 
   const addImages = () => {
     setShowModal(true);
@@ -42,6 +53,7 @@ const Medication = ({
     setShowModal(true);
     setCurrentFileView(fileImage);
   };
+
 
   return (
     <div className="form-content-wrapper">
@@ -90,8 +102,8 @@ const Medication = ({
           <textarea className="txtArea"></textarea>
         </div>
       </div>
-      <button className="submit-button submit-btn" onClick={onNext}>
-        NEXT
+      <button className="submit-button submit-btn" onClick={onSubmit}>
+        SUBMIT
       </button>
     </div>
   );

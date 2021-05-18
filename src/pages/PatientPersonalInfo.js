@@ -7,7 +7,11 @@ import {
   EMAIL_TYPE_REGEX,
   NUMBER_TYPE_REGEX,
   HEIGHT_MEASUREMENT,
+  MINIMUM_YEAR,
+  PERSONAL_INFO,
+  DATE_FORMAT,
 } from "../constants/constants";
+const moment = require("moment");
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -16,9 +20,19 @@ const PatientPersonalInfo = ({
   setPage,
   page,
 }) => {
+  const heightInFeet =
+    (intakeState.height &&
+      intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
+    0;
+  const heightInInch =
+    (intakeState.height &&
+      intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
+    0;
+
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [inchHeight, setInchHeight] = useState(0);
-  const [feetHeight, setFeetHeight] = useState(0);
+  const [inchHeight, setInchHeight] = useState(heightInInch);
+  const [feetHeight, setFeetHeight] = useState(heightInFeet);
+  const [showDateError, setShowDateError] = useState(false);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -32,6 +46,25 @@ const PatientPersonalInfo = ({
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
+  };
+
+  const handleDateChange = (e) => {
+    const item = e.target.name;
+    const year = moment(e.target.value).year();
+    const currentYear = moment().year();
+    if (year <= currentYear) {
+      setIntakeState({
+        ...intakeState,
+        [item]: moment(e.target.value).format(),
+      });
+      setShowDateError(false);
+    } else {
+      setIntakeState({
+        ...intakeState,
+        [item]: moment(e.target.value).format(),
+      });
+      setShowDateError(true);
+    }
   };
 
   const handleCheckboxChange = (e) => {
@@ -73,7 +106,7 @@ const PatientPersonalInfo = ({
   useEffect(() => {
     setIntakeState({
       ...intakeState,
-      height: `${feetHeight}ft ${inchHeight}in`,
+      height: `${feetHeight}'${inchHeight}"`,
     });
   }, [feetHeight, inchHeight]);
 
@@ -106,6 +139,13 @@ const PatientPersonalInfo = ({
       return;
     }
 
+    const currentYear = parseInt(moment().year());
+    const minimumYear = currentYear - MINIMUM_YEAR;
+    const dateOfBirth = parseInt(moment(intakeState.dateOfBirth).year());
+    if (dateOfBirth > currentYear || dateOfBirth < minimumYear) {
+      return;
+    }
+
     setPage(page + 1);
   };
 
@@ -133,12 +173,19 @@ const PatientPersonalInfo = ({
                   {info.title}{" "}
                   <span className="error-message">Invalid Email</span>
                 </label>
+              ) : `${info.field}` === PERSONAL_INFO.dob && showDateError ? (
+                <label>
+                  {info.title}{" "}
+                  <span className="error-message">
+                    Selected year cannot be greater than {moment().year()}
+                  </span>
+                </label>
               ) : (
                 <label>{info.title}</label>
               )}
 
               {info.type === "Boolean" ? (
-                GENDERS.map((gender) => {
+                GENDERS.map((gender, index) => {
                   return (
                     <>
                       <span className="gender-radio-span">
@@ -148,6 +195,7 @@ const PatientPersonalInfo = ({
                           name={info.field}
                           value={gender}
                           onChange={handleCheckboxChange}
+                          checked={intakeState.gender === gender}
                         />
                         <label className="gender-radio-label">{gender}</label>
                       </span>
@@ -159,8 +207,14 @@ const PatientPersonalInfo = ({
                   type="date"
                   id={indx}
                   name={info.field}
-                  onChange={handleInputChange}
+                  onChange={handleDateChange}
                   placeholder="dd-mon-yyyy"
+                  max={moment()
+                    .subtract(1, "days")
+                    .format(DATE_FORMAT.yyyymmdd)}
+                  value={moment(intakeState.dateOfBirth).format(
+                    DATE_FORMAT.yyyymmdd
+                  )}
                 />
               ) : info.field === "emailId" ? (
                 <input
@@ -180,6 +234,7 @@ const PatientPersonalInfo = ({
                     type="number"
                     name={info.field}
                     id={"feet"}
+                    value={feetHeight}
                     onChange={handleValidateHeight}
                   />
                   <label className="height-label" for={"inch"}>
@@ -190,27 +245,30 @@ const PatientPersonalInfo = ({
                     type="number"
                     name={info.field}
                     id={"inch"}
+                    value={inchHeight}
                     onChange={handleValidateHeight}
                   />
                 </div>
               ) : (
                 <input
-                  type={info.field === "weight" ? "number" : "text"}
+                  type={info.field === PERSONAL_INFO.weight ? "number" : "text"}
                   id={indx}
                   name={info.field}
                   value={
-                    info.field === "firstName"
+                    info.field === PERSONAL_INFO.firstName
                       ? intakeState.firstName
-                      : info.field === "lastName"
+                      : info.field === PERSONAL_INFO.lastName
                       ? intakeState.lastName
+                      : info.field === PERSONAL_INFO.weight
+                      ? intakeState.weight
                       : null
                   }
                   onChange={
-                    info.field === "weight"
+                    info.field === PERSONAL_INFO.weight
                       ? handleValidateWeight
                       : handleInputChange
                   }
-                  placeholder={info.field === "weight" ? "Kg." : ""}
+                  placeholder={info.field === PERSONAL_INFO.weight ? "Kg." : ""}
                 />
               )}
             </div>

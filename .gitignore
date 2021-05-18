@@ -13,6 +13,9 @@ deploy/node_modules
 /build
 deploy/build
 
+# VS code
+/.vscode
+
 # misc
 .DS_Store
 .env
