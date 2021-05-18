@@ -9,15 +9,10 @@ const PatientIntakeForm = () => {
   const [isAgreed, setIsAgreed] = useState(false);
   const [patientDetails, setPatientDatails] = useState({});
   const [hasPatientAgreed, setHasPatientAgreed] = useState(false);
-  const [isLoad, setIsLoad] = useState(false);
 
   useEffect(() => {
     getPatientDetail(hashKey);
   }, [hashKey]);
-
-  useEffect(() => {
-    setIsLoad(true);
-  }, [hasPatientAgreed]);
 
   const getPatientDetail = async (hashKey) => {
     try {
@@ -45,7 +40,7 @@ const PatientIntakeForm = () => {
         <>
           {patientDetails.messageType === "newPatient" ? (
             <>
-              {!isAgreed && !hasPatientAgreed && !isLoad && (
+              {!isAgreed && !hasPatientAgreed && (
                 <TermsAndCondition
                   setIsAgreed={setIsAgreed}
                   name={patientDetails.givenName}
