@@ -20,6 +20,10 @@ export const getFormProgress = (hashKey) => {
   return getData(`/patient-intake-form/form-progress/${hashKey}`);
 };
 
+export const getPatientAgreement = (patientId) => {
+  return getData(`/patient-intake-form/agreement/${patientId}`);
+};
+
 export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
 };
