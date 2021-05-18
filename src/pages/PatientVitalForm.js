@@ -33,6 +33,7 @@ const PatientVitalForm = ({
   const [showPulseErrorMessage, setShowPulseErrorMessage] = useState(false);
   const [showRespirationMessage, setShowRespirationMessage] = useState(false);
   const [showBpMessage, setShowBpMessage] = useState(false);
+  const [symptoms, setSymptoms] = useState({});
   const [vitalError, setVitalError] = useState({
     temperature: "",
     respiratoryRate: "",
@@ -41,6 +42,15 @@ const PatientVitalForm = ({
     oxygenLevel: "",
     pulseRate: "",
   });
+
+  useEffect(() => {
+    getSymptoms(patientDetails.patientId);
+  }, []);
+
+  const getSymptoms = async (patientId) => {
+    const response = await patientService.getSymptomsByPatientId(patientId);
+    setSymptoms(JSON.parse(response.symptoms.symptoms));
+  };
 
   useEffect(() => {
     if (parseInt(bpLowerRange) > parseInt(bpUpperRange)) {
@@ -99,7 +109,7 @@ const PatientVitalForm = ({
         vitalsMeasureOn: today,
         oxygenLevel,
         pulseRate,
-        symptoms: {},
+        symptoms: symptoms,
       });
     }
 
