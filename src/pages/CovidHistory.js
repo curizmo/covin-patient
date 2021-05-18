@@ -97,13 +97,13 @@ const CovidHistory = ({
 
   const handleRadioButton = (value) => {
     setChecked(value);
-    console.log(value);
     if (value === 1) {
       setIntakeState({ ...intakeState, covidPositiveEverBefore: true });
     } else if (value === 2) {
       setIntakeState({ ...intakeState, covidPositiveEverBefore: false });
     }
   };
+
   const onBackButtonClick = () => {
     setProgressedPage(NEW_PATIENT_PAGES.patientInfo);
   };
@@ -119,6 +119,16 @@ const CovidHistory = ({
       );
     } else if (field === "dateCovidBefore") {
       return moment(intakeState.dateCovidBefore).format(DATE_FORMAT.yyyymmdd);
+    }
+  };
+
+  const checkDisabled = (field) => {
+    if (field === "dateOfDose1Vaccination") {
+      return !intakeState.covidVaccinationDose1Taken;
+    } else if (field === "dateOfDose2Vaccination") {
+      return !intakeState.covidVaccinationDose2Taken;
+    } else if (field === "dateCovidBefore") {
+      return !intakeState.covidPositiveEverBefore;
     }
   };
 
@@ -190,15 +200,7 @@ const CovidHistory = ({
                   name={history.field}
                   onChange={handleInputChange}
                   max={moment().format(DATE_FORMAT.yyyymmdd)}
-                  disabled={
-                    `${history.field}` === "dateOfDose1Vaccination"
-                      ? !intakeState.covidVaccinationDose1Taken
-                      : `${history.field}` === "dateOfDose2Vaccination"
-                      ? !intakeState.covidVaccinationDose2Taken
-                      : `${history.field}` === "dateCovidBefore"
-                      ? !intakeState.covidPositiveEverBefore
-                      : null
-                  }
+                  disabled={checkDisabled(history.field)}
                   value={getValue(history.field)}
                 />
               ) : (
