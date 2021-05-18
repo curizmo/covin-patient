@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
 import PatientFirstIntake from "./PatientFirstIntake";
@@ -7,6 +7,8 @@ import "./home.css";
 import back from "../assets/images/back.svg";
 import forward from "../assets/images/forward.svg";
 
+import patient_profile from "../assets/images/icon_userprofile.svg";
+import * as patientService from "../services/patient";
 
 import {
   weekDays,
@@ -30,6 +32,7 @@ const PatientVitals = ({
   const [respiratoryRate, setRespiratoryRate] = useState("");
   const [bpUpperRange, setBpUpperRange] = useState(0);
   const [bpLowerRange, setBpLowerRange] = useState(0);
+  const [progressedPage, setProgressedPage] = useState(0);
   const [page, setPage] = useState(1);
   const [state, setState] = useState({
     feverOrChills: false,
@@ -78,6 +81,21 @@ const PatientVitals = ({
     medication4DoseFrequency: "",
     medication5DoseFrequency: "",
   });
+
+  useEffect(() => {
+    getPageProgress(hashKey);
+  }, []);
+
+  const getPageProgress = async (hashKey) => {
+    try {
+      const response = await patientService.getFormProgress(hashKey);
+      if (response.formProgress) {
+        setProgressedPage(response.formProgress.latestPage + 1);
+      } else {
+        setProgressedPage(progressedPage + 1);
+      }
+    } catch (err) {}
+  };
 
   let d = new Date();
   let day = d.getDay();
@@ -154,10 +172,9 @@ const PatientVitals = ({
               messageType={messageType}
               patientDetails={patientDetails}
               hash={hashKey}
+              progressedPage={progressedPage}
+              setProgressedPage={setProgressedPage}
             />
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.submission && (
-              <Submission />
-            )}
           </div>
         </div>
       ) : messageType === MESSAGE_TYPES.dailyScreening ? (

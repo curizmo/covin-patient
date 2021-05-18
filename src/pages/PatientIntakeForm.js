@@ -17,8 +17,10 @@ const PatientIntakeForm = () => {
     try {
       const response = await patientService.getPatientDetails(hashKey);
       setPatientDatails(response.patientInfo);
+      setIsAgreed(response.patientInfo.isAgreed);
     } catch (err) {}
   };
+
   return (
     <div>
       {patientDetails.messageStatus === "SENT" ? (

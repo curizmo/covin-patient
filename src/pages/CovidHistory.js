@@ -1,5 +1,6 @@
 import { MINIMUM_YEAR, DATE_FORMAT } from "../constants/constants";
 import React, { useState } from "react";
+import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
 
@@ -10,6 +11,10 @@ const CovidHistory = ({
   covidHistory,
   setIntakeState,
   intakeState,
+  patientDetails,
+  progressedPage,
+  setProgressedPage,
+  hash,
   setPage,
   page,
 }) => {
@@ -37,7 +42,7 @@ const CovidHistory = ({
     }
   };
 
-  const onNext = () => {
+  const onNext = async () => {
     const currentYear = parseInt(moment().year());
     const minimumYear = currentYear - MINIMUM_YEAR;
     const dose1Year = parseInt(
@@ -46,6 +51,7 @@ const CovidHistory = ({
     const dose2Year = parseInt(
       moment(intakeState.dateOfDose2Vaccination).year()
     );
+
     if (
       dose1Year > currentYear ||
       dose2Year > currentYear ||
@@ -54,6 +60,27 @@ const CovidHistory = ({
     ) {
       return;
     }
+
+    await Promise.all([
+      patientService.createPatientIntake({
+        form: {
+          ...intakeState,
+          covidPositiveEverBefore: intakeState.covidPositiveEverBefore,
+          covidVaccinationDose1Taken: intakeState.covidVaccinationDose1Taken,
+          dateOfDose1Vaccination: intakeState.dateOfDose1Vaccination,
+          covidVaccinationDose2Taken: intakeState.covidVaccinationDose2Taken,
+          dateOfDose2Vaccination: intakeState.dateOfDose2Vaccination,
+        },
+        patientId: patientDetails.patientId,
+      }),
+      patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: progressedPage,
+      }),
+    ]);
+
+    setProgressedPage(progressedPage + 1);
     setPage(page + 1);
   };
 

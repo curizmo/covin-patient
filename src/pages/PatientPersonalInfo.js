@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
+import * as patientService from "../services/patient";
 import {
   GENDERS,
-  HEIGHT,
   EMAIL_TYPE_REGEX,
   NUMBER_TYPE_REGEX,
   HEIGHT_MEASUREMENT,
@@ -11,27 +11,23 @@ import {
   PERSONAL_INFO,
   DATE_FORMAT,
 } from "../constants/constants";
+
 const moment = require("moment");
 
 const PatientPersonalInfo = ({
   personalInfo,
   setIntakeState,
   intakeState,
+  patientDetails,
+  progressedPage,
+  setProgressedPage,
+  hash,
   setPage,
   page,
 }) => {
-  const heightInFeet =
-    (intakeState.height &&
-      intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
-    0;
-  const heightInInch =
-    (intakeState.height &&
-      intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
-    0;
-
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [inchHeight, setInchHeight] = useState(heightInInch);
-  const [feetHeight, setFeetHeight] = useState(heightInFeet);
+  const [inchHeight, setInchHeight] = useState(0);
+  const [feetHeight, setFeetHeight] = useState(0);
   const [showDateError, setShowDateError] = useState(false);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
@@ -42,6 +38,19 @@ const PatientPersonalInfo = ({
     weight: "",
     emailId: "",
   });
+
+  useEffect(() => {
+    const heightInFeet =
+      (intakeState.height &&
+        intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
+      0;
+    const heightInInch =
+      (intakeState.height &&
+        intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
+      0;
+    setFeetHeight(heightInFeet);
+    setInchHeight(heightInInch);
+  }, []);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -129,7 +138,7 @@ const PatientPersonalInfo = ({
     return !isAnyTrue;
   };
 
-  const onNext = () => {
+  const onNext = async () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
       return;
@@ -146,6 +155,28 @@ const PatientPersonalInfo = ({
       return;
     }
 
+    await Promise.all([
+      patientService.createPatientIntake({
+        form: {
+          ...intakeState,
+          firstName: intakeState.firstName,
+          lastName: intakeState.lastName,
+          gender: intakeState.gender,
+          dateOfBirth: intakeState.dateOfBirth,
+          height: intakeState.height,
+          weight: intakeState.weight,
+          emailId: intakeState.emailId,
+        },
+        patientId: patientDetails.patientId,
+      }),
+      patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: progressedPage,
+      }),
+    ]);
+
+    setProgressedPage(progressedPage + 1);
     setPage(page + 1);
   };
 
@@ -185,7 +216,7 @@ const PatientPersonalInfo = ({
               )}
 
               {info.type === "Boolean" ? (
-                GENDERS.map((gender, index) => {
+                GENDERS.map((gender) => {
                   return (
                     <>
                       <span className="gender-radio-span">

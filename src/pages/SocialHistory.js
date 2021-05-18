@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
 import * as patientService from "../services/patient";
+import "../App.css";
 import "./home.css";
 
 const SocialHistory = ({
   socialHistory,
   setIntakeState,
   intakeState,
+  patientDetails,
+  progressedPage,
+  setProgressedPage,
+  hash,
   setPage,
   page,
 }) => {
@@ -23,8 +27,27 @@ const SocialHistory = ({
       : setIntakeState({ ...intakeState, [item]: isChecked });
   };
 
-  const onNext = () => {
+  const onNext = async () => {
+    await Promise.all([
+      patientService.createPatientIntake({
+        form: {
+          ...intakeState,
+          food: intakeState.food,
+          medications: intakeState.medications,
+          otherAllergies: intakeState.otherAllergies,
+        },
+        patientId: patientDetails.patientId,
+      }),
+      patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: progressedPage,
+      }),
+    ]);
+
+    setProgressedPage(progressedPage + 1);
     setPage(page + 1);
+
   };
 
   return (
