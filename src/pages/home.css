@@ -154,7 +154,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  height: 15vh;
+  height: 6rem;
 }
 
 /* PatientCheclist */
@@ -299,7 +299,12 @@ input[type="date"] {
   font-family: Helvetica, sans-serif;
   font-size: 1.125rem;
   color: #2f4068;
+  background-color: #ffffff;
   -webkit-appearance: none;
+}
+
+input[type="date"]:disabled {
+  background-color: #E0E3EA;
 }
 
 input[type="number"]::placeholder {
