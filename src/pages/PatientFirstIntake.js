@@ -6,6 +6,7 @@ import CovidHistory from "./CovidHistory";
 import PreexistingCondition from "./PreexistingCondition";
 import SocialHistory from "./SocialHistory";
 import Medication from "./Medication";
+import Submission from "./Submission";
 import PatientPersonalInfo from "./PatientPersonalInfo";
 import { NEW_PATIENT_PAGES } from "../constants/constants";
 
@@ -17,6 +18,8 @@ const PatientFirstIntake = ({
   messageType,
   setPage,
   patientDetails,
+  progressedPage,
+  setProgressedPage,
   hash,
   page,
 }) => {
@@ -56,7 +59,7 @@ const PatientFirstIntake = ({
 
   return (
     <div className="form-content-wrapper">
-      {pageNum === NEW_PATIENT_PAGES.patientInfo && (
+      {progressedPage === NEW_PATIENT_PAGES.patientInfo && (
         <PatientPersonalInfo
           personalInfo={personalInfo}
           setIntakeState={setIntakeState}
@@ -66,9 +69,11 @@ const PatientFirstIntake = ({
           setPage={setPage}
           page={page}
           hash={hash}
+          progressedPage={progressedPage}
+          setProgressedPage={setProgressedPage}
         />
       )}
-      {pageNum === NEW_PATIENT_PAGES.covidHistory && (
+      {progressedPage === NEW_PATIENT_PAGES.covidHistory && (
         <CovidHistory
           covidHistory={covidHistory}
           setIntakeState={setIntakeState}
@@ -77,9 +82,11 @@ const PatientFirstIntake = ({
           setPage={setPage}
           page={page}
           hash={hash}
+          progressedPage={progressedPage}
+          setProgressedPage={setProgressedPage}
         />
       )}
-      {pageNum === NEW_PATIENT_PAGES.preExistingCondition && (
+      {progressedPage === NEW_PATIENT_PAGES.preExistingCondition && (
         <PreexistingCondition
           preexistingCondition={preexistingCondition}
           setIntakeState={setIntakeState}
@@ -88,9 +95,11 @@ const PatientFirstIntake = ({
           setPage={setPage}
           page={page}
           hash={hash}
+          progressedPage={progressedPage}
+          setProgressedPage={setProgressedPage}
         />
       )}
-      {pageNum === NEW_PATIENT_PAGES.allergy && (
+      {progressedPage === NEW_PATIENT_PAGES.allergy && (
         <SocialHistory
           socialHistory={socialHistory}
           setIntakeState={setIntakeState}
@@ -99,9 +108,11 @@ const PatientFirstIntake = ({
           setPage={setPage}
           page={page}
           hash={hash}
+          progressedPage={progressedPage}
+          setProgressedPage={setProgressedPage}
         />
       )}
-      {pageNum === NEW_PATIENT_PAGES.medication && (
+      {progressedPage === NEW_PATIENT_PAGES.medication && (
         <Medication
           medication={medication}
           setIntakeState={setIntakeState}
@@ -111,8 +122,11 @@ const PatientFirstIntake = ({
           messageType={messageType}
           patientDetails={patientDetails}
           hash={hash}
+          progressedPage={progressedPage}
+          setProgressedPage={setProgressedPage}
         />
       )}
+      {progressedPage === NEW_PATIENT_PAGES.submission && <Submission />}
     </div>
   );
 };

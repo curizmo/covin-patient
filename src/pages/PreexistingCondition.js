@@ -10,6 +10,8 @@ const PeexistingCondition = ({
   setIntakeState,
   intakeState,
   patientDetails,
+  progressedPage,
+  setProgressedPage,
   hash,
   setPage,
   page,
@@ -110,11 +112,13 @@ const PeexistingCondition = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: page,
+        pagenum: progressedPage,
       }),
     ]);
 
+    setProgressedPage(progressedPage + 1);
     setPage(page + 1);
+
   };
 
   return (

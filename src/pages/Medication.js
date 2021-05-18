@@ -10,6 +10,8 @@ const Medication = ({
   hash,
   setPage,
   page,
+  progressedPage,
+  setProgressedPage,
 }) => {
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -26,11 +28,13 @@ const Medication = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: page,
+        pagenum: progressedPage,
       }),
     ]);
 
+    setProgressedPage(progressedPage + 1);
     setPage(page + 1);
+
   };
 
   return (

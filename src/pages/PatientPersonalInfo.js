@@ -19,6 +19,8 @@ const PatientPersonalInfo = ({
   setIntakeState,
   intakeState,
   patientDetails,
+  progressedPage,
+  setProgressedPage,
   hash,
   setPage,
   page,
@@ -170,10 +172,11 @@ const PatientPersonalInfo = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: page,
+        pagenum: progressedPage,
       }),
     ]);
 
+    setProgressedPage(progressedPage + 1);
     setPage(page + 1);
   };
 
