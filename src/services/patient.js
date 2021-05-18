@@ -16,8 +16,20 @@ export const getPatientHealthIntake = () => {
   return getData("/patients-intake-template");
 };
 
+export const getFormProgress = (hashKey) => {
+  return getData(`/patient-intake-form/form-progress/${hashKey}`);
+};
+
+export const getPatientAgreement = (patientId) => {
+  return getData(`/patient-intake-form/agreement/${patientId}`);
+};
+
 export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
+};
+
+export const createFormProgress = (payload) => {
+  return postData("/patient-intake-form/form-progress", payload);
 };
 
 export const createPatientAgreement = (payload) => {

@@ -16,7 +16,7 @@ const TermsAndCondition = ({ setIsAgreed, name, phone, patientId }) => {
 
     await patientService.createPatientAgreement({
       patientId,
-      isAgreed: isChecked ? 0 : 1,
+      isAgreed: isChecked ? 1 : 0,
     });
   };
 
