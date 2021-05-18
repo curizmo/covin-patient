@@ -1,6 +1,26 @@
-html {
+html,
+body {
+  width: 100%;
+  height: 100%;
   background-color: #f2f7fd;
 }
+
+#root,
+.App {
+  width: 100%;
+  height: 100%;
+}
+
+#root .App > div {
+  width: 100%;
+  height: 100%;
+}
+
+#root .App > div > div {
+  width: 100%;
+  height: 100%;
+}
+
 .content-wrapper {
   padding: 2rem 1.5rem; /*top spacing increased from 1rem to 2rem*/
   margin-top: 0.7rem;
@@ -161,7 +181,8 @@ input.bp:last-of-type {
 
 .initial-page-wrapper {
   background-color: blanchedalmond;
-  height: 95vh;
+  width: 100%;
+  height: 100%;
 }
 
 .name-container {
@@ -186,25 +207,25 @@ input.bp:last-of-type {
   text-align: center;
 }
 
-.nav-img-back{
+.nav-img-back {
   padding-right: 0.35rem;
 }
 
-.nav-img-skip{
+.nav-img-skip {
   padding-left: 0.35rem;
 }
 
-.back-button{
+.back-button {
   display: flex;
   align-items: center;
 }
 
-.skip-button{
+.skip-button {
   display: flex;
   align-items: center;
 }
 
-.covid-diagnosed{
+.covid-diagnosed {
   padding: 1rem 0;
 }
 
@@ -237,17 +258,17 @@ input.bp:last-of-type {
   border: 1px solid #48b07a;
 }
 
-.not-diagnosed:focus{
-  background: #FAF0F0;
-  border: 1px solid #D02727;
+.not-diagnosed:focus {
+  background: #faf0f0;
+  border: 1px solid #d02727;
 }
 
-.not-diagnosed:active{
-  background: #FAF0F0;
-  border: 1px solid #D02727;
+.not-diagnosed:active {
+  background: #faf0f0;
+  border: 1px solid #d02727;
 }
 
-.date-diagnosed{
+.date-diagnosed {
   display: flex;
   flex-direction: column;
   padding: 2rem 0;
@@ -267,7 +288,7 @@ input.bp:last-of-type {
   color: #22335e;
 }
 
-.button-img{
+.button-img {
   padding-right: 0.5rem;
 }
 
@@ -295,10 +316,11 @@ input.bp:last-of-type {
   margin-left: 0.4rem;
 }
 .wrapper {
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  width: 100%;
+  height: 100%;
 }
 .initial-page-wrapper {
-  height: 100vh;
   box-sizing: border-box;
 }
 /*@Shreeti can be removed ** START** just added for the heading for Vaccination*/

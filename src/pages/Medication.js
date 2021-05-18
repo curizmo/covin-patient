@@ -37,7 +37,6 @@ const Medication = ({
     setPage(page + 1);
   };
 
-
   const addImages = () => {
     setShowModal(true);
     setDisplayImage(false);
@@ -54,7 +53,6 @@ const Medication = ({
     setCurrentFileView(fileImage);
   };
 
-
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Medications</div>
@@ -64,7 +62,12 @@ const Medication = ({
           other medically relevant documents
         </div>
 
-        <div className="camera-icon-container" onClick={() => addImages()}>
+        <div
+          className={`camera-icon-container ${
+            showModal ? "active-container" : ""
+          }`}
+          onClick={() => addImages()}
+        >
           <img src={cameraIcon} alt="camera icon" />
         </div>
         <ImagesModal
