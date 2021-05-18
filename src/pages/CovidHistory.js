@@ -96,7 +96,6 @@ const CovidHistory = ({
   };
   return (
     <div className="form-content-wrapper">
-      {/* <div className="page-title">Covid History</div> */}
       <div className="covid-diagnosed">
         <div className="covid-tittle">
           Have you ever been diagnosed positive for COVID?
