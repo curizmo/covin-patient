@@ -3,7 +3,10 @@ import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
 
-import { PRE_EXISTING_CONDITION } from "../constants/constants";
+import {
+  PRE_EXISTING_CONDITION,
+  NEW_PATIENT_PAGES,
+} from "../constants/constants";
 
 const PeexistingCondition = ({
   preexistingCondition,
@@ -112,13 +115,12 @@ const PeexistingCondition = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: progressedPage,
+        pagenum: NEW_PATIENT_PAGES.preExistingCondition,
       }),
     ]);
 
-    setProgressedPage(progressedPage + 1);
+    setProgressedPage(NEW_PATIENT_PAGES.allergy);
     setPage(page + 1);
-
   };
 
   return (

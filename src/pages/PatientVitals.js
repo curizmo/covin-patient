@@ -57,6 +57,7 @@ const PatientVitals = ({
     dateOfDose1Vaccination: "",
     covidVaccinationDose2Taken: false,
     dateOfDose2Vaccination: "",
+    dateCovidBefore: "",
     heartDisease: false,
     cancer: false,
     highOrLowBloodPressure: false,
@@ -72,11 +73,8 @@ const PatientVitals = ({
     food: "",
     medications: "",
     otherAllergies: "",
+    otherMedications: "",
     medication1DoseFrequency: "",
-    medication2DoseFrequency: "",
-    medication3DoseFrequency: "",
-    medication4DoseFrequency: "",
-    medication5DoseFrequency: "",
   });
 
   useEffect(() => {

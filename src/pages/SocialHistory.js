@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as patientService from "../services/patient";
+import { NEW_PATIENT_PAGES } from "../constants/constants";
 import "../App.css";
 import "./home.css";
 
@@ -41,13 +42,12 @@ const SocialHistory = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: progressedPage,
+        pagenum: NEW_PATIENT_PAGES.allergy,
       }),
     ]);
 
-    setProgressedPage(progressedPage + 1);
+    setProgressedPage(NEW_PATIENT_PAGES.medication);
     setPage(page + 1);
-
   };
 
   return (

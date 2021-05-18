@@ -1,4 +1,8 @@
-import { MINIMUM_YEAR, DATE_FORMAT } from "../constants/constants";
+import {
+  MINIMUM_YEAR,
+  DATE_FORMAT,
+  NEW_PATIENT_PAGES,
+} from "../constants/constants";
 import React, { useState } from "react";
 import * as patientService from "../services/patient";
 import "../App.css";
@@ -73,11 +77,11 @@ const CovidHistory = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: progressedPage,
+        pagenum: NEW_PATIENT_PAGES.covidHistory,
       }),
     ]);
 
-    setProgressedPage(progressedPage + 1);
+    setProgressedPage(NEW_PATIENT_PAGES.preExistingCondition);
     setPage(page + 1);
   };
 
