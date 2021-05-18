@@ -90,8 +90,12 @@ body {
   height: 5rem;
 }
 
+.input-history:last-child {
+  display: none;
+}
+
 .input-history input {
-  height: 2rem;
+  height: 0.688rem; /*overall height including padding tends to 45px*/
   width: 91%;
   margin-top: 0.5rem;
   border: 1px solid #e0e3ea;
@@ -226,7 +230,7 @@ input.bp:last-of-type {
 }
 
 .covid-diagnosed {
-  padding: 1rem 0;
+  padding: 1rem 0 0;
 }
 
 .covid-tittle {
@@ -246,7 +250,6 @@ input.bp:last-of-type {
 .covid-button {
   margin-right: 0.63rem;
 }
-  
 
 .yes-diagnosed:focus {
   background-color: #f0faf5;
@@ -271,11 +274,16 @@ input.bp:last-of-type {
 .date-diagnosed {
   display: flex;
   flex-direction: column;
-  padding: 2rem 0;
+  padding: 1rem 0;
+}
+
+.date-diagnosed > label {
+  color: #657396;
+  font-size: 0.875rem;
 }
 
 .date-of-diagnosis {
-  height: 2rem;
+  height: 0.688rem;
   width: 91%;
   margin-top: 0.5rem;
   border: 1px solid #e0e3ea;
@@ -327,9 +335,9 @@ input.bp:last-of-type {
 .history-list-content:first-of-type {
   background-color: transparent;
 }
-.history-list-content:first-of-type::after {
+.history-list-content:first-of-type::before {
   content: " Vaccination History";
-  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
   display: block;
   font-size: 1.2rem;
   font-weight: 600;
