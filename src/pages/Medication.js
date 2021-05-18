@@ -37,8 +37,13 @@ const Medication = ({
     setPage(page + 1);
   };
 
+  const onBackButtonClick = () => {
+    setProgressedPage(NEW_PATIENT_PAGES.allergy);
+  };
+
   return (
     <div className="form-content-wrapper">
+      <div onClick={onBackButtonClick}>back</div>
       <div className="page-title">Medications</div>
       <div className="health-checklist">
         {medication.map((history, indx) => {

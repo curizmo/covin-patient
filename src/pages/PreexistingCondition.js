@@ -123,8 +123,13 @@ const PeexistingCondition = ({
     setPage(page + 1);
   };
 
+  const onBackButtonClick = ()=>{
+    setProgressedPage(NEW_PATIENT_PAGES.covidHistory);
+  }
+
   return (
     <div className="form-content-wrapper">
+      <div onClick={onBackButtonClick}>back</div>
       <div>Pre-existing Conditions</div>
       <div className="health-checklist">
         {preexistingCondition.map((history, indx) => {
@@ -156,6 +161,7 @@ const PeexistingCondition = ({
                   type="text"
                   id={indx}
                   name={history.field}
+                  value={intakeState[history.field]}
                   onChange={handleInputChange}
                 />
               )}
