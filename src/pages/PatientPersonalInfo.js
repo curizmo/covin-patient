@@ -238,6 +238,7 @@ const PatientPersonalInfo = ({
                 <input
                   type="date"
                   id={indx}
+                  className="date-state"
                   name={info.field}
                   onChange={handleDateChange}
                   placeholder="dd-mon-yyyy"
@@ -282,26 +283,38 @@ const PatientPersonalInfo = ({
                   />
                 </div>
               ) : (
-                <input
-                  type={info.field === PERSONAL_INFO.weight ? "number" : "text"}
-                  id={indx}
-                  name={info.field}
-                  value={
-                    info.field === PERSONAL_INFO.firstName
-                      ? intakeState.firstName
-                      : info.field === PERSONAL_INFO.lastName
-                      ? intakeState.lastName
-                      : info.field === PERSONAL_INFO.weight
-                      ? intakeState.weight
-                      : null
-                  }
-                  onChange={
-                    info.field === PERSONAL_INFO.weight
-                      ? handleValidateWeight
-                      : handleInputChange
-                  }
-                  placeholder={info.field === PERSONAL_INFO.weight ? "Kg." : ""}
-                />
+                <div className="weight-wrapper">
+                  <input
+                    type={
+                      info.field === PERSONAL_INFO.weight ? "number" : "text"
+                    }
+                    className="bp"
+                    id={indx}
+                    name={info.field}
+                    value={
+                      info.field === PERSONAL_INFO.firstName
+                        ? intakeState.firstName
+                        : info.field === PERSONAL_INFO.lastName
+                        ? intakeState.lastName
+                        : info.field === PERSONAL_INFO.weight
+                        ? intakeState.weight
+                        : null
+                    }
+                    onChange={
+                      info.field === PERSONAL_INFO.weight
+                        ? handleValidateWeight
+                        : handleInputChange
+                    }
+                    placeholder={
+                      info.field === PERSONAL_INFO.weight ? "Kg." : ""
+                    }
+                  />
+                  {info.field === PERSONAL_INFO.weight && (
+                    <label className="weight-label" for={"weight"}>
+                      Kg.
+                    </label>
+                  )}
+                </div>
               )}
             </div>
           );

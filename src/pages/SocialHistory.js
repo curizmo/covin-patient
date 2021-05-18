@@ -56,7 +56,7 @@ const SocialHistory = ({
 
   return (
     <div className="form-content-wrapper">
-      <div onClick={onBackButtonClick}>back</div>
+   
 
       <div className="page-title">Allergy</div>
       <div className="health-checklist">

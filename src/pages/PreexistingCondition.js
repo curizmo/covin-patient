@@ -129,7 +129,7 @@ const PeexistingCondition = ({
 
   return (
     <div className="form-content-wrapper">
-      <div onClick={onBackButtonClick}>back</div>
+      
       <div>Pre-existing Conditions</div>
       <div className="health-checklist">
         {preexistingCondition.map((history, indx) => {
