@@ -300,6 +300,18 @@ input.bp:last-of-type {
   border-radius: 10px;
 }
 
+.yes-diagnosed{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.not-diagnosed{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .date-diagnosed {
   display: flex;
   flex-direction: column;
