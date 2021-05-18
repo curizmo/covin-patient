@@ -44,7 +44,6 @@ const Medication = ({
 
     setProgressedPage(progressedPage + 1);
     setPage(page + 1);
-
   };
 
   const addImages = () => {
@@ -74,8 +73,8 @@ const Medication = ({
 
         <div
           className={`camera-icon-container ${
-            showModal ? "active-container" : ""
-          }`}
+            fileAspects?.length > 4 ? "disabled-container" : "enabled-container"
+          } ${showModal ? "active-container" : ""}`}
           onClick={() => addImages()}
         >
           <img src={cameraIcon} alt="camera icon" />

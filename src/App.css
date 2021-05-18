@@ -151,13 +151,16 @@ body {
   position: relative;
 }
 
-.height-wrapper {
+.height-wrapper,
+.weight-wrapper {
   display: flex;
   width: 100%;
   flex-direction: row;
   position: relative;
 }
-label.height-label {
+
+label.height-label,
+label.weight-label {
   position: absolute;
   top: 42%;
   right: 5%;
@@ -168,7 +171,8 @@ label.height-label {
 .height-label:first-of-type {
   right: 55%;
 }
-input.bp {
+input.bp,
+input.date-state {
   height: 1.5rem;
   margin-right: 0.5rem;
 }
@@ -271,7 +275,7 @@ input.bp:last-of-type {
   border: 1px solid #d02727;
 }
 
-.progress-bar{
+.progress-bar {
   width: 100%;
   padding: 1rem 0;
   position: absolute;
@@ -281,17 +285,17 @@ input.bp:last-of-type {
   justify-content: center;
 }
 
-.progress{
+.progress {
   width: 93%;
   height: 0.5rem;
-  background-color: #E8EAED;
+  background-color: #e8eaed;
   border-radius: 10px;
 }
 
 .progress:after {
-  content: '';
+  content: "";
   display: block;
-  background: #48B07A;
+  background: #48b07a;
   width: 14.5%;
   height: 100%;
   border-radius: 10px;

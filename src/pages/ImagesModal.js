@@ -1,3 +1,5 @@
+import imageCompression from "browser-image-compression";
+
 const ImagesModal = (props) => {
   const {
     show,
@@ -11,18 +13,31 @@ const ImagesModal = (props) => {
   const imageHandler = (e) => {
     if (e && e.target.files[0]) {
       const reader = new FileReader();
-      const f = e.target.files[0];
+      const imageFile = e.target.files[0];
       const file = e.target.value.split("\\");
-      reader.readAsDataURL(f);
-      reader.onload = function () {
-        const fileInfo = {
-          fileName: file[2],
-          fileImage: reader.result,
-        };
-        setFileAspects([...fileAspects, fileInfo]);
+      var options = {
+        maxSizeMB: 0.05,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
       };
+      imageCompression(imageFile, options)
+        .then(function (compressedFile) {
+          reader.readAsDataURL(compressedFile);
+          reader.onload = function () {
+            const fileInfo = {
+              fileName: file[2],
+              fileImage: reader.result,
+            };
+            setFileAspects([...fileAspects, fileInfo]);
+            onClose();
+          };
+          return null;
+        })
+        .catch(function (error) {
+          console.error(error.message);
+          onClose();
+        });
     }
-    onClose();
   };
 
   if (!show) {

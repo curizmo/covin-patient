@@ -466,6 +466,12 @@ input[type="number"]::placeholder {
   margin: 2rem 0rem;
 }
 
+.disabled-container {
+  pointer-events: none;
+  background-color: #cccccc;
+  opacity: 0.3;
+}
+
 .active-container,
 .camera-icon-container:hover {
   background: #f2f7fd;

@@ -4,7 +4,6 @@ import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
 
-
 const moment = require("moment");
 
 const CovidHistory = ({
@@ -84,26 +83,28 @@ const CovidHistory = ({
     setPage(page + 1);
   };
 
-  const yesDiagnosed =() =>{
-    setDiagnosed(true)
-  }
+  const yesDiagnosed = () => {
+    setDiagnosed(true);
+  };
 
-  const notDiagnosed =() =>{
-    setDiagnosed(false)
-  }
+  const notDiagnosed = () => {
+    setDiagnosed(false);
+  };
 
-  const handleRadioButton = (value)=>{
+  const handleRadioButton = (value) => {
     setChecked(value);
-  }
-
+  };
+  console.log({ covidHistory });
   return (
     <div className="form-content-wrapper">
       {/* <div className="page-title">Covid History</div> */}
       <div className="covid-diagnosed">
-        <div className="covid-tittle">Have you ever been diagnosed positive for COVID?</div>
+        <div className="covid-tittle">
+          Have you ever been diagnosed positive for COVID?
+        </div>
         <div className="covid-buttons">
           <span>
-            <input 
+            <input
               className="covid-button"
               type="radio"
               name="yes"
@@ -115,7 +116,7 @@ const CovidHistory = ({
             <label for="yes">Yes</label>
           </span>
           <span>
-            <input 
+            <input
               className="covid-button"
               type="radio"
               name="no"
@@ -126,31 +127,17 @@ const CovidHistory = ({
             />
             <label for="no">No</label>
           </span>
-          {/* <button 
-            className="yes-diagnosed covid-button"
-            
-          >
-            <img className="button-img" src={yes} alt="tick"></img>
-            Yes
-          </button>
-          <button 
-            className="not-diagnosed covid-button"
-            
-            >
-              <img className="button-img" src={no} alt="cross"></img>
-              No
-          </button> */}
         </div>
-        {isDiagnosed && 
+        {isDiagnosed && (
           <div className="date-diagnosed">
             <label>Date of diagnosis</label>
             <input
-            className="date-of-diagnosis"
-            type="date"
-            placeholder="Select date of diagnosis"
+              className="date-of-diagnosis"
+              type="date"
+              placeholder="Select date of diagnosis"
             />
           </div>
-        }
+        )}
       </div>
       <div className="health-checklist">
         {covidHistory.map((history, indx) => {
