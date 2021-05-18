@@ -97,6 +97,12 @@ const CovidHistory = ({
 
   const handleRadioButton = (value) => {
     setChecked(value);
+    console.log(value);
+    if (value === 1) {
+      setIntakeState({ ...intakeState, covidPositiveEverBefore: true });
+    } else if (value === 2) {
+      setIntakeState({ ...intakeState, covidPositiveEverBefore: false });
+    }
   };
   const onBackButtonClick = () => {
     setProgressedPage(NEW_PATIENT_PAGES.patientInfo);
@@ -137,9 +143,15 @@ const CovidHistory = ({
           <div className="date-diagnosed">
             <label>Date of diagnosis</label>
             <input
+              name="dateCovidBefore"
               className="date-of-diagnosis"
               type="date"
               placeholder="Select date of diagnosis"
+              max={moment().format(DATE_FORMAT.yyyymmdd)}
+              value={moment(intakeState.dateCovidBefore).format(
+                DATE_FORMAT.yyyymmdd
+              )}
+              onChange={handleInputChange}
             />
           </div>
         )}
