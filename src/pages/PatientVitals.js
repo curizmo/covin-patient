@@ -4,6 +4,9 @@ import PatientVitalForm from "./PatientVitalForm";
 import PatientFirstIntake from "./PatientFirstIntake";
 import Submission from "./Submission";
 import "./home.css";
+import back from "../assets/images/back.svg";
+import forward from "../assets/images/forward.svg";
+
 import patient_profile from "../assets/images/icon_userprofile.svg";
 import * as patientService from "../services/patient";
 
@@ -57,6 +60,7 @@ const PatientVitals = ({
     dateOfDose1Vaccination: "",
     covidVaccinationDose2Taken: false,
     dateOfDose2Vaccination: "",
+    dateCovidBefore: "",
     heartDisease: false,
     cancer: false,
     highOrLowBloodPressure: false,
@@ -71,12 +75,8 @@ const PatientVitals = ({
     noPrexistingCondition: false,
     food: "",
     medications: "",
-    otherAllergies: "",
+    otherMedicationsInfo: "",
     medication1DoseFrequency: "",
-    medication2DoseFrequency: "",
-    medication3DoseFrequency: "",
-    medication4DoseFrequency: "",
-    medication5DoseFrequency: "",
   });
 
   useEffect(() => {
@@ -107,6 +107,15 @@ const PatientVitals = ({
     pageNum: page,
   };
 
+  const goBack = () => {
+    setPage(page - 1);
+    setProgressedPage(progressedPage - 1);
+  };
+
+  const goForward = () => {
+    setPage(page + 1);
+    setProgressedPage(progressedPage + 1);
+  };
   const subWrapper =
     messageType === MESSAGE_TYPES.newPatient
       ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
@@ -125,15 +134,48 @@ const PatientVitals = ({
   return (
     <div className="wrapper">
       <div className="second-header">
-        <img src={patient_profile} alt="user-profile" />
+        {(progressedPage === NEW_PATIENT_PAGES.patientInfo ||
+          progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+          progressedPage === NEW_PATIENT_PAGES.preExistingCondition ||
+          progressedPage === NEW_PATIENT_PAGES.allergy ||
+          progressedPage === NEW_PATIENT_PAGES.medication) && (
+          <div className="progress-bar">
+            <div class="progress"></div>
+            <style>{`
+            .progress::after{
+              width : ${(progressedPage - 1) * 20}%;
+            }
+          `}</style>
+          </div>
+        )}
+        <div className="navigation-bar">
+          {(progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+            progressedPage === NEW_PATIENT_PAGES.preExistingCondition ||
+            progressedPage === NEW_PATIENT_PAGES.allergy ||
+            progressedPage === NEW_PATIENT_PAGES.medication) && (
+            <div className="back-button" onClick={goBack}>
+              <img className="nav-img-back" src={back} alt="go back"></img>
+              <span>Back</span>
+            </div>
+          )}
+          {(progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+            progressedPage === NEW_PATIENT_PAGES.allergy) && (
+            <div className="skip-button" onClick={goForward}>
+              <span>Skip</span>
+              <img
+                className="nav-img-skip"
+                src={forward}
+                alt="go forward"
+              ></img>
+            </div>
+          )}
+        </div>
         <div className="header-wrapper page-hero">
           <div className="main-text">{name}</div>
           <div className="dull-text">{phone}</div>
         </div>
       </div>
-      <div className="page-hero dull-text text-center">
-        {day}, {month} {date}, {year}
-      </div>
+      <div className="page-hero dull-text text-center"></div>
 
       {messageType === MESSAGE_TYPES.newPatient ? (
         <div className={`content-wrapper ${subWrapper}`}>

@@ -1,8 +1,20 @@
-html {
+html,
+body {
+  width: 100%;
+  height: 100%;
   background-color: #f2f7fd;
 }
+
+#root,
+.App,
+#root .App > div,
+#root .App > div > div {
+  width: 100%;
+  height: 100%;
+}
+
 .content-wrapper {
-  padding: 1rem 1.5rem;
+  padding: 2rem 1.5rem; 
   margin-top: 0.7rem;
   min-height: 70vh;
 }
@@ -54,8 +66,6 @@ html {
   font-size: 1.25rem;
   font-weight: 600;
   outline-style: none;
-
-
 }
 
 .input-vitals label {
@@ -72,8 +82,12 @@ html {
   height: 5rem;
 }
 
+.input-history:last-child {
+  display: none;
+}
+
 .input-history input {
-  height: 2rem;
+  height: 0.688rem;
   width: 91%;
   margin-top: 0.5rem;
   border: 1px solid #e0e3ea;
@@ -87,7 +101,7 @@ html {
 }
 
 .input-history label {
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 
 .history-list-content {
@@ -129,28 +143,32 @@ html {
   position: relative;
 }
 
-.height-wrapper {
+.height-wrapper,
+.weight-wrapper {
   display: flex;
   width: 100%;
   flex-direction: row;
   position: relative;
 }
-label.height-label{
+
+label.height-label,
+label.weight-label {
   position: absolute;
-  top:42%;
-  right:5%;
+  top: 42%;
+  right: 5%;
   font-weight: bold;
-  color:#657396;
+  color: #657396;
   font-size: 1.125rem;
 }
-.height-label:first-of-type{
-  right:55%;
+.height-label:first-of-type {
+  right: 55%;
 }
-input.bp {
+input.bp,
+input.date-state {
   height: 1.5rem;
   margin-right: 0.5rem;
 }
-input.bp:last-of-type{
+input.bp:last-of-type {
   margin-right: 0rem;
 }
 
@@ -163,15 +181,144 @@ input.bp:last-of-type{
 
 .initial-page-wrapper {
   background-color: blanchedalmond;
-  height: 95vh;
+  width: 100%;
+  height: 100%;
 }
 
 .name-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 3.188rem 1.5rem;
+}
+
+.thanks-message {
+  padding: 3rem;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thanks-text {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #22335e;
+  text-align: center;
+}
+
+.nav-img-back {
+  padding-right: 0.35rem;
+}
+
+.nav-img-skip {
+  padding-left: 0.35rem;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+}
+
+.skip-button {
+  display: flex;
+  align-items: center;
+}
+
+.covid-diagnosed {
+  padding: 1rem 0 0;
+}
+
+.covid-tittle {
+  font-size: 1rem;
+  line-height: 1.625rem;
+  color: #1f3259;
+  font-weight: 500;
+}
+
+.covid-buttons {
+  padding: 1rem 0;
+  width: 9.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.covid-button {
+  margin-right: 0.63rem;
+}
+
+.yes-diagnosed:focus {
+  background-color: #f0faf5;
+  border: 1px solid #48b07a;
+}
+
+.yes-diagnosed:active {
+  background-color: #f0faf5;
+  border: 1px solid #48b07a;
+}
+
+.not-diagnosed:focus {
+  background: #faf0f0;
+  border: 1px solid #d02727;
+}
+
+.not-diagnosed:active {
+  background: #faf0f0;
+  border: 1px solid #d02727;
+}
+
+.progress-bar {
+  width: 100%;
+  padding: 1rem 0;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress {
+  width: 93%;
+  height: 0.5rem;
+  background-color: #e8eaed;
+  border-radius: 10px;
+}
+
+.progress:after {
+  content: "";
+  display: block;
+  background: #48B07A;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.date-diagnosed {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.date-diagnosed > label {
+  color: #657396;
+  font-size: 0.875rem;
+}
+
+.date-of-diagnosis {
+  height: 0.688rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  outline-style: none;
+  color: #22335e;
+}
+
+.button-img {
+  padding-right: 0.5rem;
 }
 
 .initial-page-content {
@@ -193,32 +340,30 @@ input.bp:last-of-type{
   color: red;
   font-size: 0.7rem;
 }
-.history-list-content>label{
+.history-list-content > label {
   font-size: 1rem;
   margin-left: 0.4rem;
 }
-.wrapper{
-  min-height: 100vh;
+.wrapper {
+  width: 100%;
+  height: 100%;
 }
-.initial-page-wrapper{
-  height: 100vh;
+.initial-page-wrapper {
   box-sizing: border-box;
 }
 /*@Shreeti can be removed ** START** just added for the heading for Vaccination*/
-.history-list-content:first-of-type{
-
+.history-list-content:first-of-type {
   background-color: transparent;
 }
-.history-list-content:first-of-type::after {
+.history-list-content:first-of-type::before {
   content: " Vaccination History";
-  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
   display: block;
   font-size: 1.2rem;
   font-weight: 600;
-
 }
 /*@Shreeti can be removed ** END** just added for the heading for Vaccination*/
-.text-center.dull-text{
+.text-center.dull-text {
   text-align: center;
   padding-top: 0;
 }

@@ -10,6 +10,7 @@ import {
   MINIMUM_YEAR,
   PERSONAL_INFO,
   DATE_FORMAT,
+  NEW_PATIENT_PAGES,
 } from "../constants/constants";
 
 const moment = require("moment");
@@ -138,6 +139,22 @@ const PatientPersonalInfo = ({
     return !isAnyTrue;
   };
 
+  const getValue = (field) => {
+    switch (field) {
+      case PERSONAL_INFO.firstName:
+        return intakeState.firstName;
+        break;
+      case PERSONAL_INFO.lastName:
+        return intakeState.lastName;
+        break;
+      case PERSONAL_INFO.weight:
+        return intakeState.weight;
+        break;
+      default:
+        return null;
+    }
+  };
+
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
@@ -172,11 +189,11 @@ const PatientPersonalInfo = ({
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: progressedPage,
+        pagenum: NEW_PATIENT_PAGES.patientInfo,
       }),
     ]);
 
-    setProgressedPage(progressedPage + 1);
+    setProgressedPage(NEW_PATIENT_PAGES.covidHistory);
     setPage(page + 1);
   };
 
@@ -237,6 +254,7 @@ const PatientPersonalInfo = ({
                 <input
                   type="date"
                   id={indx}
+                  className="date-state"
                   name={info.field}
                   onChange={handleDateChange}
                   placeholder="dd-mon-yyyy"
@@ -281,26 +299,30 @@ const PatientPersonalInfo = ({
                   />
                 </div>
               ) : (
-                <input
-                  type={info.field === PERSONAL_INFO.weight ? "number" : "text"}
-                  id={indx}
-                  name={info.field}
-                  value={
-                    info.field === PERSONAL_INFO.firstName
-                      ? intakeState.firstName
-                      : info.field === PERSONAL_INFO.lastName
-                      ? intakeState.lastName
-                      : info.field === PERSONAL_INFO.weight
-                      ? intakeState.weight
-                      : null
-                  }
-                  onChange={
-                    info.field === PERSONAL_INFO.weight
-                      ? handleValidateWeight
-                      : handleInputChange
-                  }
-                  placeholder={info.field === PERSONAL_INFO.weight ? "Kg." : ""}
-                />
+                <div className="weight-wrapper">
+                  <input
+                    type={
+                      info.field === PERSONAL_INFO.weight ? "number" : "text"
+                    }
+                    className="bp"
+                    id={indx}
+                    name={info.field}
+                    value={getValue(info.field)}
+                    onChange={
+                      info.field === PERSONAL_INFO.weight
+                        ? handleValidateWeight
+                        : handleInputChange
+                    }
+                    placeholder={
+                      info.field === PERSONAL_INFO.weight ? "Kg." : ""
+                    }
+                  />
+                  {info.field === PERSONAL_INFO.weight && (
+                    <label className="weight-label" for={"weight"}>
+                      Kg.
+                    </label>
+                  )}
+                </div>
               )}
             </div>
           );

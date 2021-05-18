@@ -7,9 +7,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
+  align-items: center;
   box-shadow: 0px 8px 8px #eaeff7;
-  
+
   /* border-bottom: 0.125rem solid #eaeff7; */
 }
 
@@ -56,7 +56,6 @@ body {
 .dull-text {
   color: #9ea5b8;
   font-size: 0.85rem;
-
 }
 
 .link-text {
@@ -108,7 +107,6 @@ body {
 
 .name-container {
   width: 80%;
-  height: 75vh;
 }
 
 /* PatientVitals */
@@ -119,9 +117,8 @@ body {
   font-style: normal;
   font-weight: normal;
   font-size: 1.2rem;
-  
 }
-.page1-sub-wrapper <.history-list-content{
+.page1-sub-wrapper .history-list-content {
   background: #ffffff;
 }
 .page2-sub-wrapper {
@@ -132,20 +129,32 @@ body {
 .page3-sub-wrapper {
   background: #ffffff;
   font-weight: 400;
- 
-  color:#2f4068;
+
+  color: #2f4068;
+}
+
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  width: -webkit-fill-available;
+  padding: 3rem 1rem 0rem 1rem;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #9099af;
+  font-weight: 500;
 }
 
 .second-header .header-wrapper {
   box-shadow: none;
+  padding-top: 0;
 }
 .second-header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  height: 14vh;
+  height: 15vh;
 }
 
 /* PatientCheclist */
@@ -168,12 +177,12 @@ body {
   margin-right: 0.5rem;
   border: 2px solid #fff;
 }
-.preexisting-list-content .symptoms-checkbox{
-  margin:-0.4rem 0.5rem 0;
+.preexisting-list-content .symptoms-checkbox {
+  margin: -0.4rem 0.5rem 0;
 }
 
 .symptoms-checkbox:checked ~ .symptoms-checkbox {
-  background:#fff;
+  background: #fff;
 }
 
 .gender-radio {
@@ -183,10 +192,10 @@ body {
   width: 1rem;
   height: 1rem;
   margin: 0rem 0.2rem 0rem 0;
-  border: 2px solid #fff  !important;
+  border: 2px solid #fff !important;
   background-color: #fff;
 }
-input[type='radio']:after {
+input[type="radio"]:after {
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 1rem;
@@ -194,13 +203,13 @@ input[type='radio']:after {
   left: -2px;
   position: relative;
   background-color: #fff;
-  content: '';
+  content: "";
   display: inline-block;
   visibility: visible;
   border: 2px solid #657396;
   box-sizing: border-box;
 }
-input[type='radio']:checked:after {
+input[type="radio"]:checked:after {
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 1rem;
@@ -208,11 +217,10 @@ input[type='radio']:checked:after {
   left: -2px;
   position: relative;
   background-color: #fff;
-  content: '';
+  content: "";
   display: inline-block;
   visibility: visible;
-  border: 6px solid #22335E;
-  ;
+  border: 6px solid #22335e;
   box-sizing: border-box;
 }
 
@@ -221,39 +229,35 @@ input[type='radio']:checked:after {
   margin: 0rem 0.825rem 0 0.4rem;
   text-transform: capitalize;
 }
-.list-content > label{
+.list-content > label {
   display: block;
   margin-bottom: 1rem;
-  color:#22335E;
+  color: #22335e;
 }
-.list-content.symptoms-list > label{
+.list-content.symptoms-list > label {
   margin-bottom: 0rem;
   margin-left: 0.4rem;
 }
-.gender-radio-span{
+.gender-radio-span {
   height: 2rem;
   margin-top: 1rem;
 }
 input[type="radio"] {
   margin-top: -2px;
   vertical-align: middle;
-
 }
 input[type="checkbox"] {
   margin-top: -1px;
   vertical-align: middle;
-
 }
-
-
 
 /*Custom Checkbox*/
 
-input[type=checkbox] {
+input[type="checkbox"] {
   position: relative;
   cursor: pointer;
 }
-input[type=checkbox]:before {
+input[type="checkbox"]:before {
   content: "";
   display: block;
   position: absolute;
@@ -261,10 +265,10 @@ input[type=checkbox]:before {
   height: 24px;
   top: -4px;
   left: -4px;
-  background-color:#fff;
+  background-color: #fff;
   border: 1px solid #22335e;
 }
-input[type=checkbox]:checked:before {
+input[type="checkbox"]:checked:before {
   content: "";
   display: block;
   position: absolute;
@@ -272,9 +276,9 @@ input[type=checkbox]:checked:before {
   height: 24px;
   top: -5px;
   left: -5px;
-  background-color:#22335e;
+  background-color: #22335e;
 }
-input[type=checkbox]:checked:after {
+input[type="checkbox"]:checked:after {
   content: "";
   display: block;
   width: 5px;
@@ -291,20 +295,16 @@ input[type=checkbox]:checked:after {
 
 /*END CUSTOM CHECKBOX*/
 
-
-
-
-input[type="date"]{
+input[type="date"] {
   font-family: Helvetica, sans-serif;
-  font-size:1.125rem;
-  color:#2f4068;
+  font-size: 1.125rem;
+  color: #2f4068;
   -webkit-appearance: none;
 }
 
 input[type="number"]::placeholder {
- text-align: right;
+  text-align: right;
 }
-
 
 /* submission */
 .block-text {
@@ -347,7 +347,7 @@ input[type="number"]::placeholder {
 .input-vitals .icon-lower {
   position: absolute;
   top: 42%;
-  left:78%;
+  left: 78%;
   opacity: 0.3;
 }
 
@@ -359,7 +359,6 @@ input[type="number"]::placeholder {
 .input-wrap {
   display: flex;
   justify-content: space-between;
-
 }
 
 .input-wrap .patient-intake-info {
@@ -417,12 +416,208 @@ input[type="number"]::placeholder {
   height: 15rem;
 }
 
-
-.input-history>label{
-  color:#657396;
+.input-history > label {
+  color: #657396;
 }
 ::-webkit-input-placeholder {
-  color:#657396;
-  opacity:1;
- }
- 
+  color: #657396;
+  opacity: 1;
+}
+
+/* Medications */
+.medications-header {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #657396;
+}
+
+.modal-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+}
+
+.modal-content-wrap {
+  padding: 0rem 0.5rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 100%;
+}
+
+.camera-icon-container {
+  height: 5rem;
+  background: #ffffff;
+  border: 1px solid #c5cde1;
+  box-sizing: border-box;
+  box-shadow: 0px 3px 3px rgba(159, 167, 186, 0.2);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0rem;
+}
+
+.disabled-container {
+  pointer-events: none;
+  background-color: #cccccc;
+  opacity: 0.3;
+}
+
+.active-container,
+.camera-icon-container:hover {
+  background: #f2f7fd;
+}
+
+.cameraButton {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.625rem;
+  text-align: center;
+  color: #1971e0;
+}
+
+label.cameraButton {
+  border-bottom: 1px solid #e0e3ea;
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+label.cameraButton:last-child {
+  border-bottom: none;
+}
+
+.cancel-button {
+  padding: 0.925rem 0.5rem;
+  background: #ffffff;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #ccc #eee #eee #ccc;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input {
+  display: none;
+}
+
+.display-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.image-wrap-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.picture-icon {
+  display: flex;
+  margin-right: 5px;
+}
+
+.image-container {
+  margin-bottom: 1rem;
+  padding: 0rem 1rem;
+  height: 50%;
+  background: transparent no-repeat center;
+  background-size: cover;
+  border-radius: 12%;
+}
+
+.close-icon-styling {
+  background: #ffffff;
+  border-radius: 12px;
+  text-align: center;
+  width: 50%;
+  padding: 1.145rem;
+  margin: 0 auto;
+}
+
+.margin-top-bottom {
+  margin: 1rem 0rem;
+}
+
+.camera-options-wrap {
+  background: #ffffff;
+  height: 6.9rem;
+}
+
+.border-radius {
+  border-radius: 12px;
+}
+
+.display-flex-direction-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.filename-wrapper {
+  background: rgba(224, 227, 234, 0.3);
+  border-radius: 3px;
+  padding: 0.66rem 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.filename-label {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #22335e;
+}
+
+.other-information {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.625rem;
+  color: #1f3259;
+  margin-bottom: 0.5rem;
+}
+
+.txtArea {
+  width: 99%;
+  background: #ffffff;
+  border: 1px solid #c5cde1;
+  box-sizing: border-box;
+  box-shadow: 0px 3px 3px rgba(159, 167, 186, 0.2);
+  border-radius: 3px;
+  height: 6.25rem;
+}
+
+textarea {
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.125rem;
+  color: #22335e;
+}
+
+textarea:focus {
+  outline: none !important;
+}
+
+.other-information-wrapper {
+  margin-top: 2.7rem;
+}
