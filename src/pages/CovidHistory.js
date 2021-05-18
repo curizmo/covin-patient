@@ -94,7 +94,6 @@ const CovidHistory = ({
   const handleRadioButton = (value) => {
     setChecked(value);
   };
-  console.log({ covidHistory });
   return (
     <div className="form-content-wrapper">
       {/* <div className="page-title">Covid History</div> */}

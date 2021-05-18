@@ -119,7 +119,6 @@ const PatientVitals = ({
     setPage(page + 1);
     setProgressedPage(progressedPage + 1);
   }
-
   const subWrapper =
     messageType === MESSAGE_TYPES.newPatient
       ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
@@ -142,17 +141,17 @@ const PatientVitals = ({
           <div class="progress" ></div>
           <style>{`
             .progress::after{
-              width : ${page*20}%;
+              width : ${progressedPage*20}%;
             }
           `}</style>
         </div>
         <div className="navigation-bar">
-          {(page === NEW_PATIENT_PAGES.covidHistory || page ===  NEW_PATIENT_PAGES.preExistingCondition || page === NEW_PATIENT_PAGES.allergy || page === NEW_PATIENT_PAGES.medication) && 
+          {(progressedPage === NEW_PATIENT_PAGES.covidHistory || progressedPage ===  NEW_PATIENT_PAGES.preExistingCondition || progressedPage === NEW_PATIENT_PAGES.allergy || progressedPage === NEW_PATIENT_PAGES.medication) && 
           <div className="back-button" onClick={goBack}>
             <img className="nav-img-back" src={back} alt="go back"></img>
             <span>Back</span>
           </div>}
-          {(page === NEW_PATIENT_PAGES.covidHistory || page === NEW_PATIENT_PAGES.allergy ) && 
+          {(progressedPage === NEW_PATIENT_PAGES.covidHistory || progressedPage === NEW_PATIENT_PAGES.allergy ) && 
           <div className="skip-button" onClick={goForward}>
             <span>Skip</span>
             <img className="nav-img-skip" src={forward} alt="go forward"></img>
