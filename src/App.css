@@ -255,26 +255,6 @@ input.bp:last-of-type {
   margin-right: 0.63rem;
 }
 
-.yes-diagnosed:focus {
-  background-color: #f0faf5;
-  border: 1px solid #48b07a;
-}
-
-.yes-diagnosed:active {
-  background-color: #f0faf5;
-  border: 1px solid #48b07a;
-}
-
-.not-diagnosed:focus {
-  background: #faf0f0;
-  border: 1px solid #d02727;
-}
-
-.not-diagnosed:active {
-  background: #faf0f0;
-  border: 1px solid #d02727;
-}
-
 .progress-bar {
   width: 100%;
   padding: 1rem 0;
@@ -295,18 +275,18 @@ input.bp:last-of-type {
 .progress:after {
   content: "";
   display: block;
-  background: #48B07A;
+  background: #48b07a;
   height: 100%;
   border-radius: 10px;
 }
 
-.yes-diagnosed{
+.yes-diagnosed {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.not-diagnosed{
+.not-diagnosed {
   display: flex;
   align-items: center;
   justify-content: center;
