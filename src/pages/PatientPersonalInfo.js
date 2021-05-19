@@ -132,14 +132,18 @@ const PatientPersonalInfo = ({
       (intakeState.height &&
         intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
       0;
-    const dob =
-      (intakeState.dateOfBirth &&
+      const dob = 
+      (intakeState.dateOfBirth && 
         moment(intakeState.dateOfBirth).format(DATE_FORMAT.yyyymmdd)) ||
       "1990-01-01";
 
+
     setFeetHeight(heightInFeet);
     setInchHeight(heightInInch);
-    setBirthDate(dob);
+    setIntakeState({
+      ...intakeState,
+      ["DOB"]: moment(dob).format(),
+    });
   }, []);
 
   const handleInputChange = (e) => {
@@ -382,7 +386,10 @@ const PatientPersonalInfo = ({
                   max={moment()
                     .subtract(1, "days")
                     .format(DATE_FORMAT.yyyymmdd)}
-                  value={birthDate}
+                    value={moment(intakeState.dateOfBirth).format(
+                      DATE_FORMAT.yyyymmdd
+                    )}
+  
                 />
               ) : info.field === "emailId" ? (
                 <input
