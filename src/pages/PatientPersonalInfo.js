@@ -5,7 +5,6 @@ import * as patientService from "../services/patient";
 import csc from "country-state-city";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-
 import {
   GENDERS,
   EMAIL_TYPE_REGEX,
@@ -16,9 +15,57 @@ import {
   DATE_FORMAT,
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
+      transform: "translate(34px, 20px) scale(1);",
+    },
+    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+      borderBottom: "none !important",
+    },
+
+    "& .MuiInput-underline:after": {
+      borderBottom: "none !important",
+    },
+
+    "& .MuiInput-underline:before": {
+      borderBottom: "none !important",
+    },
+    "& .MuiInputLabel-formControl": {
+      top: "-6px !important",
+      paddingLeft: "1rem !important",
+    },
+
+    "& .MuiInputLabel-shrink": {
+      display: "none !important",
+    },
+
+    "& .MuiAutocomplete-inputRoot": {
+      padding: "0px 1em !important",
+    },
+  },
+  inputRoot: {
+    color: "#22335E !important",
+    paddingLeft: "1rem !important",
+    '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
+      // Default left padding is 6px
+      paddingLeft: "1rem !important",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "red",
+    },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "purple",
+    },
+  },
+}));
 
 const moment = require("moment");
-
 const states = csc.getStatesOfCountry("IN");
 const stateList = [];
 for (let i in states) {
@@ -57,6 +104,7 @@ const PatientPersonalInfo = ({
     weight: "",
     emailId: "",
   });
+  const classes = useStyles();
 
   useEffect(() => {
     const heightInFeet =
@@ -374,24 +422,19 @@ const PatientPersonalInfo = ({
           <label className="state-label" for={"state"}>
             State
           </label>
-          <Autocomplete
-            id="combo-box-demo"
-            options={stateList}
-            getOptionLabel={(option) => option.value}
-            style={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Combo box" variant="outlined" />
-            )}
-          />
-          {/* <Dropdown
-            name="stateDrop"
-            className="state-dropdown"
-            fluid
-            search
-            selection
-            onChange={handleStateChange}
-            options={stateList}
-          /> */}
+          <div className="dropdown-selections">
+            <Autocomplete
+              id="combo-box-demo"
+              shrink={false}
+              classes={classes}
+              options={stateList}
+              getOptionLabel={(option) => option.value}
+              style={{ width: "100%" }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select State" />
+              )}
+            />
+          </div>
         </div>
       </div>
       <button className="submit-button submit-btn" onClick={onNext}>
