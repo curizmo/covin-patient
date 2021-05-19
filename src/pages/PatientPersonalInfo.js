@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
-import csc from 'country-state-city';
-import { Form,Dropdown } from 'semantic-ui-react'
-
-
+import csc from "country-state-city";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import {
   GENDERS,
@@ -20,17 +19,17 @@ import {
 
 const moment = require("moment");
 
-const states = csc.getStatesOfCountry('IN');
+const states = csc.getStatesOfCountry("IN");
 const stateList = [];
-for( let i in states){
+for (let i in states) {
   let state = {
-    key : states[i].isoCode,
-    text : states[i].name,
-    value : states[i].name,
-  }
-  stateList.push(state)
+    key: states[i].isoCode,
+    text: states[i].name,
+    value: states[i].name,
+  };
+  stateList.push(state);
 }
-console.log(stateList)
+console.log(stateList);
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -68,14 +67,14 @@ const PatientPersonalInfo = ({
       (intakeState.height &&
         intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
       0;
-    const dob = 
-      (intakeState.dateOfBirth && 
+    const dob =
+      (intakeState.dateOfBirth &&
         moment(intakeState.dateOfBirth).format(DATE_FORMAT.yyyymmdd)) ||
       "1990-01-01";
-        
+
     setFeetHeight(heightInFeet);
     setInchHeight(heightInInch);
-    setBirthDate(dob)
+    setBirthDate(dob);
   }, []);
 
   const handleInputChange = (e) => {
@@ -115,7 +114,7 @@ const PatientPersonalInfo = ({
   const handleStateChange = (e) => {
     const stateName = e.target.outerText;
     setState(stateName);
-  }
+  };
 
   useEffect(() => {
     if (intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
@@ -145,7 +144,7 @@ const PatientPersonalInfo = ({
 
   const handleAddressChange = (e) => {
     const item = e.target.value;
-  }
+  };
 
   useEffect(() => {
     setIntakeState({
@@ -295,7 +294,7 @@ const PatientPersonalInfo = ({
                   max={moment()
                     .subtract(1, "days")
                     .format(DATE_FORMAT.yyyymmdd)}
-                  value= {birthDate}
+                  value={birthDate}
                 />
               ) : info.field === "emailId" ? (
                 <input
@@ -365,7 +364,7 @@ const PatientPersonalInfo = ({
           <label className="address-label" for={"address"}>
             Address
           </label>
-          <input 
+          <input
             type="text"
             className="address-input"
             onChange={handleAddressChange}
@@ -375,7 +374,16 @@ const PatientPersonalInfo = ({
           <label className="state-label" for={"state"}>
             State
           </label>
-          <Dropdown
+          <Autocomplete
+            id="combo-box-demo"
+            options={stateList}
+            getOptionLabel={(option) => option.value}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Combo box" variant="outlined" />
+            )}
+          />
+          {/* <Dropdown
             name="stateDrop"
             className="state-dropdown"
             fluid
@@ -383,7 +391,7 @@ const PatientPersonalInfo = ({
             selection
             onChange={handleStateChange}
             options={stateList}
-          />
+          /> */}
         </div>
       </div>
       <button className="submit-button submit-btn" onClick={onNext}>
