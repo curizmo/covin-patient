@@ -30,16 +30,7 @@ for (let i in states) {
   stateList.push(state);
 }
 
-const cities = csc.getCitiesOfState('IN','MH');
-const cityList = [];
-for( let i in cities){
-  let city = {
-    key : cities[i].isoCode,
-    text : cities[i].name,
-    value : cities[i].name,
-  }
-  cityList.push(city);
-}
+
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -50,6 +41,7 @@ const PatientPersonalInfo = ({
   setProgressedPage,
   hash,
   setPage,
+  stateKey,
   page,
 }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -59,6 +51,8 @@ const PatientPersonalInfo = ({
   const [birthDate, setBirthDate] = useState("1990-01-01");
   const [state, setState] = useState();
   const [city, setCity] = useState();
+  const [cityArray, setCityArray] = useState();
+  const [cityDisabled, setCityDisable] = useState(true);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -122,10 +116,36 @@ const PatientPersonalInfo = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
+  const cityList = [];
+  
   const handleStateChange = (e) => {
     const stateName = e.target.outerText;
     setState(stateName);
+    for(let i in stateList){
+      
+      if(stateList[i].text === stateName){
+        console.log(stateList[i])
+        stateKey = stateList[i].key
+      }
+    }
+    console.log(stateKey)
+    
+    const cities = csc.getCitiesOfState('IN',stateKey);
+    for( let i in cities){
+      let city = {
+        key : cities[i].isoCode,
+        text : cities[i].name,
+        value : cities[i].name,
+      }
+      cityList.push(city);
+    }
+    setCityArray((cityList))
+    console.log(cityList)
+    setCityDisable(false);
   };
+
+
+
 
   const handleCityChange = (e) => {
     const cityName = e.target.outerText;
@@ -399,20 +419,28 @@ const PatientPersonalInfo = ({
             id="combo-box-demo"
             options={stateList}
             getOptionLabel={(option) => option.value}
+            onChange={handleStateChange}
             style={{ width: 300 }}
             renderInput={(params) => (
-              <TextField {...params} label="Combo box" variant="outlined" />
+              <TextField {...params} variant="outlined" />
             )}
           />
-          {/* <Dropdown
-            name="stateDrop"
-            className="state-dropdown"
-            fluid
-            search
-            selection
-            onChange={handleStateChange}
-            options={stateList}
-          /> */}
+        </div>
+        <div className="city">
+          <label className="city-label" for={"city"}>
+            City
+          </label>
+          <Autocomplete
+            id="city-drop"
+            options={cityArray}
+            disabled={cityDisabled}
+            className="city-drop"
+            getOptionLabel={(option) => option.value}
+            style={{ width: 327 }}
+            renderInput={(params) => (
+              <TextField {...params}  variant="outlined" />
+            )}
+          />
         </div>
         <div className="pinCode">
           <label className="pincode-label" for={"pincode"}>
