@@ -61,7 +61,11 @@ const Medication = ({
     setDisplayImage(true);
     setShowModal(true);
     setCurrentFileView(fileImage);
+
   }
+
+  
+
 
   const onBackButtonClick = () => {
     setProgressedPage(NEW_PATIENT_PAGES.allergy);
@@ -117,7 +121,12 @@ const Medication = ({
       <div className="other-information-wrapper">
         <div className="other-information">Any other information</div>
         <div className="text-area-container">
-          <textarea className="txtArea"></textarea>
+          <textarea
+            name="otherMedicationsInfo"
+            value={intakeState.otherMedicationsInfo}
+            onChange={handleInputChange}
+            className="txtArea"
+          ></textarea>
         </div>
       </div>
       <button className="submit-button submit-btn" onClick={onSubmit}>
