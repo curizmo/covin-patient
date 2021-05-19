@@ -64,7 +64,7 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
   return (
     <div className="form-content-wrapper">
       <div>Are you currently having any of the following symptoms?</div>
-      <div className="health-checklist">
+      <div className="health-checklist no-select">
         {symptoms.map((symptom, indx) => {
           return (
             <div

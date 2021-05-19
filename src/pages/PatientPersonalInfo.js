@@ -5,7 +5,6 @@ import * as patientService from "../services/patient";
 import csc from "country-state-city";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-
 import {
   GENDERS,
   EMAIL_TYPE_REGEX,
@@ -16,21 +15,67 @@ import {
   DATE_FORMAT,
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
+      transform: "translate(34px, 20px) scale(1);",
+    },
+    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+      borderBottom: "none !important",
+    },
+
+    "& .MuiInput-underline:after": {
+      borderBottom: "none !important",
+    },
+
+    "& .MuiInput-underline:before": {
+      borderBottom: "none !important",
+    },
+    "& .MuiInputLabel-formControl": {
+      top: "-6px !important",
+      paddingLeft: "1rem !important",
+    },
+
+    "& .MuiInputLabel-shrink": {
+      display: "none !important",
+    },
+
+    "& .MuiAutocomplete-inputRoot": {
+      padding: "0px 1em !important",
+    },
+  },
+  inputRoot: {
+    color: "#22335E !important",
+    paddingLeft: "1rem !important",
+    '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
+      // Default left padding is 6px
+      paddingLeft: "1rem !important",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "red",
+    },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "purple",
+    },
+  },
+}));
 
 const moment = require("moment");
-
 const states = csc.getStatesOfCountry("IN");
 const stateList = [];
 for (let i in states) {
   let state = {
-    key : states[i].isoCode,
-    text : states[i].name,
-    value : states[i].name,
-  }
+    key: states[i].isoCode,
+    text: states[i].name,
+    value: states[i].name,
+  };
   stateList.push(state);
 }
-
-
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -62,6 +107,7 @@ const PatientPersonalInfo = ({
     weight: "",
     emailId: "",
   });
+  const classes = useStyles();
 
   useEffect(() => {
     const heightInFeet =
@@ -117,19 +163,18 @@ const PatientPersonalInfo = ({
   };
 
   const cityList = [];
-  
+
   const handleStateChange = (e) => {
     const stateName = e.target.outerText;
     setState(stateName);
-    for(let i in stateList){
-      
-      if(stateList[i].text === stateName){
-        stateKey = stateList[i].key
+    for (let i in stateList) {
+      if (stateList[i].text === stateName) {
+        stateKey = stateList[i].key;
       }
     }
-    
-    const cities = csc.getCitiesOfState('IN',stateKey);
-    for( let i in cities){
+
+    const cities = csc.getCitiesOfState("IN", stateKey);
+    for (let i in cities) {
       let city = {
         key : i,
         text : cities[i].name,
@@ -137,18 +182,14 @@ const PatientPersonalInfo = ({
       }
       cityList.push(city);
     }
-    setCityArray((cityList))
+    setCityArray(cityList);
     setCityDisable(false);
   };
-
-
-
 
   const handleCityChange = (e) => {
     const cityName = e.target.outerText;
     setCity(cityName);
-  }
-
+  };
 
   useEffect(() => {
     if (intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
@@ -181,8 +222,8 @@ const PatientPersonalInfo = ({
   };
 
   const handlePinCodeChange = (e) => {
-    const item = e.target.value
-  }
+    const item = e.target.value;
+  };
 
   useEffect(() => {
     setIntakeState({
@@ -413,41 +454,45 @@ const PatientPersonalInfo = ({
           <label className="state-label" for={"state"}>
             State
           </label>
-          <Autocomplete
-            id="combo-box-demo"
-            options={stateList}
-            getOptionLabel={(option) => option.value}
-            onChange={handleStateChange}
-            style={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} variant="outlined" />
-            )}
-          />
+          <div className="dropdown-selections">
+            <Autocomplete
+              id="combo-box-demo"
+              shrink={false}
+              classes={classes}
+              options={stateList}
+              onChange={handleStateChange}
+              getOptionLabel={(option) => option.value}
+              style={{ width: "100%" }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select State" />
+              )}
+            />
+          </div>
         </div>
         <div className="city">
           <label className="city-label" for={"city"}>
             City
           </label>
-          <Autocomplete
-            id="city-drop"
-            options={cityArray}
-            disabled={cityDisabled}
-            className="city-drop"
-            onChange={handleCityChange} 
-            getOptionLabel={(option) => option.value}
-            // getOptionLabel= {() => {handleOptionLabel(cityArray)}}
-            // defaultValue={() => {handleOptionLabel(cityArray)}} 
-            style={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params}  variant="outlined" />
-            )}
-          />
+          <div className="dropdown-selections">
+            <Autocomplete
+              id="city-drop"
+              classes={classes}
+              options={cityArray}
+              disabled={cityDisabled}
+              className="city-drop"
+              getOptionLabel={(option) => option.value}
+              style={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select City" />
+              )}
+            />
+          </div>
         </div>
         <div className="pinCode">
           <label className="pincode-label" for={"pincode"}>
             PIN Code
           </label>
-          <input 
+          <input
             type="number"
             className="pin-input"
             onChange={handlePinCodeChange}
