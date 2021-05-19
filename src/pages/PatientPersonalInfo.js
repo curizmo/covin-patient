@@ -474,7 +474,6 @@ const PatientPersonalInfo = ({
               options={stateList}
               name="state"
               onChange={handleStateChange}
-              value={intakeState.state}
               getOptionLabel={(option) => option.value}
               style={{ width: "100%" }}
               renderInput={(params) => (
@@ -494,7 +493,6 @@ const PatientPersonalInfo = ({
               options={cityArray}
               disabled={cityDisabled}
               name="city"
-              value={intakeState.city}
               className="city-drop"
               onChange={handleCityChange}
               getOptionLabel={(option) => option.value}
