@@ -375,6 +375,11 @@ input[type="number"]::placeholder {
   color: #3e4d72;
 }
 
+.label-header {
+  font-size: 0.875rem;
+  color: #657396;
+}
+
 .thank-you-img {
   display: flex;
   justify-content: center;

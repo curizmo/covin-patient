@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInputLabel-formControl": {
       top: "-4px !important",
       paddingLeft: "1rem !important",
+      color: "#22335E !important",
     },
 
     "& .MuiInputLabel-shrink": {
@@ -81,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 const moment = require("moment");
 const states = csc.getStatesOfCountry("IN");
 const stateList = [];
+
 for (let i in states) {
   let state = {
     key: states[i].isoCode,
@@ -108,7 +110,6 @@ const PatientPersonalInfo = ({
   const [showDateError, setShowDateError] = useState(false);
   const [birthDate, setBirthDate] = useState("1990-01-01");
   const [state, setState] = useState();
-  const [city, setCity] = useState();
   const [cityArray, setCityArray] = useState();
   const [cityDisabled, setCityDisable] = useState(true);
   const [personalInfoError, setPersonalInfoError] = useState({
@@ -197,11 +198,6 @@ const PatientPersonalInfo = ({
     }
     setCityArray(cityList);
     setCityDisable(false);
-  };
-
-  const handleCityChange = (e) => {
-    const cityName = e.target.outerText;
-    setCity(cityName);
   };
 
   useEffect(() => {
@@ -453,7 +449,7 @@ const PatientPersonalInfo = ({
       </div>
       <div className="address-wrap">
         <div className="address">
-          <label className="address-label" for={"address"}>
+          <label className="label-header" for={"address"}>
             Address
           </label>
           <input
@@ -463,12 +459,12 @@ const PatientPersonalInfo = ({
           />
         </div>
         <div className="state">
-          <label className="state-label" for={"state"}>
+          <label className="label-header" for={"state"}>
             State
           </label>
           <div className="dropdown-selections">
             <Autocomplete
-              id="combo-box-demo"
+              id="state-drop"
               shrink={false}
               classes={classes}
               options={stateList}
@@ -482,7 +478,7 @@ const PatientPersonalInfo = ({
           </div>
         </div>
         <div className="city">
-          <label className="city-label" for={"city"}>
+          <label className="label-header" for={"city"}>
             City
           </label>
           <div className="dropdown-selections">
@@ -500,7 +496,7 @@ const PatientPersonalInfo = ({
           </div>
         </div>
         <div className="pinCode">
-          <label className="pincode-label" for={"pincode"}>
+          <label className="label-header" for={"pincode"}>
             PIN Code
           </label>
           <input
