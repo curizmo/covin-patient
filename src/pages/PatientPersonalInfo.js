@@ -139,6 +139,22 @@ const PatientPersonalInfo = ({
     return !isAnyTrue;
   };
 
+  const getValue = (field) => {
+    switch (field) {
+      case PERSONAL_INFO.firstName:
+        return intakeState.firstName;
+        break;
+      case PERSONAL_INFO.lastName:
+        return intakeState.lastName;
+        break;
+      case PERSONAL_INFO.weight:
+        return intakeState.weight;
+        break;
+      default:
+        return null;
+    }
+  };
+
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
@@ -291,6 +307,7 @@ const PatientPersonalInfo = ({
                     className="bp"
                     id={indx}
                     name={info.field}
+<<<<<<< HEAD
                     value={
                       info.field === PERSONAL_INFO.firstName
                         ? intakeState.firstName
@@ -300,6 +317,9 @@ const PatientPersonalInfo = ({
                         ? intakeState.weight
                         : null
                     }
+=======
+                    value={getValue(info.field)}
+>>>>>>> 98d2da6c5a59059c5ef389e0e8671687cb7f20c7
                     onChange={
                       info.field === PERSONAL_INFO.weight
                         ? handleValidateWeight

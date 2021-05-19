@@ -6,23 +6,15 @@ body {
 }
 
 #root,
-.App {
-  width: 100%;
-  height: 100%;
-}
-
-#root .App > div {
-  width: 100%;
-  height: 100%;
-}
-
+.App,
+#root .App > div,
 #root .App > div > div {
   width: 100%;
   height: 100%;
 }
 
 .content-wrapper {
-  padding: 2rem 1.5rem; /*top spacing increased from 1rem to 2rem*/
+  padding: 2rem 1.5rem; 
   margin-top: 0.7rem;
   min-height: 70vh;
 }
@@ -95,7 +87,7 @@ body {
 }
 
 .input-history input {
-  height: 0.688rem; /*overall height including padding tends to 45px*/
+  height: 0.688rem;
   width: 91%;
   margin-top: 0.5rem;
   border: 1px solid #e0e3ea;
@@ -353,7 +345,6 @@ input.bp:last-of-type {
   margin-left: 0.4rem;
 }
 .wrapper {
-  /* min-height: 100vh; */
   width: 100%;
   height: 100%;
 }

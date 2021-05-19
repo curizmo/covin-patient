@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState} from "react";
 import cameraIcon from "../assets/images/camera-icon.svg";
 import pictureIcon from "../assets/images/picture_icon.svg";
 import closeIcon from "../assets/images/icon_close_blue.svg";
@@ -53,7 +53,7 @@ const Medication = ({
     setPage(page + 1);
   };
 
-  const addImages = (e) => {
+  const addImages = () => {
     setShowModal(true);
     setDisplayImage(false);
   };
@@ -86,7 +86,7 @@ const Medication = ({
           className={`camera-icon-container ${
             fileAspects?.length > 4 ? "disabled-container" : "enabled-container"
           } ${showModal ? "active-container" : ""}`}
-          onClick={(e) => addImages(e)}
+          onClick={() => addImages()}
         >
           <img src={cameraIcon} alt="camera icon" />
         </div>
