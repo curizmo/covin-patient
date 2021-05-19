@@ -6,12 +6,9 @@ body {
 }
 
 #root,
-.App {
-  width: 100%;
-  height: 100%;
-}
-
-#root .App > div {
+.App,
+#root .App > div,
+#root .App > div > div {
   width: 100%;
   height: 100%;
 }
