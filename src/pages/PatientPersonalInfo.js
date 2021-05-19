@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
+import csc from "country-state-city";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
   GENDERS,
   EMAIL_TYPE_REGEX,
@@ -12,8 +15,82 @@ import {
   DATE_FORMAT,
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
+      transform: "translate(34px, 20px) scale(1);",
+    },
+    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+      borderBottom: "none !important",
+    },
+
+    "& .MuiInput-underline:after": {
+      borderBottom: "none !important",
+    },
+
+    "& .MuiInput-underline:before": {
+      borderBottom: "none !important",
+    },
+    "& .MuiInputLabel-formControl": {
+      top: "-4px !important",
+      paddingLeft: "1rem !important",
+      color: "#22335E !important",
+    },
+
+    "& .MuiInputLabel-shrink": {
+      display: "none !important",
+    },
+
+    "& .MuiAutocomplete-inputRoot": {
+      padding: "0px 1em !important",
+    },
+
+    "& .MuiSvgIcon-fontSizeSmall": {
+      display: "none !important",
+    },
+
+    "& .MuiIconButton-label": {
+      paddingRight: "1rem",
+    },
+
+    "& .MuiInputBase-input": {
+      paddingTop: "0em !important",
+    },
+  },
+  inputRoot: {
+    color: "#22335E !important",
+    fontSize: "1rem",
+    paddingLeft: "1rem !important",
+    '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
+      // Default left padding is 6px
+      paddingLeft: "1rem !important",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "red",
+    },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "purple",
+    },
+  },
+}));
 
 const moment = require("moment");
+const states = csc.getStatesOfCountry("IN");
+const stateList = [];
+
+for (let i in states) {
+  let state = {
+    key: states[i].isoCode,
+    text: states[i].name,
+    value: states[i].name,
+  };
+  stateList.push(state);
+}
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -24,12 +101,17 @@ const PatientPersonalInfo = ({
   setProgressedPage,
   hash,
   setPage,
+  stateKey,
   page,
 }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [inchHeight, setInchHeight] = useState(0);
   const [feetHeight, setFeetHeight] = useState(0);
   const [showDateError, setShowDateError] = useState(false);
+  const [birthDate, setBirthDate] = useState("1990-01-01");
+  const [state, setState] = useState();
+  const [cityArray, setCityArray] = useState();
+  const [cityDisabled, setCityDisable] = useState(true);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -39,6 +121,7 @@ const PatientPersonalInfo = ({
     weight: "",
     emailId: "",
   });
+  const classes = useStyles();
 
   useEffect(() => {
     const heightInFeet =
@@ -49,8 +132,18 @@ const PatientPersonalInfo = ({
       (intakeState.height &&
         intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
       0;
+      const dob = 
+      (intakeState.dateOfBirth && 
+        moment(intakeState.dateOfBirth).format(DATE_FORMAT.yyyymmdd)) ||
+      "1990-01-01";
+
+
     setFeetHeight(heightInFeet);
     setInchHeight(heightInInch);
+    setIntakeState({
+      ...intakeState,
+      ["DOB"]: moment(dob).format(),
+    });
   }, []);
 
   const handleInputChange = (e) => {
@@ -87,6 +180,30 @@ const PatientPersonalInfo = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
+  const cityList = [];
+
+  const handleStateChange = (e) => {
+    const stateName = e.target.outerText;
+    setState(stateName);
+    for (let i in stateList) {
+      if (stateList[i].text === stateName) {
+        stateKey = stateList[i].key;
+      }
+    }
+
+    const cities = csc.getCitiesOfState("IN", stateKey);
+    for (let i in cities) {
+      let city = {
+        key: i,
+        text: cities[i].name,
+        value: cities[i].name,
+      };
+      cityList.push(city);
+    }
+    setCityArray(cityList);
+    setCityDisable(false);
+  };
+
   useEffect(() => {
     if (intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
       setShowErrorMessage(false);
@@ -111,6 +228,14 @@ const PatientPersonalInfo = ({
         setInchHeight(value);
       }
     }
+  };
+
+  const handleAddressChange = (e) => {
+    const item = e.target.value;
+  };
+
+  const handlePinCodeChange = (e) => {
+    const item = e.target.value;
   };
 
   useEffect(() => {
@@ -261,9 +386,10 @@ const PatientPersonalInfo = ({
                   max={moment()
                     .subtract(1, "days")
                     .format(DATE_FORMAT.yyyymmdd)}
-                  value={moment(intakeState.dateOfBirth).format(
-                    DATE_FORMAT.yyyymmdd
-                  )}
+                    value={moment(intakeState.dateOfBirth).format(
+                      DATE_FORMAT.yyyymmdd
+                    )}
+  
                 />
               ) : info.field === "emailId" ? (
                 <input
@@ -327,6 +453,65 @@ const PatientPersonalInfo = ({
             </div>
           );
         })}
+      </div>
+      <div className="address-wrap">
+        <div className="address">
+          <label className="label-header" for={"address"}>
+            Address
+          </label>
+          <input
+            type="text"
+            className="address-input"
+            onChange={handleAddressChange}
+          />
+        </div>
+        <div className="state">
+          <label className="label-header" for={"state"}>
+            State
+          </label>
+          <div className="dropdown-selections">
+            <Autocomplete
+              id="state-drop"
+              shrink={false}
+              classes={classes}
+              options={stateList}
+              onChange={handleStateChange}
+              getOptionLabel={(option) => option.value}
+              style={{ width: "100%" }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select State" />
+              )}
+            />
+          </div>
+        </div>
+        <div className="city">
+          <label className="label-header" for={"city"}>
+            City
+          </label>
+          <div className="dropdown-selections">
+            <Autocomplete
+              id="city-drop"
+              classes={classes}
+              options={cityArray}
+              disabled={cityDisabled}
+              className="city-drop"
+              getOptionLabel={(option) => option.value}
+              renderInput={(params) => (
+                <TextField {...params} label="Select City" />
+              )}
+            />
+          </div>
+        </div>
+        <div className="pinCode">
+          <label className="label-header" for={"pincode"}>
+            PIN Code
+          </label>
+          <input
+            type="number"
+            className="pin-input"
+            onChange={handlePinCodeChange}
+          />
+        </div>
       </div>
       <button className="submit-button submit-btn" onClick={onNext}>
         NEXT

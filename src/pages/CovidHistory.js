@@ -147,7 +147,7 @@ const CovidHistory = ({
           Have you ever been diagnosed positive for COVID?
         </div>
         <div className="covid-buttons">
-          <span>
+          <span className="yes-diagnosed">
             <input
               className="covid-button"
               type="radio"
@@ -159,7 +159,7 @@ const CovidHistory = ({
             />
             <label for="yes">Yes</label>
           </span>
-          <span>
+          <span className="not-diagnosed">
             <input
               className="covid-button"
               type="radio"
