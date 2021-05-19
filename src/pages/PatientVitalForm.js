@@ -197,7 +197,7 @@ const PatientVitalForm = ({
               }
             }}
           />
-          <div className="icon">Bpm</div>
+          <div className="icon">beats/min</div>
           <img
             className="help-icon"
             src={help_icon}
@@ -283,7 +283,7 @@ const PatientVitalForm = ({
               }
             }}
           />
-          <div className="icon">Breaths</div>
+          <div className="icon">breaths/min</div>
           <img
             className="help-icon"
             src={help_icon}

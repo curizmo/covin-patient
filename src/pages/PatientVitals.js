@@ -109,15 +109,15 @@ const PatientVitals = ({
     pageNum: page,
   };
 
-  const goBack = () =>{
+  const goBack = () => {
     setPage(page - 1);
     setProgressedPage(progressedPage - 1);
-  }
+  };
 
-  const goForward = () =>{
+  const goForward = () => {
     setPage(page + 1);
     setProgressedPage(progressedPage + 1);
-  }
+  };
   const subWrapper =
     messageType === MESSAGE_TYPES.newPatient
       ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
