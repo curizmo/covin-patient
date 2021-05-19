@@ -76,7 +76,6 @@ for (let i in states) {
   };
   stateList.push(state);
 }
-console.log(stateList);
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -87,6 +86,7 @@ const PatientPersonalInfo = ({
   setProgressedPage,
   hash,
   setPage,
+  stateKey,
   page,
 }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -95,6 +95,9 @@ const PatientPersonalInfo = ({
   const [showDateError, setShowDateError] = useState(false);
   const [birthDate, setBirthDate] = useState("1990-01-01");
   const [state, setState] = useState();
+  const [city, setCity] = useState();
+  const [cityArray, setCityArray] = useState();
+  const [cityDisabled, setCityDisable] = useState(true);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -159,9 +162,33 @@ const PatientPersonalInfo = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
+  const cityList = [];
+
   const handleStateChange = (e) => {
     const stateName = e.target.outerText;
     setState(stateName);
+    for (let i in stateList) {
+      if (stateList[i].text === stateName) {
+        stateKey = stateList[i].key;
+      }
+    }
+
+    const cities = csc.getCitiesOfState("IN", stateKey);
+    for (let i in cities) {
+      let city = {
+        key: cities[i].isoCode,
+        text: cities[i].name,
+        value: cities[i].name,
+      };
+      cityList.push(city);
+    }
+    setCityArray(cityList);
+    setCityDisable(false);
+  };
+
+  const handleCityChange = (e) => {
+    const cityName = e.target.outerText;
+    setCity(cityName);
   };
 
   useEffect(() => {
@@ -191,6 +218,10 @@ const PatientPersonalInfo = ({
   };
 
   const handleAddressChange = (e) => {
+    const item = e.target.value;
+  };
+
+  const handlePinCodeChange = (e) => {
     const item = e.target.value;
   };
 
@@ -428,6 +459,7 @@ const PatientPersonalInfo = ({
               shrink={false}
               classes={classes}
               options={stateList}
+              onChange={handleStateChange}
               getOptionLabel={(option) => option.value}
               style={{ width: "100%" }}
               renderInput={(params) => (
@@ -435,6 +467,35 @@ const PatientPersonalInfo = ({
               )}
             />
           </div>
+        </div>
+        <div className="city">
+          <label className="city-label" for={"city"}>
+            City
+          </label>
+          <div className="dropdown-selections">
+            <Autocomplete
+              id="city-drop"
+              classes={classes}
+              options={cityArray}
+              disabled={cityDisabled}
+              className="city-drop"
+              getOptionLabel={(option) => option.value}
+              style={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select City" />
+              )}
+            />
+          </div>
+        </div>
+        <div className="pinCode">
+          <label className="pincode-label" for={"pincode"}>
+            PIN Code
+          </label>
+          <input
+            type="number"
+            className="pin-input"
+            onChange={handlePinCodeChange}
+          />
         </div>
       </div>
       <button className="submit-button submit-btn" onClick={onNext}>

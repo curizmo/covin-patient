@@ -109,15 +109,15 @@ const PatientVitals = ({
     pageNum: page,
   };
 
-  const goBack = () =>{
+  const goBack = () => {
     setPage(page - 1);
     setProgressedPage(progressedPage - 1);
-  }
+  };
 
-  const goForward = () =>{
+  const goForward = () => {
     setPage(page + 1);
     setProgressedPage(progressedPage + 1);
-  }
+  };
   const subWrapper =
     messageType === MESSAGE_TYPES.newPatient
       ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
@@ -138,7 +138,7 @@ const PatientVitals = ({
       <div className="second-header">
       {(progressedPage === NEW_PATIENT_PAGES.patientInfo || progressedPage === NEW_PATIENT_PAGES.covidHistory || progressedPage ===  NEW_PATIENT_PAGES.preExistingCondition || progressedPage === NEW_PATIENT_PAGES.allergy || progressedPage === NEW_PATIENT_PAGES.medication) && 
         <div className="progress-bar">
-          <div class="progress" ></div>
+          <div className="progress" ></div>
           <style>{`
             .progress::after{
               width : ${(progressedPage-1)*20}%;

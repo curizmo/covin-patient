@@ -429,6 +429,9 @@ input[type="number"]::placeholder {
   opacity: 1;
 }
 
+.city {
+  margin-top: 2rem;
+}
 /* Medications */
 .medications-header {
   font-style: normal;
@@ -666,7 +669,13 @@ textarea:focus {
   color: #22335e;
 }
 
-.state-dropdown {
+.pinCode {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+}
+
+.pin-input {
   height: 1.5rem;
   width: 91%;
   margin-top: 0.5rem;
@@ -675,6 +684,7 @@ textarea:focus {
   border-radius: 3px;
   padding: 1rem;
   font-size: 1.125rem;
+  font-weight: 600;
   outline-style: none;
   color: #22335e;
 }
