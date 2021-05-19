@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import * as patientService from "../services/patient";
-import { NEW_PATIENT_PAGES } from "../constants/constants";
+import { NEW_PATIENT_PAGES, ALLERGY } from "../constants/constants";
 import "../App.css";
 import "./home.css";
+import { Switch } from "react-router";
 
 const SocialHistory = ({
   socialHistory,
@@ -54,10 +55,19 @@ const SocialHistory = ({
     setProgressedPage(NEW_PATIENT_PAGES.preExistingCondition);
   };
 
+  const setPlaceholder = (field) => {
+    switch (field) {
+      case ALLERGY.food:
+        return "e.g. peanuts, shell-fish";
+        break;
+      case ALLERGY.medication:
+        return "medication you’re allergic to";
+        break;
+    }
+  };
+
   return (
     <div className="form-content-wrapper">
-   
-
       <div className="page-title">Allergy</div>
       <div className="health-checklist">
         {socialHistory.map((history, indx) => {
@@ -85,6 +95,7 @@ const SocialHistory = ({
                   id={indx}
                   name={history.field}
                   value={intakeState[history.field]}
+                  placeholder={setPlaceholder(history.field)}
                   onChange={handleInputChange}
                 />
               )}

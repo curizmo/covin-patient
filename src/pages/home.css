@@ -154,7 +154,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  height: 15vh;
+  height: 7rem;
 }
 
 /* PatientCheclist */
@@ -299,7 +299,12 @@ input[type="date"] {
   font-family: Helvetica, sans-serif;
   font-size: 1.125rem;
   color: #2f4068;
+  background-color: #ffffff;
   -webkit-appearance: none;
+}
+
+input[type="date"]:disabled {
+  background-color: #e0e3ea;
 }
 
 input[type="number"]::placeholder {
@@ -370,6 +375,11 @@ input[type="number"]::placeholder {
   color: #3e4d72;
 }
 
+.label-header {
+  font-size: 0.875rem;
+  color: #657396;
+}
+
 .thank-you-img {
   display: flex;
   justify-content: center;
@@ -424,6 +434,9 @@ input[type="number"]::placeholder {
   opacity: 1;
 }
 
+.city {
+  margin-top: 1.4rem;
+}
 /* Medications */
 .medications-header {
   font-style: normal;
@@ -455,7 +468,7 @@ input[type="number"]::placeholder {
 
 .camera-icon-container {
   height: 5rem;
-  background: #ffffff;
+  background: #f2f7fd;
   border: 1px solid #c5cde1;
   box-sizing: border-box;
   box-shadow: 0px 3px 3px rgba(159, 167, 186, 0.2);
@@ -464,6 +477,22 @@ input[type="number"]::placeholder {
   align-items: center;
   justify-content: center;
   margin: 2rem 0rem;
+}
+
+.state {
+  margin-top: 1.4rem;
+}
+
+.dropdown-selections {
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  height: 3.5rem;
+  margin-top: 0.5rem;
+}
+
+.camera-icon {
+  width: 2rem;
 }
 
 .disabled-container {
@@ -620,4 +649,47 @@ textarea:focus {
 
 .other-information-wrapper {
   margin-top: 2.7rem;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-wrap {
+  padding: 0.4rem 0;
+}
+
+.address-input {
+  height: 1.5rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  outline-style: none;
+  color: #22335e;
+}
+
+.pinCode {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.3rem;
+}
+
+.pin-input {
+  height: 1.5rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  outline-style: none;
+  color: #22335e;
 }

@@ -88,7 +88,7 @@ const Medication = ({
           } ${showModal ? "active-container" : ""}`}
           onClick={() => addImages()}
         >
-          <img src={cameraIcon} alt="camera icon" />
+          <img className="camera-icon" src={cameraIcon} alt="camera icon" />
         </div>
         <ImagesModal
           onClose={() => setShowModal(false)}

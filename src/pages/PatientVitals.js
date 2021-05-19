@@ -55,6 +55,10 @@ const PatientVitals = ({
     height: patientDetails.height,
     weight: patientDetails.weight,
     emailId: patientDetails.email,
+    address: "",
+    state: "",
+    city: "",
+    pinCode: "",
     covidPositiveEverBefore: false,
     covidVaccinationDose1Taken: false,
     dateOfDose1Vaccination: "",
@@ -140,7 +144,7 @@ const PatientVitals = ({
           progressedPage === NEW_PATIENT_PAGES.allergy ||
           progressedPage === NEW_PATIENT_PAGES.medication) && (
           <div className="progress-bar">
-            <div class="progress"></div>
+            <div className="progress"></div>
             <style>{`
             .progress::after{
               width : ${(progressedPage - 1) * 20}%;
