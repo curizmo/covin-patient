@@ -124,11 +124,9 @@ const PatientPersonalInfo = ({
     for(let i in stateList){
       
       if(stateList[i].text === stateName){
-        console.log(stateList[i])
         stateKey = stateList[i].key
       }
     }
-    console.log(stateKey)
     
     const cities = csc.getCitiesOfState('IN',stateKey);
     for( let i in cities){
@@ -140,7 +138,6 @@ const PatientPersonalInfo = ({
       cityList.push(city);
     }
     setCityArray((cityList))
-    console.log(cityList)
     setCityDisable(false);
   };
 
@@ -436,7 +433,7 @@ const PatientPersonalInfo = ({
             disabled={cityDisabled}
             className="city-drop"
             getOptionLabel={(option) => option.value}
-            style={{ width: 327 }}
+            style={{ width: 300 }}
             renderInput={(params) => (
               <TextField {...params}  variant="outlined" />
             )}
