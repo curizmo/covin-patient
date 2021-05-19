@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
+import csc from 'country-state-city';
+import { Form,Dropdown } from 'semantic-ui-react'
+
+
+
 import {
   GENDERS,
   EMAIL_TYPE_REGEX,
@@ -14,6 +19,18 @@ import {
 } from "../constants/constants";
 
 const moment = require("moment");
+
+const states = csc.getStatesOfCountry('IN');
+const stateList = [];
+for( let i in states){
+  let state = {
+    key : states[i].isoCode,
+    text : states[i].name,
+    value : states[i].name,
+  }
+  stateList.push(state)
+}
+console.log(stateList)
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -30,6 +47,8 @@ const PatientPersonalInfo = ({
   const [inchHeight, setInchHeight] = useState(0);
   const [feetHeight, setFeetHeight] = useState(0);
   const [showDateError, setShowDateError] = useState(false);
+  const [birthDate, setBirthDate] = useState("1990-01-01");
+  const [state, setState] = useState();
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -49,8 +68,14 @@ const PatientPersonalInfo = ({
       (intakeState.height &&
         intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
       0;
+    const dob = 
+      (intakeState.dateOfBirth && 
+        moment(intakeState.dateOfBirth).format(DATE_FORMAT.yyyymmdd)) ||
+      "1990-01-01";
+        
     setFeetHeight(heightInFeet);
     setInchHeight(heightInInch);
+    setBirthDate(dob)
   }, []);
 
   const handleInputChange = (e) => {
@@ -87,6 +112,11 @@ const PatientPersonalInfo = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
+  const handleStateChange = (e) => {
+    const stateName = e.target.outerText;
+    setState(stateName);
+  }
+
   useEffect(() => {
     if (intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
       setShowErrorMessage(false);
@@ -112,6 +142,10 @@ const PatientPersonalInfo = ({
       }
     }
   };
+
+  const handleAddressChange = (e) => {
+    const item = e.target.value;
+  }
 
   useEffect(() => {
     setIntakeState({
@@ -261,9 +295,7 @@ const PatientPersonalInfo = ({
                   max={moment()
                     .subtract(1, "days")
                     .format(DATE_FORMAT.yyyymmdd)}
-                  value={moment(intakeState.dateOfBirth).format(
-                    DATE_FORMAT.yyyymmdd
-                  )}
+                  value= {birthDate}
                 />
               ) : info.field === "emailId" ? (
                 <input
@@ -327,6 +359,32 @@ const PatientPersonalInfo = ({
             </div>
           );
         })}
+      </div>
+      <div className="address-wrap">
+        <div className="address">
+          <label className="address-label" for={"address"}>
+            Address
+          </label>
+          <input 
+            type="text"
+            className="address-input"
+            onChange={handleAddressChange}
+          />
+        </div>
+        <div className="state">
+          <label className="state-label" for={"state"}>
+            State
+          </label>
+          <Dropdown
+            name="stateDrop"
+            className="state-dropdown"
+            fluid
+            search
+            selection
+            onChange={handleStateChange}
+            options={stateList}
+          />
+        </div>
       </div>
       <button className="submit-button submit-btn" onClick={onNext}>
         NEXT

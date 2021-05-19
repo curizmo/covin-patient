@@ -633,3 +633,40 @@ textarea:focus {
 .other-information-wrapper {
   margin-top: 2.7rem;
 }
+
+.address{
+  display: flex;
+  flex-direction: column;
+}
+
+.address-wrap{
+  padding: 1rem 0;
+}
+
+.address-input{
+  height: 1.5rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  outline-style: none;
+  color: #22335e;
+}
+
+.state-dropdown{
+  height: 1.5rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0px 2px 0px 0px #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.125rem;
+  outline-style: none;
+  color: #22335e;
+}
+

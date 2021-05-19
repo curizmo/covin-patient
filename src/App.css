@@ -29,6 +29,12 @@ body {
 
 .health-checklist {
   margin-top: 1rem;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 .list-content {
