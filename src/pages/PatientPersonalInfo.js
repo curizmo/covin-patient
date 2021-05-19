@@ -3,7 +3,8 @@ import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
 import csc from 'country-state-city';
-import { Form,Dropdown } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
+import "semantic-ui-css/semantic.min.css";
 
 
 
@@ -28,9 +29,19 @@ for( let i in states){
     text : states[i].name,
     value : states[i].name,
   }
-  stateList.push(state)
+  stateList.push(state);
 }
-console.log(stateList)
+
+const cities = csc.getCitiesOfState('IN','MH');
+const cityList = [];
+for( let i in cities){
+  let city = {
+    key : cities[i].isoCode,
+    text : cities[i].name,
+    value : cities[i].name,
+  }
+  cityList.push(city);
+}
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -49,6 +60,7 @@ const PatientPersonalInfo = ({
   const [showDateError, setShowDateError] = useState(false);
   const [birthDate, setBirthDate] = useState("1990-01-01");
   const [state, setState] = useState();
+  const [city, setCity] = useState();
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -117,6 +129,12 @@ const PatientPersonalInfo = ({
     setState(stateName);
   }
 
+  const handleCityChange = (e) => {
+    const cityName = e.target.outerText;
+    setCity(cityName);
+  }
+
+
   useEffect(() => {
     if (intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
       setShowErrorMessage(false);
@@ -145,6 +163,10 @@ const PatientPersonalInfo = ({
 
   const handleAddressChange = (e) => {
     const item = e.target.value;
+  }
+
+  const handlePinCodeChange = (e) => {
+    const item = e.target.value
   }
 
   useEffect(() => {
@@ -383,6 +405,16 @@ const PatientPersonalInfo = ({
             selection
             onChange={handleStateChange}
             options={stateList}
+          />
+        </div>
+        <div className="pinCode">
+          <label className="pincode-label" for={"pincode"}>
+            PIN Code
+          </label>
+          <input 
+            type="number"
+            className="pin-input"
+            onChange={handlePinCodeChange}
           />
         </div>
       </div>
