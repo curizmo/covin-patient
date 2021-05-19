@@ -307,19 +307,7 @@ const PatientPersonalInfo = ({
                     className="bp"
                     id={indx}
                     name={info.field}
-<<<<<<< HEAD
-                    value={
-                      info.field === PERSONAL_INFO.firstName
-                        ? intakeState.firstName
-                        : info.field === PERSONAL_INFO.lastName
-                        ? intakeState.lastName
-                        : info.field === PERSONAL_INFO.weight
-                        ? intakeState.weight
-                        : null
-                    }
-=======
                     value={getValue(info.field)}
->>>>>>> 98d2da6c5a59059c5ef389e0e8671687cb7f20c7
                     onChange={
                       info.field === PERSONAL_INFO.weight
                         ? handleValidateWeight
