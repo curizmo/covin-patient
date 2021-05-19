@@ -97,10 +97,49 @@ const CovidHistory = ({
 
   const handleRadioButton = (value) => {
     setChecked(value);
+    if (value === 1) {
+      setIntakeState({ ...intakeState, covidPositiveEverBefore: true });
+    } else if (value === 2) {
+      setIntakeState({ ...intakeState, covidPositiveEverBefore: false });
+    }
   };
+
   const onBackButtonClick = () => {
     setProgressedPage(NEW_PATIENT_PAGES.patientInfo);
   };
+
+  const getValue = (field) => {
+    switch (field) {
+      case "dateOfDose1Vaccination":
+        return moment(intakeState.dateOfDose1Vaccination).format(
+          DATE_FORMAT.yyyymmdd
+        );
+        break;
+      case "dateOfDose2Vaccination":
+        return moment(intakeState.dateOfDose2Vaccination).format(
+          DATE_FORMAT.yyyymmdd
+        );
+        break;
+      case "dateCovidBefore":
+        moment(intakeState.dateCovidBefore).format(DATE_FORMAT.yyyymmdd);
+        break;
+    }
+  };
+
+  const checkDisabled = (field) => {
+    switch (field) {
+      case "dateOfDose1Vaccination":
+        return !intakeState.covidVaccinationDose1Taken;
+        break;
+      case "dateOfDose2Vaccination":
+        return !intakeState.covidVaccinationDose2Taken;
+        break;
+      case "dateCovidBefore":
+        return !intakeState.covidPositiveEverBefore;
+        break;
+    }
+  };
+
   return (
     <div className="form-content-wrapper">
       <div className="covid-diagnosed">
@@ -137,9 +176,15 @@ const CovidHistory = ({
           <div className="date-diagnosed">
             <label>Date of diagnosis</label>
             <input
+              name="dateCovidBefore"
               className="date-of-diagnosis"
               type="date"
               placeholder="Select date of diagnosis"
+              max={moment().format(DATE_FORMAT.yyyymmdd)}
+              value={moment(intakeState.dateCovidBefore).format(
+                DATE_FORMAT.yyyymmdd
+              )}
+              onChange={handleInputChange}
             />
           </div>
         )}
@@ -163,30 +208,8 @@ const CovidHistory = ({
                   name={history.field}
                   onChange={handleInputChange}
                   max={moment().format(DATE_FORMAT.yyyymmdd)}
-                  disabled={
-                    `${history.field}` === "dateOfDose1Vaccination"
-                      ? !intakeState.covidVaccinationDose1Taken
-                      : `${history.field}` === "dateOfDose2Vaccination"
-                      ? !intakeState.covidVaccinationDose2Taken
-                      : `${history.field}` === "dateCovidBefore"
-                      ? !intakeState.covidPositiveEverBefore
-                      : null
-                  }
-                  value={
-                    `${history.field}` === "dateOfDose1Vaccination"
-                      ? moment(intakeState.dateOfDose1Vaccination).format(
-                          DATE_FORMAT.yyyymmdd
-                        )
-                      : `${history.field}` === "dateOfDose2Vaccination"
-                      ? moment(intakeState.dateOfDose2Vaccination).format(
-                          DATE_FORMAT.yyyymmdd
-                        )
-                      : `${history.field}` === "dateCovidBefore"
-                      ? moment(intakeState.dateCovidBefore).format(
-                          DATE_FORMAT.yyyymmdd
-                        )
-                      : null
-                  }
+                  disabled={checkDisabled(history.field)}
+                  value={getValue(history.field)}
                 />
               ) : (
                 <input
