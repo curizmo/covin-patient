@@ -430,7 +430,7 @@ input[type="number"]::placeholder {
 }
 
 .city {
-  margin-top: 2rem;
+  margin-top: 1.4rem;
 }
 /* Medications */
 .medications-header {
@@ -475,7 +475,7 @@ input[type="number"]::placeholder {
 }
 
 .state {
-  margin-top: 2rem;
+  margin-top: 1.4rem;
 }
 
 .dropdown-selections {
@@ -652,7 +652,7 @@ textarea:focus {
 }
 
 .address-wrap {
-  padding: 1rem 0;
+  padding: 0.4rem 0;
 }
 
 .address-input {
@@ -672,7 +672,7 @@ textarea:focus {
 .pinCode {
   display: flex;
   flex-direction: column;
-  margin-top: 1.5rem;
+  margin-top: 1.3rem;
 }
 
 .pin-input {
