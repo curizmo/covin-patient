@@ -52,7 +52,7 @@ const ImagesModal = (props) => {
         <div className="container">
           <div className="modal-content-wrap display-flex">
             <div className="camera-options-wrap display-flex border-radius">
-              <label class="cameraButton">
+              <label className="cameraButton">
                 Take photo
                 <input
                   type="file"
@@ -62,7 +62,7 @@ const ImagesModal = (props) => {
                   onClick={(e) => (e.target.value = null)}
                 />
               </label>
-              <label class="cameraButton">
+              <label className="cameraButton">
                 Choose from gallery
                 <input
                   type="file"
