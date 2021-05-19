@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "none !important",
     },
     "& .MuiInputLabel-formControl": {
-      top: "-6px !important",
+      top: "-4px !important",
       paddingLeft: "1rem !important",
     },
 
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "& .MuiInputBase-input": {
-      padding: "0 !important",
+      paddingTop: "0em !important",
     },
   },
   inputRoot: {
