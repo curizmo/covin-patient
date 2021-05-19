@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import cameraIcon from "../assets/images/camera-icon.svg";
 import pictureIcon from "../assets/images/picture_icon.svg";
 import closeIcon from "../assets/images/icon_close_blue.svg";
@@ -23,6 +23,7 @@ const Medication = ({
   const [fileAspects, setFileAspects] = useState([]);
   const [displayImage, setDisplayImage] = useState(false);
   const [currentFileView, setCurrentFileView] = useState();
+  const [medicationFile, setMedicationFile] = useState([]);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -33,6 +34,11 @@ const Medication = ({
     await Promise.all([
       patientService.createPatientIntake({
         form: intakeState,
+        patientId: patientDetails.patientId,
+      }),
+      patientService.uploadMedicationImages({
+        intakeForm: intakeState,
+        medicationImages: medicationFile,
         patientId: patientDetails.patientId,
       }),
       patientService.UpdateMessageStatus(hash),
@@ -47,7 +53,7 @@ const Medication = ({
     setPage(page + 1);
   };
 
-  const addImages = () => {
+  const addImages = (e) => {
     setShowModal(true);
     setDisplayImage(false);
   };
@@ -80,7 +86,7 @@ const Medication = ({
           className={`camera-icon-container ${
             fileAspects?.length > 4 ? "disabled-container" : "enabled-container"
           } ${showModal ? "active-container" : ""}`}
-          onClick={() => addImages()}
+          onClick={(e) => addImages(e)}
         >
           <img src={cameraIcon} alt="camera icon" />
         </div>
@@ -91,6 +97,8 @@ const Medication = ({
           fileAspects={fileAspects}
           displayImage={displayImage}
           currentFileView={currentFileView}
+          setMedicationFile={setMedicationFile}
+          medicationFile={medicationFile}
         />
         {fileAspects?.length > 0 &&
           fileAspects.map((file) => {

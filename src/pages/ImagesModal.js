@@ -8,9 +8,11 @@ const ImagesModal = (props) => {
     setFileAspects,
     displayImage,
     currentFileView,
+    setMedicationFile,
+    medicationFile,
   } = props;
 
-  const imageHandler = (e) => {
+  const imageHandler = async (e) => {
     if (e && e.target.files[0]) {
       const reader = new FileReader();
       const imageFile = e.target.files[0];
@@ -20,23 +22,24 @@ const ImagesModal = (props) => {
         maxWidthOrHeight: 1920,
         useWebWorker: true,
       };
-      imageCompression(imageFile, options)
-        .then(function (compressedFile) {
-          reader.readAsDataURL(compressedFile);
-          reader.onload = function () {
-            const fileInfo = {
-              fileName: file[2],
-              fileImage: reader.result,
-            };
-            setFileAspects([...fileAspects, fileInfo]);
-            onClose();
+      try {
+        const compressedFile = await imageCompression(imageFile, options);
+
+        reader.readAsDataURL(compressedFile);
+        reader.onload = async function () {
+          const fileInfo = {
+            fileName: file[2],
+            fileImage: reader.result,
           };
-          return null;
-        })
-        .catch(function (error) {
-          console.error(error.message);
-          onClose();
-        });
+          const imageFileInfo = await imageCompression.getFilefromDataUrl(
+            fileInfo.fileImage,
+            fileInfo.fileName
+          );
+          setFileAspects([...fileAspects, fileInfo]);
+          setMedicationFile([...medicationFile, imageFileInfo]);
+        };
+        onClose();
+      } catch (err) {}
     }
   };
 

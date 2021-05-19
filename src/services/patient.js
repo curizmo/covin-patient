@@ -1,4 +1,5 @@
 import { postData, getData, putData } from "./fetch";
+import config from "../config/index";
 
 export const getPatientDetails = (hashKey) => {
   return getData(`/register-patient-intake/${hashKey}`);
@@ -47,3 +48,29 @@ export const createPatientVitals = (payload) => {
 export const UpdateMessageStatus = (hashKey) => {
   return putData(`/register-patient-intake/message-status/${hashKey}`);
 };
+
+export async function uploadMedicationImages({
+  intakeForm,
+  medicationImages,
+  patientId,
+}) {
+  const form = new FormData();
+
+  form.append("form", JSON.stringify(intakeForm));
+
+  for (let i = 0; i < medicationImages.length; i++) {
+    form.append("medicationImages", medicationImages[i]);
+  }
+
+  const options = {
+    method: "POST",
+    body: form,
+  };
+
+  const response = await fetch(
+    `${config.apiURL}/patient-intake-form/medication/${patientId}`,
+    options
+  );
+
+  return response.json();
+}
