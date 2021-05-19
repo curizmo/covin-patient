@@ -131,7 +131,7 @@ const PatientPersonalInfo = ({
     const cities = csc.getCitiesOfState('IN',stateKey);
     for( let i in cities){
       let city = {
-        key : cities[i].isoCode,
+        key : i,
         text : cities[i].name,
         value : cities[i].name,
       }
@@ -225,6 +225,7 @@ const PatientPersonalInfo = ({
         return null;
     }
   };
+
 
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
@@ -432,7 +433,10 @@ const PatientPersonalInfo = ({
             options={cityArray}
             disabled={cityDisabled}
             className="city-drop"
+            onChange={handleCityChange} 
             getOptionLabel={(option) => option.value}
+            // getOptionLabel= {() => {handleOptionLabel(cityArray)}}
+            // defaultValue={() => {handleOptionLabel(cityArray)}} 
             style={{ width: 300 }}
             renderInput={(params) => (
               <TextField {...params}  variant="outlined" />
