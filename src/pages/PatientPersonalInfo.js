@@ -45,9 +45,22 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiAutocomplete-inputRoot": {
       padding: "0px 1em !important",
     },
+
+    "& .MuiSvgIcon-fontSizeSmall": {
+      display: "none !important",
+    },
+
+    "& .MuiIconButton-label": {
+      paddingRight: "1rem",
+    },
+
+    "& .MuiInputBase-input": {
+      padding: "0 !important",
+    },
   },
   inputRoot: {
     color: "#22335E !important",
+    fontSize: "1rem",
     paddingLeft: "1rem !important",
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
       // Default left padding is 6px
@@ -176,10 +189,10 @@ const PatientPersonalInfo = ({
     const cities = csc.getCitiesOfState("IN", stateKey);
     for (let i in cities) {
       let city = {
-        key : i,
-        text : cities[i].name,
-        value : cities[i].name,
-      }
+        key: i,
+        text: cities[i].name,
+        value: cities[i].name,
+      };
       cityList.push(city);
     }
     setCityArray(cityList);
@@ -266,7 +279,6 @@ const PatientPersonalInfo = ({
         return null;
     }
   };
-
 
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
@@ -481,7 +493,6 @@ const PatientPersonalInfo = ({
               disabled={cityDisabled}
               className="city-drop"
               getOptionLabel={(option) => option.value}
-              style={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} label="Select City" />
               )}
