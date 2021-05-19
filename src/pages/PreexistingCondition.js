@@ -131,7 +131,7 @@ const PeexistingCondition = ({
     <div className="form-content-wrapper">
       
       <div>Pre-existing Conditions</div>
-      <div className="health-checklist">
+      <div className="health-checklist no-select">
         {preexistingCondition.map((history, indx) => {
           return (
             <div
