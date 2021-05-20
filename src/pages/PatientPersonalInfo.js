@@ -127,11 +127,12 @@ const PatientPersonalInfo = ({
     const heightInFeet =
       (intakeState.height &&
         intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
-      0;
+      "";
     const heightInInch =
       (intakeState.height &&
         intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
-      0;
+      "";
+
     const dob =
       (intakeState.dateOfBirth &&
         moment(intakeState.dateOfBirth).format(DATE_FORMAT.yyyymmdd)) ||
@@ -236,10 +237,22 @@ const PatientPersonalInfo = ({
   };
 
   useEffect(() => {
-    setIntakeState({
-      ...intakeState,
-      height: `${feetHeight}'${inchHeight}"`,
-    });
+    if (feetHeight && inchHeight) {
+      setIntakeState({
+        ...intakeState,
+        height: `${feetHeight}'${inchHeight}"`,
+      });
+    } else if (feetHeight && !inchHeight) {
+      setIntakeState({
+        ...intakeState,
+        height: `${feetHeight}'`,
+      });
+    } else {
+      setIntakeState({
+        ...intakeState,
+        height: "",
+      });
+    }
   }, [feetHeight, inchHeight]);
 
   const validatePatientPersonalForm = () => {
