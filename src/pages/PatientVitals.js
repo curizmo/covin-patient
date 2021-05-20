@@ -52,7 +52,7 @@ const PatientVitals = ({
     lastName: patientDetails.familyName,
     gender: patientDetails.gender,
     dateOfBirth: patientDetails.dateOfBirth,
-    height: patientDetails.height,
+    height: patientDetails.height || "",
     weight: patientDetails.weight,
     emailId: patientDetails.email,
     address: "",
