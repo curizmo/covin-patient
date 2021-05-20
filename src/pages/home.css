@@ -714,6 +714,11 @@ textarea:focus {
   justify-content: space-between;
   width: 93%;
   padding: 0.5rem;
+  background-color: transparent;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color:#22335e;
+  outline: none;
 }
 
 #dropdown-date {
