@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     paddingLeft: "1rem !important",
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
-      // Default left padding is 6px
       paddingLeft: "1rem !important",
     },
     "& .MuiOutlinedInput-notchedOutline": {
@@ -105,8 +104,8 @@ const PatientPersonalInfo = ({
   page,
 }) => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [inchHeight, setInchHeight] = useState(0);
-  const [feetHeight, setFeetHeight] = useState(0);
+  const [inchHeight, setInchHeight] = useState("");
+  const [feetHeight, setFeetHeight] = useState("");
   const [showDateError, setShowDateError] = useState(false);
   const [birthDate, setBirthDate] = useState("1990-01-01");
   const [state, setState] = useState();
@@ -127,16 +126,16 @@ const PatientPersonalInfo = ({
     const heightInFeet =
       (intakeState.height &&
         intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
-      0;
+      "";
     const heightInInch =
       (intakeState.height &&
         intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
-      0;
-      const dob = 
-      (intakeState.dateOfBirth && 
+      "";
+
+    const dob =
+      (intakeState.dateOfBirth &&
         moment(intakeState.dateOfBirth).format(DATE_FORMAT.yyyymmdd)) ||
       "1990-01-01";
-
 
     setFeetHeight(heightInFeet);
     setInchHeight(heightInInch);
@@ -184,6 +183,7 @@ const PatientPersonalInfo = ({
 
   const handleStateChange = (e) => {
     const stateName = e.target.outerText;
+    setIntakeState({ ...intakeState, state: stateName });//Ankita please check
     setState(stateName);
     for (let i in stateList) {
       if (stateList[i].text === stateName) {
@@ -202,6 +202,11 @@ const PatientPersonalInfo = ({
     }
     setCityArray(cityList);
     setCityDisable(false);
+  };
+  //city name not taking default
+  const handleCityChange = (e) => {
+    const cityName = e.target.outerText;
+    setIntakeState({ ...intakeState, city: cityName });
   };
 
   useEffect(() => {
@@ -239,10 +244,22 @@ const PatientPersonalInfo = ({
   };
 
   useEffect(() => {
-    setIntakeState({
-      ...intakeState,
-      height: `${feetHeight}'${inchHeight}"`,
-    });
+    if (feetHeight && inchHeight) {
+      setIntakeState({
+        ...intakeState,
+        height: `${feetHeight}'${inchHeight}"`,
+      });
+    } else if (feetHeight && !inchHeight) {
+      setIntakeState({
+        ...intakeState,
+        height: `${feetHeight}'`,
+      });
+    } else {
+      setIntakeState({
+        ...intakeState,
+        height: "",
+      });
+    }
   }, [feetHeight, inchHeight]);
 
   const validatePatientPersonalForm = () => {
@@ -461,8 +478,10 @@ const PatientPersonalInfo = ({
           </label>
           <input
             type="text"
+            name="address"
             className="address-input"
-            onChange={handleAddressChange}
+            value={intakeState.address}
+            onChange={handleInputChange}
           />
         </div>
         <div className="state">
@@ -475,6 +494,7 @@ const PatientPersonalInfo = ({
               shrink={false}
               classes={classes}
               options={stateList}
+              name="state"
               onChange={handleStateChange}
               getOptionLabel={(option) => option.value}
               style={{ width: "100%" }}
@@ -494,7 +514,9 @@ const PatientPersonalInfo = ({
               classes={classes}
               options={cityArray}
               disabled={cityDisabled}
+              name="city"
               className="city-drop"
+              onChange={handleCityChange}
               getOptionLabel={(option) => option.value}
               renderInput={(params) => (
                 <TextField {...params} label="Select City" />
@@ -508,8 +530,10 @@ const PatientPersonalInfo = ({
           </label>
           <input
             type="number"
+            name="pinCode"
             className="pin-input"
-            onChange={handlePinCodeChange}
+            value={intakeState.pinCode}
+            onChange={handleInputChange}
           />
         </div>
       </div>

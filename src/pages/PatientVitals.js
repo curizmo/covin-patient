@@ -52,9 +52,13 @@ const PatientVitals = ({
     lastName: patientDetails.familyName,
     gender: patientDetails.gender,
     dateOfBirth: patientDetails.dateOfBirth,
-    height: patientDetails.height,
+    height: patientDetails.height || "",
     weight: patientDetails.weight,
     emailId: patientDetails.email,
+    address: "",
+    state: "",
+    city: "",
+    pinCode: "",
     covidPositiveEverBefore: false,
     covidVaccinationDose1Taken: false,
     dateOfDose1Vaccination: "",
@@ -82,7 +86,9 @@ const PatientVitals = ({
   });
 
   useEffect(() => {
-    getPageProgress(hashKey);
+    if (messageType === MESSAGE_TYPES.newPatient) {
+      getPageProgress(hashKey);
+    }
   }, []);
 
   const getPageProgress = async (hashKey) => {

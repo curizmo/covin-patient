@@ -311,6 +311,9 @@ input[type="number"]::placeholder {
   text-align: right;
 }
 
+input[type="text"]::placeholder {
+  opacity: 0.3;
+}
 /* submission */
 .block-text {
   font-weight: bold;
