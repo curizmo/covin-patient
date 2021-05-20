@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
 import "./home.css";
-import success_image from "../assets/images/img_thank_you.svg"
+import success_image from "../assets/images/check-circle.svg"
 
 const Submission = () => {
   return (
@@ -10,14 +10,13 @@ const Submission = () => {
     <img className="thank-you-img" src={success_image} alt="success-image"/>
       <div className="text-greeting">
         <div>
-          <span className="bold-text">Thank you</span> for completing the questionnaire. Our experts will evaluate
-            your condition and get back to you soon.
+          <span className="bold-text">Thank you</span> for completing the questionnaire. We will get back to you soon.
         </div>
         <br/>
         <div>
           <span className="block-text">Important:</span> Please make sure
-          that your phone is accessible for our medical staff to reach you over
-          messages/call
+          that your phone is accessible for us to reach you over
+          messages/call.
         </div>
       </div>
     </div>

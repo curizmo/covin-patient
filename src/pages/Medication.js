@@ -24,6 +24,7 @@ const Medication = ({
   const [displayImage, setDisplayImage] = useState(false);
   const [currentFileView, setCurrentFileView] = useState();
   const [medicationFile, setMedicationFile] = useState([]);
+  const [imageCount, setImageCount] = useState(0);
 
   const handleInputChange = (e) => {
     const item = e.target.name;
@@ -56,6 +57,7 @@ const Medication = ({
   const addImages = () => {
     setShowModal(true);
     setDisplayImage(false);
+    setImageCount(imageCount+1)
   };
 
   const removeFile = (e, name) => {
@@ -99,6 +101,7 @@ const Medication = ({
           currentFileView={currentFileView}
           setMedicationFile={setMedicationFile}
           medicationFile={medicationFile}
+          imageCount={imageCount}
         />
         {fileAspects?.length > 0 &&
           fileAspects.map((file) => {
