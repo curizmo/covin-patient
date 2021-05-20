@@ -89,10 +89,6 @@ const PatientVitals = ({
     }
   }, []);
 
-  console.log(page);
-  console.log(messageType);
-
-
   const getPageProgress = async (hashKey) => {
     try {
       const response = await patientService.getFormProgress(hashKey);
