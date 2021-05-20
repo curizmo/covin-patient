@@ -3,6 +3,7 @@ import {
   MINIMUM_YEAR,
   DATE_FORMAT,
   NEW_PATIENT_PAGES,
+  COVID_BEFORE,
 } from "../constants/constants";
 import * as patientService from "../services/patient";
 import "../App.css";
@@ -33,10 +34,10 @@ const CovidHistory = ({
 
   useEffect(() => {
     if (intakeState.covidPositiveEverBefore) {
-      setChecked(1);
+      setChecked(COVID_BEFORE.yes);
       setDiagnosed(true);
     } else {
-      setChecked(2);
+      setChecked(COVID_BEFORE.no);
       setDiagnosed(false);
     }
   }, []);
@@ -107,9 +108,9 @@ const CovidHistory = ({
 
   const handleRadioButton = (value) => {
     setChecked(value);
-    if (value === 1) {
+    if (value === COVID_BEFORE.yes) {
       setIntakeState({ ...intakeState, covidPositiveEverBefore: true });
-    } else if (value === 2) {
+    } else if (value === COVID_BEFORE.no) {
       setIntakeState({ ...intakeState, covidPositiveEverBefore: false });
     }
   };
@@ -164,7 +165,7 @@ const CovidHistory = ({
               name="yes"
               value="yes"
               onClick={yesDiagnosed}
-              checked={intakeState.covidPositiveEverBefore ? state === 1 : null}
+              checked={intakeState.covidPositiveEverBefore ? state === COVID_BEFORE.yes : null}
               onChange={() => handleRadioButton(1)}
             />
             <label for="yes">Yes</label>
@@ -177,7 +178,7 @@ const CovidHistory = ({
               value="no"
               onClick={notDiagnosed}
               checked={
-                !intakeState.covidPositiveEverBefore ? state === 2 : null
+                !intakeState.covidPositiveEverBefore ? state === COVID_BEFORE.no : null
               }
               onChange={() => handleRadioButton(2)}
             />

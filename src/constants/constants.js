@@ -84,3 +84,8 @@ export const ALLERGY = {
   food: "food",
   medication: "medications",
 };
+
+export const COVID_BEFORE = {
+  yes: 1,
+  no: 2,
+};
