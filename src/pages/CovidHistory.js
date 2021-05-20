@@ -1,9 +1,9 @@
+import { useState, useEffect } from "react";
 import {
   MINIMUM_YEAR,
   DATE_FORMAT,
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
-import React, { useState } from "react";
 import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
@@ -30,6 +30,16 @@ const CovidHistory = ({
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
+
+  useEffect(() => {
+    if (intakeState.covidPositiveEverBefore) {
+      setChecked(1);
+      setDiagnosed(true);
+    } else {
+      setChecked(2);
+      setDiagnosed(false);
+    }
+  }, []);
 
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
@@ -154,7 +164,7 @@ const CovidHistory = ({
               name="yes"
               value="yes"
               onClick={yesDiagnosed}
-              checked={state === 1}
+              checked={intakeState.covidPositiveEverBefore ? state === 1 : null}
               onChange={() => handleRadioButton(1)}
             />
             <label for="yes">Yes</label>
@@ -166,7 +176,9 @@ const CovidHistory = ({
               name="no"
               value="no"
               onClick={notDiagnosed}
-              checked={state === 2}
+              checked={
+                !intakeState.covidPositiveEverBefore ? state === 2 : null
+              }
               onChange={() => handleRadioButton(2)}
             />
             <label for="no">No</label>
