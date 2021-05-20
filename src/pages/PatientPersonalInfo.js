@@ -81,7 +81,6 @@ const useStyles = makeStyles((theme) => ({
 const moment = require("moment");
 const states = csc.getStatesOfCountry("IN");
 const stateList = [];
-const cities = csc.getCitiesOfCountry("IN");
 
 for (let i in states) {
   let state = {
