@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#22335E !important",
     fontSize: "1rem",
     paddingLeft: "1rem !important",
+    fontWeight: "600 !important",
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
       paddingLeft: "1rem !important",
     },
@@ -109,7 +110,9 @@ const PatientPersonalInfo = ({
   const [showDateError, setShowDateError] = useState(false);
   const [birthDate, setBirthDate] = useState("1990-01-01");
   const [state, setState] = useState();
-  const [cityArray, setCityArray] = useState();
+  const [inputValue, setInputValue] = useState("");
+  const [inputValueCity, setInputValueCity] = useState("");
+  const [cityArray, setCityArray] = useState([]);
   const [cityDisabled, setCityDisable] = useState(true);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
@@ -137,12 +140,12 @@ const PatientPersonalInfo = ({
         moment(intakeState.dateOfBirth).format(DATE_FORMAT.yyyymmdd)) ||
       "1990-01-01";
 
+    if (intakeState?.state) {
+      handleStateChange();
+    }
+
     setFeetHeight(heightInFeet);
     setInchHeight(heightInInch);
-    setIntakeState({
-      ...intakeState,
-      ["DOB"]: moment(dob).format(),
-    });
   }, []);
 
   const handleInputChange = (e) => {
@@ -182,9 +185,7 @@ const PatientPersonalInfo = ({
   const cityList = [];
 
   const handleStateChange = (e) => {
-    const stateName = e.target.outerText;
-    setIntakeState({ ...intakeState, state: stateName });
-    setState(stateName);
+    const stateName = e?.target?.outerText || intakeState?.state;
     for (let i in stateList) {
       if (stateList[i].text === stateName) {
         stateKey = stateList[i].key;
@@ -200,10 +201,15 @@ const PatientPersonalInfo = ({
       };
       cityList.push(city);
     }
+
+    setIntakeState({
+      ...intakeState,
+      state: stateName,
+    });
     setCityArray(cityList);
     setCityDisable(false);
   };
-
+  //city name not taking default
   const handleCityChange = (e) => {
     const cityName = e.target.outerText;
     setIntakeState({ ...intakeState, city: cityName });
@@ -233,6 +239,14 @@ const PatientPersonalInfo = ({
         setInchHeight(value);
       }
     }
+  };
+
+  const handleAddressChange = (e) => {
+    const item = e.target.value;
+  };
+
+  const handlePinCodeChange = (e) => {
+    const item = e.target.value;
   };
 
   useEffect(() => {
@@ -484,10 +498,14 @@ const PatientPersonalInfo = ({
               id="state-drop"
               shrink={false}
               classes={classes}
-              options={stateList}
               name="state"
+              value={intakeState.state}
               onChange={handleStateChange}
-              getOptionLabel={(option) => option.value}
+              inputValue={inputValue}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              options={stateList.map((item) => item.value)}
               style={{ width: "100%" }}
               renderInput={(params) => (
                 <TextField {...params} label="Select State" />
@@ -503,12 +521,16 @@ const PatientPersonalInfo = ({
             <Autocomplete
               id="city-drop"
               classes={classes}
-              options={cityArray}
-              disabled={cityDisabled}
+              value={intakeState.city}
+              onChange={handleCityChange}
+              inputValue={inputValueCity}
+              onInputChange={(event, newInputValue) => {
+                setInputValueCity(newInputValue);
+              }}
+              options={cityArray?.map((item) => item.value)}
+              disabled={intakeState?.state ? false : true}
               name="city"
               className="city-drop"
-              onChange={handleCityChange}
-              getOptionLabel={(option) => option.value}
               renderInput={(params) => (
                 <TextField {...params} label="Select City" />
               )}

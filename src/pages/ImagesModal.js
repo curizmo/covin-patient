@@ -10,6 +10,7 @@ const ImagesModal = (props) => {
     currentFileView,
     setMedicationFile,
     medicationFile,
+    imageCount,
   } = props;
 
   const imageHandler = async (e) => {
@@ -24,11 +25,12 @@ const ImagesModal = (props) => {
       };
       try {
         const compressedFile = await imageCompression(imageFile, options);
-
+        
         reader.readAsDataURL(compressedFile);
         reader.onload = async function () {
+          const imageName = 'Picture'+imageCount+'.'+file[2].split('.').pop();
           const fileInfo = {
-            fileName: file[2],
+            fileName: imageName,
             fileImage: reader.result,
           };
           const imageFileInfo = await imageCompression.getFilefromDataUrl(
