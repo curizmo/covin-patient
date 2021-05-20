@@ -84,8 +84,14 @@ const PatientVitals = ({
   });
 
   useEffect(() => {
-    getPageProgress(hashKey);
+    if (messageType === MESSAGE_TYPES.newPatient) {
+      getPageProgress(hashKey);
+    }
   }, []);
+
+  console.log(page);
+  console.log(messageType);
+
 
   const getPageProgress = async (hashKey) => {
     try {
