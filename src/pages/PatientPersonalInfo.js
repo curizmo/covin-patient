@@ -367,14 +367,12 @@ const PatientPersonalInfo = ({
 
   const formatDate = (date) => {
     const newDate = dateFormatter(date);
-    console.log("check new date", newDate);
     setIntakeState({
       ...intakeState,
       dateOfBirth: newDate,
     });
   };
 
-  console.log("check", moment(intakeState.dateOfBirth).format("YYYY-MM-D"));
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
