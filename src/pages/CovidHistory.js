@@ -29,9 +29,9 @@ const CovidHistory = ({
   const [isDiagnosed, setDiagnosed] = useState(false);
   const [state, setChecked] = useState();
 
-  const handleInputChange = (e) => {
-    const item = e.target.name;
-    setIntakeState({ ...intakeState, [item]: e.target.value });
+  const handleInputChange = (date) => {
+    const newDate = dateFormatter(date);
+    setIntakeState({ ...intakeState, dateCovidBefore: newDate });
   };
 
   useEffect(() => {
@@ -208,16 +208,42 @@ const CovidHistory = ({
         {isDiagnosed && (
           <div className="date-diagnosed">
             <label>Date of diagnosis</label>
-            <input
-              name="dateCovidBefore"
-              className="date-of-diagnosis"
-              type="date"
-              placeholder="Select date of diagnosis"
-              max={moment().format(DATE_FORMAT.yyyymmdd)}
-              value={moment(intakeState.dateCovidBefore).format(
-                DATE_FORMAT.yyyymmdd
+
+            <DropdownDate
+              selectedDate={moment(intakeState.dateCovidBefore).format(
+                "YYYY-MM-D"
               )}
-              onChange={handleInputChange}
+              ids={{
+                year: "select-year",
+                month: "select-month",
+                day: "select-day",
+              }}
+              options={{
+                monthShort: true,
+              }}
+              onDateChange={(date) => {
+                handleInputChange(date);
+              }}
+              order={[
+                DropdownComponent.month,
+                DropdownComponent.day,
+                DropdownComponent.year,
+              ]}
+              classes={{
+                dayContainer: "container-class",
+                yearContainer: "container-class",
+                monthContainer: "container-class",
+              }}
+              names={{
+                year: "year",
+                month: "month",
+                day: "day",
+              }}
+              defaultValues={{
+                month: "Month",
+                day: "Day",
+                year: "Year",
+              }}
             />
           </div>
         )}
