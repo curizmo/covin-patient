@@ -55,10 +55,10 @@ const PatientVitals = ({
     height: patientDetails.height || "",
     weight: patientDetails.weight,
     emailId: patientDetails.email,
-    address: "",
-    state: "",
-    city: "",
-    pinCode: "",
+    address: patientDetails.address1,
+    state:patientDetails.state,
+    city: patientDetails.city,
+    pinCode: patientDetails.zip,
     covidPositiveEverBefore: false,
     covidVaccinationDose1Taken: false,
     dateOfDose1Vaccination: "",
@@ -83,6 +83,7 @@ const PatientVitals = ({
     medication1DoseFrequency: "",
   });
 
+  console.log(patientDetails)
   useEffect(() => {
     if (messageType === MESSAGE_TYPES.newPatient) {
       getPageProgress(hashKey);
