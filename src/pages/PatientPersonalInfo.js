@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#22335E !important",
     fontSize: "1rem",
     paddingLeft: "1rem !important",
+    fontWeight: "600 !important",
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
       paddingLeft: "1rem !important",
     },

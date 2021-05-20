@@ -120,6 +120,9 @@ const CovidHistory = ({
   };
 
   const getValue = (field) => {
+    if(checkDisabled(field)){
+      return 'dd/mm/yyyy'
+    }
     switch (field) {
       case "dateOfDose1Vaccination":
         return moment(intakeState.dateOfDose1Vaccination).format(
