@@ -720,10 +720,10 @@ textarea:focus {
   font-weight: 600;
   color: #22335e;
   outline: none;
-  -webkit-appearance: none;
+  
   background: url("../assets/images/Polygon1.svg") no-repeat 90% 49%;
-  position: relative;
-  opacity: 1;
+  
+
 }
 
 #dropdown-date {
