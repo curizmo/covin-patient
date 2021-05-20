@@ -5,6 +5,9 @@ import * as patientService from "../services/patient";
 import csc from "country-state-city";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
+import DatePicker from "@material-ui/lab/DatePicker";
 import {
   GENDERS,
   EMAIL_TYPE_REGEX,
@@ -399,20 +402,39 @@ const PatientPersonalInfo = ({
                   );
                 })
               ) : info.type === "DateType" ? (
-                <input
-                  type="date"
-                  id={indx}
-                  className="date-state"
-                  name={info.field}
-                  onChange={handleDateChange}
-                  placeholder="dd-mon-yyyy"
-                  max={moment()
-                    .subtract(1, "days")
-                    .format(DATE_FORMAT.yyyymmdd)}
-                  value={moment(intakeState.dateOfBirth).format(
-                    DATE_FORMAT.yyyymmdd
-                  )}
-                />
+                <>
+                  <input
+                    type="date"
+                    id={indx}
+                    className="date-state"
+                    name={info.field}
+                    onChange={handleDateChange}
+                    placeholder="dd-mon-yyyy"
+                    max={moment()
+                      .subtract(1, "days")
+                      .format(DATE_FORMAT.yyyymmdd)}
+                    value={moment(intakeState.dateOfBirth).format(
+                      DATE_FORMAT.yyyymmdd
+                    )}
+                  />
+                  <div>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        label="Basic example"
+                        value={moment(intakeState.dateOfBirth).format(
+                          DATE_FORMAT.yyyymmdd
+                        )}
+                        onChange={(newValue) => {
+                          setIntakeState({
+                            ...intakeState.state,
+                            dateOfBirth: newValue,
+                          });
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                  </div>
+                </>
               ) : info.field === "emailId" ? (
                 <input
                   type="email"
