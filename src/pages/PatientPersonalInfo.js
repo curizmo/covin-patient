@@ -5,9 +5,13 @@ import * as patientService from "../services/patient";
 import csc from "country-state-city";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
-import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
-import DatePicker from "@material-ui/lab/DatePicker";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import {
   GENDERS,
   EMAIL_TYPE_REGEX,
@@ -418,7 +422,7 @@ const PatientPersonalInfo = ({
                     )}
                   />
                   <div>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         label="Basic example"
                         value={moment(intakeState.dateOfBirth).format(
@@ -432,7 +436,27 @@ const PatientPersonalInfo = ({
                         }}
                         renderInput={(params) => <TextField {...params} />}
                       />
-                    </LocalizationProvider>
+                    </LocalizationProvider> */}
+
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid container justify="space-around">
+                        <KeyboardDatePicker
+                          disableToolbar
+                          variant="inline"
+                          format="MM/dd/yyyy"
+                          margin="normal"
+                          id="date-picker-inline"
+                          label="Date picker inline"
+                          value={moment(intakeState.dateOfBirth).format(
+                            DATE_FORMAT.yyyymmdd
+                          )}
+                          onChange={handleDateChange}
+                          KeyboardButtonProps={{
+                            "aria-label": "change date",
+                          }}
+                        />
+                      </Grid>
+                    </MuiPickersUtilsProvider>
                   </div>
                 </>
               ) : info.field === "emailId" ? (
