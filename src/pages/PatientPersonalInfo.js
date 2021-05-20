@@ -5,12 +5,6 @@ import * as patientService from "../services/patient";
 import csc from "country-state-city";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
 import {
   GENDERS,
   EMAIL_TYPE_REGEX,
@@ -22,6 +16,8 @@ import {
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
 import { makeStyles } from "@material-ui/core/styles";
+import { DropdownDate, DropdownComponent } from "react-dropdown-date";
+import { dateFormatter } from "../utils/dateFormatter";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "1rem !important",
       color: "#22335E !important",
     },
+    "& .MuiFormControl-marginNormal": {
+      marginTop: "0px !important",
+    },
 
     "& .MuiInputLabel-shrink": {
       display: "none !important",
@@ -63,6 +62,19 @@ const useStyles = makeStyles((theme) => ({
 
     "& .MuiInputBase-input": {
       paddingTop: "0em !important",
+      border: "none !important",
+      boxShadow: "none !important",
+      borderRadius: "none !important",
+      marginTop: "0px !important",
+    },
+    "& .MuiPickersToolbar-toolbar": {
+      background: "rgb(18,18,18) !important",
+    },
+    "& .MuiPickersDay-daySelected": {
+      background: "rgb(18,18,18) !important",
+    },
+    "& .MuiPickersDay-daySelected:hover": {
+      background: "rgb(18,18,18) !important",
     },
   },
   inputRoot: {
@@ -81,6 +93,9 @@ const useStyles = makeStyles((theme) => ({
     },
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: "purple",
+    },
+    "& .MuiFormControl-marginNormal": {
+      marginTop: "0px !important",
     },
   },
 }));
@@ -130,13 +145,7 @@ const PatientPersonalInfo = ({
     emailId: "",
   });
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = useState(
-    new Date("2014-08-18T21:11:54")
-  );
 
-  const handleDateChanges = (date) => {
-    setSelectedDate(date);
-  };
   useEffect(() => {
     const heightInFeet =
       (intakeState.height &&
@@ -165,20 +174,19 @@ const PatientPersonalInfo = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleDateChange = (e) => {
-    const item = e.target.name;
-    const year = moment(e.target.value).year();
+  const handleDateChange = (value) => {
+    const year = moment(value).year();
     const currentYear = moment().year();
     if (year <= currentYear) {
       setIntakeState({
         ...intakeState,
-        [item]: moment(e.target.value).format(),
+        dateOfBirth: moment(value).format(),
       });
       setShowDateError(false);
     } else {
       setIntakeState({
         ...intakeState,
-        [item]: moment(e.target.value).format(),
+        dateOfBirth: moment(value).format(),
       });
       setShowDateError(true);
     }
@@ -357,6 +365,16 @@ const PatientPersonalInfo = ({
     setPage(page + 1);
   };
 
+  const formatDate = (date) => {
+    const newDate = dateFormatter(date);
+    console.log("check new date", newDate);
+    setIntakeState({
+      ...intakeState,
+      dateOfBirth: newDate,
+    });
+  };
+
+  console.log("check", moment(intakeState.dateOfBirth).format("YYYY-MM-D"));
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
@@ -411,55 +429,46 @@ const PatientPersonalInfo = ({
                   );
                 })
               ) : info.type === "DateType" ? (
-                <>
-                  <input
-                    type="date"
-                    id={indx}
-                    className="date-state"
-                    name={info.field}
-                    onChange={handleDateChange}
-                    placeholder="dd-mon-yyyy"
-                    max={moment()
-                      .subtract(1, "days")
-                      .format(DATE_FORMAT.yyyymmdd)}
-                    value={moment(intakeState.dateOfBirth).format(
-                      DATE_FORMAT.yyyymmdd
-                    )}
-                  />
-                  <div>
-                    {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        label="Basic example"
-                        value={moment(intakeState.dateOfBirth).format(
-                          DATE_FORMAT.yyyymmdd
-                        )}
-                        onChange={(newValue) => {
-                          setIntakeState({
-                            ...intakeState.state,
-                            dateOfBirth: newValue,
-                          });
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider> */}
-
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <Grid container justify="space-around">
-                        {/* <KeyboardDatePicker
-                          margin="normal"
-                          id="date-picker-dialog"
-                          label="Date picker dialog"
-                          format="MM/dd/yyyy"
-                          value={selectedDate}
-                          onChange={handleDateChanges}
-                          KeyboardButtonProps={{
-                            "aria-label": "change date",
-                          }}
-                        /> */}
-                      </Grid>
-                    </MuiPickersUtilsProvider>
-                  </div>
-                </>
+                <div>
+                  {
+                    <DropdownDate
+                      selectedDate={moment(intakeState.dateOfBirth).format(
+                        "YYYY-MM-D"
+                      )}
+                      ids={{
+                        year: "select-year",
+                        month: "select-month",
+                        day: "select-day",
+                      }}
+                      options={{
+                        monthShort: true,
+                      }}
+                      onDateChange={(date) => {
+                        formatDate(date);
+                      }}
+                      order={[
+                        DropdownComponent.month,
+                        DropdownComponent.day,
+                        DropdownComponent.year,
+                      ]}
+                      classes={{
+                        dayContainer: "container-class",
+                        yearContainer: "container-class",
+                        monthContainer: "container-class",
+                      }}
+                      names={{
+                        year: "year",
+                        month: "month",
+                        day: "day",
+                      }}
+                      defaultValues={{
+                        month: "Month",
+                        day: "Day",
+                        year: "Year",
+                      }}
+                    />
+                  }
+                </div>
               ) : info.field === "emailId" ? (
                 <input
                   type="email"
