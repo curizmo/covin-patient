@@ -6,6 +6,8 @@ import {
   COVID_BEFORE,
 } from "../constants/constants";
 import * as patientService from "../services/patient";
+import { DropdownDate, DropdownComponent } from "react-dropdown-date";
+import { dateFormatter } from "../utils/dateFormatter";
 import "../App.css";
 import "./home.css";
 
@@ -120,8 +122,8 @@ const CovidHistory = ({
   };
 
   const getValue = (field) => {
-    if(checkDisabled(field)){
-      return 'dd/mm/yyyy'
+    if (checkDisabled(field)) {
+      return "dd/mm/yyyy";
     }
     switch (field) {
       case "dateOfDose1Vaccination":
@@ -154,6 +156,15 @@ const CovidHistory = ({
     }
   };
 
+  const formatDate = (date, item) => {
+    const newDate = dateFormatter(date);
+
+    setIntakeState({
+      ...intakeState,
+      [item]: newDate,
+    });
+  };
+
   return (
     <div className="form-content-wrapper">
       <div className="covid-diagnosed">
@@ -168,7 +179,11 @@ const CovidHistory = ({
               name="yes"
               value="yes"
               onClick={yesDiagnosed}
-              checked={intakeState.covidPositiveEverBefore ? state === COVID_BEFORE.yes : null}
+              checked={
+                intakeState.covidPositiveEverBefore
+                  ? state === COVID_BEFORE.yes
+                  : null
+              }
               onChange={() => handleRadioButton(1)}
             />
             <label for="yes">Yes</label>
@@ -181,7 +196,9 @@ const CovidHistory = ({
               value="no"
               onClick={notDiagnosed}
               checked={
-                !intakeState.covidPositiveEverBefore ? state === COVID_BEFORE.no : null
+                !intakeState.covidPositiveEverBefore
+                  ? state === COVID_BEFORE.no
+                  : null
               }
               onChange={() => handleRadioButton(2)}
             />
@@ -218,14 +235,43 @@ const CovidHistory = ({
             >
               {history.type === "Text" && <label>{history.title}</label>}
               {history.type === "Text" ? (
-                <input
-                  type="date"
-                  id={indx}
-                  name={history.field}
-                  onChange={handleInputChange}
-                  max={moment().format(DATE_FORMAT.yyyymmdd)}
-                  disabled={checkDisabled(history.field)}
-                  value={getValue(history.field)}
+                <DropdownDate
+                  selectedDate={moment(
+                    intakeState?.history?.field || getValue(history.field)
+                  ).format("YYYY-MM-D")}
+                  startDate={"2020-08-01"}
+                  endDate={"2050-12-31"}
+                  ids={{
+                    year: "select-year",
+                    month: "select-month",
+                    day: "select-day",
+                  }}
+                  options={{
+                    monthShort: true,
+                  }}
+                  onDateChange={(date) => {
+                    formatDate(date, history.field);
+                  }}
+                  order={[
+                    DropdownComponent.month,
+                    DropdownComponent.day,
+                    DropdownComponent.year,
+                  ]}
+                  classes={{
+                    dayContainer: "container-class",
+                    yearContainer: "container-class",
+                    monthContainer: "container-class",
+                  }}
+                  names={{
+                    year: "year",
+                    month: "month",
+                    day: "day",
+                  }}
+                  defaultValues={{
+                    month: "Month",
+                    day: "Day",
+                    year: "Year",
+                  }}
                 />
               ) : (
                 <input
