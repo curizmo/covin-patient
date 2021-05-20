@@ -123,8 +123,6 @@ const PatientPersonalInfo = ({
   });
   const classes = useStyles();
 
-  console.log(cities)
-
   useEffect(() => {
     const heightInFeet =
       (intakeState.height &&
@@ -476,9 +474,6 @@ const PatientPersonalInfo = ({
               classes={classes}
               options={stateList}
               name="state"
-              value={
-                (intakeState.state = "" ? stateList[0] : intakeState.state)
-              }
               onChange={handleStateChange}
               getOptionLabel={(option) => option.value}
               style={{ width: "100%" }}
@@ -499,9 +494,6 @@ const PatientPersonalInfo = ({
               options={cityArray}
               disabled={cityDisabled}
               name="city"
-              // value={
-              //   intakeState.city.length ? intakeState.city : cities[0].name
-              // }
               className="city-drop"
               onChange={handleCityChange}
               getOptionLabel={(option) => option.value}
