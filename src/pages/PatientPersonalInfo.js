@@ -81,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
 const moment = require("moment");
 const states = csc.getStatesOfCountry("IN");
 const stateList = [];
+const cities = csc.getCitiesOfCountry("IN");
 
 for (let i in states) {
   let state = {
@@ -121,6 +122,8 @@ const PatientPersonalInfo = ({
     emailId: "",
   });
   const classes = useStyles();
+
+  console.log(cities)
 
   useEffect(() => {
     const heightInFeet =
@@ -473,6 +476,9 @@ const PatientPersonalInfo = ({
               classes={classes}
               options={stateList}
               name="state"
+              value={
+                (intakeState.state = "" ? stateList[0] : intakeState.state)
+              }
               onChange={handleStateChange}
               getOptionLabel={(option) => option.value}
               style={{ width: "100%" }}
@@ -493,6 +499,9 @@ const PatientPersonalInfo = ({
               options={cityArray}
               disabled={cityDisabled}
               name="city"
+              // value={
+              //   intakeState.city.length ? intakeState.city : cities[0].name
+              // }
               className="city-drop"
               onChange={handleCityChange}
               getOptionLabel={(option) => option.value}
