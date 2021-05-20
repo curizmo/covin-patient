@@ -6,8 +6,6 @@ import {
   COVID_BEFORE,
 } from "../constants/constants";
 import * as patientService from "../services/patient";
-import { DropdownDate, DropdownComponent } from "react-dropdown-date";
-import { dateFormatter } from "../utils/dateFormatter";
 import "../App.css";
 import "./home.css";
 
@@ -29,9 +27,9 @@ const CovidHistory = ({
   const [isDiagnosed, setDiagnosed] = useState(false);
   const [state, setChecked] = useState();
 
-  const handleInputChange = (date) => {
-    const newDate = dateFormatter(date);
-    setIntakeState({ ...intakeState, dateCovidBefore: newDate });
+  const handleInputChange = (e) => {
+    const item = e.target.name;
+    setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
   useEffect(() => {
@@ -156,15 +154,6 @@ const CovidHistory = ({
     }
   };
 
-  const formatDate = (date, item) => {
-    const newDate = dateFormatter(date);
-
-    setIntakeState({
-      ...intakeState,
-      [item]: newDate,
-    });
-  };
-
   return (
     <div className="form-content-wrapper">
       <div className="covid-diagnosed">
@@ -208,44 +197,16 @@ const CovidHistory = ({
         {isDiagnosed && (
           <div className="date-diagnosed">
             <label>Date of diagnosis</label>
-
-            <DropdownDate
-              selectedDate={moment(intakeState.dateCovidBefore).format(
-                "YYYY-MM-D"
+            <input
+              name="dateCovidBefore"
+              className="date-of-diagnosis"
+              type="date"
+              placeholder="Select date of diagnosis"
+              max={moment().format(DATE_FORMAT.yyyymmdd)}
+              value={moment(intakeState.dateCovidBefore).format(
+                DATE_FORMAT.yyyymmdd
               )}
-              startDate={"2019-01-01"}
-              endDate={new Date()}
-              ids={{
-                year: "select-year",
-                month: "select-month",
-                day: "select-day",
-              }}
-              options={{
-                monthShort: true,
-              }}
-              onDateChange={(date) => {
-                handleInputChange(date);
-              }}
-              order={[
-                DropdownComponent.month,
-                DropdownComponent.day,
-                DropdownComponent.year,
-              ]}
-              classes={{
-                dayContainer: "container-class",
-                yearContainer: "container-class",
-                monthContainer: "container-class",
-              }}
-              names={{
-                year: "year",
-                month: "month",
-                day: "day",
-              }}
-              defaultValues={{
-                month: "Month",
-                day: "Day",
-                year: "Year",
-              }}
+              onChange={handleInputChange}
             />
           </div>
         )}
@@ -263,43 +224,14 @@ const CovidHistory = ({
             >
               {history.type === "Text" && <label>{history.title}</label>}
               {history.type === "Text" ? (
-                <DropdownDate
-                  selectedDate={moment(
-                    intakeState?.history?.field || getValue(history.field)
-                  ).format("YYYY-MM-D")}
-                  startDate={"2020-08-01"}
-                  endDate={new Date()}
-                  ids={{
-                    year: "select-year",
-                    month: "select-month",
-                    day: "select-day",
-                  }}
-                  options={{
-                    monthShort: true,
-                  }}
-                  onDateChange={(date) => {
-                    formatDate(date, history.field);
-                  }}
-                  order={[
-                    DropdownComponent.month,
-                    DropdownComponent.day,
-                    DropdownComponent.year,
-                  ]}
-                  classes={{
-                    dayContainer: "container-class",
-                    yearContainer: "container-class",
-                    monthContainer: "container-class",
-                  }}
-                  names={{
-                    year: "year",
-                    month: "month",
-                    day: "day",
-                  }}
-                  defaultValues={{
-                    month: "Month",
-                    day: "Day",
-                    year: "Year",
-                  }}
+                <input
+                  type="date"
+                  id={indx}
+                  name={history.field}
+                  onChange={handleInputChange}
+                  max={moment().format(DATE_FORMAT.yyyymmdd)}
+                  disabled={checkDisabled(history.field)}
+                  value={getValue(history.field)}
                 />
               ) : (
                 <input
