@@ -120,8 +120,8 @@ const CovidHistory = ({
   };
 
   const getValue = (field) => {
-    if(checkDisabled(field)){
-      return 'dd/mm/yyyy'
+    if (checkDisabled(field)) {
+      return "dd/mm/yyyy";
     }
     switch (field) {
       case "dateOfDose1Vaccination":
@@ -168,7 +168,11 @@ const CovidHistory = ({
               name="yes"
               value="yes"
               onClick={yesDiagnosed}
-              checked={intakeState.covidPositiveEverBefore ? state === COVID_BEFORE.yes : null}
+              checked={
+                intakeState.covidPositiveEverBefore
+                  ? state === COVID_BEFORE.yes
+                  : null
+              }
               onChange={() => handleRadioButton(1)}
             />
             <label for="yes">Yes</label>
@@ -181,7 +185,9 @@ const CovidHistory = ({
               value="no"
               onClick={notDiagnosed}
               checked={
-                !intakeState.covidPositiveEverBefore ? state === COVID_BEFORE.no : null
+                !intakeState.covidPositiveEverBefore
+                  ? state === COVID_BEFORE.no
+                  : null
               }
               onChange={() => handleRadioButton(2)}
             />
