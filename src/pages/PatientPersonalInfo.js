@@ -9,7 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import {
@@ -131,7 +130,13 @@ const PatientPersonalInfo = ({
     emailId: "",
   });
   const classes = useStyles();
+  const [selectedDate, setSelectedDate] = useState(
+    new Date("2014-08-18T21:11:54")
+  );
 
+  const handleDateChanges = (date) => {
+    setSelectedDate(date);
+  };
   useEffect(() => {
     const heightInFeet =
       (intakeState.height &&
@@ -440,21 +445,17 @@ const PatientPersonalInfo = ({
 
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <Grid container justify="space-around">
-                        <KeyboardDatePicker
-                          disableToolbar
-                          variant="inline"
-                          format="MM/dd/yyyy"
+                        {/* <KeyboardDatePicker
                           margin="normal"
-                          id="date-picker-inline"
-                          label="Date picker inline"
-                          value={moment(intakeState.dateOfBirth).format(
-                            DATE_FORMAT.yyyymmdd
-                          )}
-                          onChange={handleDateChange}
+                          id="date-picker-dialog"
+                          label="Date picker dialog"
+                          format="MM/dd/yyyy"
+                          value={selectedDate}
+                          onChange={handleDateChanges}
                           KeyboardButtonProps={{
                             "aria-label": "change date",
                           }}
-                        />
+                        /> */}
                       </Grid>
                     </MuiPickersUtilsProvider>
                   </div>
