@@ -408,7 +408,9 @@ const PatientPersonalInfo = ({
                   max={moment()
                     .subtract(1, "days")
                     .format(DATE_FORMAT.yyyymmdd)}
-                  value={intakeState}
+                  value={moment(intakeState.dateOfBirth).format(
+                    DATE_FORMAT.yyyymmdd
+                  )}
                 />
               ) : info.field === "emailId" ? (
                 <input
