@@ -213,6 +213,8 @@ const CovidHistory = ({
               selectedDate={moment(intakeState.dateCovidBefore).format(
                 "YYYY-MM-D"
               )}
+              startDate={"2019-01-01"}
+              endDate={new Date()}
               ids={{
                 year: "select-year",
                 month: "select-month",
@@ -266,7 +268,7 @@ const CovidHistory = ({
                     intakeState?.history?.field || getValue(history.field)
                   ).format("YYYY-MM-D")}
                   startDate={"2020-08-01"}
-                  endDate={"2050-12-31"}
+                  endDate={new Date()}
                   ids={{
                     year: "select-year",
                     month: "select-month",
