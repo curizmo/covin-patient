@@ -10,7 +10,7 @@ const Submission = () => {
     <img className="thank-you-img" src={success_image} alt="success-image"/>
       <div className="text-greeting">
         <div>
-          <span className="bold-text">Thank you</span> for completing the questionnaire. We get back to you soon.
+          <span className="bold-text">Thank you</span> for completing the questionnaire. We will get back to you soon.
         </div>
         <br/>
         <div>
