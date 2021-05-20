@@ -313,7 +313,8 @@ input[type="number"]::placeholder {
 }
 
 input[type="text"]::placeholder {
-  opacity: 0.3;
+  opacity: 0.5;
+  font-weight: 500;
 }
 /* submission */
 .block-text {
