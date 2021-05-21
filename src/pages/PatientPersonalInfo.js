@@ -333,6 +333,7 @@ const PatientPersonalInfo = ({
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
+      window.scrollTo(0, 0)
       return;
     }
 
