@@ -122,11 +122,6 @@ const PatientVitals = ({
     setProgressedPage(progressedPage - 1);
   };
 
-  const goForward = () => {
-    setPage(page + 1);
-    setPageLoaded(true);
-    setProgressedPage(progressedPage + 1);
-  };
   const subWrapper =
     messageType === MESSAGE_TYPES.newPatient
       ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
@@ -153,39 +148,14 @@ const PatientVitals = ({
   return (
     <div className="wrapper">
       <div className="second-header">
-        {(progressedPage === NEW_PATIENT_PAGES.patientInfo ||
-          progressedPage === NEW_PATIENT_PAGES.covidHistory ||
-          progressedPage === NEW_PATIENT_PAGES.preExistingCondition ||
-          progressedPage === NEW_PATIENT_PAGES.allergy ||
-          progressedPage === NEW_PATIENT_PAGES.medication) && (
-          <div className="progress-bar">
-            <div className="progress"></div>
-            <style>{`
-            .progress::after{
-              width : ${(progressedPage - 1) * 20}%;
-            }
-          `}</style>
-          </div>
-        )}
         <div className="navigation-bar">
-          {(progressedPage === NEW_PATIENT_PAGES.covidHistory ||
-            progressedPage === NEW_PATIENT_PAGES.preExistingCondition ||
-            progressedPage === NEW_PATIENT_PAGES.allergy ||
-            progressedPage === NEW_PATIENT_PAGES.medication) && (
+          {[NEW_PATIENT_PAGES.covidHistory,
+            NEW_PATIENT_PAGES.preExistingCondition,
+            NEW_PATIENT_PAGES.allergy,
+            NEW_PATIENT_PAGES.medication].includes(progressedPage) && (
             <div className="back-button" onClick={goBack}>
               <img className="nav-img-back" src={back} alt="go back"></img>
               <span>Back</span>
-            </div>
-          )}
-          {(progressedPage === NEW_PATIENT_PAGES.covidHistory ||
-            progressedPage === NEW_PATIENT_PAGES.allergy) && (
-            <div className="skip-button" onClick={goForward}>
-              <span>Skip</span>
-              <img
-                className="nav-img-skip"
-                src={forward}
-                alt="go forward"
-              ></img>
             </div>
           )}
         </div>
