@@ -2,8 +2,19 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import * as patientService from "../services/patient";
 import "./home.css";
+import { NEW_PATIENT_PAGES, MESSAGE_TYPES } from "../constants/constants";
 
-const PatientChecklist = ({ state, setState, setPage, page }) => {
+const PatientChecklist = ({
+  state,
+  setState,
+  setPage,
+  page,
+  progressedPage,
+  setProgressedPage,
+  messageType,
+  hash,
+  patientDetails,
+}) => {
   const [symptoms, setSymptoms] = useState([]);
   const [symptomsError, setSymptomsError] = useState(false);
   const [isSymptomChecked, setIsSymptomChecked] = useState(false);
@@ -46,10 +57,20 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
     return isAnyTrue;
   };
 
-  const onNext = () => {
+  const onNext = async () => {
     const isValid = validateForm();
     if (!isValid) {
       return;
+    }
+
+    if (messageType === MESSAGE_TYPES.newPatient) {
+      await patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: NEW_PATIENT_PAGES.symptoms,
+      });
+
+      setProgressedPage(NEW_PATIENT_PAGES.vitals);
     }
 
     setPage(page + 1);
@@ -58,7 +79,7 @@ const PatientChecklist = ({ state, setState, setPage, page }) => {
   const getSymptoms = async () => {
     const response = await patientService.getPatientSymtoms();
     setSymptoms(response.symptomsTemplate);
-    setIsSymptomLoad(false)
+    setIsSymptomLoad(false);
   };
 
   return (

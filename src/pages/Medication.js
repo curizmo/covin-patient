@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import cameraIcon from "../assets/images/camera-icon.svg";
 import pictureIcon from "../assets/images/picture_icon.svg";
 import closeIcon from "../assets/images/icon_close_blue.svg";
@@ -31,7 +31,7 @@ const Medication = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const onSubmit = async () => {
+  const onNext = async () => {
     await Promise.all([
       patientService.createPatientIntake({
         form: intakeState,
@@ -42,7 +42,7 @@ const Medication = ({
         medicationImages: medicationFile,
         patientId: patientDetails.patientId,
       }),
-      patientService.UpdateMessageStatus(hash),
+      // patientService.UpdateMessageStatus(hash),
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
@@ -50,14 +50,14 @@ const Medication = ({
       }),
     ]);
 
-    setProgressedPage(NEW_PATIENT_PAGES.submission);
+    setProgressedPage(NEW_PATIENT_PAGES.symptoms);
     setPage(page + 1);
   };
 
   const addImages = () => {
     setShowModal(true);
     setDisplayImage(false);
-    setImageCount(imageCount+1)
+    setImageCount(imageCount + 1);
   };
 
   const removeFile = (e, name) => {
@@ -135,8 +135,8 @@ const Medication = ({
           ></textarea>
         </div>
       </div>
-      <button className="submit-button submit-btn" onClick={onSubmit}>
-        SUBMIT
+      <button className="submit-button submit-btn" onClick={onNext}>
+        NEXT
       </button>
     </div>
   );

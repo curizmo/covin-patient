@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import help_icon from "../assets/images/help-circle.svg";
 import "../App.css";
 import Modal from "./HelpVideoModal";
-import { NUMBER_TYPE_REGEX, MESSAGE_TYPES } from "../constants/constants";
+import {
+  NUMBER_TYPE_REGEX,
+  MESSAGE_TYPES,
+  NEW_PATIENT_PAGES,
+} from "../constants/constants";
 import * as patientService from "../services/patient";
 
 const PatientVitalForm = ({
@@ -25,6 +29,8 @@ const PatientVitalForm = ({
   state,
   setPage,
   page,
+  progressedPage,
+  setProgressedPage,
 }) => {
   const [show, setShow] = useState(false);
   const [showBpInvaid, setShowBpInvalid] = useState(false);
@@ -87,7 +93,10 @@ const PatientVitalForm = ({
       return;
     }
 
-    if (messageType === MESSAGE_TYPES.dailyScreening) {
+    if (
+      messageType === MESSAGE_TYPES.newPatient ||
+      messageType === MESSAGE_TYPES.dailyScreening
+    ) {
       await patientService.createPatientVitals({
         patientId: patientDetails.patientId,
         temperature,
@@ -111,6 +120,15 @@ const PatientVitalForm = ({
         pulseRate,
         symptoms: symptoms,
       });
+    }
+    if (messageType === MESSAGE_TYPES.newPatient) {
+      await patientService.createFormProgress({
+        hashKey: hash,
+        patientId: patientDetails.patientId,
+        pagenum: NEW_PATIENT_PAGES.vitals,
+      });
+
+      setProgressedPage(NEW_PATIENT_PAGES.submission);
     }
 
     await patientService.UpdateMessageStatus(hash);
