@@ -163,6 +163,7 @@ const PatientVitalForm = ({
           <input
             className="oxygen-input"
             type="text"
+            pattern="\d*"
             name="OxygenLevel"
             onChange={(e) => {
               if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -194,6 +195,7 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
+            pattern="\d*"
             name="Temperature"
             onChange={(e) => {
               if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -224,6 +226,7 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
+            pattern="\d*"
             name="Pulserate"
             onChange={(e) => {
               if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -256,6 +259,7 @@ const PatientVitalForm = ({
             <input
               className="bp"
               type="text"
+              pattern="\d*"
               name="BloodPressureHigh"
               onChange={(e) => {
                 if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -271,6 +275,7 @@ const PatientVitalForm = ({
             <input
               className="bp bp-lower"
               type="text"
+              pattern="\d*"
               name="BloodPressureLow"
               onChange={(e) => {
                 if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -310,6 +315,7 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
+            pattern="\d*"
             name="respiratoryRate"
             onChange={(e) => {
               if (e.target.value.match(NUMBER_TYPE_REGEX)) {
