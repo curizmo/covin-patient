@@ -33,7 +33,9 @@ export const NEW_PATIENT_PAGES = {
   preExistingCondition: 3,
   allergy: 4,
   medication: 5,
-  submission: 6,
+  symptoms: 6,
+  vitals: 7,
+  submission: 8,
 };
 
 export const EXISTING_PATIENT_PAGES = {
