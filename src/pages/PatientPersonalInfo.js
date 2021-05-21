@@ -367,7 +367,7 @@ const PatientPersonalInfo = ({
 
   const formatDate = (date) => {
     const newDate = dateFormatter(date);
-    
+
     setIntakeState({
       ...intakeState,
       dateOfBirth: newDate,
@@ -431,7 +431,9 @@ const PatientPersonalInfo = ({
                 <div>
                   {
                     <DropdownDate
-                      selectedDate={moment(intakeState?.dateOfBirth).format(DATE_FORMAT.yyyymmdd)}
+                      selectedDate={moment(intakeState?.dateOfBirth).format(
+                        DATE_FORMAT.yyyymmdd
+                      )}
                       ids={{
                         year: "select-year",
                         month: "select-month",
@@ -509,9 +511,7 @@ const PatientPersonalInfo = ({
                     type={
                       info.field === PERSONAL_INFO.weight ? "number" : "text"
                     }
-                    pattern={
-                      info.field === PERSONAL_INFO.weight ? '\\d*' : ""
-                    }
+                    pattern={info.field === PERSONAL_INFO.weight ? "\\d*" : ""}
                     className="bp"
                     id={indx}
                     name={info.field}

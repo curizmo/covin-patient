@@ -25,6 +25,7 @@ const PatientVitals = ({
   hashKey,
   patientDetails,
   messageType,
+  pageLoadedStatus,
 }) => {
   const [temperature, setTemperature] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
@@ -34,6 +35,7 @@ const PatientVitals = ({
   const [bpLowerRange, setBpLowerRange] = useState(0);
   const [progressedPage, setProgressedPage] = useState(0);
   const [page, setPage] = useState(1);
+  const [pageLoaded, setPageLoaded] = useState(false);
   const [state, setState] = useState({
     feverOrChills: false,
     cough: false,
@@ -94,8 +96,10 @@ const PatientVitals = ({
     try {
       const response = await patientService.getFormProgress(hashKey);
       if (response.formProgress) {
+        setPageLoaded(true);
         setProgressedPage(response.formProgress.latestPage + 1);
       } else {
+        setPageLoaded(true);
         setProgressedPage(progressedPage + 1);
       }
     } catch (err) {}
@@ -115,12 +119,14 @@ const PatientVitals = ({
   };
 
   const goBack = () => {
+    setPageLoaded(true);
     setPage(page - 1);
     setProgressedPage(progressedPage - 1);
   };
 
   const goForward = () => {
     setPage(page + 1);
+    setPageLoaded(true);
     setProgressedPage(progressedPage + 1);
   };
   const subWrapper =
@@ -138,37 +144,52 @@ const PatientVitals = ({
       ? "page2-sub-wrapper"
       : "page3-sub-wrapper";
 
+  if (!pageLoaded && messageType === MESSAGE_TYPES.newPatient) {
+    return (
+      <div className="loader-wrapper">
+        <div className="loader" />
+      </div>
+    );
+  }
+
   return (
     <div className="wrapper">
       <div className="second-header">
-      {(progressedPage === NEW_PATIENT_PAGES.patientInfo || 
-       progressedPage === NEW_PATIENT_PAGES.covidHistory || 
-       progressedPage ===  NEW_PATIENT_PAGES.preExistingCondition || 
-       progressedPage === NEW_PATIENT_PAGES.allergy || 
-       progressedPage === NEW_PATIENT_PAGES.medication) && 
-        <div className="progress-bar">
-          <div className="progress" ></div>
-          <style>{`
+        {(progressedPage === NEW_PATIENT_PAGES.patientInfo ||
+          progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+          progressedPage === NEW_PATIENT_PAGES.preExistingCondition ||
+          progressedPage === NEW_PATIENT_PAGES.allergy ||
+          progressedPage === NEW_PATIENT_PAGES.medication) && (
+          <div className="progress-bar">
+            <div className="progress"></div>
+            <style>{`
             .progress::after{
-              width : ${(progressedPage - 1)*20}%;
+              width : ${(progressedPage - 1) * 20}%;
             }
           `}</style>
-        </div>}
+          </div>
+        )}
         <div className="navigation-bar">
-          {(progressedPage === NEW_PATIENT_PAGES.covidHistory || 
-          progressedPage ===  NEW_PATIENT_PAGES.preExistingCondition || 
-          progressedPage === NEW_PATIENT_PAGES.allergy || 
-          progressedPage === NEW_PATIENT_PAGES.medication) && 
-          <div className="back-button" onClick={goBack}>
-            <img className="nav-img-back" src={back} alt="go back"></img>
-            <span>Back</span>
-          </div>}
-          {(progressedPage === NEW_PATIENT_PAGES.covidHistory || 
-          progressedPage === NEW_PATIENT_PAGES.allergy ) && 
-          <div className="skip-button" onClick={goForward}>
-            <span>Skip</span>
-            <img className="nav-img-skip" src={forward} alt="go forward"></img>
-          </div>}
+          {(progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+            progressedPage === NEW_PATIENT_PAGES.preExistingCondition ||
+            progressedPage === NEW_PATIENT_PAGES.allergy ||
+            progressedPage === NEW_PATIENT_PAGES.medication) && (
+            <div className="back-button" onClick={goBack}>
+              <img className="nav-img-back" src={back} alt="go back"></img>
+              <span>Back</span>
+            </div>
+          )}
+          {(progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+            progressedPage === NEW_PATIENT_PAGES.allergy) && (
+            <div className="skip-button" onClick={goForward}>
+              <span>Skip</span>
+              <img
+                className="nav-img-skip"
+                src={forward}
+                alt="go forward"
+              ></img>
+            </div>
+          )}
         </div>
         <div className="header-wrapper page-hero">
           <div className="main-text">{name}</div>
@@ -191,50 +212,8 @@ const PatientVitals = ({
               hash={hashKey}
               progressedPage={progressedPage}
               setProgressedPage={setProgressedPage}
+              setPageLoaded={true}
             />
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.symptoms && (
-              <PatientChecklist
-                state={state}
-                setState={setState}
-                setPage={setPage}
-                page={page}
-                hash={hashKey}
-                messageType={messageType}
-                patientDetails={patientDetails}
-                progressedPage={progressedPage}
-                setProgressedPage={setProgressedPage}
-              />
-            )}
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vitals && (
-              <PatientVitalForm
-                setTemperature={setTemperature}
-                setOxygenLevel={setOxygenLevel}
-                setPulseRate={setPulseRate}
-                setBpUpperRange={setBpUpperRange}
-                setBpLowerRange={setBpLowerRange}
-                setRespiratoryRate={setRespiratoryRate}
-                bpUpperRange={bpUpperRange}
-                bpLowerRange={bpLowerRange}
-                temperature={temperature}
-                respiratoryRate={respiratoryRate}
-                bpLowerRange={bpLowerRange}
-                bpUpperRange={bpUpperRange}
-                oxygenLevel={oxygenLevel}
-                pulseRate={pulseRate}
-                setPage={setPage}
-                page={page}
-                hash={hashKey}
-                intakeState={intakeState}
-                patientDetails={patientDetails}
-                state={state}
-                messageType={messageType}
-                progressedPage={progressedPage}
-                setProgressedPage={setProgressedPage}
-              />
-            )}
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.submission && (
-              <Submission />
-            )}
           </div>
         </div>
       ) : messageType === MESSAGE_TYPES.dailyScreening ? (
