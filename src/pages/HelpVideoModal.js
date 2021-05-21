@@ -13,7 +13,7 @@ const Modal = (props) => {
           <img src={closeIcon} alt="close icon" onClick={props.onClose} />
         </div>
         <iframe
-          src="https://www.youtube.com/embed/YipRpSJ9X6k"
+          src={props.src}
           allow="autoplay; encrypted-media"
           title="video"
           className="video"

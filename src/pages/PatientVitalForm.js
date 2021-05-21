@@ -9,6 +9,14 @@ import {
 } from "../constants/constants";
 import * as patientService from "../services/patient";
 
+const HELP_VIDEO_URLS = {
+  TEMPERATURE: "https://www.youtube.com/embed/reHREKBXH_k",
+  RESPIRATORY_RATE: "https://www.youtube.com/embed/ccKGzZXNKYs",
+  BP_RANGE: "https://www.youtube.com/embed/GSNZVaW1Wg4",
+  OXYGEN_LEVEL: "https://www.youtube.com/embed/YyMiSUfZtyU",
+  PULSE_RATE: "https://www.youtube.com/embed/ifnYjD4IKus",
+};
+
 const PatientVitalForm = ({
   setTemperature,
   setOxygenLevel,
@@ -33,6 +41,7 @@ const PatientVitalForm = ({
   setProgressedPage,
 }) => {
   const [show, setShow] = useState(false);
+  const [helpVideoUrl, setHelpVideoUrl] = useState('');
   const [showBpInvaid, setShowBpInvalid] = useState(false);
   const [showOxygenErrorMessage, setShowOxygenErrorMessage] = useState(false);
   const [showTempErrorMessage, setShowTempErrorMessage] = useState(false);
@@ -56,6 +65,16 @@ const PatientVitalForm = ({
   const getSymptoms = async (patientId) => {
     const response = await patientService.getSymptomsByPatientId(patientId);
     setSymptoms(JSON.parse(response.symptoms.symptoms));
+  };
+
+  const showHelpVideoModal = (videoUrl) => () => {
+    setHelpVideoUrl(videoUrl);
+    setShow(true);
+  };
+
+  const hideHelpVideoModal = () => {
+    setHelpVideoUrl('');
+    setShow(false);
   };
 
   useEffect(() => {
@@ -144,6 +163,7 @@ const PatientVitalForm = ({
           <input
             className="oxygen-input"
             type="text"
+            pattern="\d*"
             name="OxygenLevel"
             onChange={(e) => {
               if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -159,7 +179,7 @@ const PatientVitalForm = ({
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.OXYGEN_LEVEL)}
           />
         </div>
         {vitalError.oxygenLevel ? (
@@ -169,12 +189,13 @@ const PatientVitalForm = ({
           <span className="error-message">Oxygen Level is a number value</span>
         ) : null}
       </div>
-      <Modal onClose={() => setShow(false)} show={show} />
+      <Modal onClose={hideHelpVideoModal} show={show} src={helpVideoUrl} />
       <div className="input-vitals">
         <label>Temperature</label>
         <div className="input-wrap">
           <input
             type="text"
+            pattern="\d*"
             name="Temperature"
             onChange={(e) => {
               if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -190,7 +211,7 @@ const PatientVitalForm = ({
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.TEMPERATURE)}
           />
         </div>
         {vitalError.temperature ? (
@@ -205,6 +226,7 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
+            pattern="\d*"
             name="Pulserate"
             onChange={(e) => {
               if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -220,7 +242,7 @@ const PatientVitalForm = ({
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.PULSE_RATE)}
           />
         </div>
         {vitalError.pulseRate ? (
@@ -237,6 +259,7 @@ const PatientVitalForm = ({
             <input
               className="bp"
               type="text"
+              pattern="\d*"
               name="BloodPressureHigh"
               onChange={(e) => {
                 if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -252,6 +275,7 @@ const PatientVitalForm = ({
             <input
               className="bp bp-lower"
               type="text"
+              pattern="\d*"
               name="BloodPressureLow"
               onChange={(e) => {
                 if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -269,7 +293,7 @@ const PatientVitalForm = ({
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.BP_RANGE)}
           />
         </div>
         {vitalError.bpLowerRange ? (
@@ -291,6 +315,7 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
+            pattern="\d*"
             name="respiratoryRate"
             onChange={(e) => {
               if (e.target.value.match(NUMBER_TYPE_REGEX)) {
@@ -306,7 +331,7 @@ const PatientVitalForm = ({
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.RESPIRATORY_RATE)}
           />
         </div>
         {vitalError.respiratoryRate ? (

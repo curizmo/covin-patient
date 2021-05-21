@@ -367,6 +367,7 @@ const PatientPersonalInfo = ({
 
   const formatDate = (date) => {
     const newDate = dateFormatter(date);
+    
     setIntakeState({
       ...intakeState,
       dateOfBirth: newDate,
@@ -481,8 +482,10 @@ const PatientPersonalInfo = ({
                   <input
                     className="bp"
                     type="number"
+                    pattern="\d*"
                     name={info.field}
                     id={"feet"}
+                    max={"8"}
                     value={feetHeight}
                     onChange={handleValidateHeight}
                   />
@@ -492,8 +495,10 @@ const PatientPersonalInfo = ({
                   <input
                     className="bp"
                     type="number"
+                    pattern="\d*"
                     name={info.field}
                     id={"inch"}
+                    max={"11"}
                     value={inchHeight}
                     onChange={handleValidateHeight}
                   />
@@ -503,6 +508,9 @@ const PatientPersonalInfo = ({
                   <input
                     type={
                       info.field === PERSONAL_INFO.weight ? "number" : "text"
+                    }
+                    pattern={
+                      info.field === PERSONAL_INFO.weight ? '\\d*' : ""
                     }
                     className="bp"
                     id={indx}
@@ -595,6 +603,7 @@ const PatientPersonalInfo = ({
           </label>
           <input
             type="number"
+            pattern="\d*"
             name="pinCode"
             className="pin-input"
             value={intakeState.pinCode}
