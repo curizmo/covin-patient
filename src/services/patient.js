@@ -9,6 +9,10 @@ export const getPatientSymtoms = () => {
   return getData("/symptoms-template");
 };
 
+export const getPatientIntake = (patientId) => {
+  return getData(`/patient-intake-form/intake/${patientId}`);
+};
+
 export const getPatientVitals = () => {
   return getData("/vitals-template");
 };

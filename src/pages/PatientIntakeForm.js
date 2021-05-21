@@ -8,6 +8,8 @@ const PatientIntakeForm = () => {
   const { hashKey } = useParams();
   const [isAgreed, setIsAgreed] = useState(false);
   const [patientDetails, setPatientDatails] = useState({});
+  const [intakeForm, setIntakeForm] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getPatientDetail(hashKey);
@@ -16,9 +18,20 @@ const PatientIntakeForm = () => {
   const getPatientDetail = async (hashKey) => {
     try {
       const response = await patientService.getPatientDetails(hashKey);
+      getPatientIntake(response.patientInfo.patientId);
       setPatientDatails(response.patientInfo);
       setIsAgreed(response.patientInfo.isAgreed);
     } catch (err) {}
+  };
+
+  const getPatientIntake = async (patientId) => {
+    try {
+      const response = await patientService.getPatientIntake(patientId);
+      setIntakeForm(response.patientIntakeForm.form);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -28,31 +41,37 @@ const PatientIntakeForm = () => {
           {patientDetails.messageType === "newPatient" ? (
             <>
               {!isAgreed && (
-                <TermsAndCondition  
+                <TermsAndCondition
                   setIsAgreed={setIsAgreed}
                   name={patientDetails.givenName}
                   phone={patientDetails.phone}
                   patientId={patientDetails.patientId}
                 />
               )}
-              {isAgreed && (
+              {isAgreed && !isLoading && (
                 <PatientVitals
                   name={`${patientDetails.givenName} ${patientDetails.familyName}`}
                   phone={patientDetails.phone}
                   hashKey={hashKey}
                   patientDetails={patientDetails}
                   messageType={patientDetails.messageType}
+                  intakeForm={intakeForm}
                 />
               )}
             </>
           ) : (
-            <PatientVitals
-              name={`${patientDetails.givenName} ${patientDetails.familyName}`}
-              phone={patientDetails.phone}
-              hashKey={hashKey}
-              patientDetails={patientDetails}
-              messageType={patientDetails.messageType}
-            />
+            <>
+              {!isLoading && (
+                <PatientVitals
+                  name={`${patientDetails.givenName} ${patientDetails.familyName}`}
+                  phone={patientDetails.phone}
+                  hashKey={hashKey}
+                  patientDetails={patientDetails}
+                  messageType={patientDetails.messageType}
+                  intakeForm={intakeForm}
+                />
+              )}
+            </>
           )}
         </>
       ) : null}
