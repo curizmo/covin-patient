@@ -20,6 +20,11 @@ const Submission = () => {
           <div>
             You will hear from us shortly.
           </div>
+          <br />
+          <br />
+          <div>
+            You may close the window.
+          </div>
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
@@ -39,26 +39,27 @@ const PeexistingCondition = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleDivSelect = (item) => {
+  const handleDivSelect = useCallback((item) => () => {
     const newIntakeState = item === NO_PRE_EXISTING_CONDITION && !intakeState[NO_PRE_EXISTING_CONDITION]
     ? {
-        feverOrChills: false,
-        cough: false,
-        difficultyBreathing: false,
-        fatigueMuscleOrBodyAches: false,
-        headache: false,
-        newlossOfTasteOrSmell: false,
-        soreThroat: false,
-        congestionOrRunnyNose: false,
-        nauseaOrVomiting: false,
-        diarrhea: false,
-        none: true,
+        ...intakeState,
+        heartDisease: false,
+        cancer: false,
+        highOrLowBloodPressure: false,
+        diabetes: false,
+        asthma: false,
+        stroke: false,
+        highCholesterol: false,
+        rash: false,
+        headacheOrMigrain: false,
+        depression: false,
+        noPrexistingCondition: true,
       }
     : { ...intakeState, [NO_PRE_EXISTING_CONDITION]: false, [item]: !intakeState[item] };
     const isConditionChecked = Object.values(newIntakeState).some((s) => s);
     setConditionError(!isConditionChecked);
     setIntakeState(newIntakeState);
-  };
+  }, [intakeState]);
 
   const validateForm = () => {
     const isAnyTrue = Object.keys(preExistingCondition).some(

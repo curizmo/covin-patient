@@ -37,8 +37,8 @@ const TermsAndCondition = ({ setIsAgreed, name, phone, patientId }) => {
             onChange={handleOnChange}
           />
           <label>
-            I agree to the 
-            <a href="https://drive.google.com/file/d/1WTSvbfnI3BDjeoAfn-HVyHrqcm3AiiXR/view?usp=sharing" className="link-text" target="_blank">
+            I agree to the<span> </span>
+            <a href="https://drive.google.com/file/d/1WTSvbfnI3BDjeoAfn-HVyHrqcm3AiiXR/view?usp=sharing" className="link-text">
               terms and conditions
             </a> of the usage this system
           </label>
