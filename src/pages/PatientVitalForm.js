@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import moment from "moment";
+
 import help_icon from "../assets/images/help-circle.svg";
 import "../App.css";
 import Modal from "./HelpVideoModal";
@@ -6,6 +8,7 @@ import {
   NUMBER_TYPE_REGEX,
   MESSAGE_TYPES,
   NEW_PATIENT_PAGES,
+  DATE_FORMAT,
 } from "../constants/constants";
 import * as patientService from "../services/patient";
 
@@ -64,7 +67,7 @@ const PatientVitalForm = ({
 
   const getSymptoms = async (patientId) => {
     const response = await patientService.getSymptomsByPatientId(patientId);
-    setSymptoms(JSON.parse(response.symptoms.symptoms));
+    setSymptoms(JSON.parse(response?.symptoms?.symptoms));
   };
 
   const showHelpVideoModal = (videoUrl) => () => {
@@ -122,7 +125,7 @@ const PatientVitalForm = ({
         respiratoryRate,
         bpLowerRange,
         bpUpperRange,
-        vitalsMeasureOn: today,
+        vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmdd),
         oxygenLevel,
         pulseRate,
         symptoms: state,
@@ -134,7 +137,7 @@ const PatientVitalForm = ({
         respiratoryRate,
         bpLowerRange,
         bpUpperRange,
-        vitalsMeasureOn: today,
+        vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmdd),
         oxygenLevel,
         pulseRate,
         symptoms: symptoms,

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
 
 import {
-  PRE_EXISTING_CONDITION,
+  NO_PRE_EXISTING_CONDITION,
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
 
@@ -13,7 +13,6 @@ const PeexistingCondition = ({
   setIntakeState,
   intakeState,
   patientDetails,
-  progressedPage,
   setProgressedPage,
   hash,
   setPage,
@@ -40,21 +39,9 @@ const PeexistingCondition = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleDivSelect = (field) => {
-    setIsConditionChecked(!isConditionChecked);
-    handleOnConditionClick(field);
-  };
-
-  const handleOnConditionClick = (item) => {
-    if (isConditionChecked) {
-      setIsConditionChecked(false);
-    }
-    if (isConditionChecked) {
-      setConditionError(false);
-    }
-
-    if (item === PRE_EXISTING_CONDITION) {
-      setIntakeState({
+  const handleDivSelect = useCallback((item) => () => {
+    const newIntakeState = item === NO_PRE_EXISTING_CONDITION && !intakeState[NO_PRE_EXISTING_CONDITION]
+    ? {
         ...intakeState,
         heartDisease: false,
         cancer: false,
@@ -67,15 +54,12 @@ const PeexistingCondition = ({
         headacheOrMigrain: false,
         depression: false,
         noPrexistingCondition: true,
-      });
-    } else {
-      setIntakeState({
-        ...intakeState,
-        [item]: isConditionChecked,
-        noPrexistingCondition: false,
-      });
-    }
-  };
+      }
+    : { ...intakeState, [NO_PRE_EXISTING_CONDITION]: false, [item]: !intakeState[item] };
+    const isConditionChecked = Object.values(newIntakeState).some((s) => s);
+    setConditionError(!isConditionChecked);
+    setIntakeState(newIntakeState);
+  }, [intakeState]);
 
   const validateForm = () => {
     const isAnyTrue = Object.keys(preExistingCondition).some(
@@ -143,7 +127,7 @@ const PeexistingCondition = ({
               key={indx}
               onClick={
                 `${history.type}` === "Boolean"
-                  ? () => handleDivSelect(history.field)
+                  ? handleDivSelect(history.field)
                   : null
               }
             >
