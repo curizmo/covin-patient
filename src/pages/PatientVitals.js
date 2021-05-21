@@ -214,6 +214,47 @@ const PatientVitals = ({
               setProgressedPage={setProgressedPage}
               setPageLoaded={true}
             />
+            {progressedPage === NEW_PATIENT_PAGES.symptoms && (
+              <PatientChecklist
+                state={state}
+                setState={setState}
+                setPage={setPage}
+                page={page}
+                hash={hashKey}
+                messageType={messageType}
+                patientDetails={patientDetails}
+                progressedPage={progressedPage}
+                setProgressedPage={setProgressedPage}
+              />
+            )}
+            {progressedPage === NEW_PATIENT_PAGES.vitals && (
+              <PatientVitalForm
+                setTemperature={setTemperature}
+                setOxygenLevel={setOxygenLevel}
+                setPulseRate={setPulseRate}
+                setBpUpperRange={setBpUpperRange}
+                setBpLowerRange={setBpLowerRange}
+                setRespiratoryRate={setRespiratoryRate}
+                bpUpperRange={bpUpperRange}
+                bpLowerRange={bpLowerRange}
+                temperature={temperature}
+                respiratoryRate={respiratoryRate}
+                bpLowerRange={bpLowerRange}
+                bpUpperRange={bpUpperRange}
+                oxygenLevel={oxygenLevel}
+                pulseRate={pulseRate}
+                setPage={setPage}
+                page={page}
+                hash={hashKey}
+                intakeState={intakeState}
+                patientDetails={patientDetails}
+                state={state}
+                messageType={messageType}
+                progressedPage={progressedPage}
+                setProgressedPage={setProgressedPage}
+              />
+            )}
+            {progressedPage === NEW_PATIENT_PAGES.submission && <Submission />}
           </div>
         </div>
       ) : messageType === MESSAGE_TYPES.dailyScreening ? (
