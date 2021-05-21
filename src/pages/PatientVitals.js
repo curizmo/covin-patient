@@ -94,12 +94,11 @@ const PatientVitals = ({
     try {
       const response = await patientService.getFormProgress(hashKey);
       if (response.formProgress) {
-        setPageLoaded(true);
         setProgressedPage(response.formProgress.latestPage + 1);
       } else {
-        setPageLoaded(true);
         setProgressedPage(progressedPage + 1);
       }
+      setPageLoaded(true);
     } catch (err) {}
   };
 
