@@ -25,6 +25,7 @@ const PatientVitals = ({
   hashKey,
   patientDetails,
   messageType,
+  intakeForm,
 }) => {
   const [temperature, setTemperature] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
@@ -59,29 +60,27 @@ const PatientVitals = ({
     state: patientDetails.state,
     city: patientDetails.city,
     pinCode: patientDetails.zip,
-    covidPositiveEverBefore: false,
-    covidVaccinationDose1Taken: false,
-    dateOfDose1Vaccination: "",
-    covidVaccinationDose2Taken: false,
-    dateOfDose2Vaccination: "",
-    dateCovidBefore: "",
-    heartDisease: false,
-    cancer: false,
-    highOrLowBloodPressure: false,
-    diabetes: false,
-    asthma: false,
-    stroke: false,
-    highCholesterol: false,
-    rash: false,
-    headacheOrMigrain: false,
-    depression: false,
-    others: "",
-    noPrexistingCondition: false,
-    food: "",
-    medications: "",
-    otherAllergies: "",
-    otherMedications: "",
-    otherMedicationsInfo: "",
+    covidPositiveEverBefore: intakeForm.covidPositiveEverBefore || false,
+    covidVaccinationDose1Taken: intakeForm.covidVaccinationDose1Taken || false,
+    dateOfDose1Vaccination: intakeForm.dateOfDose1Vaccination || "",
+    covidVaccinationDose2Taken: intakeForm.covidVaccinationDose2Taken || false,
+    dateOfDose2Vaccination: intakeForm.dateOfDose2Vaccination || "",
+    dateCovidBefore: intakeForm.dateCovidBefore || "",
+    heartDisease: intakeForm.heartDisease || false,
+    cancer: intakeForm.cancer || false,
+    highOrLowBloodPressure: intakeForm.highOrLowBloodPressure || false,
+    diabetes: intakeForm.diabetes || false,
+    asthma: intakeForm.asthma || false,
+    stroke: intakeForm.stroke || false,
+    highCholesterol: intakeForm.highCholesterol || false,
+    rash: intakeForm.rash || false,
+    headacheOrMigrain: intakeForm.headacheOrMigrain || false,
+    depression: intakeForm.depression || false,
+    others: intakeForm.others || "",
+    noPrexistingCondition: intakeForm.noPrexistingCondition || false,
+    food: intakeForm.food || "",
+    medications: intakeForm.medications || "",
+    otherMedicationsInfo: intakeForm.otherMedicationsInfo || "",
   });
 
   useEffect(() => {
@@ -141,34 +140,41 @@ const PatientVitals = ({
   return (
     <div className="wrapper">
       <div className="second-header">
-      {(progressedPage === NEW_PATIENT_PAGES.patientInfo || 
-       progressedPage === NEW_PATIENT_PAGES.covidHistory || 
-       progressedPage ===  NEW_PATIENT_PAGES.preExistingCondition || 
-       progressedPage === NEW_PATIENT_PAGES.allergy || 
-       progressedPage === NEW_PATIENT_PAGES.medication) && 
-        <div className="progress-bar">
-          <div className="progress" ></div>
-          <style>{`
+        {(progressedPage === NEW_PATIENT_PAGES.patientInfo ||
+          progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+          progressedPage === NEW_PATIENT_PAGES.preExistingCondition ||
+          progressedPage === NEW_PATIENT_PAGES.allergy ||
+          progressedPage === NEW_PATIENT_PAGES.medication) && (
+          <div className="progress-bar">
+            <div className="progress"></div>
+            <style>{`
             .progress::after{
-              width : ${(progressedPage - 1)*20}%;
+              width : ${(progressedPage - 1) * 20}%;
             }
           `}</style>
-        </div>}
+          </div>
+        )}
         <div className="navigation-bar">
-          {(progressedPage === NEW_PATIENT_PAGES.covidHistory || 
-          progressedPage ===  NEW_PATIENT_PAGES.preExistingCondition || 
-          progressedPage === NEW_PATIENT_PAGES.allergy || 
-          progressedPage === NEW_PATIENT_PAGES.medication) && 
-          <div className="back-button" onClick={goBack}>
-            <img className="nav-img-back" src={back} alt="go back"></img>
-            <span>Back</span>
-          </div>}
-          {(progressedPage === NEW_PATIENT_PAGES.covidHistory || 
-          progressedPage === NEW_PATIENT_PAGES.allergy ) && 
-          <div className="skip-button" onClick={goForward}>
-            <span>Skip</span>
-            <img className="nav-img-skip" src={forward} alt="go forward"></img>
-          </div>}
+          {(progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+            progressedPage === NEW_PATIENT_PAGES.preExistingCondition ||
+            progressedPage === NEW_PATIENT_PAGES.allergy ||
+            progressedPage === NEW_PATIENT_PAGES.medication) && (
+            <div className="back-button" onClick={goBack}>
+              <img className="nav-img-back" src={back} alt="go back"></img>
+              <span>Back</span>
+            </div>
+          )}
+          {(progressedPage === NEW_PATIENT_PAGES.covidHistory ||
+            progressedPage === NEW_PATIENT_PAGES.allergy) && (
+            <div className="skip-button" onClick={goForward}>
+              <span>Skip</span>
+              <img
+                className="nav-img-skip"
+                src={forward}
+                alt="go forward"
+              ></img>
+            </div>
+          )}
         </div>
         <div className="header-wrapper page-hero">
           <div className="main-text">{name}</div>
@@ -232,9 +238,7 @@ const PatientVitals = ({
                 setProgressedPage={setProgressedPage}
               />
             )}
-            {progressedPage === NEW_PATIENT_PAGES.submission && (
-              <Submission />
-            )}
+            {progressedPage === NEW_PATIENT_PAGES.submission && <Submission />}
           </div>
         </div>
       ) : messageType === MESSAGE_TYPES.dailyScreening ? (
