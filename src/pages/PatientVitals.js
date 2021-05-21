@@ -197,7 +197,7 @@ const PatientVitals = ({
               progressedPage={progressedPage}
               setProgressedPage={setProgressedPage}
             />
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.symptoms && (
+            {progressedPage === NEW_PATIENT_PAGES.symptoms && (
               <PatientChecklist
                 state={state}
                 setState={setState}
@@ -210,7 +210,7 @@ const PatientVitals = ({
                 setProgressedPage={setProgressedPage}
               />
             )}
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vitals && (
+            {progressedPage === NEW_PATIENT_PAGES.vitals && (
               <PatientVitalForm
                 setTemperature={setTemperature}
                 setOxygenLevel={setOxygenLevel}
@@ -237,7 +237,7 @@ const PatientVitals = ({
                 setProgressedPage={setProgressedPage}
               />
             )}
-            {FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.submission && (
+            {progressedPage === NEW_PATIENT_PAGES.submission && (
               <Submission />
             )}
           </div>
