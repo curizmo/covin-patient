@@ -67,7 +67,7 @@ const PatientChecklist = ({
       await patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
-        pagenum: NEW_PATIENT_PAGES.symptoms,
+        pagenum: NEW_PATIENT_PAGES.medication,
       });
 
       setProgressedPage(NEW_PATIENT_PAGES.vitals);
