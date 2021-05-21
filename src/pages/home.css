@@ -755,22 +755,7 @@ textarea:focus {
   height: 100%;
 }
 
-/* Loader 
-.loader {
-  color: #2f4068;
-  font-size: 1rem;
-  margin: 40vh auto;
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 50%;
-  position: relative;
-  text-indent: -9999em;
-  -webkit-animation: load4 1.3s infinite linear;
-  animation: load4 1.3s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-}*/
+/* Loader*/
 .loader {
   margin: 40vh auto;
   font-size: 25px;
