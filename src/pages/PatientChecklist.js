@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../App.css";
 import * as patientService from "../services/patient";
 import "./home.css";
@@ -24,28 +24,27 @@ const PatientChecklist = ({
     getSymptoms();
   }, []);
 
-  const handleOnSynptomClick = (item) => {
-    if (isSymptomChecked) {
-      setSymptomsError(false);
-    }
-    if (item === "none") {
-      setState({
-        feverOrChills: false,
-        cough: false,
-        difficultyBreathing: false,
-        fatigueMuscleOrBodyAches: false,
-        headache: false,
-        newlossOfTasteOrSmell: false,
-        soreThroat: false,
-        congestionOrRunnyNose: false,
-        nauseaOrVomiting: false,
-        diarrhea: false,
-        none: true,
-      });
-    } else {
-      setState({ ...state, [item]: isSymptomChecked, none: false });
-    }
-  };
+  const handleOnSynptomClick = useCallback((item) => () => {
+    const newState = item === "none" && !state["none"]
+      ? {
+          feverOrChills: false,
+          cough: false,
+          difficultyBreathing: false,
+          fatigueMuscleOrBodyAches: false,
+          headache: false,
+          newlossOfTasteOrSmell: false,
+          soreThroat: false,
+          congestionOrRunnyNose: false,
+          nauseaOrVomiting: false,
+          diarrhea: false,
+          none: true,
+        }
+      : { ...state, none: false, [item]: !state[item] };
+    const isSymptomChecked = Object.values(newState).some((s) => s);
+    setState(newState);
+    setIsSymptomChecked(isSymptomChecked);
+    setSymptomsError(!isSymptomChecked);
+  }, [state]);
 
   const validateForm = () => {
     const isAnyTrue = Object.keys(state)
@@ -91,10 +90,7 @@ const PatientChecklist = ({
             <div
               className="list-content symptoms-list"
               key={indx}
-              onClick={() => {
-                setIsSymptomChecked(!isSymptomChecked);
-                handleOnSynptomClick(symptom.field);
-              }}
+              onClick={handleOnSynptomClick(symptom.field)}
             >
               <input
                 className="symptoms-checkbox"
