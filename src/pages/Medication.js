@@ -42,7 +42,6 @@ const Medication = ({
         medicationImages: medicationFile,
         patientId: patientDetails.patientId,
       }),
-      // patientService.UpdateMessageStatus(hash),
       patientService.createFormProgress({
         hashKey: hash,
         patientId: patientDetails.patientId,
