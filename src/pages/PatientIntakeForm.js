@@ -27,7 +27,7 @@ const PatientIntakeForm = () => {
   const getPatientIntake = async (patientId) => {
     try {
       const response = await patientService.getPatientIntake(patientId);
-      setIntakeForm(response.patientIntakeForm.form);
+      setIntakeForm(JSON.parse(response));
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
