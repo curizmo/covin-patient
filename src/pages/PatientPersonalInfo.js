@@ -430,9 +430,7 @@ const PatientPersonalInfo = ({
                 <div>
                   {
                     <DropdownDate
-                      selectedDate={moment(intakeState?.dateOfBirth).format(
-                        "YYYY-MM-D"
-                      )}
+                      selectedDate={moment(intakeState?.dateOfBirth).format(DATE_FORMAT.yyyymmdd)}
                       ids={{
                         year: "select-year",
                         month: "select-month",
