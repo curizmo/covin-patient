@@ -9,7 +9,6 @@ const PatientChecklist = ({
   setState,
   setPage,
   page,
-  progressedPage,
   setProgressedPage,
   messageType,
   hash,
@@ -17,7 +16,6 @@ const PatientChecklist = ({
 }) => {
   const [symptoms, setSymptoms] = useState([]);
   const [symptomsError, setSymptomsError] = useState(false);
-  const [isSymptomChecked, setIsSymptomChecked] = useState(false);
   const [isSymptomLoad, setIsSymptomLoad] = useState(true);
 
   useEffect(() => {
@@ -42,7 +40,6 @@ const PatientChecklist = ({
       : { ...state, none: false, [item]: !state[item] };
     const isSymptomChecked = Object.values(newState).some((s) => s);
     setState(newState);
-    setIsSymptomChecked(isSymptomChecked);
     setSymptomsError(!isSymptomChecked);
   }, [state]);
 

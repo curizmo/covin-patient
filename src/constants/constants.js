@@ -58,7 +58,7 @@ export const EMAIL_TYPE_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 export const NUMBER_TYPE_REGEX = /^[+-]?\d*(?:[.,]\d*)?$/;
 
-export const PRE_EXISTING_CONDITION = "noPrexistingCondition";
+export const NO_PRE_EXISTING_CONDITION = "noPrexistingCondition";
 
 export const MESSAGE_TYPES = {
   newPatient: "newPatient",

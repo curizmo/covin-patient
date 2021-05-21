@@ -4,7 +4,7 @@ import "../App.css";
 import "./home.css";
 
 import {
-  PRE_EXISTING_CONDITION,
+  NO_PRE_EXISTING_CONDITION,
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
 
@@ -13,7 +13,6 @@ const PeexistingCondition = ({
   setIntakeState,
   intakeState,
   patientDetails,
-  progressedPage,
   setProgressedPage,
   hash,
   setPage,
@@ -40,41 +39,25 @@ const PeexistingCondition = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleDivSelect = (field) => {
-    setIsConditionChecked(!isConditionChecked);
-    handleOnConditionClick(field);
-  };
-
-  const handleOnConditionClick = (item) => {
-    if (isConditionChecked) {
-      setIsConditionChecked(false);
-    }
-    if (isConditionChecked) {
-      setConditionError(false);
-    }
-
-    if (item === PRE_EXISTING_CONDITION) {
-      setIntakeState({
-        ...intakeState,
-        heartDisease: false,
-        cancer: false,
-        highOrLowBloodPressure: false,
-        diabetes: false,
-        asthma: false,
-        stroke: false,
-        highCholesterol: false,
-        rash: false,
-        headacheOrMigrain: false,
-        depression: false,
-        noPrexistingCondition: true,
-      });
-    } else {
-      setIntakeState({
-        ...intakeState,
-        [item]: isConditionChecked,
-        noPrexistingCondition: false,
-      });
-    }
+  const handleDivSelect = (item) => {
+    const newIntakeState = item === NO_PRE_EXISTING_CONDITION && !intakeState[NO_PRE_EXISTING_CONDITION]
+    ? {
+        feverOrChills: false,
+        cough: false,
+        difficultyBreathing: false,
+        fatigueMuscleOrBodyAches: false,
+        headache: false,
+        newlossOfTasteOrSmell: false,
+        soreThroat: false,
+        congestionOrRunnyNose: false,
+        nauseaOrVomiting: false,
+        diarrhea: false,
+        none: true,
+      }
+    : { ...intakeState, [NO_PRE_EXISTING_CONDITION]: false, [item]: !intakeState[item] };
+    const isConditionChecked = Object.values(newIntakeState).some((s) => s);
+    setConditionError(!isConditionChecked);
+    setIntakeState(newIntakeState);
   };
 
   const validateForm = () => {
@@ -143,7 +126,7 @@ const PeexistingCondition = ({
               key={indx}
               onClick={
                 `${history.type}` === "Boolean"
-                  ? () => handleDivSelect(history.field)
+                  ? handleDivSelect(history.field)
                   : null
               }
             >
