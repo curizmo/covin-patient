@@ -126,7 +126,6 @@ const PatientFirstIntake = ({
           setProgressedPage={setProgressedPage}
         />
       )}
-      {progressedPage === NEW_PATIENT_PAGES.submission && <Submission />}
     </div>
   );
 };
