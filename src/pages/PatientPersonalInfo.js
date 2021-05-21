@@ -225,6 +225,7 @@ const PatientPersonalInfo = ({
     setIntakeState({
       ...intakeState,
       state: stateName,
+      city: "",
     });
     setCityArray(cityList);
     setCityDisable(false);
@@ -252,10 +253,10 @@ const PatientPersonalInfo = ({
 
   const handleValidateHeight = (e) => {
     let value = e.target.value;
-    if(parseInt(value) < parseInt(e.target.min)){
+    if (parseInt(value) < parseInt(e.target.min)) {
       value = e.target.min;
     }
-    if(parseInt(value) > parseInt(e.target.max)){
+    if (parseInt(value) > parseInt(e.target.max)) {
       value = e.target.max;
     }
     if (value.match(NUMBER_TYPE_REGEX)) {
@@ -295,12 +296,12 @@ const PatientPersonalInfo = ({
   }, [feetHeight, inchHeight]);
 
   const validatePatientPersonalForm = () => {
-    
     const PaitientInfoError = {
       firstName: !intakeState.firstName,
       lastName: !intakeState.lastName,
       gender: !intakeState.gender,
-      dateOfBirth: !intakeState.dateOfBirth || isNaN(Date.parse(intakeState.dateOfBirth)),
+      dateOfBirth:
+        !intakeState.dateOfBirth || isNaN(Date.parse(intakeState.dateOfBirth)),
       height: !intakeState.height,
       weight: !intakeState.weight,
       emailId: !intakeState.emailId,
@@ -333,7 +334,7 @@ const PatientPersonalInfo = ({
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
       return;
     }
 
