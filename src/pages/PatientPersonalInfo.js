@@ -251,7 +251,13 @@ const PatientPersonalInfo = ({
   };
 
   const handleValidateHeight = (e) => {
-    const value = e.target.value;
+    let value = e.target.value;
+    if(parseInt(value) < parseInt(e.target.min)){
+      value = e.target.min;
+    }
+    if(parseInt(value) > parseInt(e.target.max)){
+      value = e.target.max;
+    }
     if (value.match(NUMBER_TYPE_REGEX)) {
       if (e.target.id === HEIGHT_MEASUREMENT.feet) {
         setFeetHeight(value);
@@ -485,7 +491,7 @@ const PatientPersonalInfo = ({
                     pattern="\d*"
                     name={info.field}
                     id={"feet"}
-                    max={"8"}
+                    max={"7"}
                     value={feetHeight}
                     onChange={handleValidateHeight}
                   />
