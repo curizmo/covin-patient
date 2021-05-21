@@ -299,7 +299,7 @@ const PatientPersonalInfo = ({
       firstName: !intakeState.firstName,
       lastName: !intakeState.lastName,
       gender: !intakeState.gender,
-      dateOfBirth: !intakeState.dateOfBirth && isNaN(Date.parse(intakeState.dateOfBirth)),
+      dateOfBirth: !intakeState.dateOfBirth && !isNaN(Date.parse(intakeState.dateOfBirth)),
       height: !intakeState.height,
       weight: !intakeState.weight,
       emailId: !intakeState.emailId,
