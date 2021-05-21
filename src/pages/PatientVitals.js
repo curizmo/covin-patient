@@ -93,11 +93,9 @@ const PatientVitals = ({
   const getPageProgress = async (hashKey) => {
     try {
       const response = await patientService.getFormProgress(hashKey);
-      if (response.formProgress) {
-        setProgressedPage(response.formProgress.latestPage + 1);
-      } else {
-        setProgressedPage(progressedPage + 1);
-      }
+      setProgressedPage(
+        (response?.formProgress?.latestPage || progressedPage) + 1
+      );
       setPageLoaded(true);
     } catch (err) {}
   };
@@ -148,10 +146,12 @@ const PatientVitals = ({
     <div className="wrapper">
       <div className="second-header">
         <div className="navigation-bar">
-          {[NEW_PATIENT_PAGES.covidHistory,
+          {[
+            NEW_PATIENT_PAGES.covidHistory,
             NEW_PATIENT_PAGES.preExistingCondition,
             NEW_PATIENT_PAGES.allergy,
-            NEW_PATIENT_PAGES.medication].includes(progressedPage) && (
+            NEW_PATIENT_PAGES.medication,
+          ].includes(progressedPage) && (
             <div className="back-button" onClick={goBack}>
               <img className="nav-img-back" src={back} alt="go back"></img>
               <span>Back</span>
