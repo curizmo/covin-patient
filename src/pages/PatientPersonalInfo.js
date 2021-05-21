@@ -225,6 +225,7 @@ const PatientPersonalInfo = ({
     setIntakeState({
       ...intakeState,
       state: stateName,
+      city: "",
     });
     setCityArray(cityList);
     setCityDisable(false);
@@ -252,10 +253,10 @@ const PatientPersonalInfo = ({
 
   const handleValidateHeight = (e) => {
     let value = e.target.value;
-    if(parseInt(value) < parseInt(e.target.min)){
+    if (parseInt(value) < parseInt(e.target.min)) {
       value = e.target.min;
     }
-    if(parseInt(value) > parseInt(e.target.max)){
+    if (parseInt(value) > parseInt(e.target.max)) {
       value = e.target.max;
     }
     if (value.match(NUMBER_TYPE_REGEX)) {
@@ -299,7 +300,8 @@ const PatientPersonalInfo = ({
       firstName: !intakeState.firstName,
       lastName: !intakeState.lastName,
       gender: !intakeState.gender,
-      dateOfBirth: !intakeState.dateOfBirth && isNaN(Date.parse(intakeState.dateOfBirth)),
+      dateOfBirth:
+        !intakeState.dateOfBirth || isNaN(Date.parse(intakeState.dateOfBirth)),
       height: !intakeState.height,
       weight: !intakeState.weight,
       emailId: !intakeState.emailId,
@@ -332,6 +334,7 @@ const PatientPersonalInfo = ({
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
+      window.scrollTo(0, 0);
       return;
     }
 
@@ -373,7 +376,7 @@ const PatientPersonalInfo = ({
 
   const formatDate = (date) => {
     const newDate = dateFormatter(date);
-    
+
     setIntakeState({
       ...intakeState,
       dateOfBirth: newDate,
@@ -437,7 +440,9 @@ const PatientPersonalInfo = ({
                 <div>
                   {
                     <DropdownDate
-                      selectedDate={moment(intakeState?.dateOfBirth).format(DATE_FORMAT.yyyymmdd)}
+                      selectedDate={moment(intakeState?.dateOfBirth).format(
+                        DATE_FORMAT.yyyymmdd
+                      )}
                       ids={{
                         year: "select-year",
                         month: "select-month",
@@ -515,9 +520,7 @@ const PatientPersonalInfo = ({
                     type={
                       info.field === PERSONAL_INFO.weight ? "number" : "text"
                     }
-                    pattern={
-                      info.field === PERSONAL_INFO.weight ? '\\d*' : ""
-                    }
+                    pattern={info.field === PERSONAL_INFO.weight ? "\\d*" : ""}
                     className="bp"
                     id={indx}
                     name={info.field}
