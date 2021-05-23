@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
-import csc from "country-state-city";
+import csc from "../third-party/country-state-city";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
@@ -319,13 +319,10 @@ const PatientPersonalInfo = ({
     switch (field) {
       case PERSONAL_INFO.firstName:
         return intakeState.firstName;
-        break;
       case PERSONAL_INFO.lastName:
         return intakeState.lastName;
-        break;
       case PERSONAL_INFO.weight:
         return intakeState.weight;
-        break;
       default:
         return null;
     }
