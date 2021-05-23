@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cameraIcon from "../assets/images/camera-icon.svg";
 import pictureIcon from "../assets/images/picture_icon.svg";
 import closeIcon from "../assets/images/icon_close_blue.svg";
@@ -25,6 +25,10 @@ const Medication = ({
   const [currentFileView, setCurrentFileView] = useState();
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleInputChange = (e) => {
     const item = e.target.name;

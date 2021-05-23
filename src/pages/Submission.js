@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import success_image from "../assets/images/check-circle.svg";
 
 const Submission = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className="form-content-wrapper success-page">

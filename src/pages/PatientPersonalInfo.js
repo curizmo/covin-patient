@@ -147,6 +147,10 @@ const PatientPersonalInfo = ({
   const classes = useStyles();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const heightInFeet =
       (intakeState.height &&
         intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||

@@ -16,6 +16,10 @@ const SocialHistory = ({
   setPage,
   page,
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });

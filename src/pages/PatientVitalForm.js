@@ -57,6 +57,7 @@ const PatientVitalForm = ({
 
   useEffect(() => {
     getSymptoms(patientDetails.patientId);
+    window.scrollTo(0, 0);
   }, []);
 
   const getSymptoms = async (patientId) => {

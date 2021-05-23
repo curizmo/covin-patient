@@ -60,6 +60,10 @@ const PeexistingCondition = ({
     setConditionError(!isConditionChecked);
     setIntakeState(newIntakeState);
   }, [intakeState]);
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const validateForm = () => {
     const isAnyTrue = Object.keys(preExistingCondition).some(
