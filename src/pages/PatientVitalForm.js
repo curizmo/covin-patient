@@ -219,8 +219,8 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="number"
-            min="95"
-            max="109.9"
+            min="90"
+            max="108"
             name="Temperature"
             onChange={onUpdateInput(setShowTempErrorMessage, setTemperature)}
           />
@@ -233,7 +233,7 @@ const PatientVitalForm = ({
           />
         </div>
         {showTempErrorMessage ? (
-          <span className="error-message">Temperature should be between 95 and 109.9</span>
+          <span className="error-message">Temperature should be between 90 and 108</span>
         ) : null}
       </div>
       <div className="input-vitals">
@@ -242,7 +242,7 @@ const PatientVitalForm = ({
           <input
             type="number"
             min="0"
-            max="120"
+            max="300"
             name="Pulserate"
             onChange={onUpdateInput(setShowPulseErrorMessage, setPulseRate)}
           />
@@ -255,7 +255,7 @@ const PatientVitalForm = ({
           />
         </div>
         {showPulseErrorMessage ? (
-          <span className="error-message">Pulse rate  should be between 0 and 120</span>
+          <span className="error-message">Pulse rate should be between 0 and 300</span>
         ) : null}
       </div>
       <div className="input-vitals">
@@ -265,7 +265,7 @@ const PatientVitalForm = ({
             <input
               className="bp"
               min="0"
-              max="180"
+              max="300"
               name="BloodPressureHigh"
               onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
             />
@@ -275,7 +275,7 @@ const PatientVitalForm = ({
               className="bp bp-lower"
               type="number"
               min="0"
-              max="130"
+              max="300"
               name="BloodPressureLow"
               onChange={onUpdateInput(setShowBpMessage, setBpLowerRange)}
             />
@@ -296,7 +296,7 @@ const PatientVitalForm = ({
         ) : null}
         {showBpMessage ? (
           <span className="error-message">
-            Higher Range should be between 0 and 130
+            Blood Pressure should be between 0 and 300
           </span>
         ) : null}
       </div>
@@ -306,7 +306,7 @@ const PatientVitalForm = ({
           <input
             type="number"
             min="0"
-            max="24"
+            max="50"
             name="respiratoryRate"
             onChange={onUpdateInput(setShowRespirationMessage, setRespiratoryRate)}
           />
@@ -320,7 +320,7 @@ const PatientVitalForm = ({
         </div>
         {showRespirationMessage ? (
           <span className="error-message">
-            Respiratory Rate should be between 0 and 24
+            Respiratory Rate should be between 0 and 50
           </span>
         ) : null}
       </div>
