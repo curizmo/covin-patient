@@ -196,7 +196,8 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             className="oxygen-input"
-            type="number"
+            type="text"
+            inputmode="decimal"
             min="0"
             max="100"
             name="OxygenLevel"
@@ -219,7 +220,8 @@ const PatientVitalForm = ({
         <label>Temperature</label>
         <div className="input-wrap">
           <input
-            type="number"
+            type="text"
+            inputmode="decimal"
             min="90"
             max="108"
             name="Temperature"
@@ -241,7 +243,8 @@ const PatientVitalForm = ({
         <label>Pulse rate</label>
         <div className="input-wrap">
           <input
-            type="number"
+            type="text"
+            inputmode="decimal"
             min="0"
             max="300"
             name="Pulserate"
@@ -265,6 +268,8 @@ const PatientVitalForm = ({
           <div className="blood-pressure">
             <input
               className="bp"
+              type="text"
+              inputmode="decimal"
               min="0"
               max="300"
               name="BloodPressureHigh"
@@ -274,7 +279,8 @@ const PatientVitalForm = ({
             <div className="icon-higher">Higher</div>
             <input
               className="bp bp-lower"
-              type="number"
+              type="text"
+              inputmode="decimal"
               min="0"
               max="300"
               name="BloodPressureLow"
@@ -305,7 +311,8 @@ const PatientVitalForm = ({
         <label>Respiratory Rate</label>
         <div className="input-wrap">
           <input
-            type="number"
+            type="text"
+            inputmode="decimal"
             min="0"
             max="50"
             name="respiratoryRate"

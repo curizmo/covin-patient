@@ -518,8 +518,9 @@ const PatientPersonalInfo = ({
               ) : (
                 <div className="weight-wrapper">
                   <input
-                    type={
-                      info.field === PERSONAL_INFO.weight ? "number" : "text"
+                    type="text"
+                    inputmode={
+                      info.field === PERSONAL_INFO.weight ? "decimal" : ""
                     }
                     pattern={info.field === PERSONAL_INFO.weight ? "\\d*" : ""}
                     className="bp"
