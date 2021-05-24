@@ -46,6 +46,7 @@ const PatientVitalForm = ({
   const [show, setShow] = useState(false);
   const [helpVideoUrl, setHelpVideoUrl] = useState('');
   const [showBpInvaid, setShowBpInvalid] = useState(false);
+  const [showBpBothRangesMessage, setShowBpBothRangesMessage] = useState(false);
   const [showOxygenErrorMessage, setShowOxygenErrorMessage] = useState(false);
   const [showTempErrorMessage, setShowTempErrorMessage] = useState(false);
   const [showPulseErrorMessage, setShowPulseErrorMessage] = useState(false);
@@ -74,14 +75,6 @@ const PatientVitalForm = ({
     setHelpVideoUrl('');
     setShow(false);
   };
-
-  useEffect(() => {
-    if (parseInt(bpLowerRange) > parseInt(bpUpperRange) || (bpLowerRange && !bpUpperRange) || (!bpLowerRange && bpUpperRange)) {
-      setShowBpInvalid(true);
-    } else {
-      setShowBpInvalid(false);
-    }
-  }, [bpUpperRange, bpLowerRange]);
 
   let today = new Date().toLocaleDateString();
 
@@ -112,47 +105,48 @@ const PatientVitalForm = ({
       showBpMessage].some((v) => v);
     const isAtLeastOneField = checkIsAtLeastOneField();
     setVitalError(!isAtLeastOneField);
-
-    return isAtLeastOneField && !isAnError;
+    const isBpInvalid = parseInt(bpLowerRange) > parseInt(bpUpperRange);
+    const isNotBothRanges = (bpLowerRange && !bpUpperRange) || (!bpLowerRange && bpUpperRange);
+    setShowBpInvalid(isBpInvalid);
+    setShowBpBothRangesMessage(isNotBothRanges);
+    return isAtLeastOneField && !isAnError && !isBpInvalid && !isNotBothRanges;
   }, [checkIsAtLeastOneField,
       showBpInvaid,
       showOxygenErrorMessage,
       showTempErrorMessage,
       showPulseErrorMessage,
       showRespirationMessage,
-      showBpMessage]);
+      showBpMessage,
+      bpUpperRange,
+      bpLowerRange]);
 
   const onSubmit = async () => {
     const isValid = validateForm();
     if (!isValid) {
       return;
     }
+    const patientVitals = {
+      patientId: patientDetails.patientId,
+      temperature: temperature ?? '0',
+      respiratoryRate: respiratoryRate ?? '0',
+      bpLowerRange: bpLowerRange ?? '0',
+      bpUpperRange: bpUpperRange ?? '0',
+      vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmdd),
+      oxygenLevel: oxygenLevel ?? '0',
+      pulseRate: pulseRate ?? '0',
+    };
 
     if (
       messageType === MESSAGE_TYPES.newPatient ||
       messageType === MESSAGE_TYPES.dailyScreening
     ) {
       await patientService.createPatientVitals({
-        patientId: patientDetails.patientId,
-        temperature,
-        respiratoryRate,
-        bpLowerRange,
-        bpUpperRange,
-        vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmdd),
-        oxygenLevel,
-        pulseRate,
+        ...patientVitals,
         symptoms: state,
       });
     } else if (messageType === MESSAGE_TYPES.vitalsUpdate) {
       await patientService.createPatientVitals({
-        patientId: patientDetails.patientId,
-        temperature,
-        respiratoryRate,
-        bpLowerRange,
-        bpUpperRange,
-        vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmdd),
-        oxygenLevel,
-        pulseRate,
+        ...patientVitals,
         symptoms: symptoms,
       });
     }
@@ -172,6 +166,8 @@ const PatientVitalForm = ({
   };
 
   const onUpdateInput = (setShowErrorMessage, setValue) => (e) => {
+    setShowBpInvalid(false);
+    setShowBpBothRangesMessage(false);
     const value = e.target.value;
     const min = e.target.min;
     const max = e.target.max;
@@ -296,11 +292,6 @@ const PatientVitalForm = ({
             onClick={showHelpVideoModal(HELP_VIDEO_URLS.BP_RANGE)}
           />
         </div>
-        {showBpInvaid ? (
-          <span className="error-message">
-            Both Ranges should be set, Higher Range must be greater that Lower Range
-          </span>
-        ) : null}
         {showBpMessage ? (
           <span className="error-message">
             Blood Pressure should be between 0 and 300
@@ -332,8 +323,16 @@ const PatientVitalForm = ({
           </span>
         ) : null}
       </div>
+        {showBpInvaid ? (
+          <p className="error-message">Blood Pressure Higher Range must be greater that Lower Range</p>
+        ) : null}
+        {showBpBothRangesMessage ? (
+          <p className="error-message">
+            Both Blood Pressure Ranges should be set
+          </p>
+        ) : null}
         {vitalError ? (
-          <span className="error-message">At least one field is required</span>
+          <p className="error-message">At least one field is required</p>
         ) : null}
       <button className="submit-button submit-btn" onClick={onSubmit}>
         SUBMIT
