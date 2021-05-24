@@ -127,13 +127,13 @@ const PatientVitalForm = ({
     }
     const patientVitals = {
       patientId: patientDetails.patientId,
-      temperature: temperature ?? '0',
-      respiratoryRate: respiratoryRate ?? '0',
-      bpLowerRange: bpLowerRange ?? '0',
-      bpUpperRange: bpUpperRange ?? '0',
+      temperature: temperature,
+      respiratoryRate: respiratoryRate,
+      bpLowerRange: bpLowerRange,
+      bpUpperRange: bpUpperRange,
       vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmdd),
-      oxygenLevel: oxygenLevel ?? '0',
-      pulseRate: pulseRate ?? '0',
+      oxygenLevel: oxygenLevel,
+      pulseRate: pulseRate,
     };
 
     if (
