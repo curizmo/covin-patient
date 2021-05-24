@@ -324,7 +324,7 @@ const PatientVitalForm = ({
         ) : null}
       </div>
         {showBpInvaid ? (
-          <p className="error-message">Blood Pressure Higher Range must be greater that Lower Range</p>
+          <p className="error-message">Blood Pressure Higher Range must be greater than Lower Range</p>
         ) : null}
         {showBpBothRangesMessage ? (
           <p className="error-message">

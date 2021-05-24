@@ -308,11 +308,10 @@ const PatientPersonalInfo = ({
         !intakeState.dateOfBirth || isNaN(Date.parse(intakeState.dateOfBirth)),
       height: !intakeState.height,
       weight: !intakeState.weight,
-      emailId: !intakeState.emailId,
+      // emailId: !intakeState.emailId,
     };
-    const isAnyTrue = Object.keys(PaitientInfoError)
-      .map((key) => PaitientInfoError[key])
-      .some((v) => v === true);
+    const isAnyTrue = Object.values(PaitientInfoError)
+      .some((v) => v);
 
     setPersonalInfoError(PaitientInfoError);
 
@@ -339,9 +338,9 @@ const PatientPersonalInfo = ({
       return;
     }
 
-    if (!intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
-      return;
-    }
+    // if (!intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
+    //   return;
+    // }
 
     const currentYear = parseInt(moment().year());
     const minimumYear = currentYear - MINIMUM_YEAR;
