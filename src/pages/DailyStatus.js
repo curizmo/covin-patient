@@ -18,14 +18,14 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
   );
 
   const onNext = useCallback(async () => {
-    if (!state["statusToday"]) {
+    const statusError = !getIsStatusChecked(state) || !state["statusToday"];
+    setStatusError(statusError);
+
+    if (statusError) {
       setStatusError(true);
       return;
-    } else setStatusError(false);
-
-    const isStatusChecked = getIsStatusChecked(state);
-    setStatusError(!isStatusChecked);
-    if (isStatusChecked) {
+    } else {
+      setStatusError(false);
       setPage(page + 1);
     }
   }, [state, page]);
