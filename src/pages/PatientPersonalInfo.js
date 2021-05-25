@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
-import csc from "country-state-city";
+import csc from "../third-party/country-state-city";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
@@ -147,6 +147,10 @@ const PatientPersonalInfo = ({
   const classes = useStyles();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const heightInFeet =
       (intakeState.height &&
         intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
@@ -225,6 +229,7 @@ const PatientPersonalInfo = ({
     setIntakeState({
       ...intakeState,
       state: stateName,
+      city: "",
     });
     setCityArray(cityList);
     setCityDisable(false);
@@ -251,7 +256,13 @@ const PatientPersonalInfo = ({
   };
 
   const handleValidateHeight = (e) => {
-    const value = e.target.value;
+    let value = e.target.value;
+    if (parseInt(value) < parseInt(e.target.min)) {
+      value = e.target.min;
+    }
+    if (parseInt(value) > parseInt(e.target.max)) {
+      value = e.target.max;
+    }
     if (value.match(NUMBER_TYPE_REGEX)) {
       if (e.target.id === HEIGHT_MEASUREMENT.feet) {
         setFeetHeight(value);
@@ -293,14 +304,14 @@ const PatientPersonalInfo = ({
       firstName: !intakeState.firstName,
       lastName: !intakeState.lastName,
       gender: !intakeState.gender,
-      dateOfBirth: !intakeState.dateOfBirth,
+      dateOfBirth:
+        !intakeState.dateOfBirth || isNaN(Date.parse(intakeState.dateOfBirth)),
       height: !intakeState.height,
       weight: !intakeState.weight,
-      emailId: !intakeState.emailId,
+      // emailId: !intakeState.emailId,
     };
-    const isAnyTrue = Object.keys(PaitientInfoError)
-      .map((key) => PaitientInfoError[key])
-      .some((v) => v === true);
+    const isAnyTrue = Object.values(PaitientInfoError)
+      .some((v) => v);
 
     setPersonalInfoError(PaitientInfoError);
 
@@ -311,13 +322,10 @@ const PatientPersonalInfo = ({
     switch (field) {
       case PERSONAL_INFO.firstName:
         return intakeState.firstName;
-        break;
       case PERSONAL_INFO.lastName:
         return intakeState.lastName;
-        break;
       case PERSONAL_INFO.weight:
         return intakeState.weight;
-        break;
       default:
         return null;
     }
@@ -326,12 +334,13 @@ const PatientPersonalInfo = ({
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
     if (!isValid) {
+      window.scrollTo(0, 0);
       return;
     }
 
-    if (!intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
-      return;
-    }
+    // if (!intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
+    //   return;
+    // }
 
     const currentYear = parseInt(moment().year());
     const minimumYear = currentYear - MINIMUM_YEAR;
@@ -367,6 +376,7 @@ const PatientPersonalInfo = ({
 
   const formatDate = (date) => {
     const newDate = dateFormatter(date);
+
     setIntakeState({
       ...intakeState,
       dateOfBirth: newDate,
@@ -430,7 +440,9 @@ const PatientPersonalInfo = ({
                 <div>
                   {
                     <DropdownDate
-                      selectedDate={moment(intakeState?.dateOfBirth).format(DATE_FORMAT.yyyymmdd)}
+                      selectedDate={moment(intakeState?.dateOfBirth).format(
+                        DATE_FORMAT.yyyymmdd
+                      )}
                       ids={{
                         year: "select-year",
                         month: "select-month",
@@ -481,8 +493,10 @@ const PatientPersonalInfo = ({
                   <input
                     className="bp"
                     type="number"
+                    pattern="\d*"
                     name={info.field}
                     id={"feet"}
+                    max={"7"}
                     value={feetHeight}
                     onChange={handleValidateHeight}
                   />
@@ -492,8 +506,10 @@ const PatientPersonalInfo = ({
                   <input
                     className="bp"
                     type="number"
+                    pattern="\d*"
                     name={info.field}
                     id={"inch"}
+                    max={"11"}
                     value={inchHeight}
                     onChange={handleValidateHeight}
                   />
@@ -501,9 +517,11 @@ const PatientPersonalInfo = ({
               ) : (
                 <div className="weight-wrapper">
                   <input
-                    type={
-                      info.field === PERSONAL_INFO.weight ? "number" : "text"
+                    type="text"
+                    inputmode={
+                      info.field === PERSONAL_INFO.weight ? "decimal" : ""
                     }
+                    pattern={info.field === PERSONAL_INFO.weight ? "\\d*" : ""}
                     className="bp"
                     id={indx}
                     name={info.field}
@@ -595,6 +613,7 @@ const PatientPersonalInfo = ({
           </label>
           <input
             type="number"
+            pattern="\d*"
             name="pinCode"
             className="pin-input"
             value={intakeState.pinCode}

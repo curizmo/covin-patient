@@ -27,6 +27,10 @@ const CovidHistory = ({
   const [isDiagnosed, setDiagnosed] = useState(false);
   const [state, setChecked] = useState();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleInputChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });

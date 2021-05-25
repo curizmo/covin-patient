@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import moment from "moment";
+
 import help_icon from "../assets/images/help-circle.svg";
 import "../App.css";
 import Modal from "./HelpVideoModal";
@@ -6,8 +8,17 @@ import {
   NUMBER_TYPE_REGEX,
   MESSAGE_TYPES,
   NEW_PATIENT_PAGES,
+  DATE_FORMAT,
 } from "../constants/constants";
 import * as patientService from "../services/patient";
+
+const HELP_VIDEO_URLS = {
+  TEMPERATURE: "https://www.youtube.com/embed/reHREKBXH_k",
+  RESPIRATORY_RATE: "https://www.youtube.com/embed/ccKGzZXNKYs",
+  BP_RANGE: "https://www.youtube.com/embed/GSNZVaW1Wg4",
+  OXYGEN_LEVEL: "https://www.youtube.com/embed/YyMiSUfZtyU",
+  PULSE_RATE: "https://www.youtube.com/embed/ifnYjD4IKus",
+};
 
 const PatientVitalForm = ({
   setTemperature,
@@ -33,91 +44,109 @@ const PatientVitalForm = ({
   setProgressedPage,
 }) => {
   const [show, setShow] = useState(false);
+  const [helpVideoUrl, setHelpVideoUrl] = useState('');
   const [showBpInvaid, setShowBpInvalid] = useState(false);
+  const [showBpBothRangesMessage, setShowBpBothRangesMessage] = useState(false);
   const [showOxygenErrorMessage, setShowOxygenErrorMessage] = useState(false);
   const [showTempErrorMessage, setShowTempErrorMessage] = useState(false);
   const [showPulseErrorMessage, setShowPulseErrorMessage] = useState(false);
   const [showRespirationMessage, setShowRespirationMessage] = useState(false);
   const [showBpMessage, setShowBpMessage] = useState(false);
   const [symptoms, setSymptoms] = useState({});
-  const [vitalError, setVitalError] = useState({
-    temperature: "",
-    respiratoryRate: "",
-    bpLowerRange: "",
-    bpUpperRange: "",
-    oxygenLevel: "",
-    pulseRate: "",
-  });
+  const [vitalError, setVitalError] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
 
   useEffect(() => {
     getSymptoms(patientDetails.patientId);
+    window.scrollTo(0, 0);
   }, []);
 
   const getSymptoms = async (patientId) => {
     const response = await patientService.getSymptomsByPatientId(patientId);
-    setSymptoms(JSON.parse(response.symptoms.symptoms));
+    setSymptoms(JSON.parse(response?.symptoms?.symptoms));
   };
 
-  useEffect(() => {
-    if (parseInt(bpLowerRange) > parseInt(bpUpperRange)) {
-      setShowBpInvalid(true);
-    } else {
-      setShowBpInvalid(false);
-    }
-  }, [bpUpperRange, bpLowerRange]);
+  const showHelpVideoModal = (videoUrl) => () => {
+    setHelpVideoUrl(videoUrl);
+    setShow(true);
+  };
+
+  const hideHelpVideoModal = () => {
+    setHelpVideoUrl('');
+    setShow(false);
+  };
 
   let today = new Date().toLocaleDateString();
 
-  const validateForm = () => {
-    const vitalErrors = {
-      temperature: !temperature,
-      respiratoryRate: !respiratoryRate,
-      bpLowerRange: !bpLowerRange,
-      bpUpperRange: !bpUpperRange,
-      oxygenLevel: !oxygenLevel,
-      pulseRate: !pulseRate,
-    };
+  const checkIsAtLeastOneField = useCallback(() => {
+    return [temperature,
+      oxygenLevel,
+      pulseRate,
+      bpUpperRange,
+      bpLowerRange,
+      temperature,
+      respiratoryRate]
+      .some((v) => v);
+  }, [temperature,
+    oxygenLevel,
+    pulseRate,
+    bpUpperRange,
+    bpLowerRange,
+    temperature,
+    respiratoryRate]);
 
-    const isAnyTrue = Object.keys(vitalErrors)
-      .map((key) => vitalErrors[key])
-      .some((v) => v === true);
-
-    setVitalError(vitalErrors);
-
-    return !isAnyTrue;
-  };
+  const validateForm = useCallback(() => {
+    setIsValidated(true);
+    const isAnError = [showBpInvaid,
+      showOxygenErrorMessage,
+      showTempErrorMessage,
+      showPulseErrorMessage,
+      showRespirationMessage,
+      showBpMessage].some((v) => v);
+    const isAtLeastOneField = checkIsAtLeastOneField();
+    setVitalError(!isAtLeastOneField);
+    const isBpInvalid = parseInt(bpLowerRange) > parseInt(bpUpperRange);
+    const isNotBothRanges = (bpLowerRange && !bpUpperRange) || (!bpLowerRange && bpUpperRange);
+    setShowBpInvalid(isBpInvalid);
+    setShowBpBothRangesMessage(isNotBothRanges);
+    return isAtLeastOneField && !isAnError && !isBpInvalid && !isNotBothRanges;
+  }, [checkIsAtLeastOneField,
+      showBpInvaid,
+      showOxygenErrorMessage,
+      showTempErrorMessage,
+      showPulseErrorMessage,
+      showRespirationMessage,
+      showBpMessage,
+      bpUpperRange,
+      bpLowerRange]);
 
   const onSubmit = async () => {
     const isValid = validateForm();
     if (!isValid) {
       return;
     }
+    const patientVitals = {
+      patientId: patientDetails.patientId,
+      temperature: temperature,
+      respiratoryRate: respiratoryRate,
+      bpLowerRange: bpLowerRange,
+      bpUpperRange: bpUpperRange,
+      vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmdd),
+      oxygenLevel: oxygenLevel,
+      pulseRate: pulseRate,
+    };
 
     if (
       messageType === MESSAGE_TYPES.newPatient ||
       messageType === MESSAGE_TYPES.dailyScreening
     ) {
       await patientService.createPatientVitals({
-        patientId: patientDetails.patientId,
-        temperature,
-        respiratoryRate,
-        bpLowerRange,
-        bpUpperRange,
-        vitalsMeasureOn: today,
-        oxygenLevel,
-        pulseRate,
+        ...patientVitals,
         symptoms: state,
       });
     } else if (messageType === MESSAGE_TYPES.vitalsUpdate) {
       await patientService.createPatientVitals({
-        patientId: patientDetails.patientId,
-        temperature,
-        respiratoryRate,
-        bpLowerRange,
-        bpUpperRange,
-        vitalsMeasureOn: today,
-        oxygenLevel,
-        pulseRate,
+        ...patientVitals,
         symptoms: symptoms,
       });
     }
@@ -136,6 +165,26 @@ const PatientVitalForm = ({
     setPage(page + 1);
   };
 
+  const onUpdateInput = (setShowErrorMessage, setValue) => (e) => {
+    setShowBpInvalid(false);
+    setShowBpBothRangesMessage(false);
+    const value = e.target.value;
+    const min = e.target.min;
+    const max = e.target.max;
+    if (!value || +value >= +min && +value <= +max) {
+      setValue(e.target.value);
+      setShowErrorMessage(false);
+    } else {
+      setShowErrorMessage(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isValidated) {
+      setVitalError(!checkIsAtLeastOneField());
+    }
+  }, [checkIsAtLeastOneField, isValidated]);
+
   return (
     <div className="form-content-wrapper">
       <div className="input-vitals">
@@ -144,60 +193,46 @@ const PatientVitalForm = ({
           <input
             className="oxygen-input"
             type="text"
+            inputmode="decimal"
+            min="0"
+            max="100"
             name="OxygenLevel"
-            onChange={(e) => {
-              if (e.target.value.match(NUMBER_TYPE_REGEX)) {
-                setOxygenLevel(e.target.value);
-                setShowOxygenErrorMessage(false);
-              } else {
-                setShowOxygenErrorMessage(true);
-              }
-            }}
+            onChange={onUpdateInput(setShowOxygenErrorMessage, setOxygenLevel)}
           />
           <div className="icon">%</div>
           <img
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.OXYGEN_LEVEL)}
           />
         </div>
-        {vitalError.oxygenLevel ? (
-          <span className="error-message">Oxygen Level is required</span>
-        ) : null}
         {showOxygenErrorMessage ? (
-          <span className="error-message">Oxygen Level is a number value</span>
+          <span className="error-message">Oxygen Level should be between 0 and 100</span>
         ) : null}
       </div>
-      <Modal onClose={() => setShow(false)} show={show} />
+      <Modal onClose={hideHelpVideoModal} show={show} src={helpVideoUrl} />
       <div className="input-vitals">
         <label>Temperature</label>
         <div className="input-wrap">
           <input
             type="text"
+            inputmode="decimal"
+            min="90"
+            max="108"
             name="Temperature"
-            onChange={(e) => {
-              if (e.target.value.match(NUMBER_TYPE_REGEX)) {
-                setTemperature(e.target.value);
-                setShowTempErrorMessage(false);
-              } else {
-                setShowTempErrorMessage(true);
-              }
-            }}
+            onChange={onUpdateInput(setShowTempErrorMessage, setTemperature)}
           />
           <div className="icon">°F</div>
           <img
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.TEMPERATURE)}
           />
         </div>
-        {vitalError.temperature ? (
-          <span className="error-message">Temperature is required</span>
-        ) : null}
         {showTempErrorMessage ? (
-          <span className="error-message">Temperature is a number value</span>
+          <span className="error-message">Temperature should be between 90 and 108</span>
         ) : null}
       </div>
       <div className="input-vitals">
@@ -205,29 +240,22 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
+            inputmode="decimal"
+            min="0"
+            max="300"
             name="Pulserate"
-            onChange={(e) => {
-              if (e.target.value.match(NUMBER_TYPE_REGEX)) {
-                setPulseRate(e.target.value);
-                setShowPulseErrorMessage(false);
-              } else {
-                setShowPulseErrorMessage(true);
-              }
-            }}
+            onChange={onUpdateInput(setShowPulseErrorMessage, setPulseRate)}
           />
           <div className="icon">beats/min</div>
           <img
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.PULSE_RATE)}
           />
         </div>
-        {vitalError.pulseRate ? (
-          <span className="error-message">Pulse Rate is required</span>
-        ) : null}
         {showPulseErrorMessage ? (
-          <span className="error-message">Pulse rate is a number value</span>
+          <span className="error-message">Pulse rate should be between 0 and 300</span>
         ) : null}
       </div>
       <div className="input-vitals">
@@ -237,30 +265,22 @@ const PatientVitalForm = ({
             <input
               className="bp"
               type="text"
+              inputmode="decimal"
+              min="0"
+              max="300"
               name="BloodPressureHigh"
-              onChange={(e) => {
-                if (e.target.value.match(NUMBER_TYPE_REGEX)) {
-                  setBpUpperRange(e.target.value);
-                  setShowBpMessage(false);
-                } else {
-                  setShowBpMessage(true);
-                }
-              }}
+              onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
             />
 
             <div className="icon-higher">Higher</div>
             <input
               className="bp bp-lower"
               type="text"
+              inputmode="decimal"
+              min="0"
+              max="300"
               name="BloodPressureLow"
-              onChange={(e) => {
-                if (e.target.value.match(NUMBER_TYPE_REGEX)) {
-                  setBpLowerRange(e.target.value);
-                  setShowBpMessage(false);
-                } else {
-                  setShowBpMessage(true);
-                }
-              }}
+              onChange={onUpdateInput(setShowBpMessage, setBpLowerRange)}
             />
 
             <div className="icon-lower">Lower</div>
@@ -269,20 +289,12 @@ const PatientVitalForm = ({
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.BP_RANGE)}
           />
         </div>
-        {vitalError.bpLowerRange ? (
-          <span className="error-message">Blood Pressure is required</span>
-        ) : null}
-        {showBpInvaid ? (
-          <span className="error-message">
-            Higher Range must be greater that Lower Range
-          </span>
-        ) : null}
         {showBpMessage ? (
           <span className="error-message">
-            Blood Pressure is a number value
+            Blood Pressure should be between 0 and 300
           </span>
         ) : null}
       </div>
@@ -291,33 +303,37 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
+            inputmode="decimal"
+            min="0"
+            max="50"
             name="respiratoryRate"
-            onChange={(e) => {
-              if (e.target.value.match(NUMBER_TYPE_REGEX)) {
-                setRespiratoryRate(e.target.value);
-                setShowRespirationMessage(false);
-              } else {
-                setShowRespirationMessage(true);
-              }
-            }}
+            onChange={onUpdateInput(setShowRespirationMessage, setRespiratoryRate)}
           />
           <div className="icon">breaths/min</div>
           <img
             className="help-icon"
             src={help_icon}
             alt="help icon"
-            onClick={() => setShow(true)}
+            onClick={showHelpVideoModal(HELP_VIDEO_URLS.RESPIRATORY_RATE)}
           />
         </div>
-        {vitalError.respiratoryRate ? (
-          <span className="error-message">Respiratory Rate is required</span>
-        ) : null}
         {showRespirationMessage ? (
           <span className="error-message">
-            Respiratory Rate is a number value
+            Respiratory Rate should be between 0 and 50
           </span>
         ) : null}
       </div>
+        {showBpInvaid ? (
+          <p className="error-message">Blood Pressure Higher Range must be greater than Lower Range</p>
+        ) : null}
+        {showBpBothRangesMessage ? (
+          <p className="error-message">
+            Both Blood Pressure Ranges should be set
+          </p>
+        ) : null}
+        {vitalError ? (
+          <p className="error-message">At least one field is required</p>
+        ) : null}
       <button className="submit-button submit-btn" onClick={onSubmit}>
         SUBMIT
       </button>
