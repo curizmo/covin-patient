@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
 import PatientFirstIntake from "./PatientFirstIntake";
+import DailyStatus from "./DailyStatus";
 import Submission from "./Submission";
 import "./home.css";
 import back from "../assets/images/back.svg";
@@ -48,6 +49,7 @@ const PatientVitals = ({
     nauseaOrVomiting: false,
     diarrhea: false,
     none: false,
+    statusToday: "",
   });
   const [intakeState, setIntakeState] = useState({
     firstName: patientDetails.givenName,
@@ -128,11 +130,18 @@ const PatientVitals = ({
           FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.covidHistory
         ? "page2-sub-wrapper"
         : "page3-sub-wrapper"
-      : FOLLOWING_STATUS.pageNum === 1
+      : messageType === MESSAGE_TYPES.dailyScreening
+      ? FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.dailyStatus ||
+        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms
+        ? "page1-sub-wrapper"
+        : FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital
+        ? "page2-sub-wrapper"
+        : "page3-sub-wrapper"
+      : FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.vital
       ? "page1-sub-wrapper"
-      : FOLLOWING_STATUS.pageNum === 2
-      ? "page2-sub-wrapper"
-      : "page3-sub-wrapper";
+      : FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.submission
+      ? "page3-sub-wrapper"
+      : "page2-sub-wrapper";
 
   if (!pageLoaded && messageType === MESSAGE_TYPES.newPatient) {
     return (
@@ -227,6 +236,15 @@ const PatientVitals = ({
       ) : messageType === MESSAGE_TYPES.dailyScreening ? (
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
+            {FOLLOWING_STATUS.pageNum ===
+              EXISTING_PATIENT_PAGES.dailyStatus && (
+              <DailyStatus
+                state={state}
+                setState={setState}
+                setPage={setPage}
+                page={page}
+              />
+            )}
             {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms && (
               <PatientChecklist
                 state={state}

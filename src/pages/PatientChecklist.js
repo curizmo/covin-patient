@@ -36,6 +36,7 @@ const PatientChecklist = ({
           nauseaOrVomiting: false,
           diarrhea: false,
           none: true,
+          statusToday: state.statusToday
         }
       : { ...state, none: false, [item]: !state[item] };
     const isSymptomChecked = Object.values(newState).some((s) => s);
