@@ -7,6 +7,7 @@ import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
 import { NEW_PATIENT_PAGES } from "../constants/constants";
+import { getRandomKey } from "../utils";
 
 const Medication = ({
   medication,
@@ -110,6 +111,7 @@ const Medication = ({
           fileAspects.map((file) => {
             return (
               <div
+                key={getRandomKey()}
                 className="filename-wrapper display-flex-direction-row justify-space-between"
                 onClick={() => displayImageInModal(file.fileImage)}
               >

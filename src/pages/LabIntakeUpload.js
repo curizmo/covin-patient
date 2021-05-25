@@ -6,6 +6,7 @@ import ImagesModal from "./ImagesModal";
 
 import "../App.css";
 import "./home.css";
+import { getRandomKey } from "../utils";
 
 const LabIntakeUpload = ({
   showModal,
@@ -64,6 +65,7 @@ const LabIntakeUpload = ({
           return (
             <>
               <div
+                key={getRandomKey()}
                 className="filename-wrapper display-flex-direction-row justify-space-between"
                 onClick={() => displayImageInModal(file.fileImage)}
               >

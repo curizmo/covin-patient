@@ -427,8 +427,8 @@ const PatientPersonalInfo = ({
                           className="gender-radio"
                           type="radio"
                           name={info.field}
-                          value={gender}
                           onChange={handleCheckboxChange}
+                          defaultValue={gender}
                           checked={intakeState.gender === gender}
                         />
                         <label className="gender-radio-label">{gender}</label>
@@ -483,7 +483,7 @@ const PatientPersonalInfo = ({
                   id={indx}
                   name={info.field}
                   onChange={handleEmailChange}
-                  value={intakeState.emailId}
+                  defaultValue={intakeState.emailId}
                 />
               ) : info.field === "height" ? (
                 <div className="height-wrapper">
@@ -497,10 +497,10 @@ const PatientPersonalInfo = ({
                     name={info.field}
                     id={"feet"}
                     max={"7"}
-                    value={feetHeight}
+                    defaultValue={feetHeight}
                     onChange={handleValidateHeight}
                   />
-                  <label className="height-label" for={"inch"}>
+                  <label className="height-label" htmlFor={"inch"}>
                     in
                   </label>
                   <input
@@ -510,7 +510,7 @@ const PatientPersonalInfo = ({
                     name={info.field}
                     id={"inch"}
                     max={"11"}
-                    value={inchHeight}
+                    defaultValue={inchHeight}
                     onChange={handleValidateHeight}
                   />
                 </div>
@@ -518,14 +518,14 @@ const PatientPersonalInfo = ({
                 <div className="weight-wrapper">
                   <input
                     type="text"
-                    inputmode={
+                    inputMode={
                       info.field === PERSONAL_INFO.weight ? "decimal" : ""
                     }
                     pattern={info.field === PERSONAL_INFO.weight ? "\\d*" : ""}
                     className="bp"
                     id={indx}
                     name={info.field}
-                    value={getValue(info.field)}
+                    defaultValue={getValue(info.field)}
                     onChange={
                       info.field === PERSONAL_INFO.weight
                         ? handleValidateWeight
@@ -536,7 +536,7 @@ const PatientPersonalInfo = ({
                     }
                   />
                   {info.field === PERSONAL_INFO.weight && (
-                    <label className="weight-label" for={"weight"}>
+                    <label className="weight-label" htmlFor={"weight"}>
                       Kg.
                     </label>
                   )}
@@ -548,19 +548,19 @@ const PatientPersonalInfo = ({
       </div>
       <div className="address-wrap">
         <div className="address">
-          <label className="label-header" for={"address"}>
+          <label className="label-header" htmlFor={"address"}>
             Address
           </label>
           <input
             type="text"
             name="address"
             className="address-input"
-            value={intakeState.address}
             onChange={handleInputChange}
+            defaultValue={intakeState.address}
           />
         </div>
         <div className="state">
-          <label className="label-header" for={"state"}>
+          <label className="label-header" htmlFor={"state"}>
             State
           </label>
           <div className="dropdown-selections">
@@ -572,7 +572,7 @@ const PatientPersonalInfo = ({
               value={intakeState.state}
               onChange={handleStateChange}
               inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
+              onInputChange={(_, newInputValue) => {
                 setInputValue(newInputValue);
               }}
               options={stateList.map((item) => item.value)}
@@ -584,7 +584,7 @@ const PatientPersonalInfo = ({
           </div>
         </div>
         <div className="city">
-          <label className="label-header" for={"city"}>
+          <label className="label-header" htmlFor={"city"}>
             City
           </label>
           <div className="dropdown-selections">
@@ -594,7 +594,7 @@ const PatientPersonalInfo = ({
               value={intakeState.city}
               onChange={handleCityChange}
               inputValue={inputValueCity}
-              onInputChange={(event, newInputValue) => {
+              onInputChange={(_, newInputValue) => {
                 setInputValueCity(newInputValue);
               }}
               options={cityArray?.map((item) => item.value)}
@@ -608,7 +608,7 @@ const PatientPersonalInfo = ({
           </div>
         </div>
         <div className="pinCode">
-          <label className="label-header" for={"pincode"}>
+          <label className="label-header" htmlFor={"pincode"}>
             PIN Code
           </label>
           <input
@@ -616,8 +616,8 @@ const PatientPersonalInfo = ({
             pattern="\d*"
             name="pinCode"
             className="pin-input"
-            value={intakeState.pinCode}
             onChange={handleInputChange}
+            defaultValue={intakeState.pinCode}
           />
         </div>
       </div>

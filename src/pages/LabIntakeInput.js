@@ -19,7 +19,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="crp"
                   onChange={handleInputChange}
                 />
@@ -30,7 +30,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp bp-lower"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="esr"
                   onChange={handleInputChange}
                 />
@@ -45,7 +45,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="dDimer"
                   onChange={handleInputChange}
                 />
@@ -56,7 +56,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp bp-lower"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="ferritin"
                   onChange={handleInputChange}
                 />
@@ -71,7 +71,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="ldh"
                   onChange={handleInputChange}
                 />
@@ -82,7 +82,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp bp-lower"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="wbc"
                   onChange={handleInputChange}
                 />
@@ -97,7 +97,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="neutrophil"
                   onChange={handleInputChange}
                 />
@@ -108,7 +108,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp bp-lower"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="lymphocytes"
                   onChange={handleInputChange}
                 />
@@ -123,7 +123,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="eosinophils"
                   onChange={handleInputChange}
                 />
@@ -134,7 +134,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="bp bp-lower"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="basophils"
                   onChange={handleInputChange}
                 />
@@ -149,7 +149,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <input
                   className="platelets"
                   type="number"
-                  inputmode="decimal"
+                  inputMode="decimal"
                   name="platelets"
                   onChange={handleInputChange}
                 />

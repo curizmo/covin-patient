@@ -7,6 +7,7 @@ import {
   NO_PRE_EXISTING_CONDITION,
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
+import { getRandomKey } from "../utils";
 
 const PeexistingCondition = ({
   preexistingCondition,
@@ -128,7 +129,7 @@ const PeexistingCondition = ({
                   ? "preexisting-list-content"
                   : "input-history"
               }
-              key={indx}
+              key={getRandomKey()}
               onClick={
                 `${history.type}` === "Boolean"
                   ? handleDivSelect(history.field)
