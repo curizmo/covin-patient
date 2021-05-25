@@ -5,7 +5,6 @@ import "../App.css";
 import "./home.css";
 import { LAB_INPUT_TYPE } from "../constants/constants";
 
-
 const LabResults = ({ labState, setLabState }) => {
   const [intakeType, setIntakeTpye] = useState(LAB_INPUT_TYPE.picture);
 
@@ -47,7 +46,9 @@ const LabResults = ({ labState, setLabState }) => {
 
       {intakeType === "picture" && <LabIntakeUpload />}
 
-      {intakeType === "type" && <LabIntakeInput />}
+      {intakeType === "type" && (
+        <LabIntakeInput labState={labState} setLabState={setLabState} />
+      )}
 
       <div className="other-information-wrapper">
         <div className="other-information">

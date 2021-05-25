@@ -3,7 +3,11 @@ import React from "react";
 import "../App.css";
 import "./home.css";
 
-const LabIntakeInput = () => {
+const LabIntakeInput = ({ labState, setLabState }) => {
+  const handleInputChange = (e) => {
+    const item = e.target.name;
+    setLabState({ ...labState, [item]: e.target.value });
+  };
   return (
     <>
       <div className="health-checklist">
@@ -16,10 +20,8 @@ const LabIntakeInput = () => {
                   className="bp"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="crp"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -29,10 +31,8 @@ const LabIntakeInput = () => {
                   className="bp bp-lower"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="esr"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpLowerRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -46,10 +46,8 @@ const LabIntakeInput = () => {
                   className="bp"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="dDimer"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -59,10 +57,8 @@ const LabIntakeInput = () => {
                   className="bp bp-lower"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="ferritin"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpLowerRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -76,10 +72,8 @@ const LabIntakeInput = () => {
                   className="bp"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="idh"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -89,10 +83,8 @@ const LabIntakeInput = () => {
                   className="bp bp-lower"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="wbc"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpLowerRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -106,10 +98,8 @@ const LabIntakeInput = () => {
                   className="bp"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="neutrophil"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -119,10 +109,8 @@ const LabIntakeInput = () => {
                   className="bp bp-lower"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="lymphocytes"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpLowerRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -136,10 +124,8 @@ const LabIntakeInput = () => {
                   className="bp"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="eosinophils"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -149,10 +135,8 @@ const LabIntakeInput = () => {
                   className="bp bp-lower"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="basophils"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpLowerRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
@@ -166,10 +150,8 @@ const LabIntakeInput = () => {
                   className="bp"
                   type="text"
                   inputmode="decimal"
-                  min="0"
-                  max="300"
                   name="platelets"
-                  //   onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
+                  onChange={handleInputChange}
                 />
                 {/* <div className="icon">beats/min</div> */}
               </div>
