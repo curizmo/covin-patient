@@ -35,7 +35,7 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
           onClick={handleOnStatusClick(DAILY_STATUS.better)}
         >
           <input
-            className="symptoms-checkbox"
+            className="covid-button"
             type="radio"
             name="Better"
             value="better"
@@ -50,7 +50,7 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
           onClick={handleOnStatusClick(DAILY_STATUS.same)}
         >
           <input
-            className="symptoms-checkbox"
+            className="covid-button"
             type="radio"
             name="Same"
             value="same"
@@ -65,7 +65,7 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
           onClick={handleOnStatusClick(DAILY_STATUS.worse)}
         >
           <input
-            className="symptoms-checkbox"
+            className="covid-button"
             type="radio"
             name="Worse"
             value="worse"

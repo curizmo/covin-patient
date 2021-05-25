@@ -14,7 +14,7 @@ const LabResults = ({
   page,
   hash,
 }) => {
-  const [intakeType, setIntakeTpye] = useState(LAB_INPUT_TYPE.picture);
+  const [intakeType, setIntakeTpye] = useState(LAB_INPUT_TYPE.type);
   const [showModal, setShowModal] = useState(false);
   const [fileAspects, setFileAspects] = useState([]);
   const [displayImage, setDisplayImage] = useState(false);
