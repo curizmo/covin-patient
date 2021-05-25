@@ -32,29 +32,31 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
       <div className="health-checklist no-select">
         <div
           className="list-content symptoms-list"
-          onClick={handleOnStatusClick(DAILY_STATUS.same)}
+          onClick={handleOnStatusClick(DAILY_STATUS.better)}
         >
           <input
             className="symptoms-checkbox"
-            type="checkbox"
-            name="Same"
-            checked={state["statusToday"] === DAILY_STATUS.same}
+            type="radio"
+            name="Better"
+            value="better"
+            checked={state["statusToday"] === DAILY_STATUS.better}
           />
-          <label>Same</label>
+          <label>Its getting better</label>
         </div>
       </div>
       <div className="health-checklist no-select">
         <div
           className="list-content symptoms-list"
-          onClick={handleOnStatusClick(DAILY_STATUS.better)}
+          onClick={handleOnStatusClick(DAILY_STATUS.same)}
         >
           <input
             className="symptoms-checkbox"
-            type="checkbox"
-            name="Better"
-            checked={state["statusToday"] === DAILY_STATUS.better}
+            type="radio"
+            name="Same"
+            value="same"
+            checked={state["statusToday"] === DAILY_STATUS.same}
           />
-          <label>Better</label>
+          <label>Same as yesterday</label>
         </div>
       </div>
       <div className="health-checklist no-select">
@@ -64,11 +66,12 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
         >
           <input
             className="symptoms-checkbox"
-            type="checkbox"
+            type="radio"
             name="Worse"
+            value="worse"
             checked={state["statusToday"] === DAILY_STATUS.worse}
           />
-          <label>Worse</label>
+          <label>Its getting worse</label>
         </div>
       </div>
       {statusError ? (
