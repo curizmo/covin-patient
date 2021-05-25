@@ -51,29 +51,30 @@ const LabResults = ({
     <div className="form-content-wrapper">
       <div>Lab Results (if available)</div>
       <div className="health-checklist no-select"></div>
-      <span className="gender-radio-span">
-        <input
-          className="gender-radio"
-          type="radio"
-          name="labIntakeOption"
-          value={LAB_INPUT_TYPE.picture}
-          onChange={handleCheckboxChange}
-          checked={intakeType === LAB_INPUT_TYPE.picture}
-        />
-        <label className="gender-radio-label">Take a Picture</label>
-      </span>
-      <span className="gender-radio-span">
-        <input
-          className="gender-radio"
-          type="radio"
-          name="labIntakeOption"
-          value={LAB_INPUT_TYPE.type}
-          onChange={handleCheckboxChange}
-          checked={intakeType === LAB_INPUT_TYPE.type}
-        />
-        <label className="gender-radio-label">Type Results</label>
-      </span>
-
+      <div className="lab-intake-type">
+        <span className="gender-radio-span">
+          <input
+            className="gender-radio"
+            type="radio"
+            name="labIntakeOption"
+            value={LAB_INPUT_TYPE.picture}
+            onChange={handleCheckboxChange}
+            checked={intakeType === LAB_INPUT_TYPE.picture}
+          />
+          <label className="gender-radio-label">Take a Picture</label>
+        </span>
+        <span className="gender-radio-span">
+          <input
+            className="gender-radio"
+            type="radio"
+            name="labIntakeOption"
+            value={LAB_INPUT_TYPE.type}
+            onChange={handleCheckboxChange}
+            checked={intakeType === LAB_INPUT_TYPE.type}
+          />
+          <label className="gender-radio-label">Type Results</label>
+        </span>
+      </div>
       {intakeType === "picture" && (
         <LabIntakeUpload
           showModal={showModal}

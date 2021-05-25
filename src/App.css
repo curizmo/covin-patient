@@ -110,6 +110,21 @@ body {
   outline-style: none;
 }
 
+.lab-input .platelets {
+  height: 1.5rem;
+  width: 75%;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+
+}
+
+.single-intake {
+  display: flex;
+  flex-direction: column;
+}
+
 .lab-input label {
   font-weight: 400;
   font-size: 1rem;
@@ -188,6 +203,50 @@ body {
 .lab-vitals {
   display: flex;
   width: 100%;
+  position: relative;
+}
+
+.lab-vitals div {
+  margin: 0.6rem 0 0.6rem 0.3rem;
+}
+
+.lab-icon {
+  font-size: 1.1rem;
+  opacity: 0.3;
+  position: absolute;
+  top: 46%;
+  right:6%;
+}
+.lab-icon-left {
+  font-size: 1.1rem;
+  opacity: 0.3;
+  position: absolute;
+  top: 46%;
+  left: 37.5%;
+}
+
+.lab-icon-single {
+  font-size: 1.1rem;
+  opacity: 0.3;
+  position: absolute;
+  top: 46%;
+  left: 76%;
+}
+
+.lab-icon-ldh{
+  font-size: 1.1rem;
+  opacity: 0.3;
+  position: absolute;
+  top: 46%;
+  left: 35%;
+}
+
+.lab-icon-left-intake{
+  font-size: 1.1rem;
+  opacity: 0.3;
+  position: absolute;
+  top: 46%;
+  left: 31%;
 }
 
 .height-wrapper,

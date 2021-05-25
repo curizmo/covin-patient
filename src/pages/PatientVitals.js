@@ -58,7 +58,7 @@ const PatientVitals = ({
     esr: "",
     dDimer: "",
     ferritin: "",
-    idh: "",
+    ldh: "",
     wbc: "",
     neutrophil: "",
     lymphocytes: "",
@@ -159,13 +159,17 @@ const PatientVitals = ({
         FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms
       ) {
         return "page1-sub-wrapper";
-      } else if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital) {
+      } else if (
+        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital ||
+        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.lab
+      ) {
         return "page2-sub-wrapper";
       } else {
         return "page3-sub-wrapper";
       }
     } else {
-      if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.vital) {
+      if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.vital||
+        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.lab) {
         return "page1-sub-wrapper";
       } else if (
         FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.submission

@@ -361,6 +361,11 @@ input[type="text"]::placeholder {
   opacity: 0.3;
 }
 
+.lab-intake-type {
+  display: flex;
+  justify-content: space-around;
+}
+
 .lab-input {
   height: 100%;
 }
@@ -393,7 +398,6 @@ input[type="text"]::placeholder {
   opacity: 0.3;
 }
 
-
 .help-icon {
   padding-left: 1rem;
   margin-top: 0.5rem;
@@ -412,6 +416,12 @@ input[type="text"]::placeholder {
 .lab-input-wrap {
   margin-top: 0.5rem;
   align-items: center;
+}
+
+.lab-input-wrap-single {
+  margin-top: 0.5rem;
+  align-items: center;
+  width: 50%;
 }
 
 .bp-lower {

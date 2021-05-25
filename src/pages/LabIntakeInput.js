@@ -18,23 +18,23 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <label>CRP</label>
                 <input
                   className="bp"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="crp"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon-left-intake">mg/L</div>
               </div>
               <div>
                 <label>ESR</label>
                 <input
                   className="bp bp-lower"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="esr"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon">mm/h</div>
               </div>
             </div>
           </div>
@@ -44,75 +44,75 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <label>D-dimer</label>
                 <input
                   className="bp"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="dDimer"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon-left-intake">ng/ml</div>
               </div>
               <div>
                 <label>Ferritin</label>
                 <input
                   className="bp bp-lower"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="ferritin"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon"> ng/ml</div>
               </div>
             </div>
           </div>
           <div className="lab-input-wrap">
             <div className="lab-vitals">
               <div>
-                <label>IDH</label>
+                <label>LDH</label>
                 <input
                   className="bp"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
-                  name="idh"
+                  name="ldh"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon-ldh">U/L</div>
               </div>
               <div>
                 <label>WBC</label>
                 <input
                   className="bp bp-lower"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="wbc"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon">/mm3</div>
               </div>
             </div>
           </div>
           <div className="lab-input-wrap">
             <div className="lab-vitals">
               <div>
-                <label>% Neutrophil</label>
+                <label>Neutrophil</label>
                 <input
                   className="bp"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="neutrophil"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon-left">%</div>
               </div>
               <div>
-                <label>% Lymphocytes</label>
+                <label>Lymphocytes</label>
                 <input
                   className="bp bp-lower"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="lymphocytes"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon">%</div>
               </div>
             </div>
           </div>
@@ -122,38 +122,38 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                 <label>Eosinophils</label>
                 <input
                   className="bp"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="eosinophils"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon-left">%</div>
               </div>
               <div>
                 <label>Basophils</label>
                 <input
                   className="bp bp-lower"
-                  type="text"
+                  type="number"
                   inputmode="decimal"
                   name="basophils"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon">%</div>
               </div>
             </div>
           </div>
-          <div className="lab-input-wrap">
+          <div className="lab-input-wrap-single">
             <div className="lab-vitals">
-              <div>
+              <div className="single-intake">
                 <label>Platelets</label>
                 <input
-                  className="bp"
-                  type="text"
+                  className="platelets"
+                  type="number"
                   inputmode="decimal"
                   name="platelets"
                   onChange={handleInputChange}
                 />
-                {/* <div className="icon">beats/min</div> */}
+                <div className="lab-icon-single">%</div>
               </div>
             </div>
           </div>
