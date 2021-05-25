@@ -39,9 +39,10 @@ export const NEW_PATIENT_PAGES = {
 };
 
 export const EXISTING_PATIENT_PAGES = {
-  symptoms: 1,
-  vital: 2,
-  submission: 3,
+  dailyStatus: 1,
+  symptoms: 2,
+  vital: 3,
+  submission: 4,
 };
 
 export const EXISTING_PATIENT_VITAL_PAGES = {
@@ -52,6 +53,12 @@ export const EXISTING_PATIENT_VITAL_PAGES = {
 export const HEIGHT_MEASUREMENT = {
   feet: "feet",
   inch: "inch",
+};
+
+export const DAILY_STATUS = {
+  same: "same",
+  better: "better",
+  worse: "worse",
 };
 
 export const EMAIL_TYPE_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
