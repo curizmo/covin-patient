@@ -46,8 +46,9 @@ export const EXISTING_PATIENT_PAGES = {
 };
 
 export const EXISTING_PATIENT_VITAL_PAGES = {
-  vital: 1,
-  submission: 2,
+  lab: 1,
+  vital: 2,
+  submission: 3,
 };
 
 export const HEIGHT_MEASUREMENT = {

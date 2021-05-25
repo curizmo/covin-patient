@@ -3,6 +3,7 @@ import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
 import PatientFirstIntake from "./PatientFirstIntake";
 import DailyStatus from "./DailyStatus";
+import LabResults from "./LabResults";
 import Submission from "./Submission";
 import "./home.css";
 import back from "../assets/images/back.svg";
@@ -51,6 +52,22 @@ const PatientVitals = ({
     none: false,
     statusToday: "",
   });
+
+  const [labState, setLabState] = useState({
+    crp: "",
+    esr: "",
+    dDimer: "",
+    ferritin: "",
+    idh: "",
+    wbc: "",
+    neutrophil: "",
+    lymphocytes: "",
+    eosinophils: "",
+    basophils: "",
+    platelets: "",
+    otherLabResultsInfo: "",
+  });
+
   const [intakeState, setIntakeState] = useState({
     firstName: patientDetails.givenName,
     lastName: patientDetails.familyName,
@@ -91,6 +108,8 @@ const PatientVitals = ({
       getPageProgress(hashKey);
     }
   }, []);
+
+  console.log(labState)
 
   const getPageProgress = async (hashKey) => {
     try {
@@ -289,6 +308,12 @@ const PatientVitals = ({
       ) : messageType === MESSAGE_TYPES.vitalsUpdate ? (
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.lab && (
+              <LabResults 
+              labState={labState}
+              setLabState={setLabState}
+              />
+            )}
             {FOLLOWING_STATUS.pageNum ===
               EXISTING_PATIENT_VITAL_PAGES.vital && (
               <PatientVitalForm
