@@ -4,9 +4,16 @@ import LabIntakeInput from "./LabIntakeInput";
 import "../App.css";
 import "./home.css";
 import { LAB_INPUT_TYPE } from "../constants/constants";
+import * as patientService from "../services/patient";
 
-const LabResults = ({ labState, setLabState }) => {
+const LabResults = ({ labState, setLabState, patientDetails }) => {
   const [intakeType, setIntakeTpye] = useState(LAB_INPUT_TYPE.picture);
+  const [showModal, setShowModal] = useState(false);
+  const [fileAspects, setFileAspects] = useState([]);
+  const [displayImage, setDisplayImage] = useState(false);
+  const [currentFileView, setCurrentFileView] = useState();
+  const [medicationFile, setMedicationFile] = useState([]);
+  const [imageCount, setImageCount] = useState(0);
 
   const handleCheckboxChange = (e) => {
     setIntakeTpye(e.target.value);
@@ -15,6 +22,19 @@ const LabResults = ({ labState, setLabState }) => {
   const handleInputChange = (e) => {
     const item = e.target.name;
     setLabState({ ...labState, [item]: e.target.value });
+  };
+
+  const onSubmit = async () => {
+    await Promise.all([
+      patientService.uploadLabImages({
+        intakeForm:
+          intakeType === LAB_INPUT_TYPE.picture
+            ? { otherLabResultsInfo: labState.otherLabResultsInfo }
+            : labState,
+        labImages: medicationFile,
+        patientId: patientDetails.patientId,
+      }),
+    ]);
   };
 
   return (
@@ -44,7 +64,22 @@ const LabResults = ({ labState, setLabState }) => {
         <label className="gender-radio-label">Type Results</label>
       </span>
 
-      {intakeType === "picture" && <LabIntakeUpload />}
+      {intakeType === "picture" && (
+        <LabIntakeUpload
+          showModal={showModal}
+          setShowModal={setShowModal}
+          fileAspects={fileAspects}
+          setFileAspects={setFileAspects}
+          displayImage={displayImage}
+          setDisplayImage={setDisplayImage}
+          currentFileView={currentFileView}
+          setCurrentFileView={setCurrentFileView}
+          medicationFile={medicationFile}
+          setMedicationFile={setMedicationFile}
+          imageCount={imageCount}
+          setImageCount={setImageCount}
+        />
+      )}
 
       {intakeType === "type" && (
         <LabIntakeInput labState={labState} setLabState={setLabState} />
@@ -64,7 +99,9 @@ const LabResults = ({ labState, setLabState }) => {
         </div>
       </div>
 
-      <button className="submit-button submit-btn">SUBMIT</button>
+      <button className="submit-button submit-btn" onClick={onSubmit}>
+        SUBMIT
+      </button>
     </div>
   );
 };

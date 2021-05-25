@@ -7,14 +7,20 @@ import ImagesModal from "./ImagesModal";
 import "../App.css";
 import "./home.css";
 
-const LabIntakeUpload = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [fileAspects, setFileAspects] = useState([]);
-  const [displayImage, setDisplayImage] = useState(false);
-  const [currentFileView, setCurrentFileView] = useState();
-  const [medicationFile, setMedicationFile] = useState([]);
-  const [imageCount, setImageCount] = useState(0);
-
+const LabIntakeUpload = ({
+  showModal,
+  setShowModal,
+  fileAspects,
+  setFileAspects,
+  displayImage,
+  setDisplayImage,
+  currentFileView,
+  setCurrentFileView,
+  medicationFile,
+  setMedicationFile,
+  imageCount,
+  setImageCount,
+}) => {
   const addImages = () => {
     setShowModal(true);
     setDisplayImage(false);

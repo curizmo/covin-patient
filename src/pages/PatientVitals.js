@@ -109,8 +109,6 @@ const PatientVitals = ({
     }
   }, []);
 
-  console.log(labState)
-
   const getPageProgress = async (hashKey) => {
     try {
       const response = await patientService.getFormProgress(hashKey);
@@ -312,6 +310,7 @@ const PatientVitals = ({
               <LabResults 
               labState={labState}
               setLabState={setLabState}
+              patientDetails={patientDetails}
               />
             )}
             {FOLLOWING_STATUS.pageNum ===
