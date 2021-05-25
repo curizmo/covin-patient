@@ -3,9 +3,11 @@ import LabIntakeUpload from "./LabIntakeUpload";
 import LabIntakeInput from "./LabIntakeInput";
 import "../App.css";
 import "./home.css";
+import { LAB_INPUT_TYPE } from "../constants/constants";
+
 
 const LabResults = ({ labState, setLabState }) => {
-  const [intakeType, setIntakeTpye] = useState("");
+  const [intakeType, setIntakeTpye] = useState(LAB_INPUT_TYPE.picture);
 
   const handleCheckboxChange = (e) => {
     setIntakeTpye(e.target.value);
@@ -25,8 +27,9 @@ const LabResults = ({ labState, setLabState }) => {
           className="gender-radio"
           type="radio"
           name="labIntakeOption"
-          value="picture"
+          value={LAB_INPUT_TYPE.picture}
           onChange={handleCheckboxChange}
+          checked={intakeType === LAB_INPUT_TYPE.picture}
         />
         <label className="gender-radio-label">Take a Picture</label>
       </span>
@@ -35,8 +38,9 @@ const LabResults = ({ labState, setLabState }) => {
           className="gender-radio"
           type="radio"
           name="labIntakeOption"
-          value="type"
+          value={LAB_INPUT_TYPE.type}
           onChange={handleCheckboxChange}
+          checked={intakeType === LAB_INPUT_TYPE.type}
         />
         <label className="gender-radio-label">Type Results</label>
       </span>

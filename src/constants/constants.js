@@ -74,6 +74,11 @@ export const MESSAGE_TYPES = {
   vitalsUpdate: "vitalsUpdate",
 };
 
+export const LAB_INPUT_TYPE = {
+  picture: "picture",
+  type: "type",
+};
+
 export const MINIMUM_YEAR = 150;
 
 export const PERSONAL_INFO = {
