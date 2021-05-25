@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
 import PatientFirstIntake from "./PatientFirstIntake";
@@ -138,27 +138,44 @@ const PatientVitals = ({
     setProgressedPage(progressedPage - 1);
   };
 
-  const subWrapper =
-    messageType === MESSAGE_TYPES.newPatient
-      ? FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
+  const subWrapper = useMemo(() => {
+    if (messageType === MESSAGE_TYPES.newPatient) {
+      if (
+        FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.preExistingCondition ||
         FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.symptoms
-        ? "page1-sub-wrapper"
-        : FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vital ||
-          FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.covidHistory
-        ? "page2-sub-wrapper"
-        : "page3-sub-wrapper"
-      : messageType === MESSAGE_TYPES.dailyScreening
-      ? FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.dailyStatus ||
+      ) {
+        return "page1-sub-wrapper";
+      } else if (
+        FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.vital ||
+        FOLLOWING_STATUS.pageNum === NEW_PATIENT_PAGES.covidHistory
+      ) {
+        return "page2-sub-wrapper";
+      } else {
+        return "page3-sub-wrapper";
+      }
+    } else if (messageType === MESSAGE_TYPES.dailyScreening) {
+      if (
+        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.dailyStatus ||
         FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms
-        ? "page1-sub-wrapper"
-        : FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital
-        ? "page2-sub-wrapper"
-        : "page3-sub-wrapper"
-      : FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.vital
-      ? "page1-sub-wrapper"
-      : FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.submission
-      ? "page3-sub-wrapper"
-      : "page2-sub-wrapper";
+      ) {
+        return "page1-sub-wrapper";
+      } else if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital) {
+        return "page2-sub-wrapper";
+      } else {
+        return "page3-sub-wrapper";
+      }
+    } else {
+      if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.vital) {
+        return "page1-sub-wrapper";
+      } else if (
+        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.submission
+      ) {
+        return "page3-sub-wrapper";
+      } else {
+        return "page2-sub-wrapper";
+      }
+    }
+  }, [FOLLOWING_STATUS.pageNum]);
 
   if (!pageLoaded && messageType === MESSAGE_TYPES.newPatient) {
     return (

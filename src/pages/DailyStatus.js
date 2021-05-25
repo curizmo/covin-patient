@@ -1,59 +1,30 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import "../App.css";
 import "./home.css";
 import { DAILY_STATUS } from "../constants/constants";
 
-const DailyStatus = ({
-  state,
-  setState,
-  setPage,
-  page,
-}) => {
-  const [isSame, setIsSame] = useState(false);
-  const [isBetter, setIsBetter] = useState(false);
-  const [isWorse, setIsWorse] = useState(false);
+const DailyStatus = ({ state, setState, setPage, page }) => {
   const [statusError, setStatusError] = useState(false);
 
+  const getIsStatusChecked = (state) => Object.values(state).some((s) => s);
   const handleOnStatusClick = useCallback(
     (item) => () => {
       const newState = { ...state, statusToday: item };
-      const isStatusChecked = Object.values(newState).some((s) => s);
+      const isStatusChecked = getIsStatusChecked(newState);
       setState(newState);
       setStatusError(!isStatusChecked);
     },
     [state]
   );
 
-  useEffect(() => {
-    switch (state["statusToday"]) {
-      case DAILY_STATUS.same:
-        setIsSame(true);
-        setIsBetter(false);
-        setIsWorse(false);
-        break;
-      case DAILY_STATUS.better:
-        setIsSame(false);
-        setIsBetter(true);
-        setIsWorse(false);
-        break;
-      case DAILY_STATUS.worse:
-        setIsSame(false);
-        setIsBetter(false);
-        setIsWorse(true);
-        break;
+  const onNext = useCallback(async () => {
+    const statusError = !getIsStatusChecked(state) || !state["statusToday"];
+    setStatusError(statusError);
+
+    if (!statusError) {
+      setPage(page + 1);
     }
-  }, [state]);
-
-  console.log(state);
-
-  const onNext = async () => {
-    if (!isSame && !isBetter && !isWorse) {
-      setStatusError(true);
-      return;
-    } else setStatusError(false);
-
-    setPage(page + 1);
-  };
+  }, [state, page]);
 
   return (
     <div className="form-content-wrapper">
@@ -67,7 +38,7 @@ const DailyStatus = ({
             className="symptoms-checkbox"
             type="checkbox"
             name="Same"
-            checked={isSame}
+            checked={state["statusToday"] === DAILY_STATUS.same}
           />
           <label>Same</label>
         </div>
@@ -81,7 +52,7 @@ const DailyStatus = ({
             className="symptoms-checkbox"
             type="checkbox"
             name="Better"
-            checked={isBetter}
+            checked={state["statusToday"] === DAILY_STATUS.better}
           />
           <label>Better</label>
         </div>
@@ -95,7 +66,7 @@ const DailyStatus = ({
             className="symptoms-checkbox"
             type="checkbox"
             name="Worse"
-            checked={isWorse}
+            checked={state["statusToday"] === DAILY_STATUS.worse}
           />
           <label>Worse</label>
         </div>
