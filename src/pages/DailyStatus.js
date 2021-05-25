@@ -4,9 +4,6 @@ import "./home.css";
 import { DAILY_STATUS } from "../constants/constants";
 
 const DailyStatus = ({ state, setState, setPage, page }) => {
-  const [isSame, setIsSame] = useState(false);
-  const [isBetter, setIsBetter] = useState(false);
-  const [isWorse, setIsWorse] = useState(false);
   const [statusError, setStatusError] = useState(false);
 
   const handleOnStatusClick = useCallback(
