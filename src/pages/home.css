@@ -361,6 +361,43 @@ input[type="text"]::placeholder {
   opacity: 0.3;
 }
 
+.lab-intake-type {
+  display: flex;
+  justify-content: space-around;
+}
+
+.lab-input {
+  height: 100%;
+}
+
+.lab-input .icon-height {
+  position: absolute;
+  top: 3.7rem;
+  right: 1rem;
+  opacity: 0.3;
+}
+
+.lab-input .icon {
+  position: absolute;
+  top: 3.7rem;
+  right: 5rem;
+  opacity: 0.3;
+}
+
+.lab-input .icon-higher {
+  position: absolute;
+  top: 42%;
+  left: 25%;
+  opacity: 0.3;
+}
+
+.lab-input .icon-lower {
+  position: absolute;
+  top: 42%;
+  left: 78%;
+  opacity: 0.3;
+}
+
 .help-icon {
   padding-left: 1rem;
   margin-top: 0.5rem;
@@ -374,6 +411,17 @@ input[type="text"]::placeholder {
 
 .input-wrap .patient-intake-info {
   width: 100%;
+}
+
+.lab-input-wrap {
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.lab-input-wrap-single {
+  margin-top: 0.5rem;
+  align-items: center;
+  width: 50%;
 }
 
 .bp-lower {

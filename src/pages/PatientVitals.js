@@ -3,6 +3,7 @@ import PatientChecklist from "./PatientChecklist";
 import PatientVitalForm from "./PatientVitalForm";
 import PatientFirstIntake from "./PatientFirstIntake";
 import DailyStatus from "./DailyStatus";
+import LabResults from "./LabResults";
 import Submission from "./Submission";
 import "./home.css";
 import back from "../assets/images/back.svg";
@@ -51,6 +52,22 @@ const PatientVitals = ({
     none: false,
     statusToday: "",
   });
+
+  const [labState, setLabState] = useState({
+    crp: "",
+    esr: "",
+    dDimer: "",
+    ferritin: "",
+    ldh: "",
+    wbc: "",
+    neutrophil: "",
+    lymphocytes: "",
+    eosinophils: "",
+    basophils: "",
+    platelets: "",
+    otherLabResultsInfo: "",
+  });
+
   const [intakeState, setIntakeState] = useState({
     firstName: patientDetails.givenName,
     lastName: patientDetails.familyName,
@@ -142,7 +159,9 @@ const PatientVitals = ({
         FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms
       ) {
         return "page1-sub-wrapper";
-      } else if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital) {
+      } else if (
+        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital 
+      ) {
         return "page2-sub-wrapper";
       } else {
         return "page3-sub-wrapper";
@@ -298,6 +317,16 @@ const PatientVitals = ({
                 messageType={messageType}
               />
             )}
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.lab && (
+              <LabResults
+                labState={labState}
+                setLabState={setLabState}
+                patientDetails={patientDetails}
+                setPage={setPage}
+                page={page}
+                hash={hashKey}
+              />
+            )}
             {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.submission && (
               <Submission />
             )}
@@ -330,6 +359,16 @@ const PatientVitals = ({
                 patientDetails={patientDetails}
                 state={state}
                 messageType={messageType}
+              />
+            )}
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.lab && (
+              <LabResults
+                labState={labState}
+                setLabState={setLabState}
+                patientDetails={patientDetails}
+                setPage={setPage}
+                page={page}
+                hash={hashKey}
               />
             )}
             {FOLLOWING_STATUS.pageNum ===
