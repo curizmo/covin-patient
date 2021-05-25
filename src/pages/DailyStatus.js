@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import "../App.css";
 import "./home.css";
 import { DAILY_STATUS } from "../constants/constants";
 
-const DailyStatus = ({
-  state,
-  setState,
-  setPage,
-  page,
-}) => {
+const DailyStatus = ({ state, setState, setPage, page }) => {
   const [isSame, setIsSame] = useState(false);
   const [isBetter, setIsBetter] = useState(false);
   const [isWorse, setIsWorse] = useState(false);
@@ -24,30 +19,8 @@ const DailyStatus = ({
     [state]
   );
 
-  useEffect(() => {
-    switch (state["statusToday"]) {
-      case DAILY_STATUS.same:
-        setIsSame(true);
-        setIsBetter(false);
-        setIsWorse(false);
-        break;
-      case DAILY_STATUS.better:
-        setIsSame(false);
-        setIsBetter(true);
-        setIsWorse(false);
-        break;
-      case DAILY_STATUS.worse:
-        setIsSame(false);
-        setIsBetter(false);
-        setIsWorse(true);
-        break;
-    }
-  }, [state]);
-
-  console.log(state);
-
   const onNext = async () => {
-    if (!isSame && !isBetter && !isWorse) {
+    if (!state["statusToday"]) {
       setStatusError(true);
       return;
     } else setStatusError(false);
@@ -67,7 +40,7 @@ const DailyStatus = ({
             className="symptoms-checkbox"
             type="checkbox"
             name="Same"
-            checked={isSame}
+            checked={state["statusToday"] === DAILY_STATUS.same}
           />
           <label>Same</label>
         </div>
@@ -81,7 +54,7 @@ const DailyStatus = ({
             className="symptoms-checkbox"
             type="checkbox"
             name="Better"
-            checked={isBetter}
+            checked={state["statusToday"] === DAILY_STATUS.better}
           />
           <label>Better</label>
         </div>
@@ -95,7 +68,7 @@ const DailyStatus = ({
             className="symptoms-checkbox"
             type="checkbox"
             name="Worse"
-            checked={isWorse}
+            checked={state["statusToday"] === DAILY_STATUS.worse}
           />
           <label>Worse</label>
         </div>
