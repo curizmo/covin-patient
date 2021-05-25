@@ -21,11 +21,7 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
     const statusError = !getIsStatusChecked(state) || !state["statusToday"];
     setStatusError(statusError);
 
-    if (statusError) {
-      setStatusError(true);
-      return;
-    } else {
-      setStatusError(false);
+    if (!statusError) {
       setPage(page + 1);
     }
   }, [state, page]);
