@@ -49,7 +49,7 @@ const LabResults = ({
 
   return (
     <div className="form-content-wrapper">
-      <div>Lab Results (if available)</div>
+      <div className="lab-title">Lab Results (if available)</div>
       <div className="health-checklist no-select"></div>
       <div className="lab-intake-type">
         <span className="gender-radio-span">

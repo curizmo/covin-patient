@@ -160,16 +160,14 @@ const PatientVitals = ({
       ) {
         return "page1-sub-wrapper";
       } else if (
-        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital ||
-        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.lab
+        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital 
       ) {
         return "page2-sub-wrapper";
       } else {
         return "page3-sub-wrapper";
       }
     } else {
-      if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.vital||
-        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.lab) {
+      if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.vital) {
         return "page1-sub-wrapper";
       } else if (
         FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.submission

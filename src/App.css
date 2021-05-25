@@ -90,7 +90,7 @@ body {
 }
 
 .lab-input {
-  margin: 2rem 0;
+  margin: 1rem 0;
   padding: 0.5rem 0;
   display: flex;
   flex-direction: column;
@@ -223,6 +223,14 @@ body {
   position: absolute;
   top: 46%;
   left: 37.5%;
+}
+
+.lab-title{
+  color: #22335e;
+  margin-top: 0px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.2rem;
 }
 
 .lab-icon-single {
