@@ -315,6 +315,16 @@ const PatientVitals = ({
                 messageType={messageType}
               />
             )}
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.lab && (
+              <LabResults
+                labState={labState}
+                setLabState={setLabState}
+                patientDetails={patientDetails}
+                setPage={setPage}
+                page={page}
+                hash={hashKey}
+              />
+            )}
             {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.submission && (
               <Submission />
             )}
@@ -323,13 +333,6 @@ const PatientVitals = ({
       ) : messageType === MESSAGE_TYPES.vitalsUpdate ? (
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
-            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.lab && (
-              <LabResults 
-              labState={labState}
-              setLabState={setLabState}
-              patientDetails={patientDetails}
-              />
-            )}
             {FOLLOWING_STATUS.pageNum ===
               EXISTING_PATIENT_VITAL_PAGES.vital && (
               <PatientVitalForm
@@ -354,6 +357,16 @@ const PatientVitals = ({
                 patientDetails={patientDetails}
                 state={state}
                 messageType={messageType}
+              />
+            )}
+            {FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_VITAL_PAGES.lab && (
+              <LabResults
+                labState={labState}
+                setLabState={setLabState}
+                patientDetails={patientDetails}
+                setPage={setPage}
+                page={page}
+                hash={hashKey}
               />
             )}
             {FOLLOWING_STATUS.pageNum ===

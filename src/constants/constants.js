@@ -42,12 +42,13 @@ export const EXISTING_PATIENT_PAGES = {
   dailyStatus: 1,
   symptoms: 2,
   vital: 3,
-  submission: 4,
+  lab: 4,
+  submission: 5,
 };
 
 export const EXISTING_PATIENT_VITAL_PAGES = {
-  lab: 1,
-  vital: 2,
+  vital: 1,
+  lab: 2,
   submission: 3,
 };
 

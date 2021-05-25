@@ -6,7 +6,14 @@ import "./home.css";
 import { LAB_INPUT_TYPE } from "../constants/constants";
 import * as patientService from "../services/patient";
 
-const LabResults = ({ labState, setLabState, patientDetails }) => {
+const LabResults = ({
+  labState,
+  setLabState,
+  patientDetails,
+  setPage,
+  page,
+  hash,
+}) => {
   const [intakeType, setIntakeTpye] = useState(LAB_INPUT_TYPE.picture);
   const [showModal, setShowModal] = useState(false);
   const [fileAspects, setFileAspects] = useState([]);
@@ -34,7 +41,10 @@ const LabResults = ({ labState, setLabState, patientDetails }) => {
         labImages: medicationFile,
         patientId: patientDetails.patientId,
       }),
+      patientService.UpdateMessageStatus(hash),
     ]);
+
+    setPage(page + 1);
   };
 
   return (
