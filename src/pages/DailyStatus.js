@@ -6,24 +6,29 @@ import { DAILY_STATUS } from "../constants/constants";
 const DailyStatus = ({ state, setState, setPage, page }) => {
   const [statusError, setStatusError] = useState(false);
 
+  const getIsStatusChecked = (state) => Object.values(state).some((s) => s);
   const handleOnStatusClick = useCallback(
     (item) => () => {
       const newState = { ...state, statusToday: item };
-      const isStatusChecked = Object.values(newState).some((s) => s);
+      const isStatusChecked = getIsStatusChecked(newState);
       setState(newState);
       setStatusError(!isStatusChecked);
     },
     [state]
   );
 
-  const onNext = async () => {
+  const onNext = useCallback(async () => {
     if (!state["statusToday"]) {
       setStatusError(true);
       return;
     } else setStatusError(false);
 
-    setPage(page + 1);
-  };
+    const isStatusChecked = getIsStatusChecked(state);
+    setStatusError(!isStatusChecked);
+    if (isStatusChecked) {
+      setPage(page + 1);
+    }
+  }, [state, page]);
 
   return (
     <div className="form-content-wrapper">
