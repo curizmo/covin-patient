@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LabIntakeUpload from "./LabIntakeUpload";
 import LabIntakeInput from "./LabIntakeInput";
 import "../App.css";
@@ -21,6 +21,10 @@ const LabResults = ({
   const [currentFileView, setCurrentFileView] = useState();
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleCheckboxChange = (e) => {
     setIntakeTpye(e.target.value);
