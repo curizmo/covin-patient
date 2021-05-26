@@ -41,7 +41,7 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
             value="better"
             checked={state["statusToday"] === DAILY_STATUS.better}
           />
-          <label>Its getting better</label>
+          <label>It's getting better</label>
         </div>
       </div>
       <div className="health-checklist no-select">
@@ -71,7 +71,7 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
             value="worse"
             checked={state["statusToday"] === DAILY_STATUS.worse}
           />
-          <label>Its getting worse</label>
+          <label>It's getting worse</label>
         </div>
       </div>
       {statusError ? (
