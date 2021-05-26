@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as patientService from "../services/patient";
 import { NEW_PATIENT_PAGES, ALLERGY } from "../constants/constants";
 import "../App.css";
 import "./home.css";
-import { Switch } from "react-router";
+import { getRandomKey } from "../utils";
 
 const SocialHistory = ({
   socialHistory,
   setIntakeState,
   intakeState,
   patientDetails,
-  progressedPage,
   setProgressedPage,
   hash,
   setPage,
@@ -55,18 +54,12 @@ const SocialHistory = ({
     setPage(page + 1);
   };
 
-  const onBackButtonClick = () => {
-    setProgressedPage(NEW_PATIENT_PAGES.preExistingCondition);
-  };
-
   const setPlaceholder = (field) => {
     switch (field) {
       case ALLERGY.food:
         return "e.g. peanuts, shell-fish";
-        break;
       case ALLERGY.medication:
         return "medication you’re allergic to";
-        break;
     }
   };
 
@@ -82,7 +75,7 @@ const SocialHistory = ({
                   ? "list-content"
                   : "input-history"
               }
-              key={indx}
+              key={getRandomKey()}
             >
               {history.type === "Text" && <label>{history.title}</label>}
               {history.type === "Boolean" ? (

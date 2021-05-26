@@ -39,19 +39,28 @@ export const NEW_PATIENT_PAGES = {
 };
 
 export const EXISTING_PATIENT_PAGES = {
-  symptoms: 1,
-  vital: 2,
-  submission: 3,
+  dailyStatus: 1,
+  symptoms: 2,
+  vital: 3,
+  lab: 4,
+  submission: 5,
 };
 
 export const EXISTING_PATIENT_VITAL_PAGES = {
   vital: 1,
-  submission: 2,
+  lab: 2,
+  submission: 3,
 };
 
 export const HEIGHT_MEASUREMENT = {
   feet: "feet",
   inch: "inch",
+};
+
+export const DAILY_STATUS = {
+  same: "same",
+  better: "better",
+  worse: "worse",
 };
 
 export const EMAIL_TYPE_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -64,6 +73,11 @@ export const MESSAGE_TYPES = {
   newPatient: "newPatient",
   dailyScreening: "dailyScreening",
   vitalsUpdate: "vitalsUpdate",
+};
+
+export const LAB_INPUT_TYPE = {
+  picture: "picture",
+  type: "type",
 };
 
 export const MINIMUM_YEAR = 150;

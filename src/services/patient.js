@@ -78,3 +78,29 @@ export async function uploadMedicationImages({
 
   return response.json();
 }
+
+export async function uploadLabImages({
+  intakeForm,
+  labImages,
+  patientId,
+}) {
+  const form = new FormData();
+
+  form.append("form", JSON.stringify(intakeForm));
+
+  for (let i = 0; i < labImages.length; i++) {
+    form.append("labImages", labImages[i]);
+  }
+
+  const options = {
+    method: "POST",
+    body: form,
+  };
+
+  const response = await fetch(
+    `${config.apiURL}/patient-labs/lab/${patientId}`,
+    options
+  );
+
+  return response.json();
+}

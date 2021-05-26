@@ -3,6 +3,7 @@ import "../App.css";
 import * as patientService from "../services/patient";
 import "./home.css";
 import { NEW_PATIENT_PAGES, MESSAGE_TYPES } from "../constants/constants";
+import { getRandomKey } from "../utils";
 
 const PatientChecklist = ({
   state,
@@ -36,6 +37,7 @@ const PatientChecklist = ({
           nauseaOrVomiting: false,
           diarrhea: false,
           none: true,
+          statusToday: state.statusToday
         }
       : { ...state, none: false, [item]: !state[item] };
     const isSymptomChecked = Object.values(newState).some((s) => s);
@@ -86,7 +88,7 @@ const PatientChecklist = ({
           return (
             <div
               className="list-content symptoms-list"
-              key={indx}
+              key={getRandomKey()}
               onClick={handleOnSynptomClick(symptom.field)}
             >
               <input

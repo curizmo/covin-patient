@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
@@ -18,6 +18,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { DropdownDate, DropdownComponent } from "react-dropdown-date";
 import { dateFormatter } from "../utils/dateFormatter";
+import { getRandomKey } from "../utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -118,7 +119,6 @@ const PatientPersonalInfo = ({
   setIntakeState,
   intakeState,
   patientDetails,
-  progressedPage,
   setProgressedPage,
   hash,
   setPage,
@@ -129,12 +129,9 @@ const PatientPersonalInfo = ({
   const [inchHeight, setInchHeight] = useState("");
   const [feetHeight, setFeetHeight] = useState("");
   const [showDateError, setShowDateError] = useState(false);
-  const [birthDate, setBirthDate] = useState("1990-01-01");
-  const [state, setState] = useState();
   const [inputValue, setInputValue] = useState("");
   const [inputValueCity, setInputValueCity] = useState("");
   const [cityArray, setCityArray] = useState([]);
-  const [cityDisabled, setCityDisable] = useState(true);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -142,7 +139,6 @@ const PatientPersonalInfo = ({
     dateOfBirth: "",
     height: "",
     weight: "",
-    emailId: "",
   });
   const classes = useStyles();
 
@@ -160,11 +156,6 @@ const PatientPersonalInfo = ({
         intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
       "";
 
-    const dob =
-      (intakeState.dateOfBirth &&
-        moment(intakeState.dateOfBirth).format(DATE_FORMAT.yyyymmdd)) ||
-      "1990-01-01";
-
     if (intakeState?.state) {
       handleStateChange();
     }
@@ -173,37 +164,18 @@ const PatientPersonalInfo = ({
     setInchHeight(heightInInch);
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleAddressChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
-  const handleDateChange = (value) => {
-    const year = moment(value).year();
-    const currentYear = moment().year();
-    if (year <= currentYear) {
-      setIntakeState({
-        ...intakeState,
-        dateOfBirth: moment(value).format(),
-      });
-      setShowDateError(false);
-    } else {
-      setIntakeState({
-        ...intakeState,
-        dateOfBirth: moment(value).format(),
-      });
-      setShowDateError(true);
-    }
-  };
-
-  const handleCheckboxChange = (e) => {
+  const handleFieldChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
-  };
-
-  const handleEmailChange = (e) => {
-    const item = e.target.name;
-    setIntakeState({ ...intakeState, [item]: e.target.value });
+    setPersonalInfoError(error => ({
+      ...error,
+      [item]: !e.target.value
+    }));
   };
 
   const cityList = [];
@@ -232,7 +204,6 @@ const PatientPersonalInfo = ({
       city: "",
     });
     setCityArray(cityList);
-    setCityDisable(false);
   };
   //city name not taking default
   const handleCityChange = (e) => {
@@ -241,17 +212,17 @@ const PatientPersonalInfo = ({
   };
 
   useEffect(() => {
-    if (intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
-      setShowErrorMessage(false);
-    } else {
-      setShowErrorMessage(true);
-    }
+    setShowErrorMessage(intakeState.emailId ? !intakeState.emailId.match(EMAIL_TYPE_REGEX)?.[0] : false);
   }, [intakeState.emailId]);
 
   const handleValidateWeight = (e) => {
     const item = e.target.name;
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
       setIntakeState({ ...intakeState, [item]: e.target.value });
+      setPersonalInfoError(error => ({
+        ...error,
+        [item]: !e.target.value
+      }));
     }
   };
 
@@ -272,14 +243,6 @@ const PatientPersonalInfo = ({
     }
   };
 
-  const handleAddressChange = (e) => {
-    const item = e.target.value;
-  };
-
-  const handlePinCodeChange = (e) => {
-    const item = e.target.value;
-  };
-
   useEffect(() => {
     if (feetHeight && inchHeight) {
       setIntakeState({
@@ -297,25 +260,28 @@ const PatientPersonalInfo = ({
         height: "",
       });
     }
+    setPersonalInfoError(error => ({
+      ...error,
+      height: !(feetHeight && inchHeight)
+    }));
   }, [feetHeight, inchHeight]);
 
   const validatePatientPersonalForm = () => {
-    const PaitientInfoError = {
+    const personalInfoError = {
       firstName: !intakeState.firstName,
       lastName: !intakeState.lastName,
       gender: !intakeState.gender,
       dateOfBirth:
         !intakeState.dateOfBirth || isNaN(Date.parse(intakeState.dateOfBirth)),
-      height: !intakeState.height,
+      height: !(feetHeight && inchHeight),
       weight: !intakeState.weight,
-      // emailId: !intakeState.emailId,
     };
-    const isAnyTrue = Object.values(PaitientInfoError)
+    const isAnyTrue = Object.values(personalInfoError)
       .some((v) => v);
 
-    setPersonalInfoError(PaitientInfoError);
+    setPersonalInfoError(personalInfoError);
 
-    return !isAnyTrue;
+    return !isAnyTrue && !showErrorMessage;
   };
 
   const getValue = (field) => {
@@ -333,14 +299,11 @@ const PatientPersonalInfo = ({
 
   const onNext = async () => {
     const isValid = validatePatientPersonalForm();
+
     if (!isValid) {
       window.scrollTo(0, 0);
       return;
     }
-
-    // if (!intakeState.emailId.match(EMAIL_TYPE_REGEX)) {
-    //   return;
-    // }
 
     const currentYear = parseInt(moment().year());
     const minimumYear = currentYear - MINIMUM_YEAR;
@@ -376,11 +339,15 @@ const PatientPersonalInfo = ({
 
   const formatDate = (date) => {
     const newDate = dateFormatter(date);
-
     setIntakeState({
       ...intakeState,
       dateOfBirth: newDate,
     });
+
+    setPersonalInfoError(error => ({
+      ...error,
+      dateOfBirth: false
+    }));
   };
 
   return (
@@ -393,14 +360,14 @@ const PatientPersonalInfo = ({
               className={
                 `${info.type}` === "Boolean" ? "list-content" : "input-history"
               }
-              key={indx}
-            >
+              key={getRandomKey()}
+              >
               {personalInfoError[`${info.field}`] ? (
                 <label>
                   {info.title}{" "}
-                  <span className="error-message">
+                  {`${info.field}` !== "emailId" && <span className="error-message">
                     (This field is required)
-                  </span>
+                  </span>}
                 </label>
               ) : `${info.field}` === "emailId" && showErrorMessage ? (
                 <label>
@@ -421,19 +388,19 @@ const PatientPersonalInfo = ({
               {info.type === "Boolean" ? (
                 GENDERS.map((gender) => {
                   return (
-                    <>
+                    <Fragment key={getRandomKey()}>
                       <span className="gender-radio-span">
                         <input
                           className="gender-radio"
                           type="radio"
                           name={info.field}
-                          value={gender}
-                          onChange={handleCheckboxChange}
+                          defaultValue={gender}
+                          onChange={handleFieldChange}
                           checked={intakeState.gender === gender}
                         />
                         <label className="gender-radio-label">{gender}</label>
                       </span>
-                    </>
+                    </Fragment>
                   );
                 })
               ) : info.type === "DateType" ? (
@@ -482,8 +449,8 @@ const PatientPersonalInfo = ({
                   type="email"
                   id={indx}
                   name={info.field}
-                  onChange={handleEmailChange}
-                  value={intakeState.emailId}
+                  onChange={handleFieldChange}
+                  defaultValue={intakeState.emailId}
                 />
               ) : info.field === "height" ? (
                 <div className="height-wrapper">
@@ -497,10 +464,10 @@ const PatientPersonalInfo = ({
                     name={info.field}
                     id={"feet"}
                     max={"7"}
-                    value={feetHeight}
+                    defaultValue={feetHeight}
                     onChange={handleValidateHeight}
                   />
-                  <label className="height-label" for={"inch"}>
+                  <label className="height-label" htmlFor={"inch"}>
                     in
                   </label>
                   <input
@@ -510,7 +477,7 @@ const PatientPersonalInfo = ({
                     name={info.field}
                     id={"inch"}
                     max={"11"}
-                    value={inchHeight}
+                    defaultValue={inchHeight}
                     onChange={handleValidateHeight}
                   />
                 </div>
@@ -518,25 +485,25 @@ const PatientPersonalInfo = ({
                 <div className="weight-wrapper">
                   <input
                     type="text"
-                    inputmode={
+                    inputMode={
                       info.field === PERSONAL_INFO.weight ? "decimal" : ""
                     }
                     pattern={info.field === PERSONAL_INFO.weight ? "\\d*" : ""}
                     className="bp"
                     id={indx}
                     name={info.field}
-                    value={getValue(info.field)}
+                    defaultValue={getValue(info.field)}
                     onChange={
                       info.field === PERSONAL_INFO.weight
                         ? handleValidateWeight
-                        : handleInputChange
+                        : handleFieldChange
                     }
                     placeholder={
                       info.field === PERSONAL_INFO.weight ? "Kg." : ""
                     }
                   />
                   {info.field === PERSONAL_INFO.weight && (
-                    <label className="weight-label" for={"weight"}>
+                    <label className="weight-label" htmlFor={"weight"}>
                       Kg.
                     </label>
                   )}
@@ -548,19 +515,19 @@ const PatientPersonalInfo = ({
       </div>
       <div className="address-wrap">
         <div className="address">
-          <label className="label-header" for={"address"}>
+          <label className="label-header" htmlFor={"address"}>
             Address
           </label>
           <input
             type="text"
             name="address"
             className="address-input"
-            value={intakeState.address}
-            onChange={handleInputChange}
+            defaultValue={intakeState.address}
+            onChange={handleAddressChange}
           />
         </div>
         <div className="state">
-          <label className="label-header" for={"state"}>
+          <label className="label-header" htmlFor={"state"}>
             State
           </label>
           <div className="dropdown-selections">
@@ -572,7 +539,7 @@ const PatientPersonalInfo = ({
               value={intakeState.state}
               onChange={handleStateChange}
               inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
+              onInputChange={(_, newInputValue) => {
                 setInputValue(newInputValue);
               }}
               options={stateList.map((item) => item.value)}
@@ -584,7 +551,7 @@ const PatientPersonalInfo = ({
           </div>
         </div>
         <div className="city">
-          <label className="label-header" for={"city"}>
+          <label className="label-header" htmlFor={"city"}>
             City
           </label>
           <div className="dropdown-selections">
@@ -594,7 +561,7 @@ const PatientPersonalInfo = ({
               value={intakeState.city}
               onChange={handleCityChange}
               inputValue={inputValueCity}
-              onInputChange={(event, newInputValue) => {
+              onInputChange={(_, newInputValue) => {
                 setInputValueCity(newInputValue);
               }}
               options={cityArray?.map((item) => item.value)}
@@ -608,7 +575,7 @@ const PatientPersonalInfo = ({
           </div>
         </div>
         <div className="pinCode">
-          <label className="label-header" for={"pincode"}>
+          <label className="label-header" htmlFor={"pincode"}>
             PIN Code
           </label>
           <input
@@ -616,8 +583,8 @@ const PatientPersonalInfo = ({
             pattern="\d*"
             name="pinCode"
             className="pin-input"
-            value={intakeState.pinCode}
-            onChange={handleInputChange}
+            defaultValue={intakeState.pinCode}
+            onChange={handleAddressChange}
           />
         </div>
       </div>

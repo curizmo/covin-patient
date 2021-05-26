@@ -8,6 +8,7 @@ import {
 import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
+import { getRandomKey } from "../utils";
 
 const moment = require("moment");
 
@@ -179,7 +180,7 @@ const CovidHistory = ({
               }
               onChange={() => handleRadioButton(1)}
             />
-            <label for="yes">Yes</label>
+            <label htmlFor="yes">Yes</label>
           </span>
           <span className="not-diagnosed">
             <input
@@ -195,7 +196,7 @@ const CovidHistory = ({
               }
               onChange={() => handleRadioButton(2)}
             />
-            <label for="no">No</label>
+            <label htmlFor="no">No</label>
           </span>
         </div>
         {isDiagnosed && (
@@ -224,7 +225,7 @@ const CovidHistory = ({
                   ? "history-list-content"
                   : "input-history"
               }
-              key={indx}
+              key={getRandomKey()}
             >
               {history.type === "Text" && <label>{history.title}</label>}
               {history.type === "Text" ? (
@@ -249,7 +250,7 @@ const CovidHistory = ({
                 />
               )}
               {history.type === "Boolean" && (
-                <label for={history.field}>{history.title}</label>
+                <label htmlFor={history.field}>{history.title}</label>
               )}
             </div>
           );

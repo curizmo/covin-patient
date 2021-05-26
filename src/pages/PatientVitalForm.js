@@ -44,7 +44,7 @@ const PatientVitalForm = ({
   setProgressedPage,
 }) => {
   const [show, setShow] = useState(false);
-  const [helpVideoUrl, setHelpVideoUrl] = useState('');
+  const [helpVideoUrl, setHelpVideoUrl] = useState("");
   const [showBpInvaid, setShowBpInvalid] = useState(false);
   const [showBpBothRangesMessage, setShowBpBothRangesMessage] = useState(false);
   const [showOxygenErrorMessage, setShowOxygenErrorMessage] = useState(false);
@@ -72,53 +72,61 @@ const PatientVitalForm = ({
   };
 
   const hideHelpVideoModal = () => {
-    setHelpVideoUrl('');
+    setHelpVideoUrl("");
     setShow(false);
   };
 
   let today = new Date().toLocaleDateString();
 
   const checkIsAtLeastOneField = useCallback(() => {
-    return [temperature,
+    return [
+      temperature,
       oxygenLevel,
       pulseRate,
       bpUpperRange,
       bpLowerRange,
       temperature,
-      respiratoryRate]
-      .some((v) => v);
-  }, [temperature,
+      respiratoryRate,
+    ].some((v) => v);
+  }, [
+    temperature,
     oxygenLevel,
     pulseRate,
     bpUpperRange,
     bpLowerRange,
     temperature,
-    respiratoryRate]);
+    respiratoryRate,
+  ]);
 
   const validateForm = useCallback(() => {
     setIsValidated(true);
-    const isAnError = [showBpInvaid,
-      showOxygenErrorMessage,
-      showTempErrorMessage,
-      showPulseErrorMessage,
-      showRespirationMessage,
-      showBpMessage].some((v) => v);
-    const isAtLeastOneField = checkIsAtLeastOneField();
-    setVitalError(!isAtLeastOneField);
-    const isBpInvalid = parseInt(bpLowerRange) > parseInt(bpUpperRange);
-    const isNotBothRanges = (bpLowerRange && !bpUpperRange) || (!bpLowerRange && bpUpperRange);
-    setShowBpInvalid(isBpInvalid);
-    setShowBpBothRangesMessage(isNotBothRanges);
-    return isAtLeastOneField && !isAnError && !isBpInvalid && !isNotBothRanges;
-  }, [checkIsAtLeastOneField,
+    const isAnError = [
       showBpInvaid,
       showOxygenErrorMessage,
       showTempErrorMessage,
       showPulseErrorMessage,
       showRespirationMessage,
       showBpMessage,
-      bpUpperRange,
-      bpLowerRange]);
+    ].some((v) => v);
+    const isAtLeastOneField = checkIsAtLeastOneField();
+    setVitalError(!isAtLeastOneField);
+    const isBpInvalid = parseInt(bpLowerRange) > parseInt(bpUpperRange);
+    const isNotBothRanges =
+      (bpLowerRange && !bpUpperRange) || (!bpLowerRange && bpUpperRange);
+    setShowBpInvalid(isBpInvalid);
+    setShowBpBothRangesMessage(isNotBothRanges);
+    return isAtLeastOneField && !isAnError && !isBpInvalid && !isNotBothRanges;
+  }, [
+    checkIsAtLeastOneField,
+    showBpInvaid,
+    showOxygenErrorMessage,
+    showTempErrorMessage,
+    showPulseErrorMessage,
+    showRespirationMessage,
+    showBpMessage,
+    bpUpperRange,
+    bpLowerRange,
+  ]);
 
   const onSubmit = async () => {
     const isValid = validateForm();
@@ -150,6 +158,7 @@ const PatientVitalForm = ({
         symptoms: symptoms,
       });
     }
+
     if (messageType === MESSAGE_TYPES.newPatient) {
       await patientService.createFormProgress({
         hashKey: hash,
@@ -157,10 +166,9 @@ const PatientVitalForm = ({
         pagenum: NEW_PATIENT_PAGES.vitals,
       });
 
+      await patientService.UpdateMessageStatus(hash);
       setProgressedPage(NEW_PATIENT_PAGES.submission);
     }
-
-    await patientService.UpdateMessageStatus(hash);
 
     setPage(page + 1);
   };
@@ -171,7 +179,7 @@ const PatientVitalForm = ({
     const value = e.target.value;
     const min = e.target.min;
     const max = e.target.max;
-    if (!value || +value >= +min && +value <= +max) {
+    if (!value || (+value >= +min && +value <= +max)) {
       setValue(e.target.value);
       setShowErrorMessage(false);
     } else {
@@ -193,7 +201,7 @@ const PatientVitalForm = ({
           <input
             className="oxygen-input"
             type="text"
-            inputmode="decimal"
+            inputMode="decimal"
             min="0"
             max="100"
             name="OxygenLevel"
@@ -208,7 +216,9 @@ const PatientVitalForm = ({
           />
         </div>
         {showOxygenErrorMessage ? (
-          <span className="error-message">Oxygen Level should be between 0 and 100</span>
+          <span className="error-message">
+            Oxygen Level should be between 0 and 100
+          </span>
         ) : null}
       </div>
       <Modal onClose={hideHelpVideoModal} show={show} src={helpVideoUrl} />
@@ -217,7 +227,7 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
-            inputmode="decimal"
+            inputMode="decimal"
             min="90"
             max="108"
             name="Temperature"
@@ -232,7 +242,9 @@ const PatientVitalForm = ({
           />
         </div>
         {showTempErrorMessage ? (
-          <span className="error-message">Temperature should be between 90 and 108</span>
+          <span className="error-message">
+            Temperature should be between 90 and 108
+          </span>
         ) : null}
       </div>
       <div className="input-vitals">
@@ -240,7 +252,7 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
-            inputmode="decimal"
+            inputMode="decimal"
             min="0"
             max="300"
             name="Pulserate"
@@ -255,7 +267,9 @@ const PatientVitalForm = ({
           />
         </div>
         {showPulseErrorMessage ? (
-          <span className="error-message">Pulse rate should be between 0 and 300</span>
+          <span className="error-message">
+            Pulse rate should be between 0 and 300
+          </span>
         ) : null}
       </div>
       <div className="input-vitals">
@@ -265,7 +279,7 @@ const PatientVitalForm = ({
             <input
               className="bp"
               type="text"
-              inputmode="decimal"
+              inputMode="decimal"
               min="0"
               max="300"
               name="BloodPressureHigh"
@@ -276,7 +290,7 @@ const PatientVitalForm = ({
             <input
               className="bp bp-lower"
               type="text"
-              inputmode="decimal"
+              inputMode="decimal"
               min="0"
               max="300"
               name="BloodPressureLow"
@@ -303,11 +317,14 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
-            inputmode="decimal"
+            inputMode="decimal"
             min="0"
             max="50"
             name="respiratoryRate"
-            onChange={onUpdateInput(setShowRespirationMessage, setRespiratoryRate)}
+            onChange={onUpdateInput(
+              setShowRespirationMessage,
+              setRespiratoryRate
+            )}
           />
           <div className="icon">breaths/min</div>
           <img
@@ -323,19 +340,21 @@ const PatientVitalForm = ({
           </span>
         ) : null}
       </div>
-        {showBpInvaid ? (
-          <p className="error-message">Blood Pressure Higher Range must be greater than Lower Range</p>
-        ) : null}
-        {showBpBothRangesMessage ? (
-          <p className="error-message">
-            Both Blood Pressure Ranges should be set
-          </p>
-        ) : null}
-        {vitalError ? (
-          <p className="error-message">At least one field is required</p>
-        ) : null}
+      {showBpInvaid ? (
+        <p className="error-message">
+          Blood Pressure Higher Range must be greater than Lower Range
+        </p>
+      ) : null}
+      {showBpBothRangesMessage ? (
+        <p className="error-message">
+          Both Blood Pressure Ranges should be set
+        </p>
+      ) : null}
+      {vitalError ? (
+        <p className="error-message">At least one field is required</p>
+      ) : null}
       <button className="submit-button submit-btn" onClick={onSubmit}>
-        SUBMIT
+        {messageType === MESSAGE_TYPES.newPatient ? 'SUBMIT' : 'NEXT'}
       </button>
     </div>
   );
