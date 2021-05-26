@@ -4,139 +4,18 @@ import { DECIMAL_REGEX } from "../constants/constants";
 import "../App.css";
 import "./home.css";
 
-const LabIntakeInput = ({
-  labState,
-  setLabState,
-  crpError,
-  setCrpError,
-  esrError,
-  setEsrError,
-  dDimerError,
-  setDdimerError,
-  ferritinError,
-  setFerritinError,
-  ldhError,
-  setLdhError,
-  wbcError,
-  setWbcError,
-  neutrophilError,
-  setNeutrophilError,
-  lymphocytesError,
-  setLymphocytesError,
-  eosinophilsError,
-  setEosinophilsError,
-  basophilsError,
-  setBasophilsError,
-  plateletsError,
-  setPlateletsError,
-}) => {
-  const handleCrpChange = (e) => {
+const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
+  const handleLabInputChange = (e) => {
     const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setCrpError(false);
-    } else {
-      setCrpError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
+    const value = e.target.value;
 
-  const handleEsrChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setEsrError(false);
-    } else {
-      setEsrError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handleDdimerChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setDdimerError(false);
-    } else {
-      setDdimerError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handleFerritinChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setFerritinError(false);
-    } else {
-      setFerritinError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handleLdhChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setLdhError(false);
-    } else {
-      setLdhError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handleWbcChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setWbcError(false);
-    } else {
-      setWbcError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handleNeutrophilChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setNeutrophilError(false);
-    } else {
-      setNeutrophilError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handleLymphocytesChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setLymphocytesError(false);
-    } else {
-      setLymphocytesError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handleEosinophilsChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setEosinophilsError(false);
-    } else {
-      setEosinophilsError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handleBasophilsChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setBasophilsError(false);
-    } else {
-      setBasophilsError(true);
-    }
-    setLabState({ ...labState, [item]: e.target.value });
-  };
-
-  const handlePlateletsChange = (e) => {
-    const item = e.target.name;
-    if (e.target.value === "" || e.target.value.match(DECIMAL_REGEX)) {
-      setPlateletsError(false);
-    } else {
-      setPlateletsError(true);
-    }
+    setLabError((errors) => ({
+      ...errors,
+      [item]:
+        e.target.value === "" || e.target.value.match(DECIMAL_REGEX)
+          ? false
+          : true,
+    }));
     setLabState({ ...labState, [item]: e.target.value });
   };
 
@@ -153,10 +32,10 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="crp"
-                  onChange={handleCrpChange}
+                  onChange={handleLabInputChange}
                   value={labState["crp"]}
                 />
-                {crpError ? (
+                {labError.crp ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -170,11 +49,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="esr"
-                  onChange={handleEsrChange}
+                  onChange={handleLabInputChange}
                   value={labState["esr"]}
                 />
                 <div className="lab-icon">mm/h</div>
-                {esrError ? (
+                {labError.esr ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -191,11 +70,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="dDimer"
-                  onChange={handleDdimerChange}
+                  onChange={handleLabInputChange}
                   value={labState["dDimer"]}
                 />
                 <div className="lab-icon-left-intake">ng/ml</div>
-                {dDimerError ? (
+                {labError.dDimer ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -208,11 +87,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="ferritin"
-                  onChange={handleFerritinChange}
+                  onChange={handleLabInputChange}
                   value={labState["ferritin"]}
                 />
                 <div className="lab-icon"> ng/ml</div>
-                {ferritinError ? (
+                {labError.ferritin ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -229,11 +108,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="ldh"
-                  onChange={handleLdhChange}
+                  onChange={handleLabInputChange}
                   value={labState["ldh"]}
                 />
                 <div className="lab-icon-ldh">U/L</div>
-                {ldhError ? (
+                {labError.ldh ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -246,11 +125,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="wbc"
-                  onChange={handleWbcChange}
+                  onChange={handleLabInputChange}
                   value={labState["wbc"]}
                 />
                 <div className="lab-icon">/mm3</div>
-                {wbcError ? (
+                {labError.wbc ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -267,11 +146,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="neutrophil"
-                  onChange={handleNeutrophilChange}
+                  onChange={handleLabInputChange}
                   value={labState["neutrophil"]}
                 />
                 <div className="lab-icon-left">%</div>
-                {neutrophilError ? (
+                {labError.neutrophil ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -284,11 +163,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="lymphocytes"
-                  onChange={handleLymphocytesChange}
+                  onChange={handleLabInputChange}
                   value={labState["lymphocytes"]}
                 />
                 <div className="lab-icon">%</div>
-                {lymphocytesError ? (
+                {labError.lymphocytes ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -305,11 +184,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="eosinophils"
-                  onChange={handleEosinophilsChange}
+                  onChange={handleLabInputChange}
                   value={labState["eosinophils"]}
                 />
                 <div className="lab-icon-left">%</div>
-                {eosinophilsError ? (
+                {labError.eosinophils ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -322,11 +201,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="basophils"
-                  onChange={handleBasophilsChange}
+                  onChange={handleLabInputChange}
                   value={labState["basophils"]}
                 />
                 <div className="lab-icon">%</div>
-                {basophilsError ? (
+                {labError.basophils ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>
@@ -343,11 +222,11 @@ const LabIntakeInput = ({
                   type="number"
                   inputMode="decimal"
                   name="platelets"
-                  onChange={handlePlateletsChange}
+                  onChange={handleLabInputChange}
                   value={labState["platelets"]}
                 />
                 <div className="lab-icon-single">%</div>
-                {plateletsError ? (
+                {labError.platelets ? (
                   <p className="lab-error-message">
                     upto one decimal point only
                   </p>

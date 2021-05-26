@@ -22,18 +22,20 @@ const LabResults = ({
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
   const [isinputValid, setIsInputValid] = useState(false);
-
-  const [crpError, setCrpError] = useState(false);
-  const [esrError, setEsrError] = useState(false);
-  const [dDimerError, setDdimerError] = useState(false);
-  const [ferritinError, setFerritinError] = useState(false);
-  const [ldhError, setLdhError] = useState(false);
-  const [wbcError, setWbcError] = useState(false);
-  const [neutrophilError, setNeutrophilError] = useState(false);
-  const [lymphocytesError, setLymphocytesError] = useState(false);
-  const [eosinophilsError, setEosinophilsError] = useState(false);
-  const [basophilsError, setBasophilsError] = useState(false);
-  const [plateletsError, setPlateletsError] = useState(false);
+  const [labError, setLabError] = useState({
+    crp: false,
+    esr: false,
+    dDimer: false,
+    ferritin: false,
+    ldh: false,
+    wbc: false,
+    neutrophil: false,
+    lymphocytes: false,
+    eosinophils: false,
+    basophils: false,
+    platelets: false,
+    otherLabResultsInfo: false,
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,36 +43,10 @@ const LabResults = ({
 
   useEffect(() => {
     validateForm();
-  }, [
-    crpError,
-    esrError,
-    dDimerError,
-    ferritinError,
-    ldhError,
-    wbcError,
-    neutrophilError,
-    lymphocytesError,
-    eosinophilsError,
-    basophilsError,
-    plateletsError,
-  ]);
+  }, [labError]);
 
   const validateForm = () => {
-    const errorState = {
-      crpError,
-      esrError,
-      dDimerError,
-      ferritinError,
-      ldhError,
-      wbcError,
-      neutrophilError,
-      lymphocytesError,
-      eosinophilsError,
-      basophilsError,
-      plateletsError,
-    };
-
-    const isAnyTrue = Object.keys(errorState).some((key) => errorState[key]);
+    const isAnyTrue = Object.keys(labError).some((key) => labError[key]);
 
     setIsInputValid(isAnyTrue);
   };
@@ -150,28 +126,8 @@ const LabResults = ({
         <LabIntakeInput
           labState={labState}
           setLabState={setLabState}
-          crpError={crpError}
-          setCrpError={setCrpError}
-          esrError={esrError}
-          setEsrError={setEsrError}
-          dDimerError={dDimerError}
-          setDdimerError={setDdimerError}
-          ferritinError={ferritinError}
-          setFerritinError={setFerritinError}
-          ldhError={ldhError}
-          setLdhError={setLdhError}
-          wbcError={wbcError}
-          setWbcError={setWbcError}
-          neutrophilError={neutrophilError}
-          setNeutrophilError={setNeutrophilError}
-          lymphocytesError={lymphocytesError}
-          setLymphocytesError={setLymphocytesError}
-          eosinophilsError={eosinophilsError}
-          setEosinophilsError={setEosinophilsError}
-          basophilsError={basophilsError}
-          setBasophilsError={setBasophilsError}
-          plateletsError={plateletsError}
-          setPlateletsError={setPlateletsError}
+          labError={labError}
+          setLabError={setLabError}
         />
       )}
 
