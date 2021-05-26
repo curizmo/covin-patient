@@ -15,7 +15,9 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
       ...errors,
       [item]: !(value === "" || value?.match(DECIMAL_REGEX)?.[0]),
     }));
-    setLabState({ ...labState, [item]: value });
+    // @toDo add validation
+    // setLabState({ ...labState, [item]: value });
+    console.log('@toDo add validation', setLabState)
   };
 
   return (
