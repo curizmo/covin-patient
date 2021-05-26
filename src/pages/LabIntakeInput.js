@@ -22,6 +22,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="crp"
                   onChange={handleInputChange}
+                  value={labState["crp"]}
                 />
                 <div className="lab-icon-left-intake">mg/L</div>
               </div>
@@ -33,6 +34,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="esr"
                   onChange={handleInputChange}
+                  value={labState["esr"]}
                 />
                 <div className="lab-icon">mm/h</div>
               </div>
@@ -48,6 +50,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="dDimer"
                   onChange={handleInputChange}
+                  value={labState["dDimer"]}
                 />
                 <div className="lab-icon-left-intake">ng/ml</div>
               </div>
@@ -59,6 +62,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="ferritin"
                   onChange={handleInputChange}
+                  value={labState["ferritin"]}
                 />
                 <div className="lab-icon"> ng/ml</div>
               </div>
@@ -74,6 +78,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="ldh"
                   onChange={handleInputChange}
+                  value={labState["ldh"]}
                 />
                 <div className="lab-icon-ldh">U/L</div>
               </div>
@@ -85,6 +90,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="wbc"
                   onChange={handleInputChange}
+                  value={labState["wbc"]}
                 />
                 <div className="lab-icon">/mm3</div>
               </div>
@@ -100,6 +106,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="neutrophil"
                   onChange={handleInputChange}
+                  value={labState["neutrophil"]}
                 />
                 <div className="lab-icon-left">%</div>
               </div>
@@ -111,6 +118,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="lymphocytes"
                   onChange={handleInputChange}
+                  value={labState["lymphocytes"]}
                 />
                 <div className="lab-icon">%</div>
               </div>
@@ -126,6 +134,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="eosinophils"
                   onChange={handleInputChange}
+                  value={labState["eosinophils"]}
                 />
                 <div className="lab-icon-left">%</div>
               </div>
@@ -137,6 +146,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="basophils"
                   onChange={handleInputChange}
+                  value={labState["basophils"]}
                 />
                 <div className="lab-icon">%</div>
               </div>
@@ -152,6 +162,7 @@ const LabIntakeInput = ({ labState, setLabState }) => {
                   inputMode="decimal"
                   name="platelets"
                   onChange={handleInputChange}
+                  value={labState["platelets"]}
                 />
                 <div className="lab-icon-single">%</div>
               </div>

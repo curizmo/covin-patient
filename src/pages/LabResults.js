@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LabIntakeUpload from "./LabIntakeUpload";
 import LabIntakeInput from "./LabIntakeInput";
 import "../App.css";
@@ -22,6 +22,10 @@ const LabResults = ({
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCheckboxChange = (e) => {
     setIntakeTpye(e.target.value);
   };
@@ -34,10 +38,7 @@ const LabResults = ({
   const onSubmit = async () => {
     await Promise.all([
       patientService.uploadLabImages({
-        intakeForm:
-          intakeType === LAB_INPUT_TYPE.picture
-            ? { otherLabResultsInfo: labState.otherLabResultsInfo }
-            : labState,
+        intakeForm: labState,
         labImages: medicationFile,
         patientId: patientDetails.patientId,
       }),
