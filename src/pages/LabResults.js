@@ -34,10 +34,7 @@ const LabResults = ({
   const onSubmit = async () => {
     await Promise.all([
       patientService.uploadLabImages({
-        intakeForm:
-          intakeType === LAB_INPUT_TYPE.picture
-            ? { otherLabResultsInfo: labState.otherLabResultsInfo }
-            : labState,
+        intakeForm: labState,
         labImages: medicationFile,
         patientId: patientDetails.patientId,
       }),
