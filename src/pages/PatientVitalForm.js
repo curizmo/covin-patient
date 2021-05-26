@@ -11,6 +11,7 @@ import {
   DATE_FORMAT,
 } from "../constants/constants";
 import * as patientService from "../services/patient";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const HELP_VIDEO_URLS = {
   TEMPERATURE: "https://www.youtube.com/embed/reHREKBXH_k",
@@ -55,6 +56,7 @@ const PatientVitalForm = ({
   const [symptoms, setSymptoms] = useState({});
   const [vitalError, setVitalError] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getSymptoms(patientDetails.patientId);
@@ -129,8 +131,10 @@ const PatientVitalForm = ({
   ]);
 
   const onSubmit = async () => {
+    setIsLoading(true);
     const isValid = validateForm();
     if (!isValid) {
+      setIsLoading(false);
       return;
     }
     const patientVitals = {
@@ -169,7 +173,7 @@ const PatientVitalForm = ({
       await patientService.UpdateMessageStatus(hash);
       setProgressedPage(NEW_PATIENT_PAGES.submission);
     }
-
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -353,9 +357,7 @@ const PatientVitalForm = ({
       {vitalError ? (
         <p className="error-message">At least one field is required</p>
       ) : null}
-      <button className="submit-button submit-btn" onClick={onSubmit}>
-        {messageType === MESSAGE_TYPES.newPatient ? 'SUBMIT' : 'NEXT'}
-      </button>
+      <SubmitButton onClick={onSubmit} isLoading={isLoading} text={messageType === MESSAGE_TYPES.newPatient ? 'SUBMIT' : 'NEXT'} />
     </div>
   );
 };

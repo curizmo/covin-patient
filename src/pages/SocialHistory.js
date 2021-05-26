@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as patientService from "../services/patient";
 import { NEW_PATIENT_PAGES, ALLERGY } from "../constants/constants";
 import "../App.css";
 import "./home.css";
 import { getRandomKey } from "../utils";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const SocialHistory = ({
   socialHistory,
@@ -15,6 +16,7 @@ const SocialHistory = ({
   setPage,
   page,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -33,6 +35,7 @@ const SocialHistory = ({
   };
 
   const onNext = async () => {
+    setIsLoading(true);
     await Promise.all([
       patientService.createPatientIntake({
         form: {
@@ -51,6 +54,7 @@ const SocialHistory = ({
     ]);
 
     setProgressedPage(NEW_PATIENT_PAGES.medication);
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -101,9 +105,7 @@ const SocialHistory = ({
           );
         })}
       </div>
-      <button className="submit-button submit-btn" onClick={onNext}>
-        NEXT
-      </button>
+      <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>
   );
 };

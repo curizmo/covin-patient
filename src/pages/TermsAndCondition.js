@@ -3,21 +3,25 @@ import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
 import patient_profile from "../assets/images/icon_userprofile.svg";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const TermsAndCondition = ({ setIsAgreed, name, phone, patientId }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
   const handleOnClick = async () => {
+    setIsLoading(true);
     setIsAgreed(true);
 
     await patientService.createPatientAgreement({
       patientId,
       isAgreed: isChecked ? 1 : 0,
     });
+    setIsLoading(false);
   };
 
   return (
@@ -45,13 +49,12 @@ const TermsAndCondition = ({ setIsAgreed, name, phone, patientId }) => {
           <span className="checkmark"></span>
         </div>
       </div>
-      <button
+      <SubmitButton
         className="initial-page-content submit-btn"
+        isLoading={isLoading}
         onClick={handleOnClick}
         disabled={!isChecked}
-      >
-        I AGREE
-      </button>
+        text='I AGREE' />
     </div>
   );
 };

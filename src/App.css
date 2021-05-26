@@ -486,3 +486,5 @@ input.bp:last-of-type {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, */
 }
+@import url('./styles/loader.css');
+@import url('./styles/submit-button.css');

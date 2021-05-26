@@ -8,6 +8,7 @@ import "./home.css";
 import * as patientService from "../services/patient";
 import { NEW_PATIENT_PAGES } from "../constants/constants";
 import { getRandomKey } from "../utils";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const Medication = ({
   medication,
@@ -26,6 +27,7 @@ const Medication = ({
   const [currentFileView, setCurrentFileView] = useState();
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,6 +39,7 @@ const Medication = ({
   };
 
   const onNext = async () => {
+    setIsLoading(true);
     await Promise.all([
       patientService.createPatientIntake({
         form: intakeState,
@@ -55,6 +58,7 @@ const Medication = ({
     ]);
 
     setProgressedPage(NEW_PATIENT_PAGES.symptoms);
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -140,9 +144,7 @@ const Medication = ({
           ></textarea>
         </div>
       </div>
-      <button className="submit-button submit-btn" onClick={onNext}>
-        NEXT
-      </button>
+      <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>
   );
 };

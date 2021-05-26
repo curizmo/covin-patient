@@ -8,6 +8,7 @@ import {
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
 import { getRandomKey } from "../utils";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const PeexistingCondition = ({
   preexistingCondition,
@@ -21,6 +22,7 @@ const PeexistingCondition = ({
 }) => {
   const [conditionError, setConditionError] = useState(false);
   const [isConditionChecked, setIsConditionChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const preExistingCondition = {
     heartDisease: intakeState.heartDisease,
     cancer: intakeState.cancer,
@@ -77,8 +79,10 @@ const PeexistingCondition = ({
   };
 
   const onNext = async () => {
+    setIsLoading(true);
     const isValid = validateForm();
     if (!isValid) {
+      setIsLoading(false);
       return;
     }
 
@@ -109,6 +113,7 @@ const PeexistingCondition = ({
     ]);
 
     setProgressedPage(NEW_PATIENT_PAGES.allergy);
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -164,9 +169,7 @@ const PeexistingCondition = ({
           At least one field must be selected
         </span>
       ) : null}
-      <button className="submit-button submit-btn" onClick={onNext}>
-        NEXT
-      </button>
+      <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>
   );
 };
