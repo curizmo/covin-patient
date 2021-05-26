@@ -88,6 +88,16 @@ body {
   margin-top: 10px;
 }
 
+.submit-btn:active{
+  background-color: #008484;
+  outline: none; 
+}
+
+.submit-btn:focus{
+  outline: none; 
+}
+
+
 .submit-btn-close {
   background-color: #657396;
   color: #ccc;
