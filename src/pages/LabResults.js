@@ -21,6 +21,7 @@ const LabResults = ({
   const [currentFileView, setCurrentFileView] = useState();
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
+  const [isinputValid, setIsInputValid] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -94,7 +95,11 @@ const LabResults = ({
       )}
 
       {intakeType === "type" && (
-        <LabIntakeInput labState={labState} setLabState={setLabState} />
+        <LabIntakeInput
+          labState={labState}
+          setLabState={setLabState}
+          setIsInputValid={setIsInputValid}
+        />
       )}
 
       <div className="other-information-wrapper">
@@ -111,7 +116,13 @@ const LabResults = ({
         </div>
       </div>
 
-      <button className="submit-button submit-btn" onClick={onSubmit}>
+      {isinputValid ? (
+          <span className="error-message">
+           Lab inputs can only have single decimal value like 198.1
+          </span>
+        ) : null}
+
+      <button className="submit-button submit-btn" onClick={onSubmit} disabled={isinputValid}>
         SUBMIT
       </button>
     </div>

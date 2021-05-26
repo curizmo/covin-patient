@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { DECIMAL_REGEX } from "../constants/constants";
 
 import "../App.css";
 import "./home.css";
 
-const LabIntakeInput = ({ labState, setLabState }) => {
+const LabIntakeInput = ({ labState, setLabState, setIsInputValid }) => {
   const handleInputChange = (e) => {
     const item = e.target.name;
+    if (e.target.value.match(DECIMAL_REGEX)) {
+      setIsInputValid(false);
+    } else {
+      setIsInputValid(true);
+    }
     setLabState({ ...labState, [item]: e.target.value });
   };
+
   return (
     <>
       <div className="health-checklist">
