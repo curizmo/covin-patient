@@ -69,6 +69,8 @@ export const NUMBER_TYPE_REGEX = /^[+-]?\d*(?:[.,]\d*)?$/;
 
 export const NO_PRE_EXISTING_CONDITION = "noPrexistingCondition";
 
+export const DECIMAL_REGEX = /^\d*(\.\d{0,1})?$/;
+
 export const MESSAGE_TYPES = {
   newPatient: "newPatient",
   dailyScreening: "dailyScreening",
