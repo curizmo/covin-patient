@@ -11,13 +11,13 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
     const item = e.target.name;
     const value = e.target.value;
 
-    setLabError((errors) => ({
-      ...errors,
-      [item]: !(value === "" || value?.match(DECIMAL_REGEX)?.[0]),
-    }));
+    setLabState({ ...labState, [item]: value });
     // @toDo add validation
-    // setLabState({ ...labState, [item]: value });
-    console.log('@toDo add validation', setLabState)
+    // setLabError((errors) => ({
+    //   ...errors,
+    //   [item]: !(value === "" || value?.match(DECIMAL_REGEX)?.[0]),
+    // }));
+    console.log('@toDo add validation', setLabError)
   };
 
   return (
