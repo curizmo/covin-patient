@@ -139,10 +139,6 @@ body {
   height: 5rem;
 }
 
-.input-history:last-child {
-  display: none;
-}
-
 .input-history input {
   height: 1.5rem; /*overall height including padding tends to 58px*/
   width: 91%;
