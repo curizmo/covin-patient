@@ -4,6 +4,7 @@ import * as patientService from "../services/patient";
 import "./home.css";
 import { NEW_PATIENT_PAGES, MESSAGE_TYPES } from "../constants/constants";
 import { getRandomKey } from "../utils";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const PatientChecklist = ({
   state,
@@ -18,6 +19,7 @@ const PatientChecklist = ({
   const [symptoms, setSymptoms] = useState([]);
   const [symptomsError, setSymptomsError] = useState(false);
   const [isSymptomLoad, setIsSymptomLoad] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getSymptoms();
@@ -56,8 +58,10 @@ const PatientChecklist = ({
   };
 
   const onNext = async () => {
+    setIsLoading(true);
     const isValid = validateForm();
     if (!isValid) {
+      setIsLoading(false);
       return;
     }
 
@@ -70,7 +74,7 @@ const PatientChecklist = ({
 
       setProgressedPage(NEW_PATIENT_PAGES.vitals);
     }
-
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -108,13 +112,7 @@ const PatientChecklist = ({
           At least one field must be selected
         </span>
       ) : null}
-      <button
-        className="submit-button submit-btn"
-        onClick={onNext}
-        disabled={isSymptomLoad}
-      >
-        NEXT
-      </button>
+        <SubmitButton disabled={isSymptomLoad} onClick={onNext} isLoading={isLoading} disabled={isSymptomLoad} />
     </div>
   );
 };

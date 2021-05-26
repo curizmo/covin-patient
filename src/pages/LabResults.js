@@ -5,6 +5,7 @@ import "../App.css";
 import "./home.css";
 import { LAB_INPUT_TYPE } from "../constants/constants";
 import * as patientService from "../services/patient";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const LabResults = ({
   labState,
@@ -36,6 +37,7 @@ const LabResults = ({
     platelets: false,
     otherLabResultsInfo: false,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -65,6 +67,7 @@ const LabResults = ({
   };
 
   const onSubmit = async () => {
+    setIsLoading(true);
     await Promise.all([
       patientService.uploadLabImages({
         intakeForm: labState,
@@ -74,6 +77,7 @@ const LabResults = ({
       patientService.UpdateMessageStatus(hash),
     ]);
 
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -148,14 +152,11 @@ const LabResults = ({
       {isinputValid ? (
         <span className="error-message">Type result values should have only one decimal place (e.g. 23.1)</span>
       ) : null}
-
-      <button
-        className="submit-button submit-btn"
+      <SubmitButton
+        isLoading={isLoading}
         onClick={onSubmit}
         disabled={isinputValid}
-      >
-        SUBMIT
-      </button>
+        text='SUBMIT' />
     </div>
   );
 };
