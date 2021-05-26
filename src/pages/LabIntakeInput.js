@@ -11,12 +11,9 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
 
     setLabError((errors) => ({
       ...errors,
-      [item]:
-        e.target.value === "" || e.target.value.match(DECIMAL_REGEX)
-          ? false
-          : true,
+      [item]: !(value === "" || value?.match(DECIMAL_REGEX)?.[0]),
     }));
-    setLabState({ ...labState, [item]: e.target.value });
+    setLabState({ ...labState, [item]: value });
   };
 
   return (
