@@ -75,6 +75,10 @@ const LabResults = ({
     setIsInputValid(isAnyTrue);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCheckboxChange = (e) => {
     setIntakeTpye(e.target.value);
   };
