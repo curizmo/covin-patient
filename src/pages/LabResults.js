@@ -146,9 +146,7 @@ const LabResults = ({
       </div>
 
       {isinputValid ? (
-        <span className="error-message">
-          Typed results can only have single decimal value, example: 100.8
-        </span>
+        <span className="error-message">Type result values should have only one decimal place (e.g. 23.1)</span>
       ) : null}
 
       <button

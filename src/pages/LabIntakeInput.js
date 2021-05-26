@@ -4,6 +4,8 @@ import { DECIMAL_REGEX } from "../constants/constants";
 import "../App.css";
 import "./home.css";
 
+const decimalPlaceError = 'Round to one decimal place (e.g. 23.1)';
+
 const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
   const handleLabInputChange = (e) => {
     const item = e.target.name;
@@ -34,7 +36,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 />
                 {labError.crp ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
                 <div className="lab-icon-left-intake">mg/L</div>
@@ -52,7 +54,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon">mm/h</div>
                 {labError.esr ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -73,7 +75,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon-left-intake">ng/ml</div>
                 {labError.dDimer ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -90,7 +92,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon"> ng/ml</div>
                 {labError.ferritin ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -111,7 +113,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon-ldh">U/L</div>
                 {labError.ldh ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -128,7 +130,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon">/mm3</div>
                 {labError.wbc ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -149,7 +151,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon-left">%</div>
                 {labError.neutrophil ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -166,7 +168,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon">%</div>
                 {labError.lymphocytes ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -187,7 +189,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon-left">%</div>
                 {labError.eosinophils ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -204,7 +206,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon">%</div>
                 {labError.basophils ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
@@ -225,7 +227,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon-single">%</div>
                 {labError.platelets ? (
                   <p className="lab-error-message">
-                    upto one decimal point only
+                    {decimalPlaceError}
                   </p>
                 ) : null}
               </div>
