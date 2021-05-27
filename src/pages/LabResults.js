@@ -77,13 +77,13 @@ const LabResults = ({
   };
 
   const onSubmit = async () => {
+    setIsLoading(true);
     const hasLabInput = checkInputValues();
     if (hasLabInput && labState["specimenDrawnDate"] === "") {
       setIsDateSet(false);
       return;
     }
 
-    setIsLoading(true);
     await Promise.all([
       patientService.uploadLabImages({
         intakeForm: labState,
