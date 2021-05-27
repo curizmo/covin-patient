@@ -19,7 +19,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
     //   ...errors,
     //   [item]: !(value === "" || value?.match(DECIMAL_REGEX)?.[0]),
     // }));
-    console.log("@toDo add validation", setLabError);
+    console.log('@toDo add validation', setLabError);
   };
 
   return (
@@ -41,7 +41,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.crp ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
                 <div className="lab-icon-left-intake">mg/L</div>
               </div>
@@ -59,7 +59,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.esr ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
             </div>
@@ -80,7 +80,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.dDimer ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
               <div>
@@ -97,7 +97,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.ferritin ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
             </div>
@@ -118,7 +118,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.ldh ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
               <div>
@@ -135,7 +135,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.wbc ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
             </div>
@@ -156,7 +156,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.neutrophil ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
               <div>
@@ -173,7 +173,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.lymphocytes ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
             </div>
@@ -194,7 +194,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.eosinophils ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
               <div>
@@ -211,7 +211,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.basophils ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
             </div>
@@ -232,7 +232,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 {labError.platelets ? (
                   <p className="lab-error-message">
                     {decimalPlaceError}
-                    </p>
+                  </p>
                 ) : null}
               </div>
             </div>
