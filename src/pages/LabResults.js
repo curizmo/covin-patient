@@ -60,6 +60,13 @@ const LabResults = ({
     return isAnyTrue;
   };
 
+  useEffect(() => {
+    if (labState["specimenDrawnDate"] !== "") {
+      setIsDateSet(true);
+      return;
+    }
+  }, [labState["specimenDrawnDate"]]);
+
   const handleCheckboxChange = (e) => {
     setIntakeTpye(e.target.value);
   };
