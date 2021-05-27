@@ -65,6 +65,7 @@ const PatientVitals = ({
     eosinophils: "",
     basophils: "",
     platelets: "",
+    specimenDrawnDate: "",
     otherLabResultsInfo: "",
   });
 
@@ -131,7 +132,7 @@ const PatientVitals = ({
   const FOLLOWING_STATUS = {
     pageNum: page,
   };
-
+console.log(labState)
   const goBack = () => {
     setPageLoaded(true);
     setPage(page - 1);
@@ -159,9 +160,7 @@ const PatientVitals = ({
         FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.symptoms
       ) {
         return "page1-sub-wrapper";
-      } else if (
-        FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital 
-      ) {
+      } else if (FOLLOWING_STATUS.pageNum === EXISTING_PATIENT_PAGES.vital) {
         return "page2-sub-wrapper";
       } else {
         return "page3-sub-wrapper";
