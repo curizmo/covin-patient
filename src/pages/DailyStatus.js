@@ -2,9 +2,11 @@ import React, { useState, useCallback } from "react";
 import "../App.css";
 import "./home.css";
 import { DAILY_STATUS } from "../constants/constants";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const DailyStatus = ({ state, setState, setPage, page }) => {
   const [statusError, setStatusError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getIsStatusChecked = (state) => Object.values(state).some((s) => s);
   const handleOnStatusClick = useCallback(
@@ -18,9 +20,11 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
   );
 
   const onNext = useCallback(async () => {
+    setIsLoading(true);
     const statusError = !getIsStatusChecked(state) || !state["statusToday"];
     setStatusError(statusError);
 
+    setIsLoading(false);
     if (!statusError) {
       setPage(page + 1);
     }
@@ -79,9 +83,7 @@ const DailyStatus = ({ state, setState, setPage, page }) => {
           At least one field must be selected
         </span>
       ) : null}
-      <button className="submit-button submit-btn" onClick={onNext}>
-        NEXT
-      </button>
+      <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>
   );
 };

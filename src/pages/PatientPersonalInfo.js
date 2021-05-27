@@ -19,6 +19,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { DropdownDate, DropdownComponent } from "react-dropdown-date";
 import { dateFormatter } from "../utils/dateFormatter";
 import { getRandomKey } from "../utils";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,6 +141,7 @@ const PatientPersonalInfo = ({
     height: "",
     weight: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -298,10 +300,12 @@ const PatientPersonalInfo = ({
   };
 
   const onNext = async () => {
+    setIsLoading(true);
     const isValid = validatePatientPersonalForm();
 
     if (!isValid) {
       window.scrollTo(0, 0);
+      setIsLoading(false);
       return;
     }
 
@@ -309,6 +313,7 @@ const PatientPersonalInfo = ({
     const minimumYear = currentYear - MINIMUM_YEAR;
     const dateOfBirth = parseInt(moment(intakeState.dateOfBirth).year());
     if (dateOfBirth > currentYear || dateOfBirth < minimumYear) {
+      setIsLoading(false);
       return;
     }
 
@@ -334,6 +339,7 @@ const PatientPersonalInfo = ({
     ]);
 
     setProgressedPage(NEW_PATIENT_PAGES.covidHistory);
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -588,9 +594,7 @@ const PatientPersonalInfo = ({
           />
         </div>
       </div>
-      <button className="submit-button submit-btn" onClick={onNext}>
-        NEXT
-      </button>
+      <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>
   );
 };

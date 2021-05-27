@@ -5,6 +5,7 @@ import "../App.css";
 import "./home.css";
 import { LAB_INPUT_TYPE } from "../constants/constants";
 import * as patientService from "../services/patient";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const LabResults = ({
   labState,
@@ -21,6 +22,36 @@ const LabResults = ({
   const [currentFileView, setCurrentFileView] = useState();
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
+  const [isinputValid, setIsInputValid] = useState(false);
+  const [labError, setLabError] = useState({
+    crp: false,
+    esr: false,
+    dDimer: false,
+    ferritin: false,
+    ldh: false,
+    wbc: false,
+    neutrophil: false,
+    lymphocytes: false,
+    eosinophils: false,
+    basophils: false,
+    platelets: false,
+    otherLabResultsInfo: false,
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    validateForm();
+  }, [labError]);
+
+  const validateForm = () => {
+    const isAnyTrue = Object.keys(labError).some((key) => labError[key]);
+
+    setIsInputValid(isAnyTrue);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,6 +67,7 @@ const LabResults = ({
   };
 
   const onSubmit = async () => {
+    setIsLoading(true);
     await Promise.all([
       patientService.uploadLabImages({
         intakeForm: labState,
@@ -45,6 +77,7 @@ const LabResults = ({
       patientService.UpdateMessageStatus(hash),
     ]);
 
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -94,7 +127,12 @@ const LabResults = ({
       )}
 
       {intakeType === "type" && (
-        <LabIntakeInput labState={labState} setLabState={setLabState} />
+        <LabIntakeInput
+          labState={labState}
+          setLabState={setLabState}
+          labError={labError}
+          setLabError={setLabError}
+        />
       )}
 
       <div className="other-information-wrapper">
@@ -111,9 +149,14 @@ const LabResults = ({
         </div>
       </div>
 
-      <button className="submit-button submit-btn" onClick={onSubmit}>
-        SUBMIT
-      </button>
+      {isinputValid ? (
+        <span className="error-message">Type result values should have only one decimal place (e.g. 23.1)</span>
+      ) : null}
+      <SubmitButton
+        isLoading={isLoading}
+        onClick={onSubmit}
+        disabled={isinputValid}
+        text='SUBMIT' />
     </div>
   );
 };

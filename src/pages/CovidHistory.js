@@ -9,6 +9,7 @@ import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
 import { getRandomKey } from "../utils";
+import { SubmitButton } from "../components/common/SubmitButton";
 
 const moment = require("moment");
 
@@ -26,6 +27,7 @@ const CovidHistory = ({
   const [checkedOne, setCheckedOne] = useState(false);
   const [checkedTwo, setCheckedTwo] = useState(false);
   const [isDiagnosed, setDiagnosed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setChecked] = useState();
 
   useEffect(() => {
@@ -62,6 +64,7 @@ const CovidHistory = ({
   };
 
   const onNext = async () => {
+    setIsLoading(true);
     const currentYear = parseInt(moment().year());
     const minimumYear = currentYear - MINIMUM_YEAR;
     const dose1Year = parseInt(
@@ -77,6 +80,7 @@ const CovidHistory = ({
       dose1Year < minimumYear ||
       dose2Year < minimumYear
     ) {
+      setIsLoading(false);
       return;
     }
 
@@ -100,6 +104,7 @@ const CovidHistory = ({
     ]);
 
     setProgressedPage(NEW_PATIENT_PAGES.preExistingCondition);
+    setIsLoading(false);
     setPage(page + 1);
   };
 
@@ -256,9 +261,7 @@ const CovidHistory = ({
           );
         })}
       </div>
-      <button className="submit-button submit-btn" onClick={onNext}>
-        NEXT
-      </button>
+      <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>
   );
 };
