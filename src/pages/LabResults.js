@@ -80,6 +80,7 @@ const LabResults = ({
     setIsLoading(true);
     const hasLabInput = checkInputValues();
     if (hasLabInput && labState["specimenDrawnDate"] === "") {
+      setIsLoading(false);
       setIsDateSet(false);
       return;
     }
