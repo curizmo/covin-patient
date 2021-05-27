@@ -1,10 +1,14 @@
 import { useState, useEffect, Fragment } from "react";
-import "../App.css";
-import "./home.css";
-import * as patientService from "../services/patient";
-import csc from "../third-party/country-state-city";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { makeStyles } from "@material-ui/core/styles";
+
+import { SubmitButton } from "../components/common/SubmitButton";
+import { SplittedDatePicker } from "../components/common/SplittedDatePicker";
+
+import csc from "../third-party/country-state-city";
+import * as patientService from "../services/patient";
+import { getRandomKey } from "../utils";
 import {
   GENDERS,
   EMAIL_TYPE_REGEX,
@@ -12,16 +16,12 @@ import {
   HEIGHT_MEASUREMENT,
   MINIMUM_YEAR,
   PERSONAL_INFO,
-  DATE_FORMAT,
   NEW_PATIENT_PAGES,
 } from "../constants/constants";
-import { makeStyles } from "@material-ui/core/styles";
-import { DropdownDate, DropdownComponent } from "react-dropdown-date";
-import { dateFormatter } from "../utils/dateFormatter";
-import { getRandomKey } from "../utils";
-import { SubmitButton } from "../components/common/SubmitButton";
+import "../App.css";
+import "./home.css";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
       transform: "translate(34px, 20px) scale(1);",
@@ -126,6 +126,8 @@ const PatientPersonalInfo = ({
   stateKey,
   page,
 }) => {
+  const classes = useStyles();
+
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [inchHeight, setInchHeight] = useState("");
   const [feetHeight, setFeetHeight] = useState("");
@@ -142,11 +144,37 @@ const PatientPersonalInfo = ({
     weight: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const classes = useStyles();
+  const [dateOfBirth, setDateOfBirth] = useState({
+    day: '',
+    month: '',
+    year: '',
+  });
 
   useEffect(() => {
+    if (intakeState.dateOfBirth) {
+      const date = new Date(intakeState.dateOfBirth);
+      setDateOfBirth({ 
+        day: `${date.getDate()}`,
+        month: `${date.getMonth()}`,
+        year: `${date.getFullYear()}`
+      });
+    }
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    const year = dateOfBirth.year;
+    const month = dateOfBirth.month;
+    const day = dateOfBirth.day;
+    if (year && month && day) {
+      const dateOfBirth = new Date(`${year}-${month < 9 ? '0' : ''}${+month + 1}-${day < 10 ? '0' : ''}${day}`);
+      setIntakeState(state => ({ ...state, dateOfBirth }));
+    }
+    setPersonalInfoError(error => ({
+      ...error,
+      dateOfBirth: false
+    })); 
+ }, [dateOfBirth, setIntakeState]);
 
   useEffect(() => {
     const heightInFeet =
@@ -207,6 +235,7 @@ const PatientPersonalInfo = ({
     });
     setCityArray(cityList);
   };
+
   //city name not taking default
   const handleCityChange = (e) => {
     const cityName = e.target.outerText;
@@ -264,7 +293,7 @@ const PatientPersonalInfo = ({
     }
     setPersonalInfoError(error => ({
       ...error,
-      height: !(feetHeight && inchHeight)
+      height: false
     }));
   }, [feetHeight, inchHeight]);
 
@@ -275,7 +304,7 @@ const PatientPersonalInfo = ({
       gender: !intakeState.gender,
       dateOfBirth:
         !intakeState.dateOfBirth || isNaN(Date.parse(intakeState.dateOfBirth)),
-      height: !(feetHeight && inchHeight),
+      height: !feetHeight,
       weight: !intakeState.weight,
     };
     const isAnyTrue = Object.values(personalInfoError)
@@ -343,19 +372,6 @@ const PatientPersonalInfo = ({
     setPage(page + 1);
   };
 
-  const formatDate = (date) => {
-    const newDate = dateFormatter(date);
-    setIntakeState({
-      ...intakeState,
-      dateOfBirth: newDate,
-    });
-
-    setPersonalInfoError(error => ({
-      ...error,
-      dateOfBirth: false
-    }));
-  };
-
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
@@ -411,44 +427,7 @@ const PatientPersonalInfo = ({
                 })
               ) : info.type === "DateType" ? (
                 <div>
-                  {
-                    <DropdownDate
-                      selectedDate={moment(intakeState?.dateOfBirth).format(
-                        DATE_FORMAT.yyyymmdd
-                      )}
-                      ids={{
-                        year: "select-year",
-                        month: "select-month",
-                        day: "select-day",
-                      }}
-                      options={{
-                        monthShort: true,
-                      }}
-                      onDateChange={(date) => {
-                        formatDate(date);
-                      }}
-                      order={[
-                        DropdownComponent.month,
-                        DropdownComponent.day,
-                        DropdownComponent.year,
-                      ]}
-                      classes={{
-                        dayContainer: "container-class",
-                        yearContainer: "container-class",
-                        monthContainer: "container-class",
-                      }}
-                      names={{
-                        year: "year",
-                        month: "month",
-                        day: "day",
-                      }}
-                      defaultValues={{
-                        month: "Month",
-                        day: "Day",
-                        year: "Year",
-                      }}
-                    />
-                  }
+                  <SplittedDatePicker date={dateOfBirth} setDate={setDateOfBirth} />
                 </div>
               ) : info.field === "emailId" ? (
                 <input
@@ -460,7 +439,7 @@ const PatientPersonalInfo = ({
                 />
               ) : info.field === "height" ? (
                 <div className="height-wrapper">
-                  <label className="height-label" for={"feet"}>
+                  <label className="height-label" htmlFor={"feet"}>
                     ft
                   </label>
                   <input
