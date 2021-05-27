@@ -23,6 +23,7 @@ const LabResults = ({
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
   const [isinputValid, setIsInputValid] = useState(false);
+  const [isDateSet, setIsDateSet] = useState(true);
   const [labError, setLabError] = useState({
     crp: false,
     esr: false,
@@ -53,6 +54,12 @@ const LabResults = ({
     setIsInputValid(isAnyTrue);
   };
 
+  const checkInputValues = () => {
+    const { specimenDrawnDate, otherLabResultsInfo, ...rest } = labState;
+    const isAnyTrue = Object.keys(rest).some((key) => rest[key]);
+    return isAnyTrue;
+  };
+
   const handleCheckboxChange = (e) => {
     setIntakeTpye(e.target.value);
   };
@@ -63,6 +70,12 @@ const LabResults = ({
   };
 
   const onSubmit = async () => {
+    const hasLabInput = checkInputValues();
+    if (hasLabInput && labState["specimenDrawnDate"] === "") {
+      setIsDateSet(false);
+      return;
+    }
+
     setIsLoading(true);
     await Promise.all([
       patientService.uploadLabImages({
@@ -146,13 +159,21 @@ const LabResults = ({
       </div>
 
       {isinputValid ? (
-        <span className="error-message">Type result values should have only one decimal place (e.g. 23.1)</span>
+        <span className="error-message">
+          Type result values should have only one decimal place (e.g. 23.1)
+        </span>
+      ) : null}
+      {!isDateSet ? (
+        <span className="error-message">
+          Lab specimen drawn date is a required field
+        </span>
       ) : null}
       <SubmitButton
         isLoading={isLoading}
         onClick={onSubmit}
         disabled={isinputValid}
-        text='SUBMIT' />
+        text="SUBMIT"
+      />
     </div>
   );
 };

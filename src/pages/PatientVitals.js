@@ -132,7 +132,7 @@ const PatientVitals = ({
   const FOLLOWING_STATUS = {
     pageNum: page,
   };
-console.log(labState)
+
   const goBack = () => {
     setPageLoaded(true);
     setPage(page - 1);
