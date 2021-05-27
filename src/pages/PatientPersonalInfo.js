@@ -434,7 +434,7 @@ const PatientPersonalInfo = ({
                   type="email"
                   id={indx}
                   name={info.field}
-                  onChange={handleFieldChange}
+                  onBlur={handleFieldChange}
                   defaultValue={intakeState.emailId}
                 />
               ) : info.field === "height" ? (
@@ -450,7 +450,7 @@ const PatientPersonalInfo = ({
                     id={"feet"}
                     max={"7"}
                     defaultValue={feetHeight}
-                    onChange={handleValidateHeight}
+                    onBlur={handleValidateHeight}
                   />
                   <label className="height-label" htmlFor={"inch"}>
                     in
@@ -463,7 +463,7 @@ const PatientPersonalInfo = ({
                     id={"inch"}
                     max={"11"}
                     defaultValue={inchHeight}
-                    onChange={handleValidateHeight}
+                    onBlur={handleValidateHeight}
                   />
                 </div>
               ) : (
@@ -478,7 +478,7 @@ const PatientPersonalInfo = ({
                     id={indx}
                     name={info.field}
                     defaultValue={getValue(info.field)}
-                    onChange={
+                    onBlur={
                       info.field === PERSONAL_INFO.weight
                         ? handleValidateWeight
                         : handleFieldChange
@@ -508,7 +508,7 @@ const PatientPersonalInfo = ({
             name="address"
             className="address-input"
             defaultValue={intakeState.address}
-            onChange={handleAddressChange}
+            onBlur={handleAddressChange}
           />
         </div>
         <div className="state">
@@ -518,7 +518,7 @@ const PatientPersonalInfo = ({
           <div className="dropdown-selections">
             <Autocomplete
               id="state-drop"
-              shrink={false}
+              shrink={'false'}
               classes={classes}
               name="state"
               value={intakeState.state}
@@ -569,7 +569,7 @@ const PatientPersonalInfo = ({
             name="pinCode"
             className="pin-input"
             defaultValue={intakeState.pinCode}
-            onChange={handleAddressChange}
+            onBlur={handleAddressChange}
           />
         </div>
       </div>

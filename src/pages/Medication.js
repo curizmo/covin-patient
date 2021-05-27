@@ -139,7 +139,7 @@ const Medication = ({
           <textarea
             name="otherMedicationsInfo"
             value={intakeState.otherMedicationsInfo}
-            onChange={handleInputChange}
+            onBlur={handleInputChange}
             className="txtArea"
           ></textarea>
         </div>

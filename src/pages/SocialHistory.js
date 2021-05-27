@@ -97,7 +97,7 @@ const SocialHistory = ({
                   name={history.field}
                   value={intakeState[history.field]}
                   placeholder={setPlaceholder(history.field)}
-                  onChange={handleInputChange}
+                  onBlur={handleInputChange}
                 />
               )}
               {history.type === "Boolean" && <label>{history.title}</label>}

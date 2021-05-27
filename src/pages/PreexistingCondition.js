@@ -156,7 +156,7 @@ const PeexistingCondition = ({
                   id={indx}
                   name={history.field}
                   value={intakeState[history.field]}
-                  onChange={handleInputChange}
+                  onBlur={handleInputChange}
                 />
               )}
               {history.type === "Boolean" && <label>{history.title}</label>}

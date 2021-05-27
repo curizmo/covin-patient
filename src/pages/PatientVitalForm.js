@@ -209,7 +209,7 @@ const PatientVitalForm = ({
             min="0"
             max="100"
             name="OxygenLevel"
-            onChange={onUpdateInput(setShowOxygenErrorMessage, setOxygenLevel)}
+            onBlur={onUpdateInput(setShowOxygenErrorMessage, setOxygenLevel)}
           />
           <div className="icon">%</div>
           <img
@@ -235,7 +235,7 @@ const PatientVitalForm = ({
             min="90"
             max="108"
             name="Temperature"
-            onChange={onUpdateInput(setShowTempErrorMessage, setTemperature)}
+            onBlur={onUpdateInput(setShowTempErrorMessage, setTemperature)}
           />
           <div className="icon">°F</div>
           <img
@@ -260,7 +260,7 @@ const PatientVitalForm = ({
             min="0"
             max="300"
             name="Pulserate"
-            onChange={onUpdateInput(setShowPulseErrorMessage, setPulseRate)}
+            onBlur={onUpdateInput(setShowPulseErrorMessage, setPulseRate)}
           />
           <div className="icon">beats/min</div>
           <img
@@ -287,7 +287,7 @@ const PatientVitalForm = ({
               min="0"
               max="300"
               name="BloodPressureHigh"
-              onChange={onUpdateInput(setShowBpMessage, setBpUpperRange)}
+              onBlur={onUpdateInput(setShowBpMessage, setBpUpperRange)}
             />
 
             <div className="icon-higher">Higher</div>
@@ -298,7 +298,7 @@ const PatientVitalForm = ({
               min="0"
               max="300"
               name="BloodPressureLow"
-              onChange={onUpdateInput(setShowBpMessage, setBpLowerRange)}
+              onBlur={onUpdateInput(setShowBpMessage, setBpLowerRange)}
             />
 
             <div className="icon-lower">Lower</div>
@@ -325,7 +325,7 @@ const PatientVitalForm = ({
             min="0"
             max="50"
             name="respiratoryRate"
-            onChange={onUpdateInput(
+            onBlur={onUpdateInput(
               setShowRespirationMessage,
               setRespiratoryRate
             )}

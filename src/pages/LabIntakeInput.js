@@ -35,7 +35,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="crp"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["crp"]}
                 />
                 {labError.crp ? (
@@ -52,7 +52,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="esr"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["esr"]}
                 />
                 <div className="lab-icon">mm/h</div>
@@ -73,7 +73,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="dDimer"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["dDimer"]}
                 />
                 <div className="lab-icon-left-intake">ng/ml</div>
@@ -90,7 +90,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="ferritin"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["ferritin"]}
                 />
                 <div className="lab-icon"> ng/ml</div>
@@ -111,7 +111,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="ldh"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["ldh"]}
                 />
                 <div className="lab-icon-ldh">U/L</div>
@@ -128,7 +128,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="wbc"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["wbc"]}
                 />
                 <div className="lab-icon">/mm3</div>
@@ -149,7 +149,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="neutrophil"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["neutrophil"]}
                 />
                 <div className="lab-icon-left">%</div>
@@ -166,7 +166,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="lymphocytes"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["lymphocytes"]}
                 />
                 <div className="lab-icon">%</div>
@@ -187,7 +187,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="eosinophils"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["eosinophils"]}
                 />
                 <div className="lab-icon-left">%</div>
@@ -204,7 +204,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="basophils"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["basophils"]}
                 />
                 <div className="lab-icon">%</div>
@@ -225,7 +225,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="platelets"
-                  onChange={handleLabInputChange}
+                  onBlur={handleLabInputChange}
                   value={labState["platelets"]}
                 />
                 <div className="lab-icon-single">%</div>
