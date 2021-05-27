@@ -1,10 +1,12 @@
 import React from "react";
-import { DECIMAL_REGEX } from "../constants/constants";
+import { DECIMAL_REGEX, DATE_FORMAT } from "../constants/constants";
 
 import "../App.css";
 import "./home.css";
 
-const decimalPlaceError = 'Round to one decimal place (e.g. 23.1)';
+const moment = require("moment");
+
+const decimalPlaceError = "Round to one decimal place (e.g. 23.1)";
 
 const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
   const handleLabInputChange = (e) => {
@@ -17,7 +19,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
     //   ...errors,
     //   [item]: !(value === "" || value?.match(DECIMAL_REGEX)?.[0]),
     // }));
-    console.log('@toDo add validation', setLabError)
+    console.log('@toDo add validation', setLabError);
   };
 
   return (
@@ -235,6 +237,20 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <label>Lab specimen drawn on</label>
+          <input
+            name="specimenDrawnDate"
+            className="date-of-lab-test"
+            type="date"
+            placeholder="Select date of diagnosis"
+            max={moment().format(DATE_FORMAT.yyyymmdd)}
+            value={moment(labState["specimenDrawnDate"]).format(
+              DATE_FORMAT.yyyymmdd
+            )}
+            onChange={handleLabInputChange}
+          />
         </div>
       </div>
     </>

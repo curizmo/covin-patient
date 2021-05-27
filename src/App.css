@@ -427,6 +427,20 @@ input.bp:last-of-type {
   color: #22335e;
 }
 
+.date-of-lab-test {
+  height: 1.5rem;
+  width: 91%;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e3ea;
+  box-shadow: 0 2px 0 0 #e0e3ea;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  outline-style: none;
+  color: #22335e;
+}
+
 .button-img {
   padding-right: 0.5rem;
 }
