@@ -155,7 +155,7 @@ const PeexistingCondition = ({
                   type="text"
                   id={indx}
                   name={history.field}
-                  value={intakeState[history.field]}
+                  defaultValue={intakeState[history.field]}
                   onBlur={handleInputChange}
                 />
               )}

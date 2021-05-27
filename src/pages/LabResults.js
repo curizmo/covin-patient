@@ -160,7 +160,7 @@ const LabResults = ({
           <textarea
             name="otherLabResultsInfo"
             value={labState.otherLabResultsInfo}
-            onBlur={handleInputChange}
+            onChange={handleInputChange}
             className="txtArea"
           ></textarea>
         </div>
