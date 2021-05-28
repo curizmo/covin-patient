@@ -167,14 +167,14 @@ const LabResults = ({
       </div>
 
       {isinputValid ? (
-        <span className="error-message">
-          Type result values should have only one decimal place (e.g. 23.1)
-        </span>
+        <p className="error-message">
+          All values should be valid
+        </p>
       ) : null}
       {!isDateSet ? (
-        <span className="error-message">
+        <p className="error-message">
           Lab specimen drawn date is a required field
-        </span>
+        </p>
       ) : null}
       <SubmitButton
         isLoading={isLoading}

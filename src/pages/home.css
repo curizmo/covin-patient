@@ -380,12 +380,12 @@ input[type="text"]::placeholder {
 }
 
 .lab-input-wrap {
-  margin-top: 0.5rem;
+  height: 140px;
   align-items: center;
 }
 
 .lab-input-wrap-single {
-  margin-top: 0.5rem;
+  height: 140px;
   align-items: center;
   width: 50%;
 }
