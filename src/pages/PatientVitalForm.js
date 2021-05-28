@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import moment from "moment";
 
 import help_icon from "../assets/images/help-circle.svg";
@@ -57,6 +57,13 @@ const PatientVitalForm = ({
   const [vitalError, setVitalError] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const oxygenRef = useRef();
+  const temperatureRef = useRef();
+  const pulseRef = useRef();
+  const bpHighRef = useRef();
+  const bpLowRef = useRef();
+  const respirationRef = useRef();
 
   useEffect(() => {
     getSymptoms(patientDetails.patientId);
@@ -210,8 +217,9 @@ const PatientVitalForm = ({
             max="100"
             name="OxygenLevel"
             onBlur={onUpdateInput(setShowOxygenErrorMessage, setOxygenLevel)}
+            ref={oxygenRef}
           />
-          <div className="icon">%</div>
+          <div className="icon" onClick={()=>{oxygenRef.current.focus()}}>%</div>
           <img
             className="help-icon"
             src={help_icon}
@@ -236,8 +244,9 @@ const PatientVitalForm = ({
             max="108"
             name="Temperature"
             onBlur={onUpdateInput(setShowTempErrorMessage, setTemperature)}
+            ref={temperatureRef}
           />
-          <div className="icon">°F</div>
+          <div className="icon" onClick={()=>{temperatureRef.current.focus()}} >°F</div>
           <img
             className="help-icon"
             src={help_icon}
@@ -261,8 +270,9 @@ const PatientVitalForm = ({
             max="300"
             name="Pulserate"
             onBlur={onUpdateInput(setShowPulseErrorMessage, setPulseRate)}
+            ref={pulseRef}
           />
-          <div className="icon">beats/min</div>
+          <div className="icon" onClick={()=>{pulseRef.current.focus()}}>beats/min</div>
           <img
             className="help-icon"
             src={help_icon}
@@ -288,9 +298,10 @@ const PatientVitalForm = ({
               max="300"
               name="BloodPressureHigh"
               onBlur={onUpdateInput(setShowBpMessage, setBpUpperRange)}
+              ref={bpHighRef}
             />
 
-            <div className="icon-higher">Higher</div>
+            <div className="icon-higher" onClick={()=>{bpHighRef.current.focus()}}>Higher</div>
             <input
               className="bp bp-lower"
               type="text"
@@ -299,9 +310,10 @@ const PatientVitalForm = ({
               max="300"
               name="BloodPressureLow"
               onBlur={onUpdateInput(setShowBpMessage, setBpLowerRange)}
+              ref={bpLowRef}
             />
 
-            <div className="icon-lower">Lower</div>
+            <div className="icon-lower" onClick={()=>{bpLowRef.current.focus()}}>Lower</div>
           </div>
           <img
             className="help-icon"
@@ -329,8 +341,9 @@ const PatientVitalForm = ({
               setShowRespirationMessage,
               setRespiratoryRate
             )}
+            ref={respirationRef}
           />
-          <div className="icon">breaths/min</div>
+          <div className="icon" onClick={()=>{respirationRef.current.focus()}}>breaths/min</div>
           <img
             className="help-icon"
             src={help_icon}
@@ -357,7 +370,11 @@ const PatientVitalForm = ({
       {vitalError ? (
         <p className="error-message">At least one field is required</p>
       ) : null}
-      <SubmitButton onClick={onSubmit} isLoading={isLoading} text={messageType === MESSAGE_TYPES.newPatient ? 'SUBMIT' : 'NEXT'} />
+      <SubmitButton
+        onClick={onSubmit}
+        isLoading={isLoading}
+        text={messageType === MESSAGE_TYPES.newPatient ? "SUBMIT" : "NEXT"}
+      />
     </div>
   );
 };
