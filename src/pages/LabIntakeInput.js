@@ -35,8 +35,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="crp"
-                  onChange={handleLabInputChange}
-                  value={labState["crp"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["crp"]}
                 />
                 {labError.crp ? (
                   <p className="lab-error-message">
@@ -52,8 +52,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="esr"
-                  onChange={handleLabInputChange}
-                  value={labState["esr"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["esr"]}
                 />
                 <div className="lab-icon">mm/h</div>
                 {labError.esr ? (
@@ -73,8 +73,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="dDimer"
-                  onChange={handleLabInputChange}
-                  value={labState["dDimer"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["dDimer"]}
                 />
                 <div className="lab-icon-left-intake">ng/ml</div>
                 {labError.dDimer ? (
@@ -90,8 +90,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="ferritin"
-                  onChange={handleLabInputChange}
-                  value={labState["ferritin"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["ferritin"]}
                 />
                 <div className="lab-icon"> ng/ml</div>
                 {labError.ferritin ? (
@@ -111,8 +111,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="ldh"
-                  onChange={handleLabInputChange}
-                  value={labState["ldh"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["ldh"]}
                 />
                 <div className="lab-icon-ldh">U/L</div>
                 {labError.ldh ? (
@@ -128,8 +128,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="wbc"
-                  onChange={handleLabInputChange}
-                  value={labState["wbc"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["wbc"]}
                 />
                 <div className="lab-icon">/mm3</div>
                 {labError.wbc ? (
@@ -149,8 +149,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="neutrophil"
-                  onChange={handleLabInputChange}
-                  value={labState["neutrophil"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["neutrophil"]}
                 />
                 <div className="lab-icon-left">%</div>
                 {labError.neutrophil ? (
@@ -166,8 +166,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="lymphocytes"
-                  onChange={handleLabInputChange}
-                  value={labState["lymphocytes"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["lymphocytes"]}
                 />
                 <div className="lab-icon">%</div>
                 {labError.lymphocytes ? (
@@ -187,8 +187,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="eosinophils"
-                  onChange={handleLabInputChange}
-                  value={labState["eosinophils"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["eosinophils"]}
                 />
                 <div className="lab-icon-left">%</div>
                 {labError.eosinophils ? (
@@ -204,8 +204,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="basophils"
-                  onChange={handleLabInputChange}
-                  value={labState["basophils"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["basophils"]}
                 />
                 <div className="lab-icon">%</div>
                 {labError.basophils ? (
@@ -225,8 +225,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   type="number"
                   inputMode="decimal"
                   name="platelets"
-                  onChange={handleLabInputChange}
-                  value={labState["platelets"]}
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["platelets"]}
                 />
                 <div className="lab-icon-single">%</div>
                 {labError.platelets ? (
