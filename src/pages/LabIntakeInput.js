@@ -6,7 +6,7 @@ import "./home.css";
 
 const moment = require("moment");
 
-const percentError = "Value should be between 0 and 100";
+const percentError = "Value must be between 0 and 100";
 
 const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
   const crpRef = useRef();
@@ -46,7 +46,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   defaultValue={labState["crp"]}
                   ref={crpRef}
                 />
-                <div className="lab-icon-left-intake" onClick={()=>{crpRef.current.focus()}}>mg/L</div>
+                <div className="lab-icon" onClick={()=>{crpRef.current.focus()}}>mg/L</div>
               </div>
               <div>
                 <label>ESR</label>
@@ -78,7 +78,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   ref={dDimerRef}
 
                 />
-                <div className="lab-icon-left-intake" onClick={()=>{dDimerRef.current.focus()}}>ng/ml</div>
+                <div className="lab-icon" onClick={()=>{dDimerRef.current.focus()}}>ng/ml</div>
               </div>
               <div>
                 <label>Ferritin</label>
@@ -108,7 +108,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   defaultValue={labState["ldh"]}
                   ref={ldhRef}
                 />
-                <div className="lab-icon-ldh" onClick={()=>{ldhRef.current.focus()}}>U/L</div>
+                <div className="lab-icon" onClick={()=>{ldhRef.current.focus()}}>U/L</div>
               </div>
               <div>
                 <label>WBC</label>
@@ -140,7 +140,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   defaultValue={labState["neutrophil"]}
                   ref={neutrophilRef}
                 />
-                <div className="lab-icon-left" onClick={()=>{neutrophilRef.current.focus()}}>%</div>
+                <div className="lab-icon" onClick={()=>{neutrophilRef.current.focus()}}>%</div>
                 {labError.neutrophil ? (
                   <p className="lab-error-message">{percentError}</p>
                 ) : null}
@@ -180,7 +180,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   defaultValue={labState["eosinophils"]}
                   ref={eosinophilsRef}
                 />
-                <div className="lab-icon-left" onClick={()=>{eosinophilsRef.current.focus()}}>%</div>
+                <div className="lab-icon" onClick={()=>{eosinophilsRef.current.focus()}}>%</div>
                 {labError.eosinophils ? (
                   <p className="lab-error-message">{percentError}</p>
                 ) : null}
@@ -210,7 +210,6 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
               <div className="single-intake">
                 <label>Platelets</label>
                 <input
-                  className="platelets"
                   type="number"
                   min='0'
                   max='100'
@@ -220,7 +219,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   defaultValue={labState["platelets"]}
                   ref={plateletsRef}
                 />
-                <div className="lab-icon-single" onClick={()=>{plateletsRef.current.focus()}}>%</div>
+                <div className="lab-icon" onClick={()=>{plateletsRef.current.focus()}}>%</div>
                 {labError.platelets ? (
                   <p className="lab-error-message">{percentError}</p>
                 ) : null}

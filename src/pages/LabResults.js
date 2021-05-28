@@ -168,7 +168,7 @@ const LabResults = ({
 
       {isinputValid ? (
         <p className="error-message">
-          All values should be valid
+          All values must be valid
         </p>
       ) : null}
       {!isDateSet ? (

@@ -387,7 +387,6 @@ input[type="text"]::placeholder {
 .lab-input-wrap-single {
   height: 140px;
   align-items: center;
-  width: 50%;
 }
 
 .bp-lower {
