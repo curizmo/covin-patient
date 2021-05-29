@@ -5,7 +5,6 @@ import {
   NEW_PATIENT_PAGES,
   COVID_BEFORE,
 } from "../constants/constants";
-import { FaCalendarAlt } from "react-icons/fa";
 import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
@@ -250,10 +249,7 @@ const CovidHistory = ({
                   ? (e.target.placeholder = DATE_FORMAT.mmddyyyy)
                   : (e.target.placeholder = "");
               }}
-            />
-            <span className="history-date-icon">
-              <FaCalendarAlt />
-            </span>
+            />            
           </div>
         )}
       </div>
@@ -287,10 +283,7 @@ const CovidHistory = ({
                         disabled={checkDisabled(history.field)}
                         value={getValue(history.field)}
                         onBlur={(e)=>{e.target.value===""?e.target.placeholder=DATE_FORMAT.mmddyyyy:e.target.placeholder=""}}
-                      />
-                      <span className="vaccine-date-icon">
-                        <FaCalendarAlt />
-                      </span>
+                      />                   
                     </div>
                   ) : (
                     <input

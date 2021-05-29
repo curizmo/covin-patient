@@ -425,30 +425,6 @@ input.bp:last-of-type {
   position: relative;
 }
 
-.vaccine-date-icon{
-  font-size: 1.2rem;
-  opacity: 0.15;
-  position: absolute;
-  top: 1.8rem;
-  right: 3%;
-}
-
-.history-date-icon{
-  font-size: 1.2rem;
-  opacity: 0.15;
-  position: absolute;
-  top: 3.3rem;
-  right: 3%;
-}
-
-.date-icon{
-  font-size: 1.2rem;
-  opacity: 0.2;
-  position: absolute;
-  top: 2.9rem;
-  right: 3%;
-}
-
 .button-img {
   padding-right: 0.5rem;
 }

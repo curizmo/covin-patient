@@ -1,6 +1,5 @@
 import React, { useState, useEffect,useRef } from "react";
 import { DATE_FORMAT } from "../constants/constants";
-import { FaCalendarAlt } from 'react-icons/fa';
 
 import "../App.css";
 import "./home.css";
@@ -249,7 +248,6 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
             onChange={handleLabInputChange} 
             onBlur={(e)=>{e.target.value===""?e.target.placeholder=DATE_FORMAT.mmddyyyy:e.target.placeholder=""}}                  
           />
-          <span className="date-icon"><FaCalendarAlt/></span>
         </div>
       </div>
     </>
