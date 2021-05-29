@@ -273,29 +273,41 @@ input[type="date"]:disabled {
   background-color: #e0e3ea;
 }
 
-input[type=date]::-webkit-calendar-picker-indicator {
-  display: inline-block;
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
 }
 
-/* input[type=date]::-webkit-datetime-edit-text {
-  -webkit-appearance: inline-block;
-  display: inline-block;
+input[type="date"]::-webkit-datetime-edit-text {
+  -webkit-appearance: none;
+  display: none;
 }
-input[type=date]::-webkit-datetime-edit-month-field{
-  -webkit-appearance: inline-block;
-  display: inline-block;
+input[type="date"]::-webkit-datetime-edit-month-field {
+  -webkit-appearance: none;
+  display: none;
 }
-input[type=date]::-webkit-datetime-edit-day-field {
-  -webkit-appearance: inline-block;
-  display: inline-block;
+input[type="date"]::-webkit-datetime-edit-day-field {
+  -webkit-appearance: none;
+  display: none;
 }
-input[type=date]::-webkit-datetime-edit-year-field {
-  -webkit-appearance: inline-block;
-  display: inline-block;
-} */
+input[type="date"]::-webkit-datetime-edit-year-field {
+  -webkit-appearance: none;
+  display: none;
+}
 
-input[type="number"]::placeholder {
-  text-align: right;
+input[type="date"]:not(.has-value):not(:focus):before{
+  content: attr(placeholder);
+  opacity: 0.5;
+  font-weight: 500;
+}
+
+input[type="date"]::-webkit-datetime-edit { 
+  color: transparent;
+  user-select: none;
+}
+
+input[type="date"]:focus::-webkit-datetime-edit{ 
+color: #000; 
+user-select: none;
 }
 
 input[type="text"]::placeholder {

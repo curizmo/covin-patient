@@ -1,5 +1,6 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { DATE_FORMAT } from "../constants/constants";
+import { FaCalendarAlt } from 'react-icons/fa';
 
 import "../App.css";
 import "./home.css";
@@ -9,6 +10,7 @@ const moment = require("moment");
 const percentError = "Value must be between 0 and 100";
 
 const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
+  const [placeholder, setPlaceholder] = useState("")
   const crpRef = useRef();
   const esrRef = useRef();
   const dDimerRef = useRef();
@@ -22,12 +24,18 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
   const plateletsRef = useRef();
 
   const handleLabInputChange = (e) => {
-    const { name: item, value, min, max} = e.target;
+    const { name: item, value, min, max} = e.target;    
 
     setLabError(state => ({ ...state, [item]: (min && +value < +min) || (max && +value > +max) }));
     setLabState({ ...labState, [item]: value });
-    console.log("@toDo add validation", setLabError);
+    console.log("@toDo add validation", setLabError);    
   };
+
+  useEffect(() => {
+    if (labState["specimenDrawnDate"] === ""){
+      setPlaceholder("mm/dd/yyyy")
+    }
+  }, [])
 
   return (
     <>
@@ -227,19 +235,21 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="date-input">
           <label>Lab specimen drawn on</label>
           <input
             name="specimenDrawnDate"
-            className="date-of-lab-test"
+            className="date-of-lab-test .date-placeholder"
             type="date"
-            placeholder="Select date of diagnosis"
+            placeholder={placeholder}
             max={moment().format(DATE_FORMAT.yyyymmdd)}
             value={moment(labState["specimenDrawnDate"]).format(
               DATE_FORMAT.yyyymmdd
             )}
-            onChange={handleLabInputChange}
+            onChange={handleLabInputChange} 
+            onBlur={(e)=>{e.target.value===""?e.target.placeholder=DATE_FORMAT.mmddyyyy:e.target.placeholder=""}}                  
           />
+          <span className="date-icon"><FaCalendarAlt/></span>
         </div>
       </div>
     </>

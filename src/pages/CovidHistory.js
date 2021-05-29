@@ -5,6 +5,7 @@ import {
   NEW_PATIENT_PAGES,
   COVID_BEFORE,
 } from "../constants/constants";
+import { FaCalendarAlt } from "react-icons/fa";
 import * as patientService from "../services/patient";
 import "../App.css";
 import "./home.css";
@@ -28,6 +29,9 @@ const CovidHistory = ({
   const [checkedTwo, setCheckedTwo] = useState(false);
   const [isDiagnosed, setDiagnosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [diagnosisPlaceholder, setDiagnosisPlaceholder] = useState("");
+  const [doseOnePlaceholder, setDoseOnePlaceholder] = useState("");
+  const [doseTwoPlaceholder, setDoseTwoPlaceholder] = useState("");  
   const [state, setChecked] = useState();
 
   useEffect(() => {
@@ -48,6 +52,30 @@ const CovidHistory = ({
       setDiagnosed(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (intakeState["dateCovidBefore"] === "") {
+      setDiagnosisPlaceholder("mm/dd/yyyy");
+    } else {
+      setDoseOnePlaceholder("");
+    }
+
+    if (intakeState["dateOfDose1Vaccination"] === "") {
+      setDoseOnePlaceholder("mm/dd/yyyy");
+    } else {
+      setDoseOnePlaceholder("");
+    }
+
+    if (intakeState["dateOfDose2Vaccination"] === "") {
+      setDoseTwoPlaceholder("mm/dd/yyyy");
+    } else {
+      setDoseTwoPlaceholder("");
+    }
+  }, [
+    intakeState.dateOfDose2Vaccination,
+    intakeState.dateOfDose1Vaccination,
+    intakeState.dateCovidBefore,
+  ]);
 
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
@@ -205,19 +233,27 @@ const CovidHistory = ({
           </span>
         </div>
         {isDiagnosed && (
-          <div className="date-diagnosed">
+          <div className="date-diagnosed date-input">
             <label>Date of diagnosis</label>
             <input
               name="dateCovidBefore"
               className="date-of-diagnosis"
               type="date"
-              placeholder="Select date of diagnosis"
+              placeholder={diagnosisPlaceholder}
               max={moment().format(DATE_FORMAT.yyyymmdd)}
               value={moment(intakeState.dateCovidBefore).format(
                 DATE_FORMAT.yyyymmdd
               )}
               onChange={handleInputChange}
+              onBlur={(e) => {
+                e.target.value === ""
+                  ? (e.target.placeholder = DATE_FORMAT.mmddyyyy)
+                  : (e.target.placeholder = "");
+              }}
             />
+            <span className="history-date-icon">
+              <FaCalendarAlt />
+            </span>
           </div>
         )}
       </div>
@@ -225,43 +261,54 @@ const CovidHistory = ({
         {covidHistory.map((history, indx) => {
           return (
             <>
-            {history.field !== "dateCovidBefore" &&
-            <div
-              className={
-                `${history.type}` === "Boolean"
-                  ? "history-list-content"
-                  : "input-history"
-              }
-              key={getRandomKey()}
-            >
-              {history.type === "Text" && <label>{history.title}</label>}
-              {history.type === "Text" ? (
-                <input
-                  type="date"
-                  id={indx}
-                  name={history.field}
-                  onChange={handleInputChange}
-                  max={moment().format(DATE_FORMAT.yyyymmdd)}
-                  disabled={checkDisabled(history.field)}
-                  value={getValue(history.field)}
-                />
-              ) : (
-                <input
-                  className="symptoms-checkbox"
-                  type="checkbox"
-                  id={indx}
-                  name={history.field}
-                  value={history.field}
-                  onChange={handleCheckboxChange}
-                  checked={intakeState[history.field]}
-                />
+              {history.field !== "dateCovidBefore" && (
+                <div
+                  className={
+                    `${history.type}` === "Boolean"
+                      ? "history-list-content"
+                      : "input-history"
+                  }
+                  key={getRandomKey()}
+                >
+                  {history.type === "Text" && <label>{history.title}</label>}
+                  {history.type === "Text" ? (
+                    <div className="date-input">
+                      <input
+                        type="date"
+                        id={indx}
+                        name={history.field}
+                        placeholder={
+                          history.field === "dateOfDose1Vaccination"
+                            ? doseOnePlaceholder
+                            : doseTwoPlaceholder
+                        }
+                        onChange={handleInputChange}
+                        max={moment().format(DATE_FORMAT.yyyymmdd)}
+                        disabled={checkDisabled(history.field)}
+                        value={getValue(history.field)}
+                        onBlur={(e)=>{e.target.value===""?e.target.placeholder=DATE_FORMAT.mmddyyyy:e.target.placeholder=""}}
+                      />
+                      <span className="vaccine-date-icon">
+                        <FaCalendarAlt />
+                      </span>
+                    </div>
+                  ) : (
+                    <input
+                      className="symptoms-checkbox"
+                      type="checkbox"
+                      id={indx}
+                      name={history.field}
+                      value={history.field}
+                      onChange={handleCheckboxChange}
+                      checked={intakeState[history.field]}
+                    />
+                  )}
+                  {history.type === "Boolean" && (
+                    <label htmlFor={history.field}>{history.title}</label>
+                  )}
+                </div>
               )}
-              {history.type === "Boolean" && (
-                <label htmlFor={history.field}>{history.title}</label>
-              )}
-            </div>
-              }
-              </>
+            </>
           );
         })}
       </div>
