@@ -224,6 +224,8 @@ const CovidHistory = ({
       <div className="health-checklist">
         {covidHistory.map((history, indx) => {
           return (
+            <>
+            {history.field !== "dateCovidBefore" &&
             <div
               className={
                 `${history.type}` === "Boolean"
@@ -258,6 +260,8 @@ const CovidHistory = ({
                 <label htmlFor={history.field}>{history.title}</label>
               )}
             </div>
+              }
+              </>
           );
         })}
       </div>
