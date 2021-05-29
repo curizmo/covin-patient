@@ -56,7 +56,7 @@ const CovidHistory = ({
     if (intakeState["dateCovidBefore"] === "") {
       setDiagnosisPlaceholder("mm/dd/yyyy");
     } else {
-      setDoseOnePlaceholder("");
+      setDiagnosisPlaceholder("");
     }
 
     if (intakeState["dateOfDose1Vaccination"] === "") {
