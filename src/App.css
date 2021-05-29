@@ -104,17 +104,8 @@ body {
   outline-style: none;
 }
 
-.lab-input .platelets {
-  height: 1.5rem;
-  width: 75%;
-  margin-top: 0.5rem;
-  padding: 1rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-
-}
-
 .single-intake {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -194,31 +185,27 @@ body {
   display: flex;
   width: 100%;
   position: relative;
+  justify-content: space-between;
 }
 
-.lab-vitals div {
-  margin: 0.6rem 0 0.6rem 0.3rem;
+.lab-vitals > div {
+  width: 49%;
+  position: relative;
 }
 
 .lab-error-message {
   margin-top: 0.4rem;
+  width: 95%;
   color: red;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
 }
 
 .lab-icon {
   font-size: 1.1rem;
   opacity: 0.3;
   position: absolute;
-  top: 46%;
-  right:6%;
-}
-.lab-icon-left {
-  font-size: 1.1rem;
-  opacity: 0.3;
-  position: absolute;
-  top: 46%;
-  left: 37.5%;
+  top: 3.5rem;
+  right: 8%;
 }
 
 .lab-title{
@@ -233,7 +220,7 @@ body {
   font-size: 1.1rem;
   opacity: 0.3;
   position: absolute;
-  top: 46%;
+  top: 3.2rem;
   left: 76%;
 }
 
@@ -241,7 +228,7 @@ body {
   font-size: 1.1rem;
   opacity: 0.3;
   position: absolute;
-  top: 46%;
+  top: 3.2rem;
   left: 35%;
 }
 
@@ -249,7 +236,7 @@ body {
   font-size: 1.1rem;
   opacity: 0.3;
   position: absolute;
-  top: 46%;
+  top: 3.2rem;
   left: 31%;
 }
 
@@ -275,7 +262,6 @@ label.weight-label {
 }
 input.bp,
 input.date-state {
-  height: 1.5rem;
   margin-right: 0.5rem;
 }
 input.bp:last-of-type {
@@ -456,7 +442,7 @@ input.bp:last-of-type {
 .error-message {
   margin-top: 0.4rem;
   color: red;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
 }
 .history-list-content > label {
   font-size: 1rem;
