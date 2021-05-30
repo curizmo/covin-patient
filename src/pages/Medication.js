@@ -28,6 +28,8 @@ const Medication = ({
   const [medicationFile, setMedicationFile] = useState([]);
   const [imageCount, setImageCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isuploadLoading, setIsUploadLoading] = useState(false);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -110,6 +112,8 @@ const Medication = ({
           setMedicationFile={setMedicationFile}
           medicationFile={medicationFile}
           imageCount={imageCount}
+          setIsLoading={setIsUploadLoading}
+          isLoading={isuploadLoading}
         />
         {fileAspects?.length > 0 &&
           fileAspects.map((file) => {
