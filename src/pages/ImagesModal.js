@@ -59,8 +59,8 @@ const ImagesModal = (props) => {
         <div className="container">
           <div className="modal-content-wrap display-flex">
             {isLoading ? (
-              <label className="camera-options-wrap display-flex border-radius">
-                <span className="lds-spinner  upload-spinner">
+              <label className="spinner-wrap display-flex">
+                <span className="lds-spinner">
                   {[...Array(12).keys()].map(() => (
                     <span />
                   ))}
