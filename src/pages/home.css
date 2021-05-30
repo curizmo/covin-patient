@@ -273,7 +273,7 @@ input[type="date"]:disabled {
   background-color: #e0e3ea;
 }
 
-input[type="date"]:not(.has-value):not(:focus):before{
+input[type="date"]:not(:focus):before{
   content: attr(placeholder);
   opacity: 0.5;
   font-weight: 500;
