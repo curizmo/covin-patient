@@ -614,6 +614,10 @@ label.cameraButton input {
   height: 6.9rem;
 }
 
+.spinner-wrap {
+  height: 100vh;
+}
+
 .border-radius {
   border-radius: 12px;
 }

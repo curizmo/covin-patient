@@ -22,6 +22,8 @@ const LabIntakeUpload = ({
   imageCount,
   setImageCount,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const addImages = () => {
     setShowModal(true);
     setDisplayImage(false);
@@ -59,6 +61,8 @@ const LabIntakeUpload = ({
         setMedicationFile={setMedicationFile}
         medicationFile={medicationFile}
         imageCount={imageCount}
+        setIsLoading={setIsLoading}
+        isLoading={isLoading}
       />
       {fileAspects?.length > 0 &&
         fileAspects.map((file) => {
