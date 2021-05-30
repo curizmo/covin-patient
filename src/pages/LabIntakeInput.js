@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DATE_FORMAT } from "../constants/constants";
 
 import "../App.css";
@@ -29,7 +29,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
     setLabState({ ...labState, [item]: value });
     console.log("@toDo add validation", setLabError);   
     if(item === "specimenDrawnDate"){
-      value !== ""? setDateClassName("has-value"): setDateClassName("")
+      setDateClassName(value ? "has-value" : "")
     } 
   };
 
@@ -243,7 +243,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
             name="specimenDrawnDate"
             className={`date-of-lab-test ${dateclassName}`}
             type="date"
-            placeholder="mm/dd/yyyy"
+            placeholder={DATE_FORMAT.mmddyyyy}
             max={moment().format(DATE_FORMAT.yyyymmdd)}
             value={moment(labState["specimenDrawnDate"]).format(
               DATE_FORMAT.yyyymmdd
