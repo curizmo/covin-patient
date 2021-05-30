@@ -28,9 +28,9 @@ const CovidHistory = ({
   const [checkedTwo, setCheckedTwo] = useState(false);
   const [isDiagnosed, setDiagnosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [diagnosisPlaceholder, setDiagnosisPlaceholder] = useState("");
-  const [doseOnePlaceholder, setDoseOnePlaceholder] = useState("");
-  const [doseTwoPlaceholder, setDoseTwoPlaceholder] = useState("");  
+  const [diagnosisClass, setDiagnosisClass] = useState("");
+  const [doseOneClass, setDoseOneClass] = useState("");
+  const [doseTwoClass, setDoseTwoClass] = useState("");
   const [state, setChecked] = useState();
 
   useEffect(() => {
@@ -53,22 +53,22 @@ const CovidHistory = ({
   }, []);
 
   useEffect(() => {
-    if (intakeState["dateCovidBefore"] === "") {
-      setDiagnosisPlaceholder("mm/dd/yyyy");
+    if (intakeState["dateCovidBefore"] !== "") {
+      setDiagnosisClass("has-value");
     } else {
-      setDiagnosisPlaceholder("");
+      setDiagnosisClass("");
     }
 
-    if (intakeState["dateOfDose1Vaccination"] === "") {
-      setDoseOnePlaceholder("mm/dd/yyyy");
+    if (intakeState["dateOfDose1Vaccination"] !== "") {
+      setDoseOneClass("has-value");
     } else {
-      setDoseOnePlaceholder("");
+      setDoseOneClass("");
     }
 
-    if (intakeState["dateOfDose2Vaccination"] === "") {
-      setDoseTwoPlaceholder("mm/dd/yyyy");
+    if (intakeState["dateOfDose2Vaccination"] !== "") {
+      setDoseTwoClass("has-value");
     } else {
-      setDoseTwoPlaceholder("");
+      setDoseTwoClass("");
     }
   }, [
     intakeState.dateOfDose2Vaccination,
@@ -236,20 +236,15 @@ const CovidHistory = ({
             <label>Date of diagnosis</label>
             <input
               name="dateCovidBefore"
-              className="date-of-diagnosis"
+              className={`date-of-diagnosis ${diagnosisClass}`}
               type="date"
-              placeholder={diagnosisPlaceholder}
+              placeholder="mm/dd/yyyy"
               max={moment().format(DATE_FORMAT.yyyymmdd)}
               value={moment(intakeState.dateCovidBefore).format(
                 DATE_FORMAT.yyyymmdd
               )}
               onChange={handleInputChange}
-              onBlur={(e) => {
-                e.target.value === ""
-                  ? (e.target.placeholder = DATE_FORMAT.mmddyyyy)
-                  : (e.target.placeholder = "");
-              }}
-            />            
+            />
           </div>
         )}
       </div>
@@ -270,20 +265,20 @@ const CovidHistory = ({
                   {history.type === "Text" ? (
                     <div className="date-input">
                       <input
+                        className={
+                          history.field === "dateOfDose1Vaccination"
+                            ? doseOneClass
+                            : doseTwoClass
+                        }
                         type="date"
                         id={indx}
                         name={history.field}
-                        placeholder={
-                          history.field === "dateOfDose1Vaccination"
-                            ? doseOnePlaceholder
-                            : doseTwoPlaceholder
-                        }
+                        placeholder="mm/dd/yyyy"
                         onChange={handleInputChange}
                         max={moment().format(DATE_FORMAT.yyyymmdd)}
                         disabled={checkDisabled(history.field)}
                         value={getValue(history.field)}
-                        onBlur={(e)=>{e.target.value===""?e.target.placeholder=DATE_FORMAT.mmddyyyy:e.target.placeholder=""}}
-                      />                   
+                      />
                     </div>
                   ) : (
                     <input

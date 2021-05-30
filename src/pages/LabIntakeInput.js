@@ -9,7 +9,7 @@ const moment = require("moment");
 const percentError = "Value must be between 0 and 100";
 
 const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
-  const [placeholder, setPlaceholder] = useState("")
+  const [dateclassName, setDateClassName] = useState("")
   const crpRef = useRef();
   const esrRef = useRef();
   const dDimerRef = useRef();
@@ -27,12 +27,15 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
 
     setLabError(state => ({ ...state, [item]: (min && +value < +min) || (max && +value > +max) }));
     setLabState({ ...labState, [item]: value });
-    console.log("@toDo add validation", setLabError);    
+    console.log("@toDo add validation", setLabError);   
+    if(item === "specimenDrawnDate"){
+      value !== ""? setDateClassName("has-value"): setDateClassName("")
+    } 
   };
 
   useEffect(() => {
-    if (labState["specimenDrawnDate"] === ""){
-      setPlaceholder("mm/dd/yyyy")
+    if (labState["specimenDrawnDate"] !== ""){
+      setDateClassName(`has-value`)
     }
   }, [])
 
@@ -238,15 +241,14 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
           <label>Lab specimen drawn on</label>
           <input
             name="specimenDrawnDate"
-            className="date-of-lab-test"
+            className={`date-of-lab-test ${dateclassName}`}
             type="date"
-            placeholder={placeholder}
+            placeholder="mm/dd/yyyy"
             max={moment().format(DATE_FORMAT.yyyymmdd)}
             value={moment(labState["specimenDrawnDate"]).format(
               DATE_FORMAT.yyyymmdd
             )}
-            onChange={handleLabInputChange} 
-            onBlur={(e)=>{e.target.value===""?e.target.placeholder=DATE_FORMAT.mmddyyyy:e.target.placeholder=""}}                  
+            onChange={handleLabInputChange}                 
           />
         </div>
       </div>
