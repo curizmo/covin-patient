@@ -238,7 +238,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
           <label>Lab specimen drawn on</label>
           <input
             name="specimenDrawnDate"
-            className="date-of-lab-test .date-placeholder"
+            className="date-of-lab-test"
             type="date"
             placeholder={placeholder}
             max={moment().format(DATE_FORMAT.yyyymmdd)}
