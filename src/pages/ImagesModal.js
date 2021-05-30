@@ -44,9 +44,13 @@ const ImagesModal = (props) => {
           setFileAspects([...fileAspects, fileInfo]);
           setMedicationFile([...medicationFile, imageFileInfo]);
         };
-        setIsLoading(false);
         onClose();
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      } 
+      finally {
+        setIsLoading(false);
+      }
     }
   };
 
