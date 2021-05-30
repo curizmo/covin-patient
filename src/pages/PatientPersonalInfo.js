@@ -483,9 +483,6 @@ const PatientPersonalInfo = ({
                         ? handleValidateWeight
                         : handleFieldChange
                     }
-                    placeholder={
-                      info.field === PERSONAL_INFO.weight ? "Kg." : ""
-                    }
                   />
                   {info.field === PERSONAL_INFO.weight && (
                     <label className="weight-label" htmlFor={"weight"}>

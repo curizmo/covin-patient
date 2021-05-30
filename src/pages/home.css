@@ -273,9 +273,11 @@ input[type="date"]:disabled {
   background-color: #e0e3ea;
 }
 
-input[type="number"]::placeholder {
-  text-align: right;
+input[type="date"]:not(.has-value):before{
+  opacity: 0.3;
+  content: attr(placeholder);
 }
+
 
 input[type="text"]::placeholder {
   opacity: 0.5;
