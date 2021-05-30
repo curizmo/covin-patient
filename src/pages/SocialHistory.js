@@ -73,35 +73,39 @@ const SocialHistory = ({
       <div className="health-checklist">
         {socialHistory.map((history, indx) => {
           return (
-            <div
-              className={
-                `${history.type}` === "Boolean"
-                  ? "list-content"
-                  : "input-history"
-              }
-              key={getRandomKey()}
-            >
-              {history.type === "Text" && <label>{history.title}</label>}
-              {history.type === "Boolean" ? (
-                <input
-                  className="symptoms-checkbox"
-                  type="checkbox"
-                  id={indx}
-                  value={history.field}
-                  onChange={handleCheckboxChange}
-                />
-              ) : (
-                <input
-                  type="text"
-                  id={indx}
-                  name={history.field}
-                  defaultValue={intakeState[history.field]}
-                  placeholder={setPlaceholder(history.field)}
-                  onBlur={handleInputChange}
-                />
+            <>
+              {history.field !== ALLERGY.other && (
+                <div
+                  className={
+                    `${history.type}` === "Boolean"
+                      ? "list-content"
+                      : "input-history"
+                  }
+                  key={getRandomKey()}
+                >
+                  {history.type === "Text" && <label>{history.title}</label>}
+                  {history.type === "Boolean" ? (
+                    <input
+                      className="symptoms-checkbox"
+                      type="checkbox"
+                      id={indx}
+                      value={history.field}
+                      onChange={handleCheckboxChange}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      id={indx}
+                      name={history.field}
+                      defaultValue={intakeState[history.field]}
+                      placeholder={setPlaceholder(history.field)}
+                      onBlur={handleInputChange}
+                    />
+                  )}
+                  {history.type === "Boolean" && <label>{history.title}</label>}
+                </div>
               )}
-              {history.type === "Boolean" && <label>{history.title}</label>}
-            </div>
+            </>
           );
         })}
       </div>
