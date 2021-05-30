@@ -80,7 +80,6 @@ const ImagesModal = (props) => {
                       accept="image/*"
                       capture=""
                       onChange={imageHandler}
-                      onClick={(e) => (e.target.value = null)}
                     />
                   </label>
                   <label className="cameraButton">
@@ -89,7 +88,6 @@ const ImagesModal = (props) => {
                       type="file"
                       accept="image/*"
                       onChange={imageHandler}
-                      onClick={(e) => (e.target.value = null)}
                     />
                   </label>
                 </div>
