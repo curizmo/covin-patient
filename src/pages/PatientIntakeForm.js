@@ -3,6 +3,8 @@ import PatientVitals from "./PatientVitals";
 import TermsAndCondition from "./TermsAndCondition";
 import { useParams } from "react-router-dom";
 import * as patientService from "../services/patient";
+import Submission from "./Submission";
+import { MESSAGE_STATUS,MESSAGE_TYPES } from "../constants/constants";
 
 const PatientIntakeForm = () => {
   const { hashKey } = useParams();
@@ -40,9 +42,9 @@ const PatientIntakeForm = () => {
 
   return (
     <div>
-      {patientDetails.messageStatus === "SENT" ? (
+      {patientDetails.messageStatus === MESSAGE_STATUS.sent ? (
         <>
-          {patientDetails.messageType === "newPatient" ? (
+          {patientDetails.messageType === MESSAGE_TYPES.newPatient ? (
             <>
               {!isAgreed && (
                 <TermsAndCondition
@@ -78,7 +80,9 @@ const PatientIntakeForm = () => {
             </>
           )}
         </>
-      ) : null}
+      ) : (
+        <Submission messageStatus={patientDetails.messageStatus} />
+      )}
     </div>
   );
 };

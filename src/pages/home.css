@@ -424,6 +424,15 @@ input[type="text"]::placeholder {
   /* font-family: Helvetica; */
 }
 
+.expired-page{
+  height: 20%;
+  position: absolute;
+	top:35%;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 .modal {
   position: fixed;
   left: 0;
