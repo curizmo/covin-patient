@@ -77,6 +77,11 @@ export const MESSAGE_TYPES = {
   vitalsUpdate: "vitalsUpdate",
 };
 
+export const MESSAGE_STATUS = {
+  sent: "SENT",
+  processed: "PROCESSED"
+}
+
 export const LAB_INPUT_TYPE = {
   picture: "picture",
   type: "type",
