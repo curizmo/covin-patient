@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   MINIMUM_YEAR,
   DATE_FORMAT,
@@ -12,35 +12,39 @@ import { getRandomKey } from "../utils";
 import { SubmitButton } from "../components/common/SubmitButton";
 
 const moment = require("moment");
+const maxDate = moment().format(DATE_FORMAT.yyyymmdd);
 
 const CovidHistory = ({
   covidHistory,
   setIntakeState,
   intakeState,
   patientDetails,
-  progressedPage,
   setProgressedPage,
   hash,
   setPage,
   page,
 }) => {
-  const [checkedOne, setCheckedOne] = useState(false);
-  const [checkedTwo, setCheckedTwo] = useState(false);
   const [isDiagnosed, setDiagnosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [diagnosisClass, setDiagnosisClass] = useState("");
-  const [doseOneClass, setDoseOneClass] = useState("");
-  const [doseTwoClass, setDoseTwoClass] = useState("");
+  const [dosesClass, setDosesClass] = useState({
+    dateOfDose1Vaccination: '',
+    dateOfDose2Vaccination: '',
+  });
   const [state, setChecked] = useState();
+  const dosesRefs = {
+    dateOfDose1Vaccination: useRef(null),
+    dateOfDose2Vaccination: useRef(null),
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleInputChange = (e) => {
-    const item = e.target.name;
-    setIntakeState({ ...intakeState, [item]: e.target.value });
-  };
+  const handleInputChange = useCallback((e) => {
+    const { name: item, value } = e.target;
+    setIntakeState(intakeState => ({ ...intakeState, [item]: value }));
+  }, [setIntakeState]);
 
   useEffect(() => {
     if (intakeState.covidPositiveEverBefore) {
@@ -50,16 +54,14 @@ const CovidHistory = ({
       setChecked(COVID_BEFORE.no);
       setDiagnosed(false);
     }
-  }, []);
+  }, [intakeState.covidPositiveEverBefore]);
 
   useEffect(() => {
-    setDiagnosisClass(intakeState["dateCovidBefore"] !== "" ? "has-value" : "");
-    setDoseOneClass(
-      intakeState["dateOfDose1Vaccination"] !== "" ? "has-value" : ""
-    );
-    setDoseTwoClass(
-      intakeState["dateOfDose2Vaccination"] !== "" ? "has-value" : ""
-    );
+    setDiagnosisClass(intakeState.dateCovidBefore ? "has-value" : "");
+    setDosesClass({
+      dateOfDose1Vaccination: intakeState.dateOfDose1Vaccination ? "has-value" : "",
+      dateOfDose2Vaccination: intakeState.dateOfDose2Vaccination ? "has-value" : ""
+    });
   }, [
     intakeState.dateOfDose2Vaccination,
     intakeState.dateOfDose1Vaccination,
@@ -69,14 +71,9 @@ const CovidHistory = ({
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.name;
-    item === "none"
-      ? setIntakeState({ ...intakeState, [item]: !isChecked })
-      : setIntakeState({ ...intakeState, [item]: isChecked });
-
-    if (item === "covidVaccinationDose1Taken") {
-      setCheckedOne(isChecked);
-    } else if (item === "covidVaccinationDose2Taken") {
-      setCheckedTwo(isChecked);
+    setIntakeState({ ...intakeState, [item]: isChecked });
+    if (isChecked) {
+      dosesRefs[item === 'covidVaccinationDose1Taken' ? 'dateOfDose1Vaccination' : 'dateOfDose2Vaccination'].current.focus();
     }
   };
 
@@ -142,45 +139,6 @@ const CovidHistory = ({
     }
   };
 
-  const onBackButtonClick = () => {
-    setProgressedPage(NEW_PATIENT_PAGES.patientInfo);
-  };
-
-  const getValue = (field) => {
-    if (checkDisabled(field)) {
-      return "dd/mm/yyyy";
-    }
-    switch (field) {
-      case "dateOfDose1Vaccination":
-        return moment(intakeState.dateOfDose1Vaccination).format(
-          DATE_FORMAT.yyyymmdd
-        );
-        break;
-      case "dateOfDose2Vaccination":
-        return moment(intakeState.dateOfDose2Vaccination).format(
-          DATE_FORMAT.yyyymmdd
-        );
-        break;
-      case "dateCovidBefore":
-        moment(intakeState.dateCovidBefore).format(DATE_FORMAT.yyyymmdd);
-        break;
-    }
-  };
-
-  const checkDisabled = (field) => {
-    switch (field) {
-      case "dateOfDose1Vaccination":
-        return !intakeState.covidVaccinationDose1Taken;
-        break;
-      case "dateOfDose2Vaccination":
-        return !intakeState.covidVaccinationDose2Taken;
-        break;
-      case "dateCovidBefore":
-        return !intakeState.covidPositiveEverBefore;
-        break;
-    }
-  };
-
   return (
     <div className="form-content-wrapper">
       <div className="covid-diagnosed">
@@ -229,7 +187,7 @@ const CovidHistory = ({
               className={`date-of-diagnosis ${diagnosisClass}`}
               type="date"
               placeholder={DATE_FORMAT.mmddyyyy}
-              max={moment().format(DATE_FORMAT.yyyymmdd)}
+              max={maxDate}
               value={moment(intakeState.dateCovidBefore).format(
                 DATE_FORMAT.yyyymmdd
               )}
@@ -255,19 +213,17 @@ const CovidHistory = ({
                   {history.type === "Text" ? (
                     <div className="date-input">
                       <input
-                        className={
-                          history.field === "dateOfDose1Vaccination"
-                            ? doseOneClass
-                            : doseTwoClass
-                        }
-                        type="date"
-                        id={indx}
+                        ref={dosesRefs[history.field]}
                         name={history.field}
+                        className={`date-of-vaccination ${dosesClass[history.field]}`}
+                        type="date"
                         placeholder={DATE_FORMAT.mmddyyyy}
+                        max={maxDate}
+                        disabled={!(history.field === "dateOfDose1Vaccination" ? intakeState.covidVaccinationDose1Taken : intakeState.covidVaccinationDose2Taken)}
+                        value={moment(intakeState[history.field]).format(
+                          DATE_FORMAT.yyyymmdd
+                        )}
                         onChange={handleInputChange}
-                        max={moment().format(DATE_FORMAT.yyyymmdd)}
-                        disabled={checkDisabled(history.field)}
-                        value={getValue(history.field)}
                       />
                     </div>
                   ) : (

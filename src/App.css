@@ -393,7 +393,8 @@ input.bp:last-of-type {
   font-size: 0.875rem;
 }
 
-.date-of-diagnosis {
+.date-of-diagnosis,
+.date-of-vaccination {
   height: 0.688rem;
   width: 91%;
   margin-top: 0.5rem;
@@ -405,6 +406,7 @@ input.bp:last-of-type {
   font-weight: 600;
   outline-style: none;
   color: #22335e;
+  cursor: pointer;
 }
 
 .date-of-lab-test {
