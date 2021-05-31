@@ -15,7 +15,7 @@ const LabResults = ({
   page,
   hash,
 }) => {
-  const [intakeType, setIntakeTpye] = useState(LAB_INPUT_TYPE.type);
+  const [intakeType, setIntakeType] = useState(LAB_INPUT_TYPE.picture);
   const [showModal, setShowModal] = useState(false);
   const [fileAspects, setFileAspects] = useState([]);
   const [displayImage, setDisplayImage] = useState(false);
@@ -68,7 +68,7 @@ const LabResults = ({
   }, [labState["specimenDrawnDate"]]);
 
   const handleCheckboxChange = (e) => {
-    setIntakeTpye(e.target.value);
+    setIntakeType(e.target.value);
   };
 
   const handleInputChange = (e) => {
