@@ -273,16 +273,23 @@ input[type="date"]:disabled {
   background-color: #e0e3ea;
 }
 
-input[type="date"]:not(.has-value):before{
+input[type="date"]:not(.has-value):before {
   opacity: 0.3;
   content: attr(placeholder);
 }
 
+input[type="date"]:not(.has-value)::-webkit-datetime-edit-text,
+input[type="date"]:not(.has-value)::-webkit-datetime-edit-month-field,
+input[type="date"]:not(.has-value)::-webkit-datetime-edit-day-field,
+input[type="date"]:not(.has-value)::-webkit-datetime-edit-year-field {
+  display: none;
+}
 
 input[type="text"]::placeholder {
   opacity: 0.5;
   font-weight: 500;
 }
+
 /* submission */
 .block-text {
   font-weight: bold;
@@ -329,7 +336,7 @@ input[type="text"]::placeholder {
   opacity: 0.3;
 }
 
-.range-error{
+.range-error {
   position: absolute;
   top: 6.3rem;
 }
@@ -424,13 +431,13 @@ input[type="text"]::placeholder {
   /* font-family: Helvetica; */
 }
 
-.expired-page{
+.expired-page {
   height: 20%;
   position: absolute;
-	top:35%;
-	bottom: 0;
-	left: 0;
-	right: 0;
+  top: 35%;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .modal {
