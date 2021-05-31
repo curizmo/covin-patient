@@ -23,25 +23,27 @@ const Submission = ({ messageStatus }) => {
             alt="success-image"
           />
           <div className="text-greeting">
-            <div>
-              <span className="bold-text">Thank you</span>{" "}
-              {messageStatus === MESSAGE_STATUS.processed
-                ? ""
-                : "for updating your health information."}
-            </div>
-            <br />
-            <div>
-              {messageStatus === MESSAGE_STATUS.processed
-                ? "You have already submitted the form."
-                : "You will hear from us shortly."}
-            </div>
-            <br />
-            <br />
-            <div>
-              {messageStatus === MESSAGE_STATUS.processed
-                ? ""
-                : "You may close the window."}
-            </div>
+            {messageStatus === MESSAGE_STATUS.processed ? (
+              <div>
+                <p className="submission-title">
+                  <b className="bold-text">Thank you</b>
+                </p>
+                <p className="submission-lead-paragraph">
+                  You have already submitted the form.
+                </p>
+              </div>
+            ) : (
+              <div>
+                <p className="submission-title">
+                  <b className="bold-text">Thank you</b>
+                  {" for updating your health information."}
+                </p>
+                <p className="submission-lead-paragraph">
+                  You will hear from us shortly.
+                </p>
+                <p>You may close the window.</p>
+              </div>
+            )}
           </div>
         </div>
       </>
