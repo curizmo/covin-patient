@@ -273,9 +273,11 @@ input[type="date"]:disabled {
   background-color: #e0e3ea;
 }
 
-input[type="number"]::placeholder {
-  text-align: right;
+input[type="date"]:not(.has-value):before{
+  opacity: 0.3;
+  content: attr(placeholder);
 }
+
 
 input[type="text"]::placeholder {
   opacity: 0.5;
@@ -325,6 +327,11 @@ input[type="text"]::placeholder {
   top: 42%;
   left: 78%;
   opacity: 0.3;
+}
+
+.range-error{
+  position: absolute;
+  top: 6.3rem;
 }
 
 .lab-intake-type {
@@ -607,6 +614,10 @@ label.cameraButton input {
 .camera-options-wrap {
   background: #ffffff;
   height: 6.9rem;
+}
+
+.spinner-wrap {
+  height: 100vh;
 }
 
 .border-radius {

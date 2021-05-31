@@ -11,6 +11,8 @@ const ImagesModal = (props) => {
     setMedicationFile,
     medicationFile,
     imageCount,
+    setIsLoading,
+    isLoading,
   } = props;
 
   const imageHandler = async (e) => {
@@ -24,11 +26,13 @@ const ImagesModal = (props) => {
         useWebWorker: true,
       };
       try {
+        setIsLoading(true);
         const compressedFile = await imageCompression(imageFile, options);
-        
+
         reader.readAsDataURL(compressedFile);
         reader.onload = async function () {
-          const imageName = 'Picture'+imageCount+'.'+file[2].split('.').pop();
+          const imageName =
+            "Picture" + imageCount + "." + file[2].split(".").pop();
           const fileInfo = {
             fileName: imageName,
             fileImage: reader.result,
@@ -41,7 +45,12 @@ const ImagesModal = (props) => {
           setMedicationFile([...medicationFile, imageFileInfo]);
         };
         onClose();
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      } 
+      finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -53,33 +62,43 @@ const ImagesModal = (props) => {
       <div className="modal-wrap">
         <div className="container">
           <div className="modal-content-wrap display-flex">
-            <div className="camera-options-wrap display-flex border-radius">
-              <label className="cameraButton">
-                Take photo
-                <input
-                  type="file"
-                  accept="image/*"
-                  capture=""
-                  onChange={imageHandler}
-                  onClick={(e) => (e.target.value = null)}
-                />
+            {isLoading ? (
+              <label className="spinner-wrap display-flex">
+                <span className="lds-spinner">
+                  {[...Array(12).keys()].map(() => (
+                    <span />
+                  ))}
+                </span>
               </label>
-              <label className="cameraButton">
-                Choose from gallery
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={imageHandler}
-                  onClick={(e) => (e.target.value = null)}
-                />
-              </label>
-            </div>
-            <div
-              className="cameraButton cancel-button margin-top-bottom border-radius"
-              onClick={onClose}
-            >
-              Cancel
-            </div>
+            ) : (
+              <>
+                <div className="camera-options-wrap display-flex border-radius">
+                  <label className="cameraButton">
+                    Take photo
+                    <input
+                      type="file"
+                      accept="image/*"
+                      capture=""
+                      onChange={imageHandler}
+                    />
+                  </label>
+                  <label className="cameraButton">
+                    Choose from gallery
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={imageHandler}
+                    />
+                  </label>
+                </div>
+                <div
+                  className="cameraButton cancel-button margin-top-bottom border-radius"
+                  onClick={onClose}
+                >
+                  Cancel
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

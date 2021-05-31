@@ -421,6 +421,10 @@ input.bp:last-of-type {
   color: #22335e;
 }
 
+.date-input{
+  position: relative;
+}
+
 .button-img {
   padding-right: 0.5rem;
 }

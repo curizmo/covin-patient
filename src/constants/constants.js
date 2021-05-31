@@ -96,11 +96,13 @@ export const PERSONAL_INFO = {
 
 export const DATE_FORMAT = {
   yyyymmdd: "YYYY-MM-DD",
+  mmddyyyy: "mm/dd/yyyy",
 };
 
 export const ALLERGY = {
   food: "food",
   medication: "medications",
+  other: "otherAllergies",
 };
 
 export const COVID_BEFORE = {

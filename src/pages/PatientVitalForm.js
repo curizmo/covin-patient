@@ -228,7 +228,7 @@ const PatientVitalForm = ({
           />
         </div>
         {showOxygenErrorMessage ? (
-          <span className="error-message">
+          <span className="error-message range-error">
             Oxygen Level must be between 0 and 100
           </span>
         ) : null}
@@ -255,7 +255,7 @@ const PatientVitalForm = ({
           />
         </div>
         {showTempErrorMessage ? (
-          <span className="error-message">
+          <span className="error-message range-error">
             Temperature must be between 90 and 108
           </span>
         ) : null}
@@ -281,7 +281,7 @@ const PatientVitalForm = ({
           />
         </div>
         {showPulseErrorMessage ? (
-          <span className="error-message">
+          <span className="error-message range-error">
             Pulse rate must be between 0 and 300
           </span>
         ) : null}
@@ -323,7 +323,7 @@ const PatientVitalForm = ({
           />
         </div>
         {showBpMessage ? (
-          <span className="error-message">
+          <span className="error-message range-error">
             Blood Pressure must be between 0 and 300
           </span>
         ) : null}
@@ -352,7 +352,7 @@ const PatientVitalForm = ({
           />
         </div>
         {showRespirationMessage ? (
-          <span className="error-message">
+          <span className="error-message range-error">
             Respiratory Rate must be between 0 and 50
           </span>
         ) : null}
