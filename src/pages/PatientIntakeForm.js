@@ -4,7 +4,7 @@ import TermsAndCondition from "./TermsAndCondition";
 import { useParams } from "react-router-dom";
 import * as patientService from "../services/patient";
 import Submission from "./Submission";
-import { MESSAGE_STATUS,MESSAGE_TYPES } from "../constants/constants";
+import { MESSAGE_STATUS, MESSAGE_TYPES } from "../constants/constants";
 
 const PatientIntakeForm = () => {
   const { hashKey } = useParams();
@@ -80,9 +80,9 @@ const PatientIntakeForm = () => {
             </>
           )}
         </>
-      ) : (
+      ) : patientDetails.messageStatus === MESSAGE_STATUS.processed ? (
         <Submission messageStatus={patientDetails.messageStatus} />
-      )}
+      ) : null}
     </div>
   );
 };
