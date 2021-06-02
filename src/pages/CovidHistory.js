@@ -24,8 +24,6 @@ const CovidHistory = ({
   setPage,
   page,
 }) => {
-  const [checkedOne, setCheckedOne] = useState(false);
-  const [checkedTwo, setCheckedTwo] = useState(false);
   const [isDiagnosed, setDiagnosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [diagnosisClass, setDiagnosisClass] = useState("");
@@ -66,36 +64,27 @@ const CovidHistory = ({
     intakeState.dateCovidBefore,
   ]);
 
-  useEffect(() => {
-    if (!intakeState.covidVaccinationDose1Taken) {
-      setIntakeState({ ...intakeState, dateOfDose1Vaccination: "" });
-    }
-  }, [intakeState.covidVaccinationDose1Taken]);
-
-  useEffect(() => {
-    if (!intakeState.covidVaccinationDose2Taken) {
-      setIntakeState({ ...intakeState, dateOfDose2Vaccination: "" });
-    }
-  }, [intakeState.covidVaccinationDose2Taken]);
-
-  useEffect(() => {
-    if (!intakeState.covidPositiveEverBefore) {
-      setIntakeState({ ...intakeState, dateCovidBefore: "" });
-    }
-  }, [intakeState.covidPositiveEverBefore]);
-
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.name;
-    item === "none"
-      ? setIntakeState({ ...intakeState, [item]: !isChecked })
-      : setIntakeState({ ...intakeState, [item]: isChecked });
+    setIntakeState({ ...intakeState, [item]: isChecked });
 
-    if (item === "covidVaccinationDose1Taken") {
-      setCheckedOne(isChecked);
-    } else if (item === "covidVaccinationDose2Taken") {
-      setCheckedTwo(isChecked);
+    if (item === "covidVaccinationDose1Taken" && !isChecked) {
+      setIntakeState({
+        ...intakeState,
+        [item]: isChecked,
+        dateOfDose1Vaccination: "",
+      });
     }
+
+    if (item === "covidVaccinationDose2Taken" && !isChecked) {
+      setIntakeState({
+        ...intakeState,
+        [item]: isChecked,
+        dateOfDose2Vaccination: "",
+      });
+    }
+
   };
 
   const onNext = async () => {
@@ -156,7 +145,11 @@ const CovidHistory = ({
     if (value === COVID_BEFORE.yes) {
       setIntakeState({ ...intakeState, covidPositiveEverBefore: true });
     } else if (value === COVID_BEFORE.no) {
-      setIntakeState({ ...intakeState, covidPositiveEverBefore: false });
+      setIntakeState({
+        ...intakeState,
+        covidPositiveEverBefore: false,
+        dateCovidBefore: "",
+      });
     }
   };
 
