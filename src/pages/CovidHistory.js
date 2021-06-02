@@ -66,6 +66,23 @@ const CovidHistory = ({
     intakeState.dateCovidBefore,
   ]);
 
+  useEffect(() => {
+    if (!intakeState.covidVaccinationDose1Taken) {
+      setIntakeState({ ...intakeState, dateOfDose1Vaccination: "" });
+    }
+
+    if (!intakeState.covidVaccinationDose2Taken) {
+      setIntakeState({ ...intakeState, dateOfDose2Vaccination: "" });
+    }
+    if (!intakeState.covidPositiveEverBefore) {
+      setIntakeState({ ...intakeState, dateCovidBefore: "" });
+    }
+  }, [
+    intakeState.covidVaccinationDose1Taken,
+    intakeState.covidVaccinationDose2Taken,
+    intakeState.covidPositiveEverBefore,
+  ]);
+
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.name;
@@ -239,56 +256,64 @@ const CovidHistory = ({
         )}
       </div>
       <div className="health-checklist">
-        {covidHistory.map((history, indx) => {
-          return (
-            <>
-              {history.field !== "dateCovidBefore" && (
-                <div
-                  className={
-                    `${history.type}` === "Boolean"
-                      ? "history-list-content"
-                      : "input-history"
-                  }
-                  key={getRandomKey()}
-                >
-                  {history.type === "Text" && <label>{history.title}</label>}
-                  {history.type === "Text" ? (
-                    <div className="date-input">
-                      <input
-                        className={
-                          history.field === "dateOfDose1Vaccination"
-                            ? doseOneClass
-                            : doseTwoClass
-                        }
-                        type="date"
-                        id={indx}
-                        name={history.field}
-                        placeholder={DATE_FORMAT.mmddyyyy}
-                        onChange={handleInputChange}
-                        max={moment().format(DATE_FORMAT.yyyymmdd)}
-                        disabled={checkDisabled(history.field)}
-                        value={getValue(history.field)}
-                      />
-                    </div>
-                  ) : (
-                    <input
-                      className="symptoms-checkbox"
-                      type="checkbox"
-                      id={indx}
-                      name={history.field}
-                      value={history.field}
-                      onChange={handleCheckboxChange}
-                      checked={intakeState[history.field]}
-                    />
-                  )}
-                  {history.type === "Boolean" && (
-                    <label htmlFor={history.field}>{history.title}</label>
-                  )}
-                </div>
-              )}
-            </>
-          );
-        })}
+        <>
+          <div className="history-list-content">
+            <input
+              className="symptoms-checkbox"
+              type="checkbox"
+              name="covidVaccinationDose1Taken"
+              value="covidVaccinationDose1Taken"
+              onChange={handleCheckboxChange}
+              checked={intakeState["covidVaccinationDose1Taken"]}
+            />
+            <label htmlFor={"covidVaccinationDose1Taken"}>
+              Vaccination - 1st dose
+            </label>
+          </div>
+          <div className="input-history">
+            <label>Date of dose - 1st vaccination</label>
+            <div className="date-input">
+              <input
+                className={doseOneClass}
+                type="date"
+                name={"dateOfDose1Vaccination"}
+                placeholder={DATE_FORMAT.mmddyyyy}
+                onChange={handleInputChange}
+                max={moment().format(DATE_FORMAT.yyyymmdd)}
+                disabled={checkDisabled("dateOfDose1Vaccination")}
+                value={getValue("dateOfDose1Vaccination")}
+              />
+            </div>
+          </div>
+          <div className="history-list-content">
+            <input
+              className="symptoms-checkbox"
+              type="checkbox"
+              name="covidVaccinationDose2Taken"
+              value="covidVaccinationDose2Taken"
+              onChange={handleCheckboxChange}
+              checked={intakeState["covidVaccinationDose2Taken"]}
+            />
+            <label htmlFor={"covidVaccinationDose2Taken"}>
+              Vaccination - 2nd dose
+            </label>
+          </div>
+          <div className="input-history">
+            <label>Date of dose - 2nd vaccination</label>
+            <div className="date-input">
+              <input
+                className={doseTwoClass}
+                type="date"
+                name={"dateOfDose2Vaccination"}
+                placeholder={DATE_FORMAT.mmddyyyy}
+                onChange={handleInputChange}
+                max={moment().format(DATE_FORMAT.yyyymmdd)}
+                disabled={checkDisabled("dateOfDose2Vaccination")}
+                value={getValue("dateOfDose2Vaccination")}
+              />
+            </div>
+          </div>
+        </>
       </div>
       <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>
