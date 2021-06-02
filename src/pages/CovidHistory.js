@@ -74,14 +74,16 @@ const CovidHistory = ({
     if (!intakeState.covidVaccinationDose2Taken) {
       setIntakeState({ ...intakeState, dateOfDose2Vaccination: "" });
     }
-    if (!intakeState.covidPositiveEverBefore) {
-      setIntakeState({ ...intakeState, dateCovidBefore: "" });
-    }
   }, [
     intakeState.covidVaccinationDose1Taken,
     intakeState.covidVaccinationDose2Taken,
-    intakeState.covidPositiveEverBefore,
   ]);
+
+  useEffect(() => {
+    if (!intakeState.covidPositiveEverBefore) {
+      setIntakeState({ ...intakeState, dateCovidBefore: "" });
+    }
+  }, [intakeState.covidPositiveEverBefore]);
 
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
