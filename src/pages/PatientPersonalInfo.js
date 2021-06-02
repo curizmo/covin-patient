@@ -382,7 +382,7 @@ const PatientPersonalInfo = ({
               className={
                 `${info.type}` === "Boolean" ? "list-content" : "input-history"
               }
-              key={getRandomKey()}
+              key={info.field}
               >
               {personalInfoError[`${info.field}`] ? (
                 <label>

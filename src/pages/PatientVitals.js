@@ -70,17 +70,17 @@ const PatientVitals = ({
   });
 
   const [intakeState, setIntakeState] = useState({
-    firstName: patientDetails.givenName,
-    lastName: patientDetails.familyName,
-    gender: patientDetails.gender,
-    dateOfBirth: patientDetails.dateOfBirth,
-    height: patientDetails.height || "",
-    weight: patientDetails.weight,
-    emailId: patientDetails.email,
-    address: patientDetails.address1,
-    state: patientDetails.state,
-    city: patientDetails.city,
-    pinCode: patientDetails.zip,
+    firstName: intakeForm.firstName || patientDetails.givenName || "",
+    lastName: intakeForm.lastName || patientDetails.familyName || "",
+    gender: intakeForm.gender || patientDetails.gender || "",
+    dateOfBirth: intakeForm.dateOfBirth || patientDetails.dateOfBirth || "",
+    height: intakeForm.height || patientDetails.height || "",
+    weight: intakeForm.weight || patientDetails.weight || "",
+    emailId: intakeForm.emailId || patientDetails.email || "",
+    address: intakeForm.address || patientDetails.address1 || "",
+    state: intakeForm.state || patientDetails.state || "",
+    city: intakeForm.city || patientDetails.city || "",
+    pinCode: intakeForm.pinCode || patientDetails.zip || "",
     covidPositiveEverBefore: intakeForm.covidPositiveEverBefore || false,
     covidVaccinationDose1Taken: intakeForm.covidVaccinationDose1Taken || false,
     dateOfDose1Vaccination: intakeForm.dateOfDose1Vaccination || "",
@@ -137,7 +137,7 @@ const PatientVitals = ({
     setPageLoaded(true);
     setPage(page - 1);
     setProgressedPage(progressedPage - 1);
-  };
+  };  
 
   const subWrapper = useMemo(() => {
     if (messageType === MESSAGE_TYPES.newPatient) {
