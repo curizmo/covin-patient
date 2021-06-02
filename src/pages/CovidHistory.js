@@ -24,8 +24,6 @@ const CovidHistory = ({
   setPage,
   page,
 }) => {
-  const [checkedOne, setCheckedOne] = useState(false);
-  const [checkedTwo, setCheckedTwo] = useState(false);
   const [isDiagnosed, setDiagnosed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [diagnosisClass, setDiagnosisClass] = useState("");
@@ -69,15 +67,24 @@ const CovidHistory = ({
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.name;
-    item === "none"
-      ? setIntakeState({ ...intakeState, [item]: !isChecked })
-      : setIntakeState({ ...intakeState, [item]: isChecked });
+    setIntakeState({ ...intakeState, [item]: isChecked });
 
-    if (item === "covidVaccinationDose1Taken") {
-      setCheckedOne(isChecked);
-    } else if (item === "covidVaccinationDose2Taken") {
-      setCheckedTwo(isChecked);
+    if (item === "covidVaccinationDose1Taken" && !isChecked) {
+      setIntakeState({
+        ...intakeState,
+        [item]: isChecked,
+        dateOfDose1Vaccination: "",
+      });
     }
+
+    if (item === "covidVaccinationDose2Taken" && !isChecked) {
+      setIntakeState({
+        ...intakeState,
+        [item]: isChecked,
+        dateOfDose2Vaccination: "",
+      });
+    }
+
   };
 
   const onNext = async () => {
@@ -138,7 +145,11 @@ const CovidHistory = ({
     if (value === COVID_BEFORE.yes) {
       setIntakeState({ ...intakeState, covidPositiveEverBefore: true });
     } else if (value === COVID_BEFORE.no) {
-      setIntakeState({ ...intakeState, covidPositiveEverBefore: false });
+      setIntakeState({
+        ...intakeState,
+        covidPositiveEverBefore: false,
+        dateCovidBefore: "",
+      });
     }
   };
 
@@ -239,56 +250,64 @@ const CovidHistory = ({
         )}
       </div>
       <div className="health-checklist">
-        {covidHistory.map((history, indx) => {
-          return (
-            <>
-              {history.field !== "dateCovidBefore" && (
-                <div
-                  className={
-                    `${history.type}` === "Boolean"
-                      ? "history-list-content"
-                      : "input-history"
-                  }
-                  key={getRandomKey()}
-                >
-                  {history.type === "Text" && <label>{history.title}</label>}
-                  {history.type === "Text" ? (
-                    <div className="date-input">
-                      <input
-                        className={
-                          history.field === "dateOfDose1Vaccination"
-                            ? doseOneClass
-                            : doseTwoClass
-                        }
-                        type="date"
-                        id={indx}
-                        name={history.field}
-                        placeholder={DATE_FORMAT.mmddyyyy}
-                        onChange={handleInputChange}
-                        max={moment().format(DATE_FORMAT.yyyymmdd)}
-                        disabled={checkDisabled(history.field)}
-                        value={getValue(history.field)}
-                      />
-                    </div>
-                  ) : (
-                    <input
-                      className="symptoms-checkbox"
-                      type="checkbox"
-                      id={indx}
-                      name={history.field}
-                      value={history.field}
-                      onChange={handleCheckboxChange}
-                      checked={intakeState[history.field]}
-                    />
-                  )}
-                  {history.type === "Boolean" && (
-                    <label htmlFor={history.field}>{history.title}</label>
-                  )}
-                </div>
-              )}
-            </>
-          );
-        })}
+        <>
+          <div className="history-list-content">
+            <input
+              className="symptoms-checkbox"
+              type="checkbox"
+              name="covidVaccinationDose1Taken"
+              value="covidVaccinationDose1Taken"
+              onChange={handleCheckboxChange}
+              checked={intakeState["covidVaccinationDose1Taken"]}
+            />
+            <label htmlFor={"covidVaccinationDose1Taken"}>
+              Vaccination - 1st dose
+            </label>
+          </div>
+          <div className="input-history">
+            <label>Date of dose - 1st vaccination</label>
+            <div className="date-input">
+              <input
+                className={doseOneClass}
+                type="date"
+                name={"dateOfDose1Vaccination"}
+                placeholder={DATE_FORMAT.mmddyyyy}
+                onChange={handleInputChange}
+                max={moment().format(DATE_FORMAT.yyyymmdd)}
+                disabled={checkDisabled("dateOfDose1Vaccination")}
+                value={getValue("dateOfDose1Vaccination")}
+              />
+            </div>
+          </div>
+          <div className="history-list-content">
+            <input
+              className="symptoms-checkbox"
+              type="checkbox"
+              name="covidVaccinationDose2Taken"
+              value="covidVaccinationDose2Taken"
+              onChange={handleCheckboxChange}
+              checked={intakeState["covidVaccinationDose2Taken"]}
+            />
+            <label htmlFor={"covidVaccinationDose2Taken"}>
+              Vaccination - 2nd dose
+            </label>
+          </div>
+          <div className="input-history">
+            <label>Date of dose - 2nd vaccination</label>
+            <div className="date-input">
+              <input
+                className={doseTwoClass}
+                type="date"
+                name={"dateOfDose2Vaccination"}
+                placeholder={DATE_FORMAT.mmddyyyy}
+                onChange={handleInputChange}
+                max={moment().format(DATE_FORMAT.yyyymmdd)}
+                disabled={checkDisabled("dateOfDose2Vaccination")}
+                value={getValue("dateOfDose2Vaccination")}
+              />
+            </div>
+          </div>
+        </>
       </div>
       <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>
