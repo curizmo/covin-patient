@@ -70,14 +70,13 @@ const CovidHistory = ({
     if (!intakeState.covidVaccinationDose1Taken) {
       setIntakeState({ ...intakeState, dateOfDose1Vaccination: "" });
     }
+  }, [intakeState.covidVaccinationDose1Taken]);
 
+  useEffect(() => {
     if (!intakeState.covidVaccinationDose2Taken) {
       setIntakeState({ ...intakeState, dateOfDose2Vaccination: "" });
     }
-  }, [
-    intakeState.covidVaccinationDose1Taken,
-    intakeState.covidVaccinationDose2Taken,
-  ]);
+  }, [intakeState.covidVaccinationDose2Taken]);
 
   useEffect(() => {
     if (!intakeState.covidPositiveEverBefore) {
