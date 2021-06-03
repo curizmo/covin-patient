@@ -290,6 +290,14 @@ input[type="text"]::placeholder {
   font-weight: 500;
 }
 
+input[type="text"]:not(#city-drop):not(#state-drop):focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus  {
+  border: 1px solid #3e4d72 !important;
+  box-shadow: 0px 2px 0px 0px #3e4d72 !important;
+}
+
 /* submission */
 .block-text {
   font-weight: bold;
