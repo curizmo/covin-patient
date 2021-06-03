@@ -31,6 +31,8 @@ const CovidHistory = ({
   const [doseTwoClass, setDoseTwoClass] = useState("");
   const [state, setChecked] = useState();
 
+  const maxDate = moment().format(DATE_FORMAT.yyyymmdd);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -67,24 +69,18 @@ const CovidHistory = ({
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
     const item = event.target.name;
-    setIntakeState({ ...intakeState, [item]: isChecked });
-
+    
+    let intakeStateUpdates = { [item]: isChecked };
+   
     if (item === "covidVaccinationDose1Taken" && !isChecked) {
-      setIntakeState({
-        ...intakeState,
-        [item]: isChecked,
-        dateOfDose1Vaccination: "",
-      });
+      intakeStateUpdates['dateOfDose1Vaccination'] = '';
+    } else if (item === "covidVaccinationDose2Taken" && !isChecked) {
+      intakeStateUpdates['dateOfDose2Vaccination'] = '';
     }
-
-    if (item === "covidVaccinationDose2Taken" && !isChecked) {
-      setIntakeState({
+    setIntakeState(intakeState => ({
         ...intakeState,
-        [item]: isChecked,
-        dateOfDose2Vaccination: "",
-      });
-    }
-
+        ...intakeStateUpdates,
+      }));
   };
 
   const onNext = async () => {
@@ -240,7 +236,7 @@ const CovidHistory = ({
               className={`date-of-diagnosis ${diagnosisClass}`}
               type="date"
               placeholder={DATE_FORMAT.mmddyyyy}
-              max={moment().format(DATE_FORMAT.yyyymmdd)}
+              max={maxDate}
               value={moment(intakeState.dateCovidBefore).format(
                 DATE_FORMAT.yyyymmdd
               )}
@@ -250,64 +246,62 @@ const CovidHistory = ({
         )}
       </div>
       <div className="health-checklist">
-        <>
-          <div className="history-list-content">
+        <div className="history-list-content">
+          <input
+            className="symptoms-checkbox"
+            type="checkbox"
+            name="covidVaccinationDose1Taken"
+            value="covidVaccinationDose1Taken"
+            onChange={handleCheckboxChange}
+            checked={intakeState["covidVaccinationDose1Taken"]}
+          />
+          <label htmlFor={"covidVaccinationDose1Taken"}>
+            Vaccination - 1st dose
+          </label>
+        </div>
+        <div className="input-history">
+          <label>Date of dose - 1st vaccination</label>
+          <div className="date-input">
             <input
-              className="symptoms-checkbox"
-              type="checkbox"
-              name="covidVaccinationDose1Taken"
-              value="covidVaccinationDose1Taken"
-              onChange={handleCheckboxChange}
-              checked={intakeState["covidVaccinationDose1Taken"]}
+              className={doseOneClass}
+              type="date"
+              name={"dateOfDose1Vaccination"}
+              placeholder={DATE_FORMAT.mmddyyyy}
+              onChange={handleInputChange}
+              max={maxDate}
+              disabled={checkDisabled("dateOfDose1Vaccination")}
+              value={getValue("dateOfDose1Vaccination")}
             />
-            <label htmlFor={"covidVaccinationDose1Taken"}>
-              Vaccination - 1st dose
-            </label>
           </div>
-          <div className="input-history">
-            <label>Date of dose - 1st vaccination</label>
-            <div className="date-input">
-              <input
-                className={doseOneClass}
-                type="date"
-                name={"dateOfDose1Vaccination"}
-                placeholder={DATE_FORMAT.mmddyyyy}
-                onChange={handleInputChange}
-                max={moment().format(DATE_FORMAT.yyyymmdd)}
-                disabled={checkDisabled("dateOfDose1Vaccination")}
-                value={getValue("dateOfDose1Vaccination")}
-              />
-            </div>
-          </div>
-          <div className="history-list-content">
+        </div>
+        <div className="history-list-content">
+          <input
+            className="symptoms-checkbox"
+            type="checkbox"
+            name="covidVaccinationDose2Taken"
+            value="covidVaccinationDose2Taken"
+            onChange={handleCheckboxChange}
+            checked={intakeState["covidVaccinationDose2Taken"]}
+          />
+          <label htmlFor={"covidVaccinationDose2Taken"}>
+            Vaccination - 2nd dose
+          </label>
+        </div>
+        <div className="input-history">
+          <label>Date of dose - 2nd vaccination</label>
+          <div className="date-input">
             <input
-              className="symptoms-checkbox"
-              type="checkbox"
-              name="covidVaccinationDose2Taken"
-              value="covidVaccinationDose2Taken"
-              onChange={handleCheckboxChange}
-              checked={intakeState["covidVaccinationDose2Taken"]}
+              className={doseTwoClass}
+              type="date"
+              name={"dateOfDose2Vaccination"}
+              placeholder={DATE_FORMAT.mmddyyyy}
+              onChange={handleInputChange}
+              max={maxDate}
+              disabled={checkDisabled("dateOfDose2Vaccination")}
+              value={getValue("dateOfDose2Vaccination")}
             />
-            <label htmlFor={"covidVaccinationDose2Taken"}>
-              Vaccination - 2nd dose
-            </label>
           </div>
-          <div className="input-history">
-            <label>Date of dose - 2nd vaccination</label>
-            <div className="date-input">
-              <input
-                className={doseTwoClass}
-                type="date"
-                name={"dateOfDose2Vaccination"}
-                placeholder={DATE_FORMAT.mmddyyyy}
-                onChange={handleInputChange}
-                max={moment().format(DATE_FORMAT.yyyymmdd)}
-                disabled={checkDisabled("dateOfDose2Vaccination")}
-                value={getValue("dateOfDose2Vaccination")}
-              />
-            </div>
-          </div>
-        </>
+        </div>
       </div>
       <SubmitButton onClick={onNext} isLoading={isLoading} />
     </div>

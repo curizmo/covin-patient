@@ -41,7 +41,7 @@ const Submission = ({ messageStatus }) => {
                 <p className="submission-lead-paragraph">
                   You will hear from us shortly.
                 </p>
-                <p>You may close the window.</p>
+                <p>You may close this window.</p>
               </div>
             )}
           </div>
