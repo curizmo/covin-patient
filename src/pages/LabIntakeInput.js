@@ -44,6 +44,20 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
   return (
     <>
       <div className="health-checklist">
+        <div className="lab-date-input">
+            <label>Lab specimen drawn on <span className="required-field">*</span></label>
+              <input
+                name="specimenDrawnDate"
+                className={`date-of-lab-test ${dateclassName}`}
+                type="date"
+                placeholder={DATE_FORMAT.mmddyyyy}
+                max={moment().format(DATE_FORMAT.yyyymmdd)}
+                value={moment(labState["specimenDrawnDate"]).format(
+                  DATE_FORMAT.yyyymmdd
+                )}
+                onChange={handleLabInputChange}                 
+              />
+        </div>
         <div className="lab-input">
           <div className="blood-sugar-input-wrap">
             <div className="lab-vitals">
@@ -269,21 +283,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="date-input">
-          <label>Lab specimen drawn on</label>
-          <input
-            name="specimenDrawnDate"
-            className={`date-of-lab-test ${dateclassName}`}
-            type="date"
-            placeholder={DATE_FORMAT.mmddyyyy}
-            max={moment().format(DATE_FORMAT.yyyymmdd)}
-            value={moment(labState["specimenDrawnDate"]).format(
-              DATE_FORMAT.yyyymmdd
-            )}
-            onChange={handleLabInputChange}                 
-          />
-        </div>
+        </div>        
       </div>
     </>
   );
