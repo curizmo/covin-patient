@@ -207,7 +207,7 @@ const PatientVitalForm = ({
   return (
     <div className="form-content-wrapper">
       <div className="input-vitals">
-        <label>Oxygen Level</label>
+        <label>Oxygen Level (SpO2)</label>
         <div className="input-wrap">
           <input
             className="oxygen-input"

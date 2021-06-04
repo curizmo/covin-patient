@@ -66,6 +66,8 @@ const PatientVitals = ({
     basophils: "",
     platelets: "",
     specimenDrawnDate: "",
+    fbs:"",
+    ppbs:"",
     otherLabResultsInfo: "",
   });
 

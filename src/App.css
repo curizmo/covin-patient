@@ -83,6 +83,14 @@ body {
   color: #657396;
 }
 
+.lab-input::before {
+  content: " ";
+  display: block;
+  border-bottom: 1.8px solid #e0e3ea;
+  padding: 0;
+  margin: 0 -1.3rem 2rem -1.3rem;
+}
+
 .lab-input {
   margin: 1rem 0;
   padding: 0.5rem 0;
@@ -208,7 +216,7 @@ body {
   right: 8%;
 }
 
-.lab-title{
+.lab-title {
   color: #22335e;
   margin-top: 0px;
   font-style: normal;
@@ -224,7 +232,7 @@ body {
   left: 76%;
 }
 
-.lab-icon-ldh{
+.lab-icon-ldh {
   font-size: 1.1rem;
   opacity: 0.3;
   position: absolute;
@@ -232,12 +240,30 @@ body {
   left: 35%;
 }
 
-.lab-icon-left-intake{
+.lab-icon-left-intake {
   font-size: 1.1rem;
   opacity: 0.3;
   position: absolute;
   top: 3.2rem;
   left: 31%;
+}
+
+.lab-icon-blood-sugar {
+  font-size: 1.1rem;
+  opacity: 0.3;
+  position: absolute;
+  top: 5.3rem;
+  right: 8%;
+}
+
+.blood-sugar-label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.blood-sugar-label span {
+  margin-top: 6px;
 }
 
 .height-wrapper,
@@ -421,7 +447,7 @@ input.bp:last-of-type {
   color: #22335e;
 }
 
-.date-input{
+.date-input {
   position: relative;
 }
 
@@ -484,5 +510,5 @@ input.bp:last-of-type {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, */
 }
-@import url('./styles/loader.css');
-@import url('./styles/submit-button.css');
+@import url("./styles/loader.css");
+@import url("./styles/submit-button.css");
