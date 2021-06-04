@@ -83,6 +83,7 @@ export async function uploadLabImages({
   intakeForm,
   labImages,
   patientId,
+  messageHash,
 }) {
   const form = new FormData();
 
@@ -98,7 +99,7 @@ export async function uploadLabImages({
   };
 
   const response = await fetch(
-    `${config.apiURL}/patient-labs/lab/${patientId}`,
+    `${config.apiURL}/patient-labs/lab/patient/${patientId}/patient-message/${messageHash}`,
     options
   );
 
