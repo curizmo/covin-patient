@@ -90,6 +90,7 @@ const LabResults = ({
         intakeForm: labState,
         labImages: medicationFile,
         patientId: patientDetails.patientId,
+        messageHash: hash
       }),
       patientService.UpdateMessageStatus(hash),
     ]);
