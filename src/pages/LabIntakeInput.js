@@ -45,10 +45,10 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
     <>
       <div className="health-checklist">
         <div className="lab-input">
-        <div className="lab-input-wrap">
+          <div className="blood-sugar-input-wrap">
             <div className="lab-vitals">
               <div>
-                <label>Blood Sugar Fasting (FBS)</label>
+                <label className="blood-sugar-label"><span>Blood Sugar</span> <span>Fasting (FBS)</span></label>
                 <input
                   className="bp"
                   type="number"
@@ -61,7 +61,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                 <div className="lab-icon-blood-sugar" onClick={()=>{fbsRef.current.focus()}}>mg/dL</div>
               </div>
               <div>
-                <label>Blood Sugar After food (PPBS)</label>
+                <label className="blood-sugar-label"><span>Blood Sugar</span> <span>After food (PPBS)</span></label>
                 <input
                   className="bp bp-lower"
                   type="number"

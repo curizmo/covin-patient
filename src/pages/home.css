@@ -414,6 +414,11 @@ input[type="date"]:focus  {
   align-items: center;
 }
 
+.blood-sugar-input-wrap{
+  height: 165px;
+  align-items: center;
+}
+
 .lab-input-wrap-single {
   height: 140px;
   align-items: center;
