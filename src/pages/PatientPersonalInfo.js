@@ -558,7 +558,7 @@ const PatientPersonalInfo = ({
         </div>
         <div className="pinCode">
           <label className="label-header" htmlFor={"pincode"}>
-            PIN Code
+            Postal Code
           </label>
           <input
             type="number"
