@@ -8,7 +8,7 @@ const moment = require("moment");
 
 const percentError = "Value must be between 0 and 100";
 
-const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
+const LabIntakeInput = ({ labState, setLabState, labError, setLabError, disableInput }) => {
   const [dateclassName, setDateClassName] = useState("")
   const crpRef = useRef();
   const esrRef = useRef();
@@ -69,6 +69,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="fbs"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["fbs"]}
                   ref={fbsRef}
                 />
@@ -82,6 +83,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="ppbs"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["ppbs"]}
                   ref={ppbsRef}
 
@@ -100,6 +102,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="crp"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["crp"]}
                   ref={crpRef}
                 />
@@ -113,6 +116,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="esr"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["esr"]}
                   ref={esrRef}
 
@@ -131,6 +135,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="dDimer"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["dDimer"]}
                   ref={dDimerRef}
 
@@ -145,6 +150,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="ferritin"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["ferritin"]}
                   ref={ferritinRef}
                 />
@@ -162,6 +168,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="ldh"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["ldh"]}
                   ref={ldhRef}
                 />
@@ -175,6 +182,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="wbc"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["wbc"]}
                   ref={wbcRef}
                 />
@@ -194,6 +202,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   max='100'
                   name="neutrophil"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["neutrophil"]}
                   ref={neutrophilRef}
                 />
@@ -212,6 +221,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   max='100'
                   name="lymphocytes"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["lymphocytes"]}
                   ref={lymphocytesRef}
                 />
@@ -234,6 +244,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   max='100'
                   name="eosinophils"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["eosinophils"]}
                   ref={eosinophilsRef}
                 />
@@ -252,6 +263,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   max='100'
                   name="basophils"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["basophils"]}
                   ref={basopholsRef}
                 />
@@ -273,6 +285,7 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
                   inputMode="decimal"
                   name="platelets"
                   onBlur={handleLabInputChange}
+                  disabled={disableInput}
                   defaultValue={labState["platelets"]}
                   ref={plateletsRef}
                 />

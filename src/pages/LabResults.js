@@ -24,6 +24,7 @@ const LabResults = ({
   const [imageCount, setImageCount] = useState(0);
   const [isinputValid, setIsInputValid] = useState(false);
   const [isDateSet, setIsDateSet] = useState(true);
+  const [disableInput, setDisableInput] = useState(true);
   const [labError, setLabError] = useState({
     crp: false,
     esr: false,
@@ -63,7 +64,11 @@ const LabResults = ({
   useEffect(() => {
     if (labState["specimenDrawnDate"] !== "") {
       setIsDateSet(true);
+      setDisableInput(false);
       return;
+    } else if (labState["specimenDrawnDate"] === "") {
+      setDisableInput(true);
+      setIsDateSet(true);
     }
   }, [labState["specimenDrawnDate"]]);
 
@@ -90,7 +95,7 @@ const LabResults = ({
         intakeForm: labState,
         labImages: medicationFile,
         patientId: patientDetails.patientId,
-        messageHash: hash
+        messageHash: hash,
       }),
       patientService.UpdateMessageStatus(hash),
     ]);
@@ -148,6 +153,7 @@ const LabResults = ({
         <LabIntakeInput
           labState={labState}
           setLabState={setLabState}
+          disableInput={disableInput}
           labError={labError}
           setLabError={setLabError}
         />
@@ -168,9 +174,7 @@ const LabResults = ({
       </div>
 
       {isinputValid ? (
-        <p className="error-message">
-          All values must be valid
-        </p>
+        <p className="error-message">All values must be valid</p>
       ) : null}
       {!isDateSet ? (
         <p className="error-message">
