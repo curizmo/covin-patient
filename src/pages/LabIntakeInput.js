@@ -21,6 +21,8 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
   const eosinophilsRef = useRef();
   const basopholsRef = useRef();
   const plateletsRef = useRef();
+  const fbsRef = useRef();
+  const ppbsRef = useRef();
 
   const handleLabInputChange = (e) => {
     const { name: item, value, min, max} = e.target;    
@@ -43,6 +45,37 @@ const LabIntakeInput = ({ labState, setLabState, labError, setLabError }) => {
     <>
       <div className="health-checklist">
         <div className="lab-input">
+        <div className="lab-input-wrap">
+            <div className="lab-vitals">
+              <div>
+                <label>Blood Sugar Fasting (FBS)</label>
+                <input
+                  className="bp"
+                  type="number"
+                  inputMode="decimal"
+                  name="fbs"
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["fbs"]}
+                  ref={fbsRef}
+                />
+                <div className="lab-icon-blood-sugar" onClick={()=>{fbsRef.current.focus()}}>mg/dL</div>
+              </div>
+              <div>
+                <label>Blood Sugar After food (PPBS)</label>
+                <input
+                  className="bp bp-lower"
+                  type="number"
+                  inputMode="decimal"
+                  name="ppbs"
+                  onBlur={handleLabInputChange}
+                  defaultValue={labState["ppbs"]}
+                  ref={ppbsRef}
+
+                />
+                <div className="lab-icon-blood-sugar" onClick={()=>{ppbsRef.current.focus()}}>mg/dL</div>
+              </div>
+            </div>
+          </div>
           <div className="lab-input-wrap">
             <div className="lab-vitals">
               <div>
