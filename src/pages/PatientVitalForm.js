@@ -198,6 +198,12 @@ const PatientVitalForm = ({
     }
   };
 
+  const onHandleChange = (setValue) => (e) => {
+      if(e.target.validity.valid){
+        setValue(e.target.value);
+      }
+  };
+
   useEffect(() => {
     if (isValidated) {
       setVitalError(!checkIsAtLeastOneField());
@@ -213,11 +219,14 @@ const PatientVitalForm = ({
             className="oxygen-input"
             type="text"
             inputMode="decimal"
+            pattern="[0-9]*"
             min="0"
             max="100"
             name="OxygenLevel"
             onBlur={onUpdateInput(setShowOxygenErrorMessage, setOxygenLevel)}
             ref={oxygenRef}
+            value={oxygenLevel}
+            onChange={onHandleChange(setOxygenLevel)}
           />
           <div className="icon" onClick={()=>{oxygenRef.current.focus()}}>%</div>
           <img
@@ -238,7 +247,7 @@ const PatientVitalForm = ({
         <label>Temperature</label>
         <div className="input-wrap">
           <input
-            type="text"
+            type="number"
             inputMode="decimal"
             min="90"
             max="108"
@@ -266,11 +275,14 @@ const PatientVitalForm = ({
           <input
             type="text"
             inputMode="decimal"
+            pattern="[0-9]*"
             min="0"
             max="300"
             name="Pulserate"
             onBlur={onUpdateInput(setShowPulseErrorMessage, setPulseRate)}
             ref={pulseRef}
+            value={pulseRate}
+            onChange={onHandleChange(setPulseRate)}
           />
           <div className="icon" onClick={()=>{pulseRef.current.focus()}}>beats/min</div>
           <img
@@ -293,24 +305,30 @@ const PatientVitalForm = ({
             <input
               className="bp"
               type="text"
+              pattern="[0-9]*"
               inputMode="decimal"
               min="0"
               max="300"
               name="BloodPressureHigh"
               onBlur={onUpdateInput(setShowBpMessage, setBpUpperRange)}
               ref={bpHighRef}
+              value={bpUpperRange || ""}
+              onChange={onHandleChange(setBpUpperRange)}
             />
 
             <div className="icon-higher" onClick={()=>{bpHighRef.current.focus()}}>Higher</div>
             <input
               className="bp bp-lower"
               type="text"
+              pattern="[0-9]*"
               inputMode="decimal"
               min="0"
               max="300"
               name="BloodPressureLow"
               onBlur={onUpdateInput(setShowBpMessage, setBpLowerRange)}
               ref={bpLowRef}
+              value={bpLowerRange || ""}
+              onChange={onHandleChange(setBpLowerRange)}
             />
 
             <div className="icon-lower" onClick={()=>{bpLowRef.current.focus()}}>Lower</div>
@@ -333,6 +351,7 @@ const PatientVitalForm = ({
         <div className="input-wrap">
           <input
             type="text"
+            pattern="[0-9]*"
             inputMode="decimal"
             min="0"
             max="50"
@@ -342,6 +361,8 @@ const PatientVitalForm = ({
               setRespiratoryRate
             )}
             ref={respirationRef}
+            value={respiratoryRate}
+            onChange={onHandleChange(setRespiratoryRate)}
           />
           <div className="icon" onClick={()=>{respirationRef.current.focus()}}>breaths/min</div>
           <img
