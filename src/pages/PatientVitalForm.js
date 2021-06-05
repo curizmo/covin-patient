@@ -187,11 +187,16 @@ const PatientVitalForm = ({
   const onUpdateInput = (setShowErrorMessage, setValue) => (e) => {
     setShowBpInvalid(false);
     setShowBpBothRangesMessage(false);
-    const value = e.target.value;
+    const value =
+      (e.target.name === "BloodPressureHigh" ||
+        e.target.name === "BloodPressureLow") &&
+      e.target.value === ""
+        ? 0
+        : e.target.value;
     const min = e.target.min;
-    const max = e.target.max;
+    const max = e.target.max;   
     if (!value || (+value >= +min && +value <= +max)) {
-      setValue(e.target.value);
+      setValue(value);
       setShowErrorMessage(false);
     } else {
       setShowErrorMessage(true);
@@ -199,9 +204,9 @@ const PatientVitalForm = ({
   };
 
   const onHandleChange = (setValue) => (e) => {
-      if(e.target.validity.valid){
-        setValue(e.target.value);
-      }
+    if (e.target.validity.valid) {
+      setValue(e.target.value);
+    }
   };
 
   useEffect(() => {
@@ -228,7 +233,14 @@ const PatientVitalForm = ({
             value={oxygenLevel}
             onChange={onHandleChange(setOxygenLevel)}
           />
-          <div className="icon" onClick={()=>{oxygenRef.current.focus()}}>%</div>
+          <div
+            className="icon"
+            onClick={() => {
+              oxygenRef.current.focus();
+            }}
+          >
+            %
+          </div>
           <img
             className="help-icon"
             src={help_icon}
@@ -255,7 +267,14 @@ const PatientVitalForm = ({
             onBlur={onUpdateInput(setShowTempErrorMessage, setTemperature)}
             ref={temperatureRef}
           />
-          <div className="icon" onClick={()=>{temperatureRef.current.focus()}} >°F</div>
+          <div
+            className="icon"
+            onClick={() => {
+              temperatureRef.current.focus();
+            }}
+          >
+            °F
+          </div>
           <img
             className="help-icon"
             src={help_icon}
@@ -284,7 +303,14 @@ const PatientVitalForm = ({
             value={pulseRate}
             onChange={onHandleChange(setPulseRate)}
           />
-          <div className="icon" onClick={()=>{pulseRef.current.focus()}}>beats/min</div>
+          <div
+            className="icon"
+            onClick={() => {
+              pulseRef.current.focus();
+            }}
+          >
+            beats/min
+          </div>
           <img
             className="help-icon"
             src={help_icon}
@@ -316,7 +342,14 @@ const PatientVitalForm = ({
               onChange={onHandleChange(setBpUpperRange)}
             />
 
-            <div className="icon-higher" onClick={()=>{bpHighRef.current.focus()}}>Higher</div>
+            <div
+              className="icon-higher"
+              onClick={() => {
+                bpHighRef.current.focus();
+              }}
+            >
+              Higher
+            </div>
             <input
               className="bp bp-lower"
               type="text"
@@ -331,7 +364,14 @@ const PatientVitalForm = ({
               onChange={onHandleChange(setBpLowerRange)}
             />
 
-            <div className="icon-lower" onClick={()=>{bpLowRef.current.focus()}}>Lower</div>
+            <div
+              className="icon-lower"
+              onClick={() => {
+                bpLowRef.current.focus();
+              }}
+            >
+              Lower
+            </div>
           </div>
           <img
             className="help-icon"
@@ -364,7 +404,14 @@ const PatientVitalForm = ({
             value={respiratoryRate}
             onChange={onHandleChange(setRespiratoryRate)}
           />
-          <div className="icon" onClick={()=>{respirationRef.current.focus()}}>breaths/min</div>
+          <div
+            className="icon"
+            onClick={() => {
+              respirationRef.current.focus();
+            }}
+          >
+            breaths/min
+          </div>
           <img
             className="help-icon"
             src={help_icon}
@@ -384,9 +431,7 @@ const PatientVitalForm = ({
         </p>
       ) : null}
       {showBpBothRangesMessage ? (
-        <p className="error-message">
-          Both Blood Pressure Ranges must be set
-        </p>
+        <p className="error-message">Both Blood Pressure Ranges must be set</p>
       ) : null}
       {vitalError ? (
         <p className="error-message">At least one field is required</p>
