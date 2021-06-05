@@ -24,7 +24,7 @@ const LabResults = ({
   const [imageCount, setImageCount] = useState(0);
   const [isinputValid, setIsInputValid] = useState(false);
   const [isDateSet, setIsDateSet] = useState(true);
-  const [disableInput, setDisableInput] = useState(true);
+  const [disableInput, setDisableInput] = useState(false);
   const [labError, setLabError] = useState({
     crp: false,
     esr: false,
@@ -62,14 +62,8 @@ const LabResults = ({
   };
 
   useEffect(() => {
-    if (labState["specimenDrawnDate"] !== "") {
-      setIsDateSet(true);
-      setDisableInput(false);
-      return;
-    } else if (labState["specimenDrawnDate"] === "") {
-      setDisableInput(true);
-      setIsDateSet(true);
-    }
+    setIsDateSet(true);
+    setDisableInput(labState["specimenDrawnDate"] === "");
   }, [labState["specimenDrawnDate"]]);
 
   const handleCheckboxChange = (e) => {
