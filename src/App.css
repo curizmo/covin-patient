@@ -83,14 +83,6 @@ body {
   color: #657396;
 }
 
-.lab-input::before {
-  content: " ";
-  display: block;
-  border-bottom: 1.8px solid #e0e3ea;
-  padding: 0;
-  margin: 0 -1.3rem 2rem -1.3rem;
-}
-
 .lab-input {
   margin: 1rem 0;
   padding: 0.5rem 0;
@@ -449,6 +441,23 @@ input.bp:last-of-type {
 
 .date-input {
   position: relative;
+}
+
+.lab-date-input{
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.lab-date-input::before {
+  content: " ";
+  display: block;
+  border-bottom: 1.8px solid #e0e3ea;
+  padding: 0;
+  margin: 0 -1.3rem 2rem -1.3rem;
+}
+
+.required-field{
+  color: red;
 }
 
 .button-img {
