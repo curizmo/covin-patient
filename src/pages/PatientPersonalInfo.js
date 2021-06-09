@@ -382,21 +382,19 @@ const PatientPersonalInfo = ({
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
+
       <div className="health-checklist">
-        <div className="address">
+        <div className="input-history">
           <label className="label-header" htmlFor={"secondaryContact"}>
             Secondary Contact (Mobile)
           </label>
           <input
             type="text"
             name="secondaryContact"
-            className="address-input"
             defaultValue={intakeState.secondaryContact}
             onBlur={handleFieldChange}
           />
         </div>
-      </div>
-      <div className="health-checklist">
         {personalInfo.map((info, indx) => {
           return (
             <div
