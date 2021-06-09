@@ -148,6 +148,8 @@ const PatientPersonalInfo = ({
   });
   const [phoneCheckMessage, setPhoneCheckMessage] = useState(false);
   const [phoneValidationError, setPhoneValidationError] = useState(false);
+  const [countryCodeValidationError, setCountryCodeValidationError] =
+    useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState({
     day: "",
@@ -272,11 +274,18 @@ const PatientPersonalInfo = ({
   }, [intakeState.emailId]);
 
   useEffect(() => {
-    setPhoneValidationError(
-      intakeState.secondaryContact
-        ? !intakeState.secondaryContact.match(PHONE_REGEX.content)?.[0]
-        : false
-    );
+    if (intakeState.secondaryContact !== "" && !intakeState.secondaryContact.match(PHONE_REGEX.countryCode)) {
+      setCountryCodeValidationError(true);
+      setPhoneValidationError(false);
+    } else {
+      setCountryCodeValidationError(false);
+      setPhoneValidationError(
+        intakeState.secondaryContact
+          ? !intakeState.secondaryContact.match(PHONE_REGEX.content)?.[0]
+          : false
+      );
+    }
+
     setPhoneCheckMessage(intakeState.secondaryContact === phone ? true : false);
   }, [intakeState.secondaryContact]);
 
@@ -370,7 +379,11 @@ const PatientPersonalInfo = ({
       setIsLoading(false);
       return;
     }
-    if (phoneValidationError || phoneCheckMessage) {
+    if (
+      phoneValidationError ||
+      phoneCheckMessage ||
+      countryCodeValidationError
+    ) {
       window.scrollTo(0, 0);
       setIsLoading(false);
       return;
@@ -433,7 +446,12 @@ const PatientPersonalInfo = ({
           )}
           {phoneValidationError && (
             <span className="error-message">
-              Country code required. Only numbers, dashes and brackets accepted.
+              Mobile Number Invalid: Only numbers, dashes and brackets accepted.
+            </span>
+          )}
+          {countryCodeValidationError && (
+            <span className="error-message">
+              Country Code is required, example: +91
             </span>
           )}
         </div>

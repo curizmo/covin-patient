@@ -73,7 +73,7 @@ export const DECIMAL_REGEX = /^\d*(\.\d{0,1})?$/;
 
 export const PHONE_REGEX = {
   content: /^(\+[1-9]{1,4}[-]?)(\(?[0-9]{2,4}\)?[-]?)*$/,
-  length: /^\d{10}$/,
+  countryCode: /^(\+[1-9]{1,4}[-]?)/,
 };
 
 export const DEFAULT_COUNTRY_CODE = "+91";
