@@ -288,7 +288,11 @@ const PatientPersonalInfo = ({
       setCountryCodeValidationError(true);
       setPhoneLengthValidationError(false);
       setPhoneValidationError(false);
-    } else if (intakeState.secondaryContact !== "" && phoneNumber.length !== 10) {
+    } else if (
+      intakeState.secondaryContact !== "" &&
+      phoneNumber &&
+      phoneNumber.length !== 10
+    ) {
       setPhoneLengthValidationError(true);
       setCountryCodeValidationError(false);
       setPhoneValidationError(false);
