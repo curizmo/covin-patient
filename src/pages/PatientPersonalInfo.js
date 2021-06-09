@@ -19,6 +19,7 @@ import {
   PERSONAL_INFO,
   NEW_PATIENT_PAGES,
   DEFAULT_COUNTRY_CODE,
+  COUNTRY_CODE,
 } from "../constants/constants";
 import "../App.css";
 import "./home.css";
@@ -150,6 +151,8 @@ const PatientPersonalInfo = ({
   const [phoneValidationError, setPhoneValidationError] = useState(false);
   const [countryCodeValidationError, setCountryCodeValidationError] =
     useState(false);
+  const [phoneLengthValidationError, setPhoneLengthValidationError] =
+    useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState({
     day: "",
@@ -274,10 +277,23 @@ const PatientPersonalInfo = ({
   }, [intakeState.emailId]);
 
   useEffect(() => {
-    if (intakeState.secondaryContact !== "" && !intakeState.secondaryContact.match(PHONE_REGEX.countryCode)) {
+    const phoneNumber =
+      intakeState.secondaryContact.split(COUNTRY_CODE.india)[1] ||
+      intakeState.secondaryContact.split(COUNTRY_CODE.northAmerica)[1];
+
+    if (
+      intakeState.secondaryContact !== "" &&
+      !intakeState.secondaryContact.match(PHONE_REGEX.countryCode)
+    ) {
       setCountryCodeValidationError(true);
+      setPhoneLengthValidationError(false);
+      setPhoneValidationError(false);
+    } else if (intakeState.secondaryContact !== "" && phoneNumber.length !== 10) {
+      setPhoneLengthValidationError(true);
+      setCountryCodeValidationError(false);
       setPhoneValidationError(false);
     } else {
+      setPhoneLengthValidationError(false);
       setCountryCodeValidationError(false);
       setPhoneValidationError(
         intakeState.secondaryContact
@@ -382,7 +398,8 @@ const PatientPersonalInfo = ({
     if (
       phoneValidationError ||
       phoneCheckMessage ||
-      countryCodeValidationError
+      countryCodeValidationError ||
+      phoneLengthValidationError
     ) {
       window.scrollTo(0, 0);
       setIsLoading(false);
@@ -452,6 +469,11 @@ const PatientPersonalInfo = ({
           {countryCodeValidationError && (
             <span className="error-message">
               Country Code is required, example: +91
+            </span>
+          )}
+          {phoneLengthValidationError && (
+            <span className="error-message">
+              Mobile Numbers must have 10 digits
             </span>
           )}
         </div>

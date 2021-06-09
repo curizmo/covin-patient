@@ -78,6 +78,11 @@ export const PHONE_REGEX = {
 
 export const DEFAULT_COUNTRY_CODE = "+91";
 
+export const COUNTRY_CODE ={
+  india: "+91",
+  northAmerica: "+1"
+}
+
 export const MESSAGE_TYPES = {
   newPatient: "newPatient",
   dailyScreening: "dailyScreening",
