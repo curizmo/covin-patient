@@ -107,6 +107,7 @@ const PatientVitals = ({
     otherMedicationsInfo: intakeForm.otherMedicationsInfo || "",
   });
 
+  console.log(intakeState)
   useEffect(() => {
     if (messageType === MESSAGE_TYPES.newPatient) {
       getPageProgress(hashKey);
@@ -227,6 +228,7 @@ const PatientVitals = ({
               progressedPage={progressedPage}
               setProgressedPage={setProgressedPage}
               setPageLoaded={true}
+              phone={phone}
             />
             {progressedPage === NEW_PATIENT_PAGES.symptoms && (
               <PatientChecklist

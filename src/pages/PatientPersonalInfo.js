@@ -125,6 +125,7 @@ const PatientPersonalInfo = ({
   setPage,
   stateKey,
   page,
+  phone,
 }) => {
   const classes = useStyles();
 
@@ -143,6 +144,7 @@ const PatientPersonalInfo = ({
     height: "",
     weight: "",
   });
+  const [phoneValidationError, setPhoneValidationError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState({
     day: "",
@@ -201,6 +203,17 @@ const PatientPersonalInfo = ({
   const handleAddressChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
+  };
+
+  const handlePhoneChange = (e) => {
+    const item = e.target.name;
+    const value = e.target.value.replace(/\(/g, "").replace(/\)/g, "").replace(/-/g,"");
+    if (value !== phone) {
+      setIntakeState({ ...intakeState, [item]: value });
+      setPhoneValidationError(false);
+    } else {
+      setPhoneValidationError(true);
+    }
   };
 
   const handleFieldChange = (e) => {
@@ -391,9 +404,14 @@ const PatientPersonalInfo = ({
           <input
             type="text"
             name="secondaryContact"
-            defaultValue={intakeState.secondaryContact}
-            onBlur={handleFieldChange}
+            defaultValue={intakeState.secondaryContact || "+91-"}
+            onBlur={handlePhoneChange}
           />
+          {phoneValidationError && (
+            <span className="error-message">
+              Secondary and primary number cannot be the same
+            </span>
+          )}
         </div>
         {personalInfo.map((info, indx) => {
           return (
