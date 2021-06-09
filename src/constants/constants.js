@@ -71,6 +71,8 @@ export const NO_PRE_EXISTING_CONDITION = "noPrexistingCondition";
 
 export const DECIMAL_REGEX = /^\d*(\.\d{0,1})?$/;
 
+export const PHONE_REGEX = /^(\+[1-9]{1,4}[-]?)(\(?[0-9]{2,4}\)?[-]?)*$/;
+
 export const MESSAGE_TYPES = {
   newPatient: "newPatient",
   dailyScreening: "dailyScreening",

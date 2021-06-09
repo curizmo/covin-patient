@@ -13,6 +13,7 @@ import {
   GENDERS,
   EMAIL_TYPE_REGEX,
   NUMBER_TYPE_REGEX,
+  PHONE_REGEX,
   HEIGHT_MEASUREMENT,
   MINIMUM_YEAR,
   PERSONAL_INFO,
@@ -144,6 +145,7 @@ const PatientPersonalInfo = ({
     height: "",
     weight: "",
   });
+  const [phoneCheckMessage, setPhoneCheckMessage] = useState(false);
   const [phoneValidationError, setPhoneValidationError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState({
@@ -210,12 +212,12 @@ const PatientPersonalInfo = ({
     const value = e.target.value.replace(/\(/g, "").replace(/\)/g, "").replace(/-/g,"");
     if (value !== phone) {
       setIntakeState({ ...intakeState, [item]: value });
-      setPhoneValidationError(false);
+      setPhoneCheckMessage(false);
     } else {
-      setPhoneValidationError(true);
+      setPhoneCheckMessage(true);
     }
   };
-
+  
   const handleFieldChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
@@ -266,6 +268,14 @@ const PatientPersonalInfo = ({
         : false
     );
   }, [intakeState.emailId]);
+
+  useEffect(() => {
+    setPhoneValidationError(
+      intakeState.secondaryContact
+        ? !intakeState.secondaryContact.match(PHONE_REGEX)?.[0]
+        : false
+    );
+  }, [intakeState.secondaryContact]);
 
   const handleValidateWeight = (e) => {
     const item = e.target.name;
@@ -407,9 +417,14 @@ const PatientPersonalInfo = ({
             defaultValue={intakeState.secondaryContact || "+91-"}
             onBlur={handlePhoneChange}
           />
-          {phoneValidationError && (
+          {phoneCheckMessage && (
             <span className="error-message">
               Secondary and primary number cannot be the same
+            </span>
+          )}
+          {phoneValidationError && (
+            <span className="error-message">
+              Invalid Mobile Number: Only numbers, dashes and brackets accepted
             </span>
           )}
         </div>
