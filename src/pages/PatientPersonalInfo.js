@@ -18,6 +18,7 @@ import {
   MINIMUM_YEAR,
   PERSONAL_INFO,
   NEW_PATIENT_PAGES,
+  DEFAULT_COUNTRY_CODE,
 } from "../constants/constants";
 import "../App.css";
 import "./home.css";
@@ -209,15 +210,21 @@ const PatientPersonalInfo = ({
 
   const handlePhoneChange = (e) => {
     const item = e.target.name;
-    const value = e.target.value.replace(/\(/g, "").replace(/\)/g, "").replace(/-/g,"");
+    const value = e.target.value
+      .replace(/\(/g, "")
+      .replace(/\)/g, "")
+      .replace(/-/g, "");
     if (value !== phone) {
-      setIntakeState({ ...intakeState, [item]: value });
+      setIntakeState({
+        ...intakeState,
+        [item]: value === DEFAULT_COUNTRY_CODE ? "" : value,
+      });
       setPhoneCheckMessage(false);
     } else {
       setPhoneCheckMessage(true);
     }
   };
-  
+
   const handleFieldChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
@@ -272,7 +279,7 @@ const PatientPersonalInfo = ({
   useEffect(() => {
     setPhoneValidationError(
       intakeState.secondaryContact
-        ? !intakeState.secondaryContact.match(PHONE_REGEX)?.[0]
+        ? !intakeState.secondaryContact.match(PHONE_REGEX.content)?.[0]
         : false
     );
   }, [intakeState.secondaryContact]);

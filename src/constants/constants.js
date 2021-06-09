@@ -71,7 +71,12 @@ export const NO_PRE_EXISTING_CONDITION = "noPrexistingCondition";
 
 export const DECIMAL_REGEX = /^\d*(\.\d{0,1})?$/;
 
-export const PHONE_REGEX = /^(\+[1-9]{1,4}[-]?)(\(?[0-9]{2,4}\)?[-]?)*$/;
+export const PHONE_REGEX = {
+  content: /^(\+[1-9]{1,4}[-]?)(\(?[0-9]{2,4}\)?[-]?)*$/,
+  length: /^\d{10}$/,
+};
+
+export const DEFAULT_COUNTRY_CODE = "+91";
 
 export const MESSAGE_TYPES = {
   newPatient: "newPatient",
@@ -81,8 +86,8 @@ export const MESSAGE_TYPES = {
 
 export const MESSAGE_STATUS = {
   sent: "SENT",
-  processed: "PROCESSED"
-}
+  processed: "PROCESSED",
+};
 
 export const LAB_INPUT_TYPE = {
   picture: "picture",
