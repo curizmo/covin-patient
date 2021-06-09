@@ -107,7 +107,6 @@ const PatientVitals = ({
     otherMedicationsInfo: intakeForm.otherMedicationsInfo || "",
   });
 
-  console.log(intakeState)
   useEffect(() => {
     if (messageType === MESSAGE_TYPES.newPatient) {
       getPageProgress(hashKey);
