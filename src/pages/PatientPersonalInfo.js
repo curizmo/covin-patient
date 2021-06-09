@@ -290,6 +290,13 @@ const PatientPersonalInfo = ({
       setPhoneValidationError(false);
     } else if (
       intakeState.secondaryContact !== "" &&
+      !intakeState.secondaryContact.match(PHONE_REGEX.content)
+    ) {
+      setPhoneValidationError(true);
+      setPhoneLengthValidationError(false);
+      setCountryCodeValidationError(false);
+    } else if (
+      intakeState.secondaryContact !== "" &&
       phoneNumber &&
       phoneNumber.length !== 10
     ) {
@@ -299,11 +306,7 @@ const PatientPersonalInfo = ({
     } else {
       setPhoneLengthValidationError(false);
       setCountryCodeValidationError(false);
-      setPhoneValidationError(
-        intakeState.secondaryContact
-          ? !intakeState.secondaryContact.match(PHONE_REGEX.content)?.[0]
-          : false
-      );
+      setCountryCodeValidationError(false);
     }
 
     setPhoneCheckMessage(intakeState.secondaryContact === phone ? true : false);
