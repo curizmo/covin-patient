@@ -306,7 +306,7 @@ const PatientPersonalInfo = ({
     } else {
       setPhoneLengthValidationError(false);
       setCountryCodeValidationError(false);
-      setCountryCodeValidationError(false);
+      setPhoneValidationError(false);
     }
 
     setPhoneCheckMessage(intakeState.secondaryContact === phone ? true : false);
