@@ -421,6 +421,7 @@ const PatientPersonalInfo = ({
           <input
             type="text"
             name="secondaryContact"
+            inputMode="tel"
             defaultValue={intakeState.secondaryContact || "+91-"}
             onBlur={handlePhoneChange}
           />
