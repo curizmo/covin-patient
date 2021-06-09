@@ -13,10 +13,13 @@ import {
   GENDERS,
   EMAIL_TYPE_REGEX,
   NUMBER_TYPE_REGEX,
+  PHONE_REGEX,
   HEIGHT_MEASUREMENT,
   MINIMUM_YEAR,
   PERSONAL_INFO,
   NEW_PATIENT_PAGES,
+  DEFAULT_COUNTRY_CODE,
+  COUNTRY_CODE,
 } from "../constants/constants";
 import "../App.css";
 import "./home.css";
@@ -125,6 +128,7 @@ const PatientPersonalInfo = ({
   setPage,
   stateKey,
   page,
+  phone,
 }) => {
   const classes = useStyles();
 
@@ -143,20 +147,26 @@ const PatientPersonalInfo = ({
     height: "",
     weight: "",
   });
+  const [phoneCheckMessage, setPhoneCheckMessage] = useState(false);
+  const [phoneValidationError, setPhoneValidationError] = useState(false);
+  const [countryCodeValidationError, setCountryCodeValidationError] =
+    useState(false);
+  const [phoneLengthValidationError, setPhoneLengthValidationError] =
+    useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState({
-    day: '',
-    month: '',
-    year: '',
+    day: "",
+    month: "",
+    year: "",
   });
 
   useEffect(() => {
     if (intakeState.dateOfBirth) {
       const date = new Date(intakeState.dateOfBirth);
-      setDateOfBirth({ 
+      setDateOfBirth({
         day: `${date.getDate()}`,
         month: `${date.getMonth()}`,
-        year: `${date.getFullYear()}`
+        year: `${date.getFullYear()}`,
       });
     }
     window.scrollTo(0, 0);
@@ -167,14 +177,18 @@ const PatientPersonalInfo = ({
     const month = dateOfBirth.month;
     const day = dateOfBirth.day;
     if (year && month && day) {
-      const dateOfBirth = new Date(`${year}-${month < 9 ? '0' : ''}${+month + 1}-${day < 10 ? '0' : ''}${day}`);
-      setIntakeState(state => ({ ...state, dateOfBirth }));
+      const dateOfBirth = new Date(
+        `${year}-${month < 9 ? "0" : ""}${+month + 1}-${
+          day < 10 ? "0" : ""
+        }${day}`
+      );
+      setIntakeState((state) => ({ ...state, dateOfBirth }));
     }
-    setPersonalInfoError(error => ({
+    setPersonalInfoError((error) => ({
       ...error,
-      dateOfBirth: false
-    })); 
- }, [dateOfBirth, setIntakeState]);
+      dateOfBirth: false,
+    }));
+  }, [dateOfBirth, setIntakeState]);
 
   useEffect(() => {
     const heightInFeet =
@@ -199,12 +213,24 @@ const PatientPersonalInfo = ({
     setIntakeState({ ...intakeState, [item]: e.target.value });
   };
 
+  const handlePhoneChange = (e) => {
+    const item = e.target.name;
+    const value = e.target.value
+      .replace(/\(/g, "")
+      .replace(/\)/g, "")
+      .replace(/-/g, "");
+    setIntakeState({
+      ...intakeState,
+      [item]: value === DEFAULT_COUNTRY_CODE ? "" : value,
+    });
+  };
+
   const handleFieldChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
-    setPersonalInfoError(error => ({
+    setPersonalInfoError((error) => ({
       ...error,
-      [item]: !e.target.value
+      [item]: !e.target.value,
     }));
   };
 
@@ -243,16 +269,53 @@ const PatientPersonalInfo = ({
   };
 
   useEffect(() => {
-    setShowErrorMessage(intakeState.emailId ? !intakeState.emailId.match(EMAIL_TYPE_REGEX)?.[0] : false);
+    setShowErrorMessage(
+      intakeState.emailId
+        ? !intakeState.emailId.match(EMAIL_TYPE_REGEX)?.[0]
+        : false
+    );
   }, [intakeState.emailId]);
+
+  useEffect(() => {
+    const phoneNumber =
+      intakeState.secondaryContact.split(COUNTRY_CODE.india)[1] ||
+      intakeState.secondaryContact.split(COUNTRY_CODE.northAmerica)[1];
+
+    if (
+      intakeState.secondaryContact !== "" &&
+      !intakeState.secondaryContact.match(PHONE_REGEX.countryCode)
+    ) {
+      setCountryCodeValidationError(true);
+      setPhoneLengthValidationError(false);
+      setPhoneValidationError(false);
+    } else if (
+      intakeState.secondaryContact !== "" &&
+      phoneNumber &&
+      phoneNumber.length !== 10
+    ) {
+      setPhoneLengthValidationError(true);
+      setCountryCodeValidationError(false);
+      setPhoneValidationError(false);
+    } else {
+      setPhoneLengthValidationError(false);
+      setCountryCodeValidationError(false);
+      setPhoneValidationError(
+        intakeState.secondaryContact
+          ? !intakeState.secondaryContact.match(PHONE_REGEX.content)?.[0]
+          : false
+      );
+    }
+
+    setPhoneCheckMessage(intakeState.secondaryContact === phone ? true : false);
+  }, [intakeState.secondaryContact]);
 
   const handleValidateWeight = (e) => {
     const item = e.target.name;
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
       setIntakeState({ ...intakeState, [item]: e.target.value });
-      setPersonalInfoError(error => ({
+      setPersonalInfoError((error) => ({
         ...error,
-        [item]: !e.target.value
+        [item]: !e.target.value,
       }));
     }
   };
@@ -291,9 +354,9 @@ const PatientPersonalInfo = ({
         height: "",
       });
     }
-    setPersonalInfoError(error => ({
+    setPersonalInfoError((error) => ({
       ...error,
-      height: false
+      height: false,
     }));
   }, [feetHeight, inchHeight]);
 
@@ -307,8 +370,7 @@ const PatientPersonalInfo = ({
       height: !feetHeight,
       weight: !intakeState.weight,
     };
-    const isAnyTrue = Object.values(personalInfoError)
-      .some((v) => v);
+    const isAnyTrue = Object.values(personalInfoError).some((v) => v);
 
     setPersonalInfoError(personalInfoError);
 
@@ -333,6 +395,16 @@ const PatientPersonalInfo = ({
     const isValid = validatePatientPersonalForm();
 
     if (!isValid) {
+      window.scrollTo(0, 0);
+      setIsLoading(false);
+      return;
+    }
+    if (
+      phoneValidationError ||
+      phoneCheckMessage ||
+      countryCodeValidationError ||
+      phoneLengthValidationError
+    ) {
       window.scrollTo(0, 0);
       setIsLoading(false);
       return;
@@ -375,7 +447,40 @@ const PatientPersonalInfo = ({
   return (
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
+
       <div className="health-checklist">
+        <div className="input-history">
+          <label className="label-header" htmlFor={"secondaryContact"}>
+            Secondary Contact (Mobile)
+          </label>
+          <input
+            type="text"
+            name="secondaryContact"
+            inputMode="tel"
+            defaultValue={intakeState.secondaryContact || "+91-"}
+            onBlur={handlePhoneChange}
+          />
+          {phoneCheckMessage && (
+            <span className="error-message">
+              Secondary and primary number cannot be the same
+            </span>
+          )}
+          {phoneValidationError && (
+            <span className="error-message">
+              Mobile Number Invalid: Only numbers, dashes and brackets accepted.
+            </span>
+          )}
+          {countryCodeValidationError && (
+            <span className="error-message">
+              Country Code is required, example: +91
+            </span>
+          )}
+          {phoneLengthValidationError && (
+            <span className="error-message">
+              Mobile Numbers must have 10 digits
+            </span>
+          )}
+        </div>
         {personalInfo.map((info, indx) => {
           return (
             <div
@@ -383,13 +488,15 @@ const PatientPersonalInfo = ({
                 `${info.type}` === "Boolean" ? "list-content" : "input-history"
               }
               key={info.field}
-              >
+            >
               {personalInfoError[`${info.field}`] ? (
                 <label>
                   {info.title}{" "}
-                  {`${info.field}` !== "emailId" && <span className="error-message">
-                    (This field is required)
-                  </span>}
+                  {`${info.field}` !== "emailId" && (
+                    <span className="error-message">
+                      (This field is required)
+                    </span>
+                  )}
                 </label>
               ) : `${info.field}` === "emailId" && showErrorMessage ? (
                 <label>
@@ -427,7 +534,10 @@ const PatientPersonalInfo = ({
                 })
               ) : info.type === "DateType" ? (
                 <div>
-                  <SplittedDatePicker date={dateOfBirth} setDate={setDateOfBirth} />
+                  <SplittedDatePicker
+                    date={dateOfBirth}
+                    setDate={setDateOfBirth}
+                  />
                 </div>
               ) : info.field === "emailId" ? (
                 <input
@@ -515,7 +625,7 @@ const PatientPersonalInfo = ({
           <div className="dropdown-selections">
             <Autocomplete
               id="state-drop"
-              shrink={'false'}
+              shrink={"false"}
               classes={classes}
               name="state"
               value={intakeState.state}

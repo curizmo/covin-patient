@@ -22,6 +22,7 @@ const PatientFirstIntake = ({
   setProgressedPage,
   hash,
   page,
+  phone,
 }) => {
   const [personalInfo, setPersonalInfo] = useState([]);
   const [covidHistory, setcovidHistory] = useState([]);
@@ -71,6 +72,7 @@ const PatientFirstIntake = ({
           hash={hash}
           progressedPage={progressedPage}
           setProgressedPage={setProgressedPage}
+          phone={phone}
         />
       )}
       {progressedPage === NEW_PATIENT_PAGES.covidHistory && (

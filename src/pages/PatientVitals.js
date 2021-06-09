@@ -79,6 +79,7 @@ const PatientVitals = ({
     height: intakeForm.height || patientDetails.height || "",
     weight: intakeForm.weight || patientDetails.weight || "",
     emailId: intakeForm.emailId || patientDetails.email || "",
+    secondaryContact: intakeForm.secondaryContact || patientDetails.secondaryContact || "",
     address: intakeForm.address || patientDetails.address1 || "",
     state: intakeForm.state || patientDetails.state || "",
     city: intakeForm.city || patientDetails.city || "",
@@ -226,6 +227,7 @@ const PatientVitals = ({
               progressedPage={progressedPage}
               setProgressedPage={setProgressedPage}
               setPageLoaded={true}
+              phone={phone}
             />
             {progressedPage === NEW_PATIENT_PAGES.symptoms && (
               <PatientChecklist
