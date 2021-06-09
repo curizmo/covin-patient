@@ -145,18 +145,18 @@ const PatientPersonalInfo = ({
   });
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState({
-    day: '',
-    month: '',
-    year: '',
+    day: "",
+    month: "",
+    year: "",
   });
 
   useEffect(() => {
     if (intakeState.dateOfBirth) {
       const date = new Date(intakeState.dateOfBirth);
-      setDateOfBirth({ 
+      setDateOfBirth({
         day: `${date.getDate()}`,
         month: `${date.getMonth()}`,
-        year: `${date.getFullYear()}`
+        year: `${date.getFullYear()}`,
       });
     }
     window.scrollTo(0, 0);
@@ -167,14 +167,18 @@ const PatientPersonalInfo = ({
     const month = dateOfBirth.month;
     const day = dateOfBirth.day;
     if (year && month && day) {
-      const dateOfBirth = new Date(`${year}-${month < 9 ? '0' : ''}${+month + 1}-${day < 10 ? '0' : ''}${day}`);
-      setIntakeState(state => ({ ...state, dateOfBirth }));
+      const dateOfBirth = new Date(
+        `${year}-${month < 9 ? "0" : ""}${+month + 1}-${
+          day < 10 ? "0" : ""
+        }${day}`
+      );
+      setIntakeState((state) => ({ ...state, dateOfBirth }));
     }
-    setPersonalInfoError(error => ({
+    setPersonalInfoError((error) => ({
       ...error,
-      dateOfBirth: false
-    })); 
- }, [dateOfBirth, setIntakeState]);
+      dateOfBirth: false,
+    }));
+  }, [dateOfBirth, setIntakeState]);
 
   useEffect(() => {
     const heightInFeet =
@@ -202,9 +206,9 @@ const PatientPersonalInfo = ({
   const handleFieldChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
-    setPersonalInfoError(error => ({
+    setPersonalInfoError((error) => ({
       ...error,
-      [item]: !e.target.value
+      [item]: !e.target.value,
     }));
   };
 
@@ -243,16 +247,20 @@ const PatientPersonalInfo = ({
   };
 
   useEffect(() => {
-    setShowErrorMessage(intakeState.emailId ? !intakeState.emailId.match(EMAIL_TYPE_REGEX)?.[0] : false);
+    setShowErrorMessage(
+      intakeState.emailId
+        ? !intakeState.emailId.match(EMAIL_TYPE_REGEX)?.[0]
+        : false
+    );
   }, [intakeState.emailId]);
 
   const handleValidateWeight = (e) => {
     const item = e.target.name;
     if (e.target.value.match(NUMBER_TYPE_REGEX)) {
       setIntakeState({ ...intakeState, [item]: e.target.value });
-      setPersonalInfoError(error => ({
+      setPersonalInfoError((error) => ({
         ...error,
-        [item]: !e.target.value
+        [item]: !e.target.value,
       }));
     }
   };
@@ -291,9 +299,9 @@ const PatientPersonalInfo = ({
         height: "",
       });
     }
-    setPersonalInfoError(error => ({
+    setPersonalInfoError((error) => ({
       ...error,
-      height: false
+      height: false,
     }));
   }, [feetHeight, inchHeight]);
 
@@ -307,8 +315,7 @@ const PatientPersonalInfo = ({
       height: !feetHeight,
       weight: !intakeState.weight,
     };
-    const isAnyTrue = Object.values(personalInfoError)
-      .some((v) => v);
+    const isAnyTrue = Object.values(personalInfoError).some((v) => v);
 
     setPersonalInfoError(personalInfoError);
 
@@ -376,6 +383,20 @@ const PatientPersonalInfo = ({
     <div className="form-content-wrapper">
       <div className="page-title">Personal Information</div>
       <div className="health-checklist">
+        <div className="address">
+          <label className="label-header" htmlFor={"secondaryContact"}>
+            Secondary Contact (Mobile)
+          </label>
+          <input
+            type="text"
+            name="secondaryContact"
+            className="address-input"
+            defaultValue={intakeState.secondaryContact}
+            onBlur={handleFieldChange}
+          />
+        </div>
+      </div>
+      <div className="health-checklist">
         {personalInfo.map((info, indx) => {
           return (
             <div
@@ -383,13 +404,15 @@ const PatientPersonalInfo = ({
                 `${info.type}` === "Boolean" ? "list-content" : "input-history"
               }
               key={info.field}
-              >
+            >
               {personalInfoError[`${info.field}`] ? (
                 <label>
                   {info.title}{" "}
-                  {`${info.field}` !== "emailId" && <span className="error-message">
-                    (This field is required)
-                  </span>}
+                  {`${info.field}` !== "emailId" && (
+                    <span className="error-message">
+                      (This field is required)
+                    </span>
+                  )}
                 </label>
               ) : `${info.field}` === "emailId" && showErrorMessage ? (
                 <label>
@@ -427,7 +450,10 @@ const PatientPersonalInfo = ({
                 })
               ) : info.type === "DateType" ? (
                 <div>
-                  <SplittedDatePicker date={dateOfBirth} setDate={setDateOfBirth} />
+                  <SplittedDatePicker
+                    date={dateOfBirth}
+                    setDate={setDateOfBirth}
+                  />
                 </div>
               ) : info.field === "emailId" ? (
                 <input
@@ -515,7 +541,7 @@ const PatientPersonalInfo = ({
           <div className="dropdown-selections">
             <Autocomplete
               id="state-drop"
-              shrink={'false'}
+              shrink={"false"}
               classes={classes}
               name="state"
               value={intakeState.state}
