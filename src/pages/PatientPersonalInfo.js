@@ -374,6 +374,11 @@ const PatientPersonalInfo = ({
       setIsLoading(false);
       return;
     }
+    if (phoneValidationError || phoneCheckMessage) {
+      window.scrollTo(0, 0);
+      setIsLoading(false);
+      return;
+    }
 
     const currentYear = parseInt(moment().year());
     const minimumYear = currentYear - MINIMUM_YEAR;
@@ -432,7 +437,7 @@ const PatientPersonalInfo = ({
           )}
           {phoneValidationError && (
             <span className="error-message">
-              Invalid Mobile Number: Only numbers, dashes and brackets accepted
+              Country code required. Only numbers, dashes and brackets accepted.
             </span>
           )}
         </div>
