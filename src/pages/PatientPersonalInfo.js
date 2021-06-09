@@ -214,15 +214,10 @@ const PatientPersonalInfo = ({
       .replace(/\(/g, "")
       .replace(/\)/g, "")
       .replace(/-/g, "");
-    if (value !== phone) {
-      setIntakeState({
-        ...intakeState,
-        [item]: value === DEFAULT_COUNTRY_CODE ? "" : value,
-      });
-      setPhoneCheckMessage(false);
-    } else {
-      setPhoneCheckMessage(true);
-    }
+    setIntakeState({
+      ...intakeState,
+      [item]: value === DEFAULT_COUNTRY_CODE ? "" : value,
+    });
   };
 
   const handleFieldChange = (e) => {
@@ -282,6 +277,7 @@ const PatientPersonalInfo = ({
         ? !intakeState.secondaryContact.match(PHONE_REGEX.content)?.[0]
         : false
     );
+    setPhoneCheckMessage(intakeState.secondaryContact === phone ? true : false);
   }, [intakeState.secondaryContact]);
 
   const handleValidateWeight = (e) => {
