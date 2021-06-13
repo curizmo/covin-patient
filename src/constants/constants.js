@@ -114,6 +114,7 @@ export const PERSONAL_INFO = {
 export const DATE_FORMAT = {
   yyyymmdd: "YYYY-MM-DD",
   mmddyyyy: "mm/dd/yyyy",
+  yyyymmddhms:'YYYY-MM-DD HH:mm:ss',
 };
 
 export const ALLERGY = {

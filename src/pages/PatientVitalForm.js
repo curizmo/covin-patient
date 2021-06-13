@@ -150,7 +150,7 @@ const PatientVitalForm = ({
       respiratoryRate: respiratoryRate,
       bpLowerRange: bpLowerRange,
       bpUpperRange: bpUpperRange,
-      vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmdd),
+      vitalsMeasureOn: moment().format(DATE_FORMAT.yyyymmddhms),
       oxygenLevel: oxygenLevel,
       pulseRate: pulseRate,
     };
