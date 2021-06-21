@@ -87,6 +87,7 @@ export const MESSAGE_TYPES = {
   newPatient: "newPatient",
   dailyScreening: "dailyScreening",
   vitalsUpdate: "vitalsUpdate",
+  webMeeting: "webMeeting",
 };
 
 export const MESSAGE_STATUS = {

@@ -294,6 +294,14 @@ input.bp:last-of-type {
   margin-top: 1rem;
 }
 
+.waiting-room-message {
+  font-size: 1rem;
+  color: #959fb7;
+  line-height: 1.5rem;
+  text-align: center;
+  margin-top: 8rem;
+}
+
 .initial-page-wrapper {
   background-color: blanchedalmond;
   width: 100%;
