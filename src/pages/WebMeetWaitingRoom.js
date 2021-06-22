@@ -24,7 +24,6 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
           response?.appointment.organizationEventBookingId,
           patientDetails.patientId
         ));
-
     } catch (err) {}
   };
 
@@ -33,38 +32,32 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
       {getDateString(appointment.eventStartTime) === today &&
       (appointment.eventStatusDesc === BOOKING_STATUS.confirmed ||
         appointment.eventStatusDesc === BOOKING_STATUS.checkedIn) ? (
-        <>
-          <div className={`form-content-wrapper success-page`}>
-            <div className="waiting-room-message">
-              <div>
-                <p className="submission-title">
-                  <b className="bold-text">Welcome!</b>
-                </p>
-                <p className="submission-title">
-                  Appointment Time : {getTimeString(appointment.eventStartTime)}
-                </p>
-                <p>
-                  Please wait for the physician to bring you into exam room.
-                </p>
-              </div>
+        <div className={`form-content-wrapper success-page`}>
+          <div className="waiting-room-message">
+            <div>
+              <p className="submission-title">
+                <b className="bold-text">Welcome!</b>
+              </p>
+              <p className="submission-title">
+                Appointment Time : {getTimeString(appointment.eventStartTime)}
+              </p>
+              <p>Please wait for the physician to bring you into exam room.</p>
             </div>
           </div>
-        </>
+        </div>
       ) : (
-        <>
-          <div className={`form-content-wrapper success-page`}>
-            <div className="waiting-room-message">
-              <div>
-                <p className="submission-title">
-                  <b className="bold-text">Welcome!</b>
-                </p>
-                <p className="submission-title">
-                  Looks like the appointment has expired already.
-                </p>
-              </div>
+        <div className={`form-content-wrapper success-page`}>
+          <div className="waiting-room-message">
+            <div>
+              <p className="submission-title">
+                <b className="bold-text">Welcome!</b>
+              </p>
+              <p className="submission-title">
+                Looks like the appointment has expired already.
+              </p>
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );
