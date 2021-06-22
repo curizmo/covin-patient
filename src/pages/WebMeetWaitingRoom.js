@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "./home.css";
 import * as patientService from "../services/patient";
 import { getDateString, getTimeString, getToday } from "../utils";
@@ -27,9 +27,18 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
     } catch (err) {}
   };
 
+  const appointmentStartDate = useMemo(() => {
+    let info = {};
+    if (appointment.eventStartTime) {
+      info = { ...info, date: getDateString(appointment.eventStartTime) };
+      info = { ...info, time: getTimeString(appointment.eventStartTime) };
+    }
+    return info;
+  }, [appointment.eventStartTime]);
+
   return (
     <>
-      {getDateString(appointment.eventStartTime) === today &&
+      {appointmentStartDate.date === today &&
       (appointment.eventStatusDesc === BOOKING_STATUS.confirmed ||
         appointment.eventStatusDesc === BOOKING_STATUS.checkedIn) ? (
         <div className={`form-content-wrapper success-page`}>
@@ -39,7 +48,7 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
                 <b className="bold-text">Welcome!</b>
               </p>
               <p className="submission-title">
-                Appointment Time : {getTimeString(appointment.eventStartTime)}
+                Appointment Time : {appointmentStartDate.time}
               </p>
               <p>Please wait for the physician to bring you into exam room.</p>
             </div>
