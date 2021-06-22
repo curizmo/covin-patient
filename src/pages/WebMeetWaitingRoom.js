@@ -3,6 +3,9 @@ import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
 import { getDateString, getTimeString, getToday } from "../utils";
+import {
+  BOOKING_STATUS
+} from "../constants/constants";
 
 const WebMeetWaitingRoom = ({ patientDetails }) => {
   const [appointment, setAppointment] = useState({});
@@ -26,7 +29,7 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
   return (
     <>
       {getDateString(appointment.eventStartTime) === today &&
-      appointment.eventStatusDesc !== "Completed" ? (
+      appointment.eventStatusDesc !== BOOKING_STATUS.completed ? (
         <>
           <div className={`form-content-wrapper success-page`}>
             <div className="waiting-room-message">
