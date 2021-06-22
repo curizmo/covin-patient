@@ -33,6 +33,10 @@ export const getSymptomsByPatientId = (patientId) => {
   return getData(`/vitals/symptoms/${patientId}`);
 };
 
+export const getAppointmentDetailsByPatientId = (patientId) => {
+  return getData(`/appointment/appointment-booking/${patientId}`);
+};
+
 export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
 };

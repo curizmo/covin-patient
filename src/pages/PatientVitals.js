@@ -384,7 +384,7 @@ const PatientVitals = ({
       ) : messageType === MESSAGE_TYPES.webMeeting ? (
         <div className={`content-wrapper ${subWrapper}`}>
           <div className="form-wrapper">
-            <WebMeetWaitingRoom />
+            <WebMeetWaitingRoom patientDetails={patientDetails} />
           </div>
         </div>
       ) : null}
