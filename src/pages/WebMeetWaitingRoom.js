@@ -17,11 +17,11 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
       const response = await patientService.getAppointmentDetailsByPatientId(
         patientDetails.patientId
       );
-      setAppointment(response.appointment);
+      setAppointment(response?.appointment);
 
       response.appointment.eventStatusDesc === BOOKING_STATUS.confirmed &&
         (await patientService.updateAppointmentStatus(
-          response.appointment.organizationEventBookingId,
+          response?.appointment.organizationEventBookingId,
           patientDetails.patientId
         ));
 
