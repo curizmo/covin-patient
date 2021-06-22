@@ -57,7 +57,7 @@ export const UpdateMessageStatus = (hashKey) => {
   return putData(`/register-patient-intake/message-status/${hashKey}`);
 };
 
-export const UpdateAppointmentStatus = (appointmentId, patientId) => {
+export const updateAppointmentStatus = (appointmentId, patientId) => {
   return putData(`/appointment/${appointmentId}/check-in/${patientId}`);
 };
 

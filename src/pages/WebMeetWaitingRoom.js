@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../App.css";
 import "./home.css";
 import * as patientService from "../services/patient";
 import { getDateString, getTimeString, getToday } from "../utils";
@@ -21,15 +20,13 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
       setAppointment(response.appointment);
 
       response.appointment.eventStatusDesc === BOOKING_STATUS.confirmed &&
-        (await patientService.UpdateAppointmentStatus(
+        (await patientService.updateAppointmentStatus(
           response.appointment.organizationEventBookingId,
           patientDetails.patientId
         ));
 
     } catch (err) {}
   };
-
-  console.log(appointment);
 
   return (
     <>
