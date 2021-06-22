@@ -19,6 +19,13 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
         patientDetails.patientId
       );
       setAppointment(response.appointment);
+
+      response.appointment.eventStatusDesc === BOOKING_STATUS.confirmed &&
+        (await patientService.UpdateAppointmentStatus(
+          response.appointment.organizationEventBookingId,
+          patientDetails.patientId
+        ));
+
     } catch (err) {}
   };
 
@@ -27,8 +34,8 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
   return (
     <>
       {getDateString(appointment.eventStartTime) === today &&
-      (appointment.eventStatusDesc !== BOOKING_STATUS.completed ||
-        appointment.eventStatusDesc !== BOOKING_STATUS.cancelled) ? (
+      (appointment.eventStatusDesc === BOOKING_STATUS.confirmed ||
+        appointment.eventStatusDesc === BOOKING_STATUS.checkedIn) ? (
         <>
           <div className={`form-content-wrapper success-page`}>
             <div className="waiting-room-message">
