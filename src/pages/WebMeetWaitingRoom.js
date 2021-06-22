@@ -25,7 +25,8 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
 
   return (
     <>
-      {getDateString(appointment.eventStartTime) === today ? (
+      {getDateString(appointment.eventStartTime) === today &&
+      appointment.eventStatusDesc !== "Completed" ? (
         <>
           <div className={`form-content-wrapper success-page`}>
             <div className="waiting-room-message">
