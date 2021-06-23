@@ -30,8 +30,11 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
   const appointmentStartDate = useMemo(() => {
     let info = {};
     if (appointment.eventStartTime) {
-      info = { ...info, date: getDateString(appointment.eventStartTime) };
-      info = { ...info, time: getTimeString(appointment.eventStartTime) };
+      info = {
+        ...info,
+        date: getDateString(appointment.eventStartTime),
+        time: getTimeString(appointment.eventStartTime),
+      };
     }
     return info;
   }, [appointment.eventStartTime]);
