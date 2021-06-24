@@ -5,6 +5,8 @@ import PatientFirstIntake from "./PatientFirstIntake";
 import DailyStatus from "./DailyStatus";
 import LabResults from "./LabResults";
 import Submission from "./Submission";
+import WebMeetWaitingRoom from "./WebMeetWaitingRoom";
+
 import "./home.css";
 import back from "../assets/images/back.svg";
 import forward from "../assets/images/forward.svg";
@@ -66,8 +68,8 @@ const PatientVitals = ({
     basophils: "",
     platelets: "",
     specimenDrawnDate: "",
-    fbs:"",
-    ppbs:"",
+    fbs: "",
+    ppbs: "",
     otherLabResultsInfo: "",
   });
 
@@ -79,7 +81,8 @@ const PatientVitals = ({
     height: intakeForm.height || patientDetails.height || "",
     weight: intakeForm.weight || patientDetails.weight || "",
     emailId: intakeForm.emailId || patientDetails.email || "",
-    secondaryContact: intakeForm.secondaryContact || patientDetails.secondaryContact || "",
+    secondaryContact:
+      intakeForm.secondaryContact || patientDetails.secondaryContact || "",
     address: intakeForm.address || patientDetails.address1 || "",
     state: intakeForm.state || patientDetails.state || "",
     city: intakeForm.city || patientDetails.city || "",
@@ -140,7 +143,7 @@ const PatientVitals = ({
     setPageLoaded(true);
     setPage(page - 1);
     setProgressedPage(progressedPage - 1);
-  };  
+  };
 
   const subWrapper = useMemo(() => {
     if (messageType === MESSAGE_TYPES.newPatient) {
@@ -376,6 +379,12 @@ const PatientVitals = ({
             )}
             {FOLLOWING_STATUS.pageNum ===
               EXISTING_PATIENT_VITAL_PAGES.submission && <Submission />}
+          </div>
+        </div>
+      ) : messageType === MESSAGE_TYPES.webMeeting ? (
+        <div className={`content-wrapper ${subWrapper}`}>
+          <div className="form-wrapper">
+            <WebMeetWaitingRoom patientDetails={patientDetails} />
           </div>
         </div>
       ) : null}

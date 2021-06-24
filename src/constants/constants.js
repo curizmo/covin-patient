@@ -87,6 +87,7 @@ export const MESSAGE_TYPES = {
   newPatient: "newPatient",
   dailyScreening: "dailyScreening",
   vitalsUpdate: "vitalsUpdate",
+  webMeeting: "webMeeting",
 };
 
 export const MESSAGE_STATUS = {
@@ -126,4 +127,12 @@ export const ALLERGY = {
 export const COVID_BEFORE = {
   yes: 1,
   no: 2,
+};
+
+export const BOOKING_STATUS = {
+  checkedIn: 'CheckedIn',
+  confirmed: 'Confirmed',
+  cancelled: 'Cancelled',
+  completed: 'Completed',
+  inProgress: 'InProgress',
 };
