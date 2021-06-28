@@ -18,7 +18,6 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
   const jitsiContainer = useRef(null);
   const [jitsiApi, setJitsiApi] = useState(null);
   const [startWebMeeting, setStartWebMeeting] = useState(false);
-  const [practitionerDetails, setPractitionerDetails] = useState({});
 
   const today = getToday();
   useEffect(() => {
@@ -26,21 +25,11 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
     getAppointmentDetail();
   }, []);
 
-  const { key, cluster } = config.pusher;
-  const pusher = new Pusher(key, {
-    cluster,
-    encrypted: true,
-  });
-
   const handleAppointmentProgress = useCallback(
     (data) => {
       console.log(appointment);
 
       setAppointment({ ...appointment, eventStatusDesc: "InProgress" });
-
-      if (data.practitioner) {
-        setPractitionerDetails(data.practitioner);
-      }
 
       if (data) {
         setStartWebMeeting(true);
@@ -51,6 +40,12 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
 
   useEffect(() => {
     if (appointment.organizationEventBookingId && !startWebMeeting) {
+      const { key, cluster } = config.pusher;
+      const pusher = new Pusher(key, {
+        cluster,
+        encrypted: true,
+      });
+
       const appointmentStatus = pusher.subscribe("appointmentStatus");
 
       appointmentStatus.bind("InProgress", handleAppointmentProgress);
@@ -64,7 +59,6 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
   };
 
   const startConference = useCallback(async () => {
-    console.log('i am running')
     if (
       patientDetails.patientId &&
       appointment &&
@@ -72,8 +66,6 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
       patientDetails.patientId === appointment.patientId
     ) {
       const jwt = await getJWT();
-      console.log("hi");
-
       try {
         const domain = "8x8.vc";
         const options = {
