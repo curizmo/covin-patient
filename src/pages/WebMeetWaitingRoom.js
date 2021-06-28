@@ -27,8 +27,6 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
 
   const handleAppointmentProgress = useCallback(
     (data) => {
-      console.log(appointment);
-
       setAppointment({ ...appointment, eventStatusDesc: "InProgress" });
 
       if (data) {
