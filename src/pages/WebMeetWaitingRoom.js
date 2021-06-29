@@ -53,17 +53,18 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
       cluster,
       encrypted: true,
     });
-    const appointmentStatus = pusher.subscribe("appointmentStatus");
+    const appointmentStatus = pusher.subscribe(
+      `${appointment.NTOUserID?.toLowerCase()}-appointmentStatus`
+    );
 
     if (appointment.organizationEventBookingId && !startWebMeeting) {
-
       appointmentStatus.bind("InProgress", handleAppointmentProgress);
     }
 
     if (appointment.organizationEventBookingId) {
       appointmentStatus.bind("completed", handleAppointmentCompleted);
     }
-  }, [appointment, startWebMeeting]);
+  }, [appointment?.organizationEventBookingId,appointment?.NTOUserID, startWebMeeting]);
 
   const getJWT = async () => {
     const response = await patientService.fetchJWT(patientDetails.patientId);
@@ -118,7 +119,11 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
         // @toDo Handle error
       }
     }
-  }, [jitsiContainer, appointment?.organizationEventBookingId, appointment?.eventStatusDesc]);
+  }, [
+    jitsiContainer,
+    appointment?.organizationEventBookingId,
+    appointment?.eventStatusDesc,
+  ]);
 
   useEffect(() => {
     if (
