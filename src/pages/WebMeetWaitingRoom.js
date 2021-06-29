@@ -36,17 +36,32 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
     [appointment]
   );
 
-  useEffect(() => {
-    if (appointment.organizationEventBookingId && !startWebMeeting) {
-      const { key, cluster } = config.pusher;
-      const pusher = new Pusher(key, {
-        cluster,
-        encrypted: true,
-      });
+  const handleAppointmentCompleted = useCallback(
+    (data) => {
+      setAppointment({ ...appointment, eventStatusDesc: "Completed" });
 
-      const appointmentStatus = pusher.subscribe("appointmentStatus");
+      if (data) {
+        setStartWebMeeting(false);
+      }
+    },
+    [appointment]
+  );
+
+  useEffect(() => {
+    const { key, cluster } = config.pusher;
+    const pusher = new Pusher(key, {
+      cluster,
+      encrypted: true,
+    });
+    const appointmentStatus = pusher.subscribe("appointmentStatus");
+
+    if (appointment.organizationEventBookingId && !startWebMeeting) {
 
       appointmentStatus.bind("InProgress", handleAppointmentProgress);
+    }
+    
+    if (appointment.organizationEventBookingId) {
+      appointmentStatus.bind("completed", handleAppointmentCompleted);
     }
   }, [appointment, startWebMeeting]);
 
