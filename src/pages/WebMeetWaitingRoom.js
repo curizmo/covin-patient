@@ -18,6 +18,7 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
   const jitsiContainer = useRef(null);
   const [jitsiApi, setJitsiApi] = useState(null);
   const [startWebMeeting, setStartWebMeeting] = useState(false);
+  const [endWebMeeting, setEndWebMeeting] = useState(false);
 
   const today = getToday();
   useEffect(() => {
@@ -41,6 +42,7 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
       setAppointment({ ...appointment, eventStatusDesc: "Completed" });
 
       if (data) {
+        setEndWebMeeting(true);
         setStartWebMeeting(false);
       }
     },
@@ -48,23 +50,30 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
   );
 
   useEffect(() => {
-    const { key, cluster } = config.pusher;
-    const pusher = new Pusher(key, {
-      cluster,
-      encrypted: true,
-    });
-    const appointmentStatus = pusher.subscribe(
-      `${appointment.NTOUserID?.toLowerCase()}-appointmentStatus`
-    );
-
-    if (appointment.organizationEventBookingId && !startWebMeeting) {
-      appointmentStatus.bind("InProgress", handleAppointmentProgress);
+    if (
+      (appointment.organizationEventBookingId && !startWebMeeting) ||
+      (appointment.organizationEventBookingId && !endWebMeeting)
+    ) {
+      const { key, cluster } = config.pusher;
+      const pusher = new Pusher(key, {
+        cluster,
+        encrypted: true,
+      });
+      const appointmentStatus = pusher.subscribe(
+        `${appointment.NTOUserID?.toLowerCase()}-appointmentStatus`
+      );
+      if (!startWebMeeting) {
+        appointmentStatus.bind("InProgress", handleAppointmentProgress);
+      }
+      if (!endWebMeeting) {
+        appointmentStatus.bind("completed", handleAppointmentCompleted);
+      }
     }
-
-    if (appointment.organizationEventBookingId) {
-      appointmentStatus.bind("completed", handleAppointmentCompleted);
-    }
-  }, [appointment?.organizationEventBookingId,appointment?.NTOUserID, startWebMeeting]);
+  }, [
+    appointment?.organizationEventBookingId,
+    appointment?.NTOUserID,
+    startWebMeeting,
+  ]);
 
   const getJWT = async () => {
     const response = await patientService.fetchJWT(patientDetails.patientId);
