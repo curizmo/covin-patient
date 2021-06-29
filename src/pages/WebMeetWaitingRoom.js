@@ -59,7 +59,7 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
 
       appointmentStatus.bind("InProgress", handleAppointmentProgress);
     }
-    
+
     if (appointment.organizationEventBookingId) {
       appointmentStatus.bind("completed", handleAppointmentCompleted);
     }
@@ -118,7 +118,7 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
         // @toDo Handle error
       }
     }
-  }, [jitsiContainer, appointment?.organizationEventBookingId]);
+  }, [jitsiContainer, appointment?.organizationEventBookingId, appointment?.eventStatusDesc]);
 
   useEffect(() => {
     if (
