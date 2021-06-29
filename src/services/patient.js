@@ -33,6 +33,14 @@ export const getSymptomsByPatientId = (patientId) => {
   return getData(`/vitals/symptoms/${patientId}`);
 };
 
+export const getAppointmentDetailsByPatientId = (patientId) => {
+  return getData(`/appointment/appointment-booking/${patientId}`);
+};
+
+export const fetchJWT = (patientId) => {
+  return getData(`/jitsi/jwt/${patientId}`);
+};
+
 export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
 };
@@ -51,6 +59,10 @@ export const createPatientVitals = (payload) => {
 
 export const UpdateMessageStatus = (hashKey) => {
   return putData(`/register-patient-intake/message-status/${hashKey}`);
+};
+
+export const updateAppointmentStatus = (appointmentId, patientId) => {
+  return putData(`/appointment/${appointmentId}/check-in/${patientId}`);
 };
 
 export async function uploadMedicationImages({

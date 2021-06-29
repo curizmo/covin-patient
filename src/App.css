@@ -286,12 +286,26 @@ input.bp:last-of-type {
   margin-right: 0rem;
 }
 
+.jitsi-embed{
+  background: #2A3A4B;
+  height: 20rem;
+  width: 20rem;
+}
+
 .text-greeting {
   font-size: 1rem;
   color: #959fb7;
   line-height: 1.5rem;
   text-align: center;
   margin-top: 1rem;
+}
+
+.waiting-room-message {
+  font-size: 1rem;
+  color: #959fb7;
+  line-height: 1.5rem;
+  text-align: center;
+  margin-top: 8rem;
 }
 
 .initial-page-wrapper {
