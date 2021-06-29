@@ -452,6 +452,15 @@ input[type="date"]:focus  {
   /* font-family: Helvetica; */
 }
 
+.web-call-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -5rem;
+  /* font-family: Helvetica; */
+}
+
 .expired-page {
   height: 20%;
   position: absolute;

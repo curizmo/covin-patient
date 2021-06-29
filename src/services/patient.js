@@ -37,6 +37,10 @@ export const getAppointmentDetailsByPatientId = (patientId) => {
   return getData(`/appointment/appointment-booking/${patientId}`);
 };
 
+export const fetchJWT = (patientId) => {
+  return getData(`/jitsi/jwt/${patientId}`);
+};
+
 export const createPatientIntake = (payload) => {
   return postData("/patient-intake-form", payload);
 };
