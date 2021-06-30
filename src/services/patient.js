@@ -57,6 +57,42 @@ export const createPatientVitals = (payload) => {
   return postData("/vitals", payload);
 };
 
+export const uploadLabResult = async(patientId, appointmentId, labResults) => {
+  const formData = new FormData();
+  
+  formData.append("form", JSON.stringify({}));
+
+  labResults.forEach((labResult) => {
+    formData.append("labImages", labResult);
+  });
+
+  const options = {
+    method: "PUT",
+    body: formData,
+  };
+  
+  const response = await fetch(
+    `${config.apiURL}/patient-labs/patient-lab-files/${patientId}/appointment/${appointmentId}`,
+    options
+  );
+
+  return response.json();
+};
+
+export const deleteLabResult = async(appointmentId, labResults) => {
+  const options = {
+    method: "PUT",
+    body: labResults,
+  };
+
+  const response = await fetch(
+    `${config.apiURL}/patient-labs/patient-lab-files/appointment/${appointmentId}/delete`,
+    options
+  );
+
+  return response.json(); 
+};
+
 export const UpdateMessageStatus = (hashKey) => {
   return putData(`/register-patient-intake/message-status/${hashKey}`);
 };

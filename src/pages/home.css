@@ -696,6 +696,16 @@ label.cameraButton input {
   justify-content: space-between;
 }
 
+.patient-lab-filename{
+  color: #3182fb;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.attachment{
+  margin-right: 0.3rem;
+}
+
 .filename-wrapper {
   background: rgba(224, 227, 234, 0.3);
   border-radius: 3px;

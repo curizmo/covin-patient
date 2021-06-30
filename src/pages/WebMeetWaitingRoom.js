@@ -13,6 +13,7 @@ import { BOOKING_STATUS, ENTER } from "../constants/constants";
 import config from "../config/index";
 import Pusher from "pusher-js";
 import { AiOutlineUpload, AiOutlineClose } from "react-icons/ai";
+import { ImAttachment } from 'react-icons/im';
 
 const WebMeetWaitingRoom = ({ patientDetails }) => {
   const [appointment, setAppointment] = useState({});
@@ -191,91 +192,54 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
     return info;
   }, [appointment.eventStartTime]);
 
-  // const handleFileSelect = async (e) => {
-  //   try {
-  //     const files = e.target.files;
-  //     if (appointmentId) {
-  //       setIsNoteSaved(false);
+  const handleFileSelect = async (e) => {
+    try {
+      const files = e.target.files;
+      console.log('i am here',files)
+      if (appointment.organizationEventBookingId) {
+        const labResultResponse = await patientService.uploadLabResult(
+          patientDetails.patientId,
+          appointment.organizationEventBookingId,
+          [...files]
+        );
+          console.log(labResultResponse)
+        const newFiles = labResultResponse.data.files.map((file) => ({
+          name: file.replace("laboratory/", ""),
+          file,
+        }));
+        
+        setLabResults((labResult) => [...labResult, ...newFiles]);
+      }
+    } catch (err) {
+      // TODO: Handle error
+    } finally {
+    }
+  };
 
-  //       const labResultResponse = await uploadLabResult(
-  //         patientId,
-  //         appointmentId,
-  //         [...files],
-  //       );
+  const handleRemoveFile = async (selectedFile) => {
+    try {
+      const results = labResults.filter(
+        (result) => result.name !== selectedFile.name
+      );
+      const labImageUrl = results.map((result) => result.file);
 
-  //       const newFiles = labResultResponse.data.files.map((file) => ({
-  //         name: file.replace('laboratory/', ''),
-  //         file,
-  //       }));
+      await patientService.deleteLabResult(
+        appointment.organizationEventBookingId,
+        { labImageUrl }
+      );
 
-  //       setLabResults((labResult) => [...labResult, ...newFiles]);
-  //     } else {
-  //       setIsNoteLoading(true);
-  //       setIsNoteSaved(false);
-
-  //       const response = await createEncounter(
-  //         {
-  //           patientId,
-  //           labs: JSON.stringify(
-  //             prescriptionList.filter(
-  //               (prescription) => prescription.label === 'lab',
-  //             ),
-  //           ),
-  //           prescriptionList: JSON.stringify(
-  //             prescriptionList.filter(
-  //               (prescription) => prescription.label === 'prescription',
-  //             ),
-  //           ),
-  //           note: '',
-  //         },
-  //         patientId,
-  //       );
-
-  //       const { organizationEventBookingId } = response.data;
-  //       setAppointmentId(organizationEventBookingId);
-
-  //       const labResultResponse = await uploadLabResult(
-  //         patientId,
-  //         organizationEventBookingId,
-  //         [...files],
-  //       );
-
-  //       const newFiles = labResultResponse.data.files.map((file) => ({
-  //         name: file.replace('laboratory/', ''),
-  //         file,
-  //       }));
-
-  //       setLabResults((labResult) => [...labResult, ...newFiles]);
-  //     }
-  //   } catch (err) {
-  //     // TODO: Handle error
-  //   } finally {
-  //     setIsNoteSaved(true);
-  //   }
-  // };
-
-  // const handleRemoveFile = async (selectedFile) => {
-  //   try {
-  //     setIsNoteSaved(false);
-  //     const results = labResults.filter(
-  //       (result) => result.name !== selectedFile.name,
-  //     );
-  //     const labImageUrl = results.map((result) => result.file);
-
-  //     await deleteLabResult(appointmentId, { labImageUrl });
-
-  //     setLabResults(results);
-  //   } catch (err) {
-  //     // TODO: Handle error.
-  //   } finally {
-  //     setIsNoteSaved(true);
-  //   }
-  // };
+      setLabResults(results);
+    } catch (err) {
+      // TODO: Handle error.
+    } finally {
+    }
+  };
 
   const handleUploadClick = () => {
     imageUploadRef.current.click();
   };
-
+console.log('i am here lab result',labResults)
+console.log(appointment)
   return (
     <>
       {appointmentStartDate.date === today &&
@@ -318,17 +282,17 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
               </div>
               <input
                 type="file"
-                // onChange={handleFileSelect}
+                onChange={handleFileSelect}
                 className="d-none"
                 ref={imageUploadRef}
               />
-              {/* {labResults?.length ? (
+              {labResults?.length ? (
                 <div>
                   {labResults.map((labResult) => {
                     return (
                       <div key={labResult.name}>
-                        <ImAttachment className="mr-1" />
-                        <FileName>{labResult.name} </FileName>
+                        <ImAttachment className="attachment" />
+                        <span className="patient-lab-filename">{labResult.name}</span>
                         <AiOutlineClose
                           className="ml-1"
                           role="button"
@@ -344,7 +308,7 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
                     );
                   })}
                 </div>
-              ) : null} */}
+              ) : null}
             </div>
           </div>
         </div>
