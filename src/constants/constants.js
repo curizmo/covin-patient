@@ -136,3 +136,5 @@ export const BOOKING_STATUS = {
   completed: 'Completed',
   inProgress: 'InProgress',
 };
+
+export const ENTER = 'Enter';

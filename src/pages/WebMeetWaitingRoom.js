@@ -8,17 +8,20 @@ import React, {
 } from "react";
 import "./home.css";
 import * as patientService from "../services/patient";
-import { getDateString, getTimeString, getToday } from "../utils";
-import { BOOKING_STATUS } from "../constants/constants";
+import { getDateString, getTimeString, getToday, getTabIndex } from "../utils";
+import { BOOKING_STATUS, ENTER } from "../constants/constants";
 import config from "../config/index";
 import Pusher from "pusher-js";
+import { AiOutlineUpload, AiOutlineClose } from "react-icons/ai";
 
 const WebMeetWaitingRoom = ({ patientDetails }) => {
   const [appointment, setAppointment] = useState({});
   const jitsiContainer = useRef(null);
+  const imageUploadRef = useRef(null);
   const [jitsiApi, setJitsiApi] = useState(null);
   const [startWebMeeting, setStartWebMeeting] = useState(false);
   const [endWebMeeting, setEndWebMeeting] = useState(false);
+  const [labResults, setLabResults] = useState([]);
 
   const today = getToday();
   useEffect(() => {
@@ -188,6 +191,91 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
     return info;
   }, [appointment.eventStartTime]);
 
+  // const handleFileSelect = async (e) => {
+  //   try {
+  //     const files = e.target.files;
+  //     if (appointmentId) {
+  //       setIsNoteSaved(false);
+
+  //       const labResultResponse = await uploadLabResult(
+  //         patientId,
+  //         appointmentId,
+  //         [...files],
+  //       );
+
+  //       const newFiles = labResultResponse.data.files.map((file) => ({
+  //         name: file.replace('laboratory/', ''),
+  //         file,
+  //       }));
+
+  //       setLabResults((labResult) => [...labResult, ...newFiles]);
+  //     } else {
+  //       setIsNoteLoading(true);
+  //       setIsNoteSaved(false);
+
+  //       const response = await createEncounter(
+  //         {
+  //           patientId,
+  //           labs: JSON.stringify(
+  //             prescriptionList.filter(
+  //               (prescription) => prescription.label === 'lab',
+  //             ),
+  //           ),
+  //           prescriptionList: JSON.stringify(
+  //             prescriptionList.filter(
+  //               (prescription) => prescription.label === 'prescription',
+  //             ),
+  //           ),
+  //           note: '',
+  //         },
+  //         patientId,
+  //       );
+
+  //       const { organizationEventBookingId } = response.data;
+  //       setAppointmentId(organizationEventBookingId);
+
+  //       const labResultResponse = await uploadLabResult(
+  //         patientId,
+  //         organizationEventBookingId,
+  //         [...files],
+  //       );
+
+  //       const newFiles = labResultResponse.data.files.map((file) => ({
+  //         name: file.replace('laboratory/', ''),
+  //         file,
+  //       }));
+
+  //       setLabResults((labResult) => [...labResult, ...newFiles]);
+  //     }
+  //   } catch (err) {
+  //     // TODO: Handle error
+  //   } finally {
+  //     setIsNoteSaved(true);
+  //   }
+  // };
+
+  // const handleRemoveFile = async (selectedFile) => {
+  //   try {
+  //     setIsNoteSaved(false);
+  //     const results = labResults.filter(
+  //       (result) => result.name !== selectedFile.name,
+  //     );
+  //     const labImageUrl = results.map((result) => result.file);
+
+  //     await deleteLabResult(appointmentId, { labImageUrl });
+
+  //     setLabResults(results);
+  //   } catch (err) {
+  //     // TODO: Handle error.
+  //   } finally {
+  //     setIsNoteSaved(true);
+  //   }
+  // };
+
+  const handleUploadClick = () => {
+    imageUploadRef.current.click();
+  };
+
   return (
     <>
       {appointmentStartDate.date === today &&
@@ -212,6 +300,51 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
           <div className="waiting-room-message">
             <div>
               <div ref={jitsiContainer} className="jitsi-embed"></div>
+            </div>
+            <div>
+              <div
+                className="upload-container"
+                role="button"
+                tabIndex={getTabIndex()}
+                onClick={handleUploadClick}
+                onKeyPress={(e) => {
+                  if (e.key === ENTER) {
+                    handleUploadClick();
+                  }
+                }}
+              >
+                <AiOutlineUpload className="upload-icon" />
+                Upload a file
+              </div>
+              <input
+                type="file"
+                // onChange={handleFileSelect}
+                className="d-none"
+                ref={imageUploadRef}
+              />
+              {/* {labResults?.length ? (
+                <div>
+                  {labResults.map((labResult) => {
+                    return (
+                      <div key={labResult.name}>
+                        <ImAttachment className="mr-1" />
+                        <FileName>{labResult.name} </FileName>
+                        <AiOutlineClose
+                          className="ml-1"
+                          role="button"
+                          tabIndex={getTabIndex()}
+                          onClick={() => handleRemoveFile(labResult)}
+                          onKeyPress={(e) => {
+                            if (e.key === ENTER) {
+                              handleRemoveFile(labResult);
+                            }
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null} */}
             </div>
           </div>
         </div>
