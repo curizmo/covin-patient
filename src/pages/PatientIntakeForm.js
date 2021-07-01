@@ -83,7 +83,7 @@ const PatientIntakeForm = () => {
           )}
         </>
       ) : patientDetails.messageStatus === MESSAGE_STATUS.processed ? (
-        <Submission messageStatus={patientDetails.messageStatus} />
+        <Submission messageStatus={patientDetails.messageStatus} messageType={patientDetails.messageType} />
       ) : null}
     </div>
   );

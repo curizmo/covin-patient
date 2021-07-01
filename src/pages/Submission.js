@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import "../App.css";
 import "./home.css";
 import success_image from "../assets/images/check-circle.svg";
-import { MESSAGE_STATUS } from "../constants/constants";
+import { MESSAGE_STATUS, MESSAGE_TYPES } from "../constants/constants";
 
-const Submission = ({ messageStatus }) => {
+const Submission = ({ messageStatus, messageType }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -24,14 +24,27 @@ const Submission = ({ messageStatus }) => {
           />
           <div className="text-greeting">
             {messageStatus === MESSAGE_STATUS.processed ? (
-              <div>
-                <p className="submission-title">
-                  <b className="bold-text">Thank you</b>
-                </p>
-                <p className="submission-lead-paragraph">
-                  You have already submitted the form.
-                </p>
-              </div>
+              <>
+                {messageType === MESSAGE_TYPES.webMeeting ? (
+                  <div>
+                    <p className="submission-title">
+                      <b className="bold-text">Thank you</b>
+                    </p>
+                    <p className="submission-lead-paragraph">
+                      Your web meeting is completed.
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="submission-title">
+                      <b className="bold-text">Thank you</b>
+                    </p>
+                    <p className="submission-lead-paragraph">
+                      You have already submitted the form.
+                    </p>
+                  </div>
+                )}
+              </>
             ) : (
               <div>
                 <p className="submission-title">
