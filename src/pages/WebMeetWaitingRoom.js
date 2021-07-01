@@ -40,7 +40,7 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
   const handleAppointmentCompleted = useCallback(
     async (data) => {
       setAppointment({ ...appointment, eventStatusDesc: "Completed" });
-      await patientService.UpdateMessageStatus(hashKey);
+      await patientService.updateMessageStatus(hashKey);
       if (data) {
         setEndWebMeeting(true);
         setStartWebMeeting(false);

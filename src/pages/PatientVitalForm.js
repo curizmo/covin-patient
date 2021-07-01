@@ -177,7 +177,7 @@ const PatientVitalForm = ({
         pagenum: NEW_PATIENT_PAGES.vitals,
       });
 
-      await patientService.UpdateMessageStatus(hash);
+      await patientService.updateMessageStatus(hash);
       setProgressedPage(NEW_PATIENT_PAGES.submission);
     }
     setIsLoading(false);

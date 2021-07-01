@@ -57,7 +57,7 @@ export const createPatientVitals = (payload) => {
   return postData("/vitals", payload);
 };
 
-export const UpdateMessageStatus = (hashKey) => {
+export const updateMessageStatus = (hashKey) => {
   return putData(`/register-patient-intake/message-status/${hashKey}`);
 };
 
