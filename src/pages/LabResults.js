@@ -91,7 +91,7 @@ const LabResults = ({
         patientId: patientDetails.patientId,
         messageHash: hash,
       }),
-      patientService.UpdateMessageStatus(hash),
+      patientService.updateMessageStatus(hash),
     ]);
 
     setIsLoading(false);

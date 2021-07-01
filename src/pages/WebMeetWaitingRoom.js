@@ -13,7 +13,7 @@ import { BOOKING_STATUS } from "../constants/constants";
 import config from "../config/index";
 import Pusher from "pusher-js";
 
-const WebMeetWaitingRoom = ({ patientDetails }) => {
+const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
   const [appointment, setAppointment] = useState({});
   const jitsiContainer = useRef(null);
   const [jitsiApi, setJitsiApi] = useState(null);
@@ -38,9 +38,9 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
   );
 
   const handleAppointmentCompleted = useCallback(
-    (data) => {
+    async (data) => {
       setAppointment({ ...appointment, eventStatusDesc: "Completed" });
-
+      await patientService.updateMessageStatus(hashKey);
       if (data) {
         setEndWebMeeting(true);
         setStartWebMeeting(false);

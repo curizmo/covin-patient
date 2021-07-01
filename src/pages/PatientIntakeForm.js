@@ -24,16 +24,18 @@ const PatientIntakeForm = () => {
   const getPatientDetail = async (hashKey) => {
     try {
       const response = await patientService.getPatientDetails(hashKey);
-      getPatientIntake(response.patientInfo.patientId);
+      getPatientIntake(response.patientInfo.patientId, response.patientInfo.messageType);
       setPatientDatails(response.patientInfo);
       setIsAgreed(response.patientInfo.isAgreed);
     } catch (err) {}
   };
 
-  const getPatientIntake = async (patientId) => {
+  const getPatientIntake = async (patientId, messageType) => {
     try {
+      if(messageType !== MESSAGE_TYPES.webMeeting){
       const response = await patientService.getPatientIntake(patientId);
       setIntakeForm(JSON.parse(response));
+      }
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -81,7 +83,7 @@ const PatientIntakeForm = () => {
           )}
         </>
       ) : patientDetails.messageStatus === MESSAGE_STATUS.processed ? (
-        <Submission messageStatus={patientDetails.messageStatus} />
+        <Submission messageStatus={patientDetails.messageStatus} messageType={patientDetails.messageType} />
       ) : null}
     </div>
   );
