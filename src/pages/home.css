@@ -546,13 +546,18 @@ input[type="date"]:focus {
   color: #3182fb;
   font-size: 14px;
   line-height: 18px;
+  outline: none !important;
 }
 
-.upload-icon{
-  margin:0.15rem 0.4rem 0 0;
+.upload-container:focus {
+  outline: none !important;
 }
 
-.d-none{
+.upload-icon {
+  margin: 0.15rem 0.4rem 0 0;
+}
+
+.d-none {
   display: none;
 }
 
@@ -696,14 +701,26 @@ label.cameraButton input {
   justify-content: space-between;
 }
 
-.patient-lab-filename{
+.patient-lab-filename {
   color: #3182fb;
   font-size: 14px;
   line-height: 18px;
 }
 
-.attachment{
+.attachment {
   margin-right: 0.3rem;
+  height: 0.8rem;
+}
+
+.delete-image {
+  margin-left: 0.3rem;
+  height: 0.77rem;
+}
+
+.encounter-images {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .filename-wrapper {

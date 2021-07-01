@@ -9,11 +9,16 @@ import React, {
 import "./home.css";
 import * as patientService from "../services/patient";
 import { getDateString, getTimeString, getToday, getTabIndex } from "../utils";
-import { BOOKING_STATUS, ENTER } from "../constants/constants";
+import {
+  BOOKING_STATUS,
+  ENTER,
+  IMAGE_TYPE_REGEX,
+  FILE_TYPES,
+} from "../constants/constants";
 import config from "../config/index";
 import Pusher from "pusher-js";
 import { AiOutlineUpload, AiOutlineClose } from "react-icons/ai";
-import { ImAttachment } from 'react-icons/im';
+import { ImAttachment } from "react-icons/im";
 
 const WebMeetWaitingRoom = ({ patientDetails }) => {
   const [appointment, setAppointment] = useState({});
@@ -192,54 +197,50 @@ const WebMeetWaitingRoom = ({ patientDetails }) => {
     return info;
   }, [appointment.eventStartTime]);
 
-  const handleFileSelect = async (e) => {
-    try {
-      const files = e.target.files;
-      console.log('i am here',files)
-      if (appointment.organizationEventBookingId) {
-        const labResultResponse = await patientService.uploadLabResult(
-          patientDetails.patientId,
-          appointment.organizationEventBookingId,
-          [...files]
-        );
-          console.log(labResultResponse)
-        const newFiles = labResultResponse.data.files.map((file) => ({
-          name: file.replace("laboratory/", ""),
-          file,
-        }));
-        
-        setLabResults((labResult) => [...labResult, ...newFiles]);
-      }
-    } catch (err) {
-      // TODO: Handle error
-    } finally {
-    }
+  const handleFileSelect = (e) => {
+    uploadEncounterFiles(e.target.files[0]);
   };
 
-  const handleRemoveFile = async (selectedFile) => {
+  const uploadEncounterFiles = async (file) => {
     try {
-      const results = labResults.filter(
-        (result) => result.name !== selectedFile.name
-      );
-      const labImageUrl = results.map((result) => result.file);
-
-      await patientService.deleteLabResult(
+      const isFileImage = IMAGE_TYPE_REGEX.test(file.type);
+      const fileType = isFileImage ? FILE_TYPES.IMAGE : FILE_TYPES.FILE;
+      const response = await patientService.uploadEncounterFiles(
+        file,
         appointment.organizationEventBookingId,
-        { labImageUrl }
+        patientDetails.patientId,
+        fileType
+      );
+      setLabResults([
+        ...labResults,
+        {
+          ...response.file,
+          fileName: response.file.fileUrl.replace(
+            `${config.apiURL}/file/encounter/`,
+            ""
+          ),
+        },
+      ]);
+
+      return;
+    } catch (err) {}
+  };
+
+  const deleteAppointmentFile = async (fileId) => {
+    try {
+      await patientService.deleteAppointmentFile(
+        appointment.organizationEventBookingId,
+        fileId
       );
 
-      setLabResults(results);
-    } catch (err) {
-      // TODO: Handle error.
-    } finally {
-    }
+      setLabResults(labResults.filter((file) => file.id !== fileId));
+    } catch (error) {}
   };
 
   const handleUploadClick = () => {
     imageUploadRef.current.click();
   };
-console.log('i am here lab result',labResults)
-console.log(appointment)
+
   return (
     <>
       {appointmentStartDate.date === today &&
@@ -287,20 +288,22 @@ console.log(appointment)
                 ref={imageUploadRef}
               />
               {labResults?.length ? (
-                <div>
+                <div className="encounter-images">
                   {labResults.map((labResult) => {
                     return (
-                      <div key={labResult.name}>
+                      <div key={labResult.fileName}>
                         <ImAttachment className="attachment" />
-                        <span className="patient-lab-filename">{labResult.name}</span>
+                        <span className="patient-lab-filename">
+                          {labResult.fileName.split("encounter/")[1]}
+                        </span>
                         <AiOutlineClose
-                          className="ml-1"
+                          className="delete-image"
                           role="button"
                           tabIndex={getTabIndex()}
-                          onClick={() => handleRemoveFile(labResult)}
+                          onClick={() => deleteAppointmentFile(labResult.id)}
                           onKeyPress={(e) => {
                             if (e.key === ENTER) {
-                              handleRemoveFile(labResult);
+                              deleteAppointmentFile(labResult.id);
                             }
                           }}
                         />

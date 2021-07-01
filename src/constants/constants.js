@@ -90,6 +90,14 @@ export const MESSAGE_TYPES = {
   webMeeting: "webMeeting",
 };
 
+export const FILE_TYPES = {
+  FILE: 'file',
+  IMAGE: 'image',
+};
+
+export const IMAGE_TYPE_REGEX = /^image\//;
+
+
 export const MESSAGE_STATUS = {
   sent: "SENT",
   processed: "PROCESSED",

@@ -1,4 +1,4 @@
-import { postData, getData, putData } from "./fetch";
+import { postData, getData, putData, deleteData } from "./fetch";
 import config from "../config/index";
 
 export const getPatientDetails = (hashKey) => {
@@ -57,9 +57,9 @@ export const createPatientVitals = (payload) => {
   return postData("/vitals", payload);
 };
 
-export const uploadLabResult = async(patientId, appointmentId, labResults) => {
+export const uploadLabResult = async (patientId, appointmentId, labResults) => {
   const formData = new FormData();
-  
+
   formData.append("form", JSON.stringify({}));
 
   labResults.forEach((labResult) => {
@@ -70,7 +70,7 @@ export const uploadLabResult = async(patientId, appointmentId, labResults) => {
     method: "PUT",
     body: formData,
   };
-  
+
   const response = await fetch(
     `${config.apiURL}/patient-labs/patient-lab-files/${patientId}/appointment/${appointmentId}`,
     options
@@ -79,7 +79,7 @@ export const uploadLabResult = async(patientId, appointmentId, labResults) => {
   return response.json();
 };
 
-export const deleteLabResult = async(appointmentId, labResults) => {
+export const deleteLabResult = async (appointmentId, labResults) => {
   const options = {
     method: "PUT",
     body: labResults,
@@ -90,7 +90,7 @@ export const deleteLabResult = async(appointmentId, labResults) => {
     options
   );
 
-  return response.json(); 
+  return response.json();
 };
 
 export const UpdateMessageStatus = (hashKey) => {
@@ -152,4 +152,32 @@ export async function uploadLabImages({
   );
 
   return response.json();
+}
+
+export async function uploadEncounterFiles(
+  file,
+  appointmentId,
+  patientId,
+  fileType
+) {
+  const form = new FormData();
+
+  form.append("file", file);
+  form.append("fileType", fileType);
+
+  const options = {
+    method: "POST",
+    body: form,
+  };
+
+  const response = await fetch(
+    `${config.apiURL}/appointment/${appointmentId}/patient-file/${patientId}`,
+    options
+  );
+
+  return response.json();
+}
+
+export function deleteAppointmentFile(appointmentId, fileId) {
+  return deleteData(`/appointment/${appointmentId}/patient-file/${fileId}`);
 }
