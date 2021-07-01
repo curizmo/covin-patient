@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:windows": "rmdir /s /q .\\deploy\\build\\ && react-scripts build && xcopy .\\build\\ .\\deploy\\build\\ /y /e && xcopy .\\build\\ .\\deploy\\build\\ /y",
+    "build:windows": "(if EXIST .\\deploy\\build\\ rmdir /s /q .\\deploy\\build\\) && react-scripts build && xcopy .\\build\\ .\\deploy\\build\\ /y /e && xcopy .\\build\\ .\\deploy\\build\\ /y",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
