@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import "./home.css";
 import * as patientService from "../services/patient";
-import { getDateString, getTimeString, getToday, getTabIndex } from "../utils";
+import { getDateString, getTimeString, getToday, tabIndex } from "../utils";
 import {
   BOOKING_STATUS,
   ENTER,
@@ -270,7 +270,7 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
               <div
                 className="upload-container"
                 role="button"
-                tabIndex={getTabIndex()}
+                tabIndex={tabIndex}
                 onClick={handleUploadClick}
                 onKeyPress={(e) => {
                   if (e.key === ENTER) {
@@ -299,7 +299,7 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
                         <AiOutlineClose
                           className="delete-image"
                           role="button"
-                          tabIndex={getTabIndex()}
+                          tabIndex={tabIndex}
                           onClick={() => deleteAppointmentFile(labResult.id)}
                           onKeyPress={(e) => {
                             if (e.key === ENTER) {
