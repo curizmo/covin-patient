@@ -28,3 +28,10 @@ export const putData = async (url) => {
   })
   return response.json();
 };
+
+export const deleteData = async (url) => {
+  const response = await fetch(`${config.apiURL}${url}`,  {
+    method: 'DELETE',
+  })
+  return response.json();
+};

@@ -293,7 +293,7 @@ input[type="text"]::placeholder {
 input[type="text"]:not(#city-drop):not(#state-drop):focus,
 input[type="number"]:focus,
 input[type="email"]:focus,
-input[type="date"]:focus  {
+input[type="date"]:focus {
   border: 1px solid #3e4d72 !important;
   box-shadow: 0px 2px 0px 0px #3e4d72 !important;
 }
@@ -414,7 +414,7 @@ input[type="date"]:focus  {
   align-items: center;
 }
 
-.blood-sugar-input-wrap{
+.blood-sugar-input-wrap {
   height: 169px;
   align-items: center;
 }
@@ -538,6 +538,27 @@ input[type="date"]:focus  {
   display: flex;
   flex-direction: column-reverse;
   height: 100%;
+}
+
+.upload-container {
+  display: flex;
+  padding: 1rem 0rem;
+  color: #3182fb;
+  font-size: 14px;
+  line-height: 18px;
+  outline: none !important;
+}
+
+.upload-container:focus {
+  outline: none !important;
+}
+
+.upload-icon {
+  margin: 0.15rem 0.4rem 0 0;
+}
+
+.d-none {
+  display: none;
 }
 
 .camera-icon-container {
@@ -678,6 +699,28 @@ label.cameraButton input {
 
 .justify-space-between {
   justify-content: space-between;
+}
+
+.patient-lab-filename {
+  color: #3182fb;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.attachment {
+  margin-right: 0.3rem;
+  height: 0.8rem;
+}
+
+.delete-image {
+  margin-left: 0.3rem;
+  height: 0.77rem;
+}
+
+.encounter-images {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .filename-wrapper {

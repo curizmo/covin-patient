@@ -8,17 +8,26 @@ import React, {
 } from "react";
 import "./home.css";
 import * as patientService from "../services/patient";
-import { getDateString, getTimeString, getToday } from "../utils";
-import { BOOKING_STATUS } from "../constants/constants";
+import { getDateString, getTimeString, getToday, tabIndex } from "../utils";
+import {
+  BOOKING_STATUS,
+  ENTER,
+  IMAGE_TYPE_REGEX,
+  FILE_TYPES,
+} from "../constants/constants";
 import config from "../config/index";
 import Pusher from "pusher-js";
+import { AiOutlineUpload, AiOutlineClose } from "react-icons/ai";
+import { ImAttachment } from "react-icons/im";
 
 const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
   const [appointment, setAppointment] = useState({});
   const jitsiContainer = useRef(null);
+  const imageUploadRef = useRef(null);
   const [jitsiApi, setJitsiApi] = useState(null);
   const [startWebMeeting, setStartWebMeeting] = useState(false);
   const [endWebMeeting, setEndWebMeeting] = useState(false);
+  const [labResults, setLabResults] = useState([]);
 
   const today = getToday();
   useEffect(() => {
@@ -188,6 +197,50 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
     return info;
   }, [appointment.eventStartTime]);
 
+  const handleFileSelect = (e) => {
+    uploadEncounterFiles(e.target.files[0]);
+  };
+
+  const uploadEncounterFiles = async (file) => {
+    try {
+      const isFileImage = IMAGE_TYPE_REGEX.test(file.type);
+      const fileType = isFileImage ? FILE_TYPES.IMAGE : FILE_TYPES.FILE;
+      const response = await patientService.uploadEncounterFiles(
+        file,
+        appointment.organizationEventBookingId,
+        patientDetails.patientId,
+        fileType
+      );
+      setLabResults([
+        ...labResults,
+        {
+          ...response.file,
+          fileName: response.file.fileUrl.replace(
+            `${config.apiURL}/file/encounter/`,
+            ""
+          ),
+        },
+      ]);
+
+      return;
+    } catch (err) {}
+  };
+
+  const deleteAppointmentFile = async (fileId) => {
+    try {
+      await patientService.deleteAppointmentFile(
+        appointment.organizationEventBookingId,
+        fileId
+      );
+
+      setLabResults(labResults.filter((file) => file.id !== fileId));
+    } catch (error) {}
+  };
+
+  const handleUploadClick = () => {
+    imageUploadRef.current.click();
+  };
+
   return (
     <>
       {appointmentStartDate.date === today &&
@@ -212,6 +265,53 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
           <div className="waiting-room-message">
             <div>
               <div ref={jitsiContainer} className="jitsi-embed"></div>
+            </div>
+            <div>
+              <div
+                className="upload-container"
+                role="button"
+                tabIndex={tabIndex}
+                onClick={handleUploadClick}
+                onKeyPress={(e) => {
+                  if (e.key === ENTER) {
+                    handleUploadClick();
+                  }
+                }}
+              >
+                <AiOutlineUpload className="upload-icon" />
+                Upload a file
+              </div>
+              <input
+                type="file"
+                onChange={handleFileSelect}
+                className="d-none"
+                ref={imageUploadRef}
+              />
+              {labResults?.length ? (
+                <div className="encounter-images">
+                  {labResults.map((labResult) => {
+                    return (
+                      <div key={labResult.fileName}>
+                        <ImAttachment className="attachment" />
+                        <span className="patient-lab-filename">
+                          {labResult.fileName.split("encounter/")[1]}
+                        </span>
+                        <AiOutlineClose
+                          className="delete-image"
+                          role="button"
+                          tabIndex={tabIndex}
+                          onClick={() => deleteAppointmentFile(labResult.id)}
+                          onKeyPress={(e) => {
+                            if (e.key === ENTER) {
+                              deleteAppointmentFile(labResult.id);
+                            }
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

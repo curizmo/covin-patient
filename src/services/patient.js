@@ -1,4 +1,4 @@
-import { postData, getData, putData } from "./fetch";
+import { postData, getData, putData, deleteData } from "./fetch";
 import config from "../config/index";
 
 export const getPatientDetails = (hashKey) => {
@@ -116,4 +116,32 @@ export async function uploadLabImages({
   );
 
   return response.json();
+}
+
+export async function uploadEncounterFiles(
+  file,
+  appointmentId,
+  patientId,
+  fileType
+) {
+  const form = new FormData();
+
+  form.append("file", file);
+  form.append("fileType", fileType);
+
+  const options = {
+    method: "POST",
+    body: form,
+  };
+
+  const response = await fetch(
+    `${config.apiURL}/appointment/${appointmentId}/patient-file/${patientId}`,
+    options
+  );
+
+  return response.json();
+}
+
+export function deleteAppointmentFile(appointmentId, fileId) {
+  return deleteData(`/appointment/${appointmentId}/patient-file/${fileId}`);
 }
