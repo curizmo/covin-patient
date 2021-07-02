@@ -3028,11 +3028,6 @@
   dependencies:
     "fill-range" "^7.0.1"
 
-"branch@^0.0.0":
-  "integrity" "sha1-JitYnTyklf3uQ0XFm302GpMZYDU="
-  "resolved" "https://registry.npmjs.org/branch/-/branch-0.0.0.tgz"
-  "version" "0.0.0"
-
 "brorand@^1.0.1", "brorand@^1.1.0":
   "integrity" "sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8="
   "resolved" "https://registry.npmjs.org/brorand/-/brorand-1.1.0.tgz"
