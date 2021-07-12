@@ -6,8 +6,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { SubmitButton } from "../components/common/SubmitButton";
 import { SplittedDatePicker } from "../components/common/SplittedDatePicker";
 
-import csc from "../third-party/country-state-city";
 import * as patientService from "../services/patient";
+import {
+  getAllCountries,
+  getCitiesByCountryCodeAndStateCode,
+  getStatesByCountryCode,
+} from '../services/location';
 import { getRandomKey } from "../utils";
 import {
   GENDERS,
@@ -19,7 +23,9 @@ import {
   PERSONAL_INFO,
   NEW_PATIENT_PAGES,
   DEFAULT_COUNTRY_CODE,
+  DEFAULT_COUNTRY_PHONE_CODE,
   COUNTRY_CODE,
+  COUNTRY,
 } from "../constants/constants";
 import "../App.css";
 import "./home.css";
@@ -106,17 +112,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const moment = require("moment");
-const states = csc.getStatesOfCountry("IN");
-const stateList = [];
-
-for (let i in states) {
-  let state = {
-    key: states[i].isoCode,
-    text: states[i].name,
-    value: states[i].name,
-  };
-  stateList.push(state);
-}
 
 const PatientPersonalInfo = ({
   personalInfo,
@@ -126,7 +121,6 @@ const PatientPersonalInfo = ({
   setProgressedPage,
   hash,
   setPage,
-  stateKey,
   page,
   phone,
 }) => {
@@ -136,9 +130,9 @@ const PatientPersonalInfo = ({
   const [inchHeight, setInchHeight] = useState("");
   const [feetHeight, setFeetHeight] = useState("");
   const [showDateError, setShowDateError] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValueCountry, setInputValueCountry] = useState('');
+  const [inputValueState, setInputValueState] = useState("");
   const [inputValueCity, setInputValueCity] = useState("");
-  const [cityArray, setCityArray] = useState([]);
   const [personalInfoError, setPersonalInfoError] = useState({
     firstName: "",
     lastName: "",
@@ -159,8 +153,44 @@ const PatientPersonalInfo = ({
     month: "",
     year: "",
   });
+  const [countriesList, setCountriesList] = useState([]);
+  const [statesList, setStatesList] = useState([]);
+  const [citiesList, setCitiesList] = useState([]);
 
-  useEffect(() => {
+  const getCountries = async () => {
+    const countries = await getAllCountries();
+    setCountriesList(countries);
+  };
+
+
+  const getStatesList = async (countryCode) => {
+    try {
+      const statesList = await getStatesByCountryCode(countryCode);
+      setStatesList(statesList);
+    } catch {
+      setStatesList([]);
+      // @toDo add error message
+    }
+  };
+
+  const getCities = async (countryCode, stateCode) => {
+    try {
+      const cities = await getCitiesByCountryCodeAndStateCode(
+        countryCode,
+        stateCode,
+      );
+      setCitiesList(cities);
+    } catch {
+      setCitiesList([]);
+      // @toDo add error message
+    }
+  };
+
+  const initializeLocation = () => {
+    getCountries();
+  };
+
+  const initializeDateOfBirth = () => {
     if (intakeState.dateOfBirth) {
       const date = new Date(intakeState.dateOfBirth);
       setDateOfBirth({
@@ -170,7 +200,43 @@ const PatientPersonalInfo = ({
       });
     }
     window.scrollTo(0, 0);
+  };
+
+  const initializeHeight = () => {
+    const heightInFeet =
+      (intakeState.height &&
+        intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
+      "";
+    const heightInInch =
+      (intakeState.height &&
+        intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
+      "";
+
+    if (intakeState?.state) {
+      handleStateChange();
+    }
+
+    setFeetHeight(heightInFeet);
+    setInchHeight(heightInInch);
+  };
+
+  useEffect(() => {
+    initializeLocation();
+    initializeDateOfBirth();
+    initializeHeight();
   }, []);
+
+  useEffect(() => {
+    getStatesList(intakeState.countryCode || COUNTRY[DEFAULT_COUNTRY_CODE]);
+    setCitiesList([]);
+  }, [intakeState.countryCode]);
+
+  useEffect(() => {
+    const stateCode = statesList.find(s => s.name === intakeState.state)?.isoCode;
+    if (intakeState.countryCode && stateCode) {
+      getCities(intakeState.countryCode, stateCode);
+    }
+  }, [intakeState.countryCode, intakeState.state, statesList]);
 
   useEffect(() => {
     const year = dateOfBirth.year;
@@ -190,24 +256,6 @@ const PatientPersonalInfo = ({
     }));
   }, [dateOfBirth, setIntakeState]);
 
-  useEffect(() => {
-    const heightInFeet =
-      (intakeState.height &&
-        intakeState.height.split(`'`)[0].replace(/[^0-9]/g, "")) ||
-      "";
-    const heightInInch =
-      (intakeState.height &&
-        intakeState.height.split(`'`)[1].replace(/[^0-9]/g, "")) ||
-      "";
-
-    if (intakeState?.state) {
-      handleStateChange();
-    }
-
-    setFeetHeight(heightInFeet);
-    setInchHeight(heightInInch);
-  }, []);
-
   const handleAddressChange = (e) => {
     const item = e.target.name;
     setIntakeState({ ...intakeState, [item]: e.target.value });
@@ -221,7 +269,7 @@ const PatientPersonalInfo = ({
       .replace(/-/g, "");
     setIntakeState({
       ...intakeState,
-      [item]: value === DEFAULT_COUNTRY_CODE ? "" : value,
+      [item]: value === DEFAULT_COUNTRY_PHONE_CODE ? "" : value,
     });
   };
 
@@ -234,32 +282,26 @@ const PatientPersonalInfo = ({
     }));
   };
 
-  const cityList = [];
+  const handleCountryChange = (e) => {
+    const countryName = e?.target?.outerText || intakeState?.country;
+    const countryCode = countriesList.find(c => c.name === countryName)?.isoCode;
+
+    setIntakeState({
+      ...intakeState,
+      countryCode,
+      state: '',
+      city: '',
+    });
+  };
 
   const handleStateChange = (e) => {
     const stateName = e?.target?.outerText || intakeState?.state;
-    for (let i in stateList) {
-      if (stateList[i].text === stateName) {
-        stateKey = stateList[i].key;
-      }
-    }
-
-    const cities = csc.getCitiesOfState("IN", stateKey);
-    for (let i in cities) {
-      let city = {
-        key: i,
-        text: cities[i].name,
-        value: cities[i].name,
-      };
-      cityList.push(city);
-    }
 
     setIntakeState({
       ...intakeState,
       state: stateName,
-      city: "",
+      city: '',
     });
-    setCityArray(cityList);
   };
 
   //city name not taking default
@@ -277,9 +319,7 @@ const PatientPersonalInfo = ({
   }, [intakeState.emailId]);
 
   useEffect(() => {
-    const phoneNumber =
-      intakeState.secondaryContact.split(COUNTRY_CODE.india)[1] ||
-      intakeState.secondaryContact.split(COUNTRY_CODE.northAmerica)[1];
+    const phoneNumber = intakeState.secondaryContact.split(COUNTRY_CODE.US)[1];
 
     if (
       intakeState.secondaryContact !== "" &&
@@ -460,7 +500,7 @@ const PatientPersonalInfo = ({
             type="text"
             name="secondaryContact"
             inputMode="tel"
-            defaultValue={intakeState.secondaryContact || "+91-"}
+            defaultValue={intakeState.secondaryContact || DEFAULT_COUNTRY_PHONE_CODE}
             onBlur={handlePhoneChange}
           />
           {phoneCheckMessage && (
@@ -475,7 +515,7 @@ const PatientPersonalInfo = ({
           )}
           {countryCodeValidationError && (
             <span className="error-message">
-              Country Code is required, example: +91
+              Country Code is required, example: {COUNTRY_CODE.US}
             </span>
           )}
           {phoneLengthValidationError && (
@@ -622,6 +662,30 @@ const PatientPersonalInfo = ({
           />
         </div>
         <div className="state">
+          <label className="label-header" htmlFor={"country"}>
+            Country
+          </label>
+          <div className="dropdown-selections">
+            <Autocomplete
+              id="country-drop"
+              shrink={"false"}
+              classes={classes}
+              name="country"
+              value={intakeState.country || COUNTRY[DEFAULT_COUNTRY_CODE]}
+              onChange={handleCountryChange}
+              inputValue={inputValueCountry}
+              onInputChange={(_, newInputValue) => {
+                setInputValueCountry(newInputValue);
+              }}
+              options={countriesList.map((item) => item.name)}
+              style={{ width: "100%" }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select country" />
+              )}
+            />
+          </div>
+        </div>
+        <div className="state">
           <label className="label-header" htmlFor={"state"}>
             State
           </label>
@@ -633,11 +697,11 @@ const PatientPersonalInfo = ({
               name="state"
               value={intakeState.state}
               onChange={handleStateChange}
-              inputValue={inputValue}
+              inputValue={inputValueState}
               onInputChange={(_, newInputValue) => {
-                setInputValue(newInputValue);
+                setInputValueState(newInputValue);
               }}
-              options={stateList.map((item) => item.value)}
+              options={statesList.map((item) => item.name)}
               style={{ width: "100%" }}
               renderInput={(params) => (
                 <TextField {...params} label="Select State" />
@@ -659,7 +723,7 @@ const PatientPersonalInfo = ({
               onInputChange={(_, newInputValue) => {
                 setInputValueCity(newInputValue);
               }}
-              options={cityArray?.map((item) => item.value)}
+              options={citiesList?.map((item) => item.name)}
               disabled={intakeState?.state ? false : true}
               name="city"
               className="city-drop"
