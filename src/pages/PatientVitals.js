@@ -84,6 +84,7 @@ const PatientVitals = ({
     secondaryContact:
       intakeForm.secondaryContact || patientDetails.secondaryContact || "",
     address: intakeForm.address || patientDetails.address1 || "",
+    countryCode: intakeForm.countryCode || patientDetails.countryCode || "",
     state: intakeForm.state || patientDetails.state || "",
     city: intakeForm.city || patientDetails.city || "",
     pinCode: intakeForm.pinCode || patientDetails.zip || "",
