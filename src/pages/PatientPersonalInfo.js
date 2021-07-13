@@ -1,4 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
+import { validate } from 'postal-codes-js';
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
@@ -156,6 +157,7 @@ const PatientPersonalInfo = ({
   const [countriesList, setCountriesList] = useState([]);
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
+  const [postalCodeError, setPostalCodeError] = useState('');
 
   const getCountries = async () => {
     const countries = await getAllCountries();
@@ -230,6 +232,15 @@ const PatientPersonalInfo = ({
     getStatesList(intakeState.countryCode || COUNTRY[DEFAULT_COUNTRY_CODE]);
     setCitiesList([]);
   }, [intakeState.countryCode]);
+
+  useEffect(() => {
+    if (!intakeState.pinCode) {
+      setPostalCodeError('');
+    } else {
+      const validationResult = validate(intakeState.countryCode, intakeState.pinCode);
+      setPostalCodeError(validationResult === true ? '' : validationResult);
+    }
+  }, [intakeState.countryCode, intakeState.pinCode]);
 
   useEffect(() => {
     const stateCode = statesList.find(s => s.name === intakeState.state)?.isoCode;
@@ -745,6 +756,7 @@ const PatientPersonalInfo = ({
             defaultValue={intakeState.pinCode}
             onBlur={handleAddressChange}
           />
+          <p className="pin-error">{postalCodeError}</p>
         </div>
       </div>
       <SubmitButton onClick={onNext} isLoading={isLoading} />
