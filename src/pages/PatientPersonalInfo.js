@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment, useMemo } from "react";
 import { validate } from 'postal-codes-js';
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -158,7 +158,13 @@ const PatientPersonalInfo = ({
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
   const [postalCodeError, setPostalCodeError] = useState('');
-
+  const [country, setCountry] = useState('');
+  
+  useEffect(() => {
+    const country = countriesList.find(c => c.isoCode === intakeState.countryCode)?.name;
+    setCountry(country);
+  }, [countriesList, intakeState.countryCode]);
+  
   const getCountries = async () => {
     const countries = await getAllCountries();
     setCountriesList(countries);
@@ -294,7 +300,7 @@ const PatientPersonalInfo = ({
   };
 
   const handleCountryChange = (e) => {
-    const countryName = e?.target?.outerText || intakeState?.country;
+    const countryName = e?.target?.outerText || country;
     const countryCode = countriesList.find(c => c.name === countryName)?.isoCode;
 
     setIntakeState({
@@ -423,6 +429,7 @@ const PatientPersonalInfo = ({
         !intakeState.dateOfBirth || isNaN(Date.parse(intakeState.dateOfBirth)),
       height: !feetHeight,
       weight: !intakeState.weight,
+      pinCode: postalCodeError,
     };
     const isAnyTrue = Object.values(personalInfoError).some((v) => v);
 
@@ -682,7 +689,7 @@ const PatientPersonalInfo = ({
               shrink={"false"}
               classes={classes}
               name="country"
-              value={intakeState.country || COUNTRY[DEFAULT_COUNTRY_CODE]}
+              value={country}
               onChange={handleCountryChange}
               inputValue={inputValueCountry}
               onInputChange={(_, newInputValue) => {
