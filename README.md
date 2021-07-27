@@ -1,3 +1,4 @@
+[![Board Status](https://curizmo.visualstudio.com/3f64e075-db04-4186-ae51-1898adb87f60/02b9791c-d663-4809-abeb-21a1b958169a/_apis/work/boardbadge/767d60f5-b28a-490a-b3a4-775f8520396f)](https://curizmo.visualstudio.com/3f64e075-db04-4186-ae51-1898adb87f60/_boards/board/t/02b9791c-d663-4809-abeb-21a1b958169a/Microsoft.RequirementCategory)
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
