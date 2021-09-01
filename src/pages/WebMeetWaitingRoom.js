@@ -111,6 +111,7 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
             SHOW_JITSI_WATERMARK: false,
             HIDE_INVITE_MORE_HEADER: true,
             DISABLE_FOCUS_INDICATOR: true,
+            SHARING_FEATURES: ['email', 'dial-in', 'embed'],
           },
           userInfo: {
             displayName: `${patientDetails.givenName} ${patientDetails.familyName}`,
