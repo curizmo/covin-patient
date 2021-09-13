@@ -244,7 +244,8 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
 
   return (
     <>
-      {appointmentStartDate.date === today &&
+      {
+      // appointmentStartDate.date === today &&
       (appointment.eventStatusDesc === BOOKING_STATUS.confirmed ||
         appointment.eventStatusDesc === BOOKING_STATUS.checkedIn) ? (
         <div className={`form-content-wrapper success-page`}>
@@ -260,7 +261,8 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
             </div>
           </div>
         </div>
-      ) : appointmentStartDate.date === today &&
+      ) : 
+      // appointmentStartDate.date === today &&
         appointment.eventStatusDesc === BOOKING_STATUS.inProgress ? (
         <div className={`web-call-page`}>
           <div className="waiting-room-message">
