@@ -111,7 +111,7 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
             SHOW_JITSI_WATERMARK: false,
             HIDE_INVITE_MORE_HEADER: true,
             DISABLE_FOCUS_INDICATOR: true,
-            SHARING_FEATURES: ['email', 'dial-in', 'embed'],
+            SHARING_FEATURES: ["email", "dial-in", "embed"],
           },
           userInfo: {
             displayName: `${patientDetails.givenName} ${patientDetails.familyName}`,
@@ -245,93 +245,97 @@ const WebMeetWaitingRoom = ({ patientDetails, hashKey }) => {
   return (
     <>
       {
-      // appointmentStartDate.date === today &&
-      (appointment.eventStatusDesc === BOOKING_STATUS.confirmed ||
-        appointment.eventStatusDesc === BOOKING_STATUS.checkedIn) ? (
-        <div className={`form-content-wrapper success-page`}>
-          <div className="waiting-room-message">
-            <div>
-              <p className="submission-title">
-                <b className="bold-text">Welcome!</b>
-              </p>
-              <p className="submission-title">
-                Appointment Time : {appointmentStartDate.time}
-              </p>
-              <p>Please wait for the physician to bring you into exam room.</p>
-            </div>
-          </div>
-        </div>
-      ) : 
-      // appointmentStartDate.date === today &&
-        appointment.eventStatusDesc === BOOKING_STATUS.inProgress ? (
-        <div className={`web-call-page`}>
-          <div className="waiting-room-message">
-            <div>
-              <div ref={jitsiContainer} className="jitsi-embed"></div>
-            </div>
-            <div>
-              <div
-                className="upload-container"
-                role="button"
-                tabIndex={tabIndex}
-                onClick={handleUploadClick}
-                onKeyPress={(e) => {
-                  if (e.key === ENTER) {
-                    handleUploadClick();
-                  }
-                }}
-              >
-                <AiOutlineUpload className="upload-icon" />
-                Upload a file
+        //@to-do : uncomment the logic when database procedure is updated
+        // appointmentStartDate.date === today &&
+        appointment.eventStatusDesc === BOOKING_STATUS.confirmed ||
+        appointment.eventStatusDesc === BOOKING_STATUS.checkedIn ? (
+          <div className={`form-content-wrapper success-page`}>
+            <div className="waiting-room-message">
+              <div>
+                <p className="submission-title">
+                  <b className="bold-text">Welcome!</b>
+                </p>
+                <p className="submission-title">
+                  Appointment Time : {appointmentStartDate.time}
+                </p>
+                <p>
+                  Please wait for the physician to bring you into exam room.
+                </p>
               </div>
-              <input
-                type="file"
-                onChange={handleFileSelect}
-                className="d-none"
-                ref={imageUploadRef}
-              />
-              {labResults?.length ? (
-                <div className="encounter-images">
-                  {labResults.map((labResult) => {
-                    return (
-                      <div key={labResult.fileName}>
-                        <ImAttachment className="attachment" />
-                        <span className="patient-lab-filename">
-                          {labResult.fileName.split("encounter/")[1]}
-                        </span>
-                        <AiOutlineClose
-                          className="delete-image"
-                          role="button"
-                          tabIndex={tabIndex}
-                          onClick={() => deleteAppointmentFile(labResult.id)}
-                          onKeyPress={(e) => {
-                            if (e.key === ENTER) {
-                              deleteAppointmentFile(labResult.id);
-                            }
-                          }}
-                        />
-                      </div>
-                    );
-                  })}
+            </div>
+          </div>
+        ) : //@to-do : uncomment the logic when database procedure is updated
+        // appointmentStartDate.date === today &&
+        appointment.eventStatusDesc === BOOKING_STATUS.inProgress ? (
+          <div className={`web-call-page`}>
+            <div className="waiting-room-message">
+              <div>
+                <div ref={jitsiContainer} className="jitsi-embed"></div>
+              </div>
+              <div>
+                <div
+                  className="upload-container"
+                  role="button"
+                  tabIndex={tabIndex}
+                  onClick={handleUploadClick}
+                  onKeyPress={(e) => {
+                    if (e.key === ENTER) {
+                      handleUploadClick();
+                    }
+                  }}
+                >
+                  <AiOutlineUpload className="upload-icon" />
+                  Upload a file
                 </div>
-              ) : null}
+                <input
+                  type="file"
+                  onChange={handleFileSelect}
+                  className="d-none"
+                  ref={imageUploadRef}
+                />
+                {labResults?.length ? (
+                  <div className="encounter-images">
+                    {labResults.map((labResult) => {
+                      return (
+                        <div key={labResult.fileName}>
+                          <ImAttachment className="attachment" />
+                          <span className="patient-lab-filename">
+                            {labResult.fileName.split("encounter/")[1]}
+                          </span>
+                          <AiOutlineClose
+                            className="delete-image"
+                            role="button"
+                            tabIndex={tabIndex}
+                            onClick={() => deleteAppointmentFile(labResult.id)}
+                            onKeyPress={(e) => {
+                              if (e.key === ENTER) {
+                                deleteAppointmentFile(labResult.id);
+                              }
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className={`form-content-wrapper success-page`}>
-          <div className="waiting-room-message">
-            <div>
-              <p className="submission-title">
-                <b className="bold-text">Welcome!</b>
-              </p>
-              <p className="submission-title">
-                Looks like the appointment has expired already.
-              </p>
+        ) : appointment.eventStatusDesc === BOOKING_STATUS.completed ? (
+          <div className={`form-content-wrapper success-page`}>
+            <div className="waiting-room-message">
+              <div>
+                <p className="submission-title">
+                  <b className="bold-text">Welcome!</b>
+                </p>
+                <p className="submission-title">
+                  Looks like the appointment has expired already.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        ) : null
+      }
     </>
   );
 };
