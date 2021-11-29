@@ -1,14 +1,4 @@
-# FHIR API
-
-The api for the FHIR DB.
-
-## Table of contents
-
-* [Setup](#setup)
-* [Local development](#local-development)
-* [Run REST client to check fhir api](#run-rest-client-to-check-fhir-api)
-* [Run in production mode](#run-in-production-mode)
-* [Azure Redis cache](#azure-redis-cache)
+The patient app for phoenix.
 
 ## Setup
 
