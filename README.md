@@ -1,71 +1,45 @@
-[![Board Status](https://curizmo.visualstudio.com/3f64e075-db04-4186-ae51-1898adb87f60/02b9791c-d663-4809-abeb-21a1b958169a/_apis/work/boardbadge/767d60f5-b28a-490a-b3a4-775f8520396f)](https://curizmo.visualstudio.com/3f64e075-db04-4186-ae51-1898adb87f60/_boards/board/t/02b9791c-d663-4809-abeb-21a1b958169a/Microsoft.RequirementCategory)
-# Getting Started with Create React App
+# FHIR API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The api for the FHIR DB.
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+* [Setup](#setup)
+* [Local development](#local-development)
+* [Run REST client to check fhir api](#run-rest-client-to-check-fhir-api)
+* [Run in production mode](#run-in-production-mode)
+* [Azure Redis cache](#azure-redis-cache)
 
-### `yarn start`
+## Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Change directory to the project folder i.e `covin-patient` folder
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```shell
+$ cd covin-patient
+```
 
-### `yarn test`
+Install dependencies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```shell
+$ yarn
+```
 
-### `yarn build`
+Create an env file
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```shell
+$ cp .env.example .env
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<strong>Note: Your .env file is where app credentials are stored [locally](https://docs.google.com/document/d/1_9vfTitCVBkhUFAraPkeC1zeUAxMgPgZ/edit). These credentials are read by the config.js file during runtime. If you need the config variables, please contact one of the contributors.</strong>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Local development
 
-### `yarn eject`
+```shell
+$ npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## To View the application locally add the patient's hash code to the url:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+[http://localhost:3000/patient-hash-code](http://localhost:3000/)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
